@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2011 ETH Zurich.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the GNU Public License v2.0
+  which accompanies this distribution, and is available at
+  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+  
+  Contributors:
+      Paolo Carta - Implementation
+      Theus Hossmann - Implementation
+      Dominik Schatzmann - Message specification
+-->
+<resources>
+    <!-- General -->
+    <string name="app_name">Twimight</string>
+    <string name="app_label">Twimight</string>
+    <string name="twitter">Twitter</string>
+    <string name="placeholder">asdf</string>
+    <string name="tweet_length">140</string>
+    <string name="tweets">Tweets</string>
+    <string name="tweet">Tweet</string>
+    <string name="users">Utenti</string>
+    <string name="user">Utente</string>
+    <string name="message">Messaggio</string>
+    <string name="ok">OK</string>
+    <string name="yes">Si</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancella</string>
+    
+    <!-- Menu -->
+    <string name="home">Home</string>
+    <string name="profile">Profilo</string>
+    <string name="messages">Messaggi</string>
+    <string name="settings">Impostazioni</string>
+    <string name="logout">Esci</string>
+    <string name="about">Info</string>
+    <string name="feedback">Feedback</string>    
+    <string name="cache_html">Salva Links</string>
+    <string name="clear_cache_html">Cancella cache</string>  
+    <string name="write_tweet">Componi</string>
+    <string name="search">Cerca</string>
+    
+       <!--web page caching--> 
+	<string name="clear_cache_question">Sei sicuro di voler cancellare tutte le pagine web salvate?</string>
+	<string name="clear_cache_title">Cancella Cache</string>
+	<string name="loading">Caricamento</string>	
+	<string name="file_not_exists">Il file non esiste</string>	
+	<string name="loading_finished">Caricamento completato</string>
+	<string name="downloaded">Scaricata</string>
+    <string name="downloading">Download in corso</string>
+    <string name="faulty_page">La pagina è corrotta. Verrà scaricata nuovamente al più presto </string>
+    
+    <!-- TO BE TRANSLATED -->
+    <string name="no_valid_pdf">No valid application for viewing pdf files</string>
+    <string name="no_valid_pictures">No valid application for viewing pictures</string>
+    <string name="no_valid_audio">No valid application for playing audio files</string>
+    <string name="no_valid_video">No valid application for playing video files</string>
+    <string name="pages_not_downloaded">Unable to surf in offline mode because pages have not been downloaded</string>
+    
+    <!-- Tweeting, Timeline, Favorites -->
+    <string name="tweet_will_be_posted">Il tweet verrà pubblicato al più presto(non appena sarà disponibile una connessione ad internet).</string>
+    <string name="tweet_will_be_deleted">Il tweet verrà cancellato al più presto(non appena sarà disponibile una connessione ad internet). Pressa qui per annullare</string>
+    <string name="tweet_will_be_favorited">Il tweet verrà aggiunto ai preferiti al più presto(non appena sarà disponibile una connessione ad internet).</string>
+    <string name="tweet_will_be_unfavorited">Il tweet verrà rimosso dai preferiti al più presto (non appena sarà disponibile una connessione ad internet).</string>
+    <string name="will_be_retweeted">Il retweet verrà pubblicato al più presto (non appena sarà disponibile una connessione ad internet).</string>
+	<string name="no_tweets">Nessun Tweet disponibile</string>
+	<string name="no_connection">Nessuna connessione disponibile, verranno mostrati i vecchi tweet </string>
+	<string name="location_on">GPS attivato</string>
+	<string name="location_off">GPS disattivato</string>
+	<string name="no_connection4">Nessuna connessione ad internet. Il tweet verrà pubblicato al più presto !</string>
+	<string name="picker">Completa l\'azione con</string>
+	<string name="retweeted_by">Retweet da</string>
+	 <string name="delete_tweet">Il tweet verrà cancellato, continuare?</string>
+	<string name="modify_tweet">Vuole modificare il tweet prima di effettuare il retweet?</string>
+	
+    <!-- User, Friends -->
+    <string name="followers">Followers</string>
+    <string name="friends">Amici</string>
+    <string name="favorits">Preferiti</string>
+    <string name="peers">Peers</string>
+    <string name="will_stop_following">L\'utente verrà seguito non appena la connessione internet sarà disponibile.</string>
+    <string name="will_start_following">L\'utente non verrà più seguito non appena la connessione internet sarà disponibile</string>
+    <string name="follow">Segui</string>
+    <string name="unfollow">Smetti di Seguire</string>
+    <string name="no_users">Nessun utente disponibile.</string>
+
+    <!-- Searching -->
+    <string name="no_results">Nessun risultato</string>
+    <string name="search_hint">Cerca Tweets e Utenti</string>
+    <string name="results_for">Risultati ricerca per</string>
+    
+    <!-- Direct Messages -->
+    <string name="no_dms">Nessun messaggio diretto disponibile</string>
+    <string name="to">A: </string>
+    <string name="no_connection3">Nessuna connessione ad internet disponibile, il messaggio verrà inviato non appena possibile</string>
+    <string name="dm_content_title">Nuovi Messaggi Diretti!</string>
+    <string name="dm_content_text">Hai nuovi messaggi diretti</string>
+    <string name="send">Invia</string> 	
+    
+    <!-- Tweet Notification -->
+    <string name="tweet_content_title">Nuovi tweets</string>
+    <string name="tweet_content_text">Nuovi tweets nella tua timeline</string>
+    <string name="mention_content_text">Nuovi tweet in cui sei menzionato</string>
+    <string name="dis_tweet_content_text">Nuovi tweet in modalità disastro</string>    
+    
+    <!-- Install -->
+    <string name="permission">Accesso al Content provider di Twimight</string>
+    <string name="permDescription">Questo permesso consentirà l\'accesso al content provider. I dati potrebbero essere manipolati da altre applicazioni</string>
+    
+    <!-- Login, Logout -->
+    <string name="login">Accedi</string>
+    <string name="no_connection2">Nessuna connessione ad internet, provare più tardi</string>
+    <string name="error_signing">La richiesta è fallita</string>
+    <string name="error_twitter">Twitter non puo essere raggiunto al momento, provare più tardi</string>
+    <string name="error_parameters">I parametri non sono stati impostati correttamente</string>
+    <string name="error_server">Comunicazione con il server fallita, controllare la connessione ad internet</string>
+    <string name="error_authentication">Errore di autenticazione</string>
+    <string name="error_login">C\'è stato un problema nell\'accesso. Provare più tardi </string>
+    <string name="in_progress">In corso</string>
+    <string name="verifying">Verifica credenziali</string>
+    <string name="disastermode_running">Attenzione: La modalità disastro è ancora attiva in background</string>
+    <string name="disable_disastermode">Disabilita la modalità disastro prima. NOTA: Una volta uscito, Twimight non funzionerà fino a quando una connessione internet non sarà nuovamente disponibile.</string>
+    <string name="logout_question">Sei sicuro di voler uscire?</string>
+    
+    
+   
+    <!-- About -->
+    <string name="author">Autori: Paolo Carta and Theus Hossmann</string>
+    <string name="version">Versione:</string>
+    <string name="keys">Chiavi</string>
+    
+    <string name="no_certificate">Nessun Certificato valido.</string>
+    <string name="no_update">Nessun aggiornamento</string>
+    <string name="starting_update">Aggiornamento con il TDS iniziato.</string>
+    <string name="mighty">Il potente client Twitter!</string>
+    <string name="copyright">\u00A9 CSG, ETH Zurich, 2012</string>
+    <string name="revoke">Revoca</string>
+    <string name="revoke_key">Sei sicuro vuoi revocare la tua chiave? Questo va effettuato in caso di telefono smarrito o rubato.</string>
+    <string name="revoking">Revoca la chiave.</string>
+    <string name="update">Aggiornamento TDS</string>
+    <string name="update_button">Aggiorna</string>
+    
+    <!-- Terms & Conditions -->
+    <string name="terms_and_conditions">Condizioni d\'uso</string>
+    <string name="agree">Accetto</string>
+    <string name="decline">Rifiuto</string>
+    <string name="conditions">Cliccando &quot;Accetto&quot; qua sotto, accetto di prender parte alla raccolta
+        dati di Twimight Beta.L\'applicazione raccoglie dati e statistiche e registra alcune azioni
+        effettuate e la posizione geografica.
+
+		L\'accesso ad ogni tipo di dato sarà permessa solo ed esclusivamente ai soli membri del team di sviluppo per scopi 
+		di ricerca scientifica. I risultati pubblicati verranno rilasciati
+		dopo anonimizzazione e offuscamento dei dati sensibili. Verranno pubblicate solamente statistiche 
+		di tipo aggregato che non riveleranno in nessun modo l\'identità dei partecipanti. 
+		L\'utente ha il diritto di abbandonare questa ricerca in ogni momento, disinstallando
+		l\'applicazione. Inoltre, l\'utente ha il diritto di avere accesso ai propri dati ed eventualmente
+		richiederne la cancellazione. </string>
+  
+    <!-- Rate -->
+     <string name="app_rater">Se ti piace Twimight, dedica un minuto per votarlo. Grazie per il sostegno!</string>    
+    <string name="rate_app">Vota App</string>   	
+    <string name="remind_me">Ricorda più tardi</string>   
+    <string name="no_thanks">No Grazie</string> 
+    
+    
+    
+    <!-- Preferences -->
+    <string name="notifications">Notifiche</string>
+    <string name="notifications_explain">Clicca per il menu delle notifiche</string>
+    <string name="notify_tweets">Notifica Tweets</string>
+    <string name="notify_tweets_explain">Seleziona per ricevere notifiche sui tweet</string>
+    <string name="notify_mentions">Notifica Interazioni</string>
+    <string name="notify_mentions_explain">Seleziona per ricevere notifiche sui tweet in cui sono menzionato</string>
+    <string name="notify_dms">Notifica messaggi diretti</string>
+    <string name="notify_dms_explain">Seleziona per ricevere notifiche sui messaggi diretti</string>
+    <string name="use_location">Utilizza GPS</string>
+    <string name="use_location_explain">Seleziona per aggiungere automaticamente il geo-tag ai tweet.</string>
+    <string name="updates_background">Aggiornamenti in background</string>
+    <string name="updates_background_explain">Seleziona per aggiornamenti automatici in background</string>
+    <string name="updates_interval">Intervallo aggiornamenti</string>
+    <string name="updates_interval_explain">Seleziona l\'intervallo di tempo desiderato per gli aggiornamenti</string>
+    <string name="disaster_mode">Modalità disastro</string>
+    <string name="disaster_mode_explain">Clicca per abilitare la modalità disastro. Nota che utilizza il Bluetooth.</string>
+    <string name="tds_communication">Comunicazione con il TDS</string>
+    <string name="tds_communication_explain">Seleziona per abilitare aggiornamenti automatici con il server</string>
+    <string name="location_updates">Aggiornamenti GPS</string>
+    <string name="location_updates_explain">Inviare aggiornamenti periodici al TDS sulla propria posizione?</string>
+    
+      <!--Disaster mode  -->    
+    <string name="dis_mode_description">
+        In assenza di connettività, attiva la modalità disastro nelle opzioni.
+        I tweet scritti verranno diffusi a tutti i telefoni in broadcast, anche
+        senza 3G o WiFi. Una volta che una connessione sarà nuovamente
+        disponibile i Tweet verranno pubblicati su Twitter
+        </string>
+    <string name="btstatus_searching">ricerca</string>
+    
+</resources>

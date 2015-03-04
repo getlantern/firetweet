@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="listArray">
+        <item>1 Min</item>
+        <item>5 Min</item>
+        <item>15 Min</item>
+        <item>30 Min</item>
+        <item>1 Std</item>
+        <item>4 Std</item>
+        <item>12 Std</item>
+        <item>Täglich</item>
+    </string-array>
+    <string-array name="listValues">
+        <item>1</item>
+        <item>5</item>
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>240</item>
+        <item>720</item>
+        <item>1440</item>
+    </string-array>
+
+</resources>

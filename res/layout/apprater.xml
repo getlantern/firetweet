@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2011 ETH Zurich. All rights reserved. This program and
+        the accompanying materials are made available under the terms of the GNU
+        Public License v2.0 which accompanies this distribution, and is available
+        at http://www.gnu.org/licenses/old-licenses/gpl-2.0.html Contributors: Paolo
+        Carta - Implementation Theus Hossmann - Implementation Dominik Schatzmann
+        - Message specification -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:background="@color/tweet_background"
+        android:padding="5dp" android:id="@+id/showNewTweetRoot">
+        
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_rater"
+            android:textColor="@color/black" />
+    
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/rater_rate"
+                    android:layout_width="100dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="left"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/button_custom"
+                    android:paddingLeft="5dp"
+                    android:text="@string/rate_app"
+                    android:textColor="#FFFFFFFF"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/rater_remind"
+                    android:layout_width="100dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/remind_me" />
+                
+                <Button
+                    android:id="@+id/rater_nothanks"
+                    android:layout_width="100dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="right"
+                    android:text="@string/no_thanks" />
+
+        </LinearLayout>
+
+        
+
+</LinearLayout>
+
+
+

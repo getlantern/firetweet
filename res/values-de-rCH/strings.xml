@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2011 ETH Zurich.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the GNU Public License v2.0
+  which accompanies this distribution, and is available at
+  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+  
+  Contributors:
+      Paolo Carta - Implementation
+      Theus Hossmann - Implementation
+      Dominik Schatzmann - Message specification
+-->
+<resources>
+    <!-- General -->
+    <string name="app_name">Twimight</string>
+    <string name="app_label">Twimight</string>
+    <string name="twitter">Twitter</string>
+    <string name="placeholder">chuchichästli</string>
+    <string name="tweet_length">140</string>
+    <string name="tweets">Tweets</string>
+    <string name="tweet">Tweet</string>
+    <string name="users">Benutzer</string>
+    <string name="user">Benutzer</string>
+    <string name="message">Nachrichte</string>
+    <string name="ok">OK</string>
+    <string name="yes">Äuä scho</string>
+    <string name="no">Äuä nid</string>
+    <string name="cancel">Abbräche</string>
+    
+    <!-- Menu -->
+    <string name="home">Hei</string>
+    <string name="profile">Mis Profil</string>
+    <string name="messages">Nachrichte</string>
+    <string name="settings">Istellige</string>
+    <string name="logout">Abmäude</string>
+    <string name="about">Über Twimight</string>
+    <string name="feedback">Rückmäudige</string>  
+    
+    <!-- web page caching --> 
+	<string name="clear_cache_question">Bisch sicher dass aui abegladne Links wosch lösche?</string>
+	<string name="clear_cache_title">Cache lösche</string>
+	<string name="loading">Ladä</string>	
+	<string name="file_not_exists">Die Datei gits nid</string>	
+	<string name="loading_finished">Fertig glade</string>
+	<string name="downloaded">Fertig glade</string>
+    <string name="downloading">Wird glade</string>
+    <string name="cache_html">Links abelade</string>
+    <string name="clear_cache_html">Cache lösche</string>  
+    <string name="write_tweet">Tweet</string>
+    <string name="search">Sueche</string>
+     <!-- TO BE TRANSLATED -->
+     	<string name="faulty_page">The page is corrupted. It will downloaded again shortly</string>
+    <string name="no_valid_pdf">No valid application for viewing pdf files</string>
+    <string name="no_valid_pictures">No valid application for viewing pictures</string>
+    <string name="no_valid_audio">No valid application for playing audio files</string>
+    <string name="no_valid_video">No valid application for playing video files</string>
+    <string name="pages_not_downloaded">Unable to surf in offline mode because pages have not been downloaded</string>
+    
+     <!--Disaster mode  -->    
+    <string name="dis_mode_description">
+        Falls d Internetverbindig zämäbricht, aktivier dr Katastrophe-Modus
+        i de Istellige. Katastrophe-Tweets wärde epidemisch zwüsche aune
+        Telefon im Katastrophe-Modus verbreitet, o ohni 3G oder WLAN.
+        Sobald d Verbindig wider härgstellt wird, wärde diner
+        Tweets när uf Twitter ufeglade.
+    </string>
+    
+    <!-- Tweeting, Timeline, Favorites -->
+    <string name="tweet_will_be_posted">Dä Tweet wird gli veröffentlicht (sobau Internetverbindig besteit).</string>
+    <string name="tweet_will_be_deleted">Dä Tweet wird gli glöscht (sobau Internetverbindig besteit).</string>
+    <string name="tweet_will_be_favorited">Dä Tweet wird gli zu de Favorite hinzuegfüegt (sobau Internetverbindig besteit).</string>
+    <string name="tweet_will_be_unfavorited">Dä Tweet wird gli vo de Favorite entfernt (sobau Internetverbindig besteit).</string>
+    <string name="will_be_retweeted">Dä Retweet wird gli gschickt (sobau Internetverbindig besteit).</string>
+	<string name="no_tweets">Kener Tweets verfüegbar</string>
+	<string name="no_connection">Ke Internetverbindig, nume auti Tweets!</string>
+	<string name="location_on">Lokalisierig isch igschaute</string>
+	<string name="location_off">Lokalisierig isch usgschaute</string>
+	<string name="no_connection4">Ke Internetverbindig. Dä Tweet wird veröffentlicht sobau Internetverbindig besteit.</string>
+	<string name="picker">Usfüere mit</string>
+	<string name="retweeted_by">Retweet vo</string>
+    <string name="delete_tweet">Bisch sicher dass di Tweet wosch lösche?</string>
+	<string name="modify_tweet">Wosch dä Tweet vor em retweete verändere?</string>
+	
+    <!-- User, Friends -->
+    <string name="followers">Fouge Mir</string>
+    <string name="friends">Fouge Ig</string>
+    <string name="favorits">Favorite</string>
+    <string name="peers">Peers</string>
+    <string name="will_stop_following">Du wirsch däm Benutzer gli nümme fouge (sobau Internetverbindig besteit).</string>
+    <string name="will_start_following">Du wirsch däm Benutzer gli fougen (sobau Internetverbindig besteit).</string>
+    <string name="follow">Fougen</string>
+    <string name="unfollow">Nümme fouge</string>
+    <string name="no_users">Ke Benutzer verfüegbar.</string>
+
+    <!-- Searching -->
+    <string name="no_results">Kener Resultat</string>
+    <string name="search_hint">Tweets u Benutzer sueche</string>
+    <string name="results_for">Suechresultat für</string>
+    
+    <!-- Direct Messages -->
+    <string name="no_dms">Kener Nachrichte verfüegbar</string>
+    <string name="to">A: </string>
+    <string name="no_connection3">Dini Nachricht wird gli verschickt (sobau Internetverbindung besteit).</string>   
+    <string name="dm_content_title">Nöi Nachricht(e)!</string>
+    <string name="dm_content_text">Du hesch nöi Nachricht(e)</string>
+    <string name="send">Schicke</string>
+    
+    <!-- Tweet Notification -->
+    <string name="tweet_content_title">Nöi Tweet(s)!</string>
+    <string name="tweet_content_text">Du hesch nöi Tweet(s) ir Timeline</string>
+    <string name="mention_content_text">Du hesch nöi Mention(s)</string>
+    <string name="dis_tweet_content_text">Du hesch nöi Katastrophe-Tweet(s)</string>    
+    
+    <!-- Install -->
+    <string name="permission">Zuegriff uf Twimight Content Providers</string>
+    <string name="permDescription">Die Berächtigung verleiht Zugriff uf "Content Providers". Date chönnten vo bösartige Applikatione veränderet wärde.</string>
+    
+    <!-- Login, Logout -->
+    <string name="login">Amäude</string>
+    <string name="no_connection2">Ke Internetverbindig. Bitte später nomau probiere.</string>
+    <string name="error_signing">Fähler bim Signiere.</string>
+    <string name="error_twitter">Twitter isch grad nid erreichbar. Bitte später nochmau probiere.</string>
+    <string name="error_parameters">Benötigti Parameter si nid korräkt gsetzt.</string>
+    <string name="error_server">Kommunikation mit äm Server isch gschiteret. Bitte Internetverbindig prüefe.</string>
+    <string name="error_authentication">Fähler bei dr Authentisierig.</string>
+    <string name="error_login">Fähler bim Amäude. Bitte später nochmau probiere.</string>
+    <string name="in_progress">Wird usgfüehrt</string>
+    <string name="verifying">Berächtigung wird prüft.</string>
+    <string name="disastermode_running">Warnig: Katastrophe-Modus louft no im Hingergrund.</string>
+    <string name="disable_disastermode">Bitte zersch Katastrophe-Modus abschaute. Achtung: Sobau du di abmäudisch funktioniert Twimight nümme bis wieder Internetverbindig besteit.</string>
+    <string name="logout_question">Bisch sicher dass di wosch abmäude?</string>
+    
+
+
+    
+    <!-- About -->
+    <string name="author">Outore: Paolo Carta u Theus Hossmann</string>
+    <string name="version">Version:</string>
+    <string name="keys">Keys</string>    
+    <string name="no_certificate">Kes güutigs Zertifikat.</string>
+    <string name="no_update">Ke Aktualisierig</string>
+    <string name="starting_update">TDS Update wird gstartet.</string>
+    <string name="mighty">Di mächtigi Twitter App!</string>
+    <string name="copyright">\u00A9 CSG, ETH Zürich, 2012</string>
+    <string name="revoke">Widerruefe</string>
+    <string name="revoke_key">Bisch sicher dass dr Schlüssu wosch widerruefe? Nume komprimittierti Schlüssu sötte widerruefe wärde (z.B. falls ds Telefon isch gmugget worde).</string>
+    <string name="revoking">Schlüssu wird jetz widerruefe</string>
+    <string name="update">Twimight Server Update</string>
+    <string name="update_button">Update</string>
+    
+    <!-- Terms & Conditions -->
+    <string name="terms_and_conditions">Gschäftsbedinungige</string>
+    <string name="agree">Zuestimme</string>
+    <string name="decline">Ablehne</string>
+    <string name="conditions">
+        Indäm i unger \"Zuestimme\" wähle, stimme i zue bir Twimight Beta Datesammlig mitzmache.
+        D Twimight Beta Applikation sammlet Date über d Benutzig vor Twimight Applikation u über ä Ort während dr Benutzig.
+        
+        I verstah, dass nume Mitglider vom Twimight Forschigsprojekt Zuegriff uf di gsammlete Date hei
+        u das nume zu wüsseschaftliche Zwäck im Zämehang mit äm Twimight Forschigsprojekt.
+        Jeglichi veröffentlichete Resultat vo dere Studie enthaute nume anonymisierti und verschleiereti Date.
+        Aggregierti Statistike dörfe kener Rückschlüss uf d Identität vo Teilnehmer zuelah.
+        Aus Teilnähmer han i ds Rächt jederzit us dere Studie uszstige indäm i di Applikation vo mine Grät deinstalliere.
+        Zuesätzlich han i ds Rächt di über mi gsammlete Date izgseh, u d Löschig z verlangen.
+    </string>
+  
+    <!-- Rate -->
+    <string name="app_rater">Faus dr Twimight gfaut, nimm dir bitte churz Zit für ä Bewärtig. Merci viumau für dini Ungerstützig!</string>   		
+    <string name="rate_app">App bewärte</string>   	
+    <string name="remind_me">Später</string>   
+    <string name="no_thanks">Nei merci</string> 
+    
+    
+    <!-- Preferences -->
+    <string name="notifications">Benachrichtige</string>
+    <string name="notifications_explain">Hie klicke für ds Benachrichtigungsmenu</string>
+    <string name="notify_tweets">Tweets</string>
+    <string name="notify_tweets_explain">Markiere um über nöi Tweets benachrichtigt z wärde.</string>
+    <string name="notify_mentions">Erwähnige</string>
+    <string name="notify_mentions_explain">Markiere um über nöi Erwähnige (mentions) benachrichtiget z wärde.</string>
+    <string name="notify_dms">Nachrichte</string>
+    <string name="notify_dms_explain">Markiere um über nöi Nachrichte benachrichtiget z wärde.</string>
+    <string name="use_location">Standort</string>
+    <string name="use_location_explain">Markiere um dr Standort zu Tweets hinzuezfüege.</string>
+    <string name="updates_background">Updates im Hingergrund</string>
+    <string name="updates_background_explain">Markiere um outomatisch im Hingergrund nöi Tweets z lade.</string>
+    <string name="updates_interval">Update-Intervau</string>
+    <string name="updates_interval_explain">Ds gwünschte Update-Intervau uswähle.</string>
+    <string name="disaster_mode">Katastrophe-Modus</string>
+    <string name="disaster_mode_explain">Markiere um dr Katastrophe-Modus izschaute. Ufpasst: Das schautet Bluetooth i.</string>
+    <string name="tds_communication">Twimight Server Kommunikation</string>
+    <string name="tds_communication_explain">Markiere um outomatisch Updates vom Twimight Server z lade.</string>
+    <string name="location_updates">Standort-Updates</string>
+    <string name="location_updates_explain">Söue periodisch Standort-Updates a Twimight Server gschickt wärde?</string>
+    <string name="btstatus_connected_to">verbunde mit %s</string>
+    <string name="btstatus_connecting_to">verbindä mit %s</string>
+    <string name="btstatus_listening">wartä</string>
+    <string name="btstatus_resetting">dä Adapter wird zrugggsetzt</string>
+    <string name="btstatus_searching">suächä</string>
+    
+</resources>

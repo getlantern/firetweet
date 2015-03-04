@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    
+       <ch.ethz.twimight.net.twitter.TweetListView  xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent" 
+            android:id="@+id/tweetListView"
+            android:fastScrollEnabled="true" 
+            android:scrollingCache="true" 
+            android:divider="@color/twimightBackgroundLight"/>
+        
+  
+    
+

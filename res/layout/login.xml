@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2011 ETH Zurich. All rights reserved. This program and 
+	the accompanying materials are made available under the terms of the GNU 
+	Public License v2.0 which accompanies this distribution, and is available 
+	at http://www.gnu.org/licenses/old-licenses/gpl-2.0.html Contributors: Paolo 
+	Carta - Implementation Theus Hossmann - Implementation Dominik Schatzmann 
+	- Message specification -->
+<RelativeLayout android:layout_width="fill_parent"
+	android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/showLoginRoot">
+	<ImageView android:id="@+id/showAboutLayout"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:src="@drawable/mightybird_starglow" android:orientation="vertical"
+		android:layout_gravity="center" android:scaleType="centerCrop" />
+
+
+	<LinearLayout android:id="@+id/showLoginLogo"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_gravity="bottom|center_horizontal" android:orientation="vertical"
+		android:layout_alignParentBottom="true" android:gravity="center_horizontal">
+
+		<Button android:id="@+id/buttonLogin" android:layout_width="120dp"
+			android:layout_height="40dp" android:layout_marginTop="20dp"
+			android:layout_marginBottom="30dp" android:text="@string/login" />
+
+	</LinearLayout>
+</RelativeLayout>
+

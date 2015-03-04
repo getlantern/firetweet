@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <resources>
+    	<color name="grey">#999999</color>
+    	<color name="red">#ff0000</color>
+    	<color name="title">#ffffff</color>
+        <color name="transparent">#00000000</color>
+        <color name="tweet_background">#dddddd</color>
+        <color name="text">#000000</color>
+        <color name="white">#FFFFFF</color>
+        <color name="black">#000000</color>  
+     
+      
+        <color name="titlenormalbackgroundcolor">#939393</color>
+  		<color name="titledisasterbackgroundcolor">#ff0000</color>
+  		
+  		
+  		<color name="general_background_end">#61421F</color>
+  		<color name="general_background_start">#272010</color>
+  		
+ 	
+  		
+  		 <color name="dm_background_disaster_start">#FD8566</color>
+         <color name="dm_background_disaster_end">#FD6466</color>
+         
+   		<!-- new UI colors -->
+  		<color name="twimightBackgroundLight">#dbe4f3</color>
+  		<color name="twimightBackgroundDark">#cad4e4</color>
+  		<color name="twimightTextDark">#353f50</color>
+  		<color name="twimightTextLight">#838e9e</color>
+  		<color name="twimightHeaderBackground">#627595</color>
+  		<color name="twimightSeparator">#a6b3ca</color>
+  		<color name="twimightButtonBackground">#838e9e</color>
+  		<color name="twimightButtonBackgroundShadow">#404a5b</color>
+  		
+  		<color name="twimightBackgroundOwn">#e4dbf3</color>
+  		<color name="twimightBackgroundMention">#dbf3e4</color>
+  		<color name="twimightBackgroundDisaster">#ffe4db</color>
+  		
+  		<color name="twimightHeaderBackgroundDisaster">#bb5454</color>
+  		<color name="twimightImageBorder">#747474</color>
+  	
+         
+  		
+    </resources>

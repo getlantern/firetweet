@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    
+    <style name="Twimight" parent="android:style/Theme.Holo.Light">
+        <item name="android:buttonStyle">@style/Button</item>
+        <item name="android:imageButtonStyle">@style/ImageButton</item>
+        <item name="android:windowBackground">@color/twimightBackgroundLight</item>
+    	<item name="android:colorBackground">@color/twimightBackgroundLight</item>
+    	<item name="android:textAppearance">@style/twimightDefaultTextAppearance</item>
+    	<item name="android:actionBarStyle">@style/MyActionBar</item>
+    	<item name="android:actionBarTabStyle">@style/ActionBarTabStyle </item>    	
+    	<item name="android:actionBarItemBackground">@drawable/action_button</item>
+    	
+
+       
+    </style>
+    
+     <style name="Twimight.NoActionBar" parent="android:style/Theme.Holo.Light.NoActionBar">
+        <item name="android:buttonStyle">@style/Button</item>
+        <item name="android:imageButtonStyle">@style/ImageButton</item>
+        <item name="android:windowBackground">@color/twimightBackgroundLight</item>
+    	<item name="android:colorBackground">@color/twimightBackgroundLight</item>
+    	<item name="android:textAppearance">@style/twimightDefaultTextAppearance</item>    	
+    
+    </style>
+    
+    <style name="Theme.Transparent" parent="android:Theme">
+		<item name="android:windowIsTranslucent">true</item>
+		<item name="android:windowBackground">@color/transparent</item>
+		<item name="android:windowContentOverlay">@null</item>
+		<item name="android:windowNoTitle">true</item>
+		<item name="android:windowIsFloating">true</item>
+		<item name="android:backgroundDimEnabled">true</item>
+	</style>
+</resources>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent" 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/showConditionsRoot">
+
+<LinearLayout
+    android:id="@+id/showConditionsLogo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:layout_margin="10dp"
+    android:background="@drawable/about_background"
+    android:orientation="vertical" >
+		
+		<TextView
+		    android:id="@+id/textConditions"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_marginTop="15dp"
+		    android:text="@string/dis_mode_description"
+		    android:textColor="@color/black" />
+		
+	<LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_marginTop="20dp" android:gravity="center_vertical|center_horizontal">
+		
+		<Button
+		    android:id="@+id/buttonSkip"
+		    android:layout_width="80dp"
+		    android:layout_height="wrap_content"
+		    android:text="Ok" android:padding="10dp" android:layout_gravity="center_vertical|center_horizontal" android:layout_marginTop="20dp" android:layout_marginBottom="20dp"/>
+    
+    
+	</LinearLayout>
+
+</LinearLayout>
+
+
+
+  
+</ScrollView>
+

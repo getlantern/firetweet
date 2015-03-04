@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2011 ETH Zurich.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the GNU Public License v2.0
+  which accompanies this distribution, and is available at
+  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+  
+  Contributors:
+      Paolo Carta - Implementation
+      Theus Hossmann - Implementation
+      Dominik Schatzmann - Message specification
+-->
+<resources>
+    <!-- General -->
+    <string name="app_name">Twimight</string>
+    <string name="app_label">Twimight</string>
+    <string name="twitter">Twitter</string>
+    <string name="tweets">Tweets</string>        
+    <string name="placeholder">asdf</string>
+    <string name="tweet_length">140</string>     
+    <string name="tweet">Tweet</string>
+    <string name="users">Users</string>
+    <string name="user">User</string>
+    <string name="message">Message</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    
+    <!-- Menu -->
+    <string name="home">Home</string>
+    <string name="profile">My Profile</string>      
+    <string name="messages">Messages</string>
+    <string name="settings">Settings</string>
+    <string name="cache_html">Save Links</string>
+    <string name="clear_cache_html">Clear cache</string>
+    <string name="logout">Logout</string>
+    <string name="about">About</string>
+    <string name="feedback">Feedback</string>
+    <string name="write_tweet">Tweet</string>
+    <string name="search">Search</string>
+    
+    
+    <!-- Tweeting, Timeline, Favorites -->
+    <string name="tweet_will_be_posted">This tweet will be posted soon (when Internet connection available).</string>
+    <string name="tweet_will_be_deleted">This tweet will be deleted soon (when Internet connection available). Press to abort operation</string>
+    <string name="tweet_will_be_favorited">This tweet will be marked as favorite soon (when Internet connection available).</string>
+    <string name="tweet_will_be_unfavorited">This tweet will be un-favorited soon (when Internet connection available).</string>
+    <string name="will_be_retweeted">This retweet will be posted soon (when Internet connection available).</string>
+	<string name="no_tweets">No Tweets available</string>
+	<string name="no_connection">Not connected to the Internet, showing old Tweets!</string>
+	<string name="location_on">Location is turned on</string>
+	<string name="location_off">Location is turned off</string>
+	<string name="no_connection4">No connectivity, your Tweet will be uploaded to Twitter once we have a connection!</string>
+	<string name="picker">Complete action using</string>
+	<string name="retweeted_by">retweeted by</string>
+	<string name="delete_tweet">Are you sure you want to delete your Tweet?</string>
+	<string name="modify_tweet">Would you like to modify the tweet before retweeting?</string>
+	
+	<!--web page caching and pictures--> 
+	<string name="clear_cache_question">Are you sure you want to clear all files and data of saved webpages?</string>
+	<string name="clear_cache_title">Clear Cache</string>
+	<string name="loading">Loading</string>	
+	<string name="file_not_exists">Page not downloaded yet</string>	
+     <string name="url_not_added">The URL has not been added to the Database</string>	
+	
+	<string name="loading_finished">Loading finished.</string>
+	<string name="faulty_page">The page is corrupted. It will downloaded again shortly</string>
+	<string name="no_valid_pdf">No valid application for viewing pdf files</string>
+    <string name="no_valid_pictures">No valid application for viewing pictures</string>
+    <string name="no_valid_audio">No valid application for playing audio files</string>
+    <string name="no_valid_video">No valid application for playing video files</string>
+    <string name="pages_not_downloaded">Unable to surf in offline mode because pages have not been downloaded</string>
+    <string name="downloaded">Downloaded</string>
+    <string name="downloading">Downloading</string>
+    
+    
+	
+    <!-- User, Friends -->
+    <string name="followers">Followers</string>
+    <string name="friends">Friends</string>
+    <string name="favorits">Favorites</string>
+    <string name="peers">Peers</string>
+    <string name="will_stop_following">You will stop following this user once Internet connectivity is available.</string>
+    <string name="will_start_following">You will start following this user once Internet connectivity is available.</string>
+    <string name="follow">Follow</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="no_users">No users available.</string>
+
+    <!-- Searching -->
+    <string name="no_results">No results</string>
+    <string name="search_hint">Search Tweets and users</string>
+    <string name="results_for">Search Results for</string>
+    
+    <!-- Direct Messages -->
+    <string name="no_dms">No direct messages available</string>
+    <string name="to">To: </string>
+    <string name="no_connection3">No connectivity, your Message will be sent once we have a connection!</string>
+    <string name="dm_content_title">New Direct Messages!</string>
+    <string name="dm_content_text">You have new direct message(s)</string>
+    <string name="send">Send</string>
+    
+    
+    <!-- Tweet Notification -->
+    <string name="tweet_content_title">New Tweet(s)!</string>
+    <string name="tweet_content_text">New tweet(s) in your timeline</string>
+    <string name="mention_content_text">You have new mention(s)</string>
+    <string name="dis_tweet_content_text">You have new disaster tweet(s)</string>    
+        
+    
+    <!-- Install -->
+    <string name="permission">Access to Twimight content providers</string>
+    <string name="permDescription">This permission will grant access to content providers. Data might be manipulated by malicious applications.</string>
+    
+    <!-- Login, Logout -->
+    <string name="login">Login</string>
+    <string name="no_connection2">Not connected to the Internet, please try again later</string>
+    <string name="error_signing">Signing the request failed</string>
+    <string name="error_twitter">Twitter is not reachable at the moment, please try again later</string>
+    <string name="error_parameters">Required parameters were not correctly set</string>
+    <string name="error_server">Server communication failed, check internet connectivity</string>
+    <string name="error_authentication">Error authenticating</string>
+    <string name="error_login">There was a problem with the login. Please try again later</string>
+    <string name="in_progress">In progress</string>
+    <string name="verifying">Veryfing credentials</string>
+    <string name="disastermode_running">Warning: The disaster mode is still running in the background</string>
+    <string name="disable_disastermode">Disable Disaster Mode first. NOTE: Once you log out Twimight will not work until you are connected to the internet again!</string>
+    <string name="logout_question">Are you sure you want to log out?</string>
+        
+    <!-- About -->
+    <string name="author">Authors: Paolo Carta and Theus Hossmann</string>
+    <string name="version">Version:</string>
+    <string name="keys">Keys</string>    
+    <string name="no_certificate">No valid certificate.</string>
+    <string name="no_update">No update</string>
+    <string name="starting_update">Starting TDS update.</string>
+    <string name="mighty">The mighty Twitter client!</string>
+    <string name="copyright">\u00A9 CSG, ETH Zurich, 2012</string>
+    <string name="revoke">Revoke</string>
+    <string name="revoke_key">Are you sure you want to revoke your key? You should only do that if the private key was compromised (e.g., your phone was stolen).</string>
+    <string name="revoking">Revoking key.</string>
+    <string name="update">TDS Update</string>
+    <string name="update_button">Update</string>
+    
+    <!-- Terms & Conditions -->
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="agree">Agree</string>
+    <string name="decline">Decline</string>
+    <string name="conditions">
+        By clicking &quot;Agree&quot; below, I agree to join the Twimight Beta data
+		collection. The Twimight Beta application will collect data that samples
+		Twimight application usage statistics and my location during application
+		usage.
+
+		I understand that access to any data collected will only be allowed
+		to the members of the Twimight research team and only for the purpose of
+		research performed in the context of the Twimight project. Any published
+		results of this study will only refer to anonymised and obfuscated data,
+		and aggregated statistics that do not reveal the identities of the
+		participants. As a participant I have the right to opt out of this study at
+		any time during this experiment by uninstalling the application. Moreover,
+		I have the right to access any information in the data set related to me,
+		and request for all collected data to be removed.
+  </string>
+  
+    <!-- Rate -->
+    <string name="app_rater">If you enjoy using Twimight, please take a moment to rate it. Thanks for your support!</string> 
+    <string name="rate_app">Rate App</string>   	
+    <string name="remind_me">Remind me later</string>   
+    <string name="no_thanks">No Thanks</string>    		
+    
+    <!-- Preferences -->    
+    <string name="pref_offline_mode">prefOfflineMode</string>
+    <string name="prefWebShare">prefWebShare</string>
+    <string name="prefDisasterMode">prefDisasterMode</string>
+    <string name="prefTDSCommunication">refTDSCommunication</string>
+    <string name="prefUpdateInterval">prefUpdateInterval</string>
+    <string name="prefRunAtBoot">prefRunAtBoot</string>
+    <string name="prefUseLocation">prefUseLocation</string>
+    <string name="prefNotifyTweets">prefNotifyTweets</string>
+    <string name="prefNotifyMentions">prefNotifyMentions</string>
+    <string name="prefNotifyDirectMessages">prefNotifyDirectMessages</string>  
+    
+    <string name="notifications">Notifications</string>
+    <string name="notifications_explain">click to enter in the notifications menu</string>
+    <string name="notify_tweets">Notify Tweets</string>
+    <string name="notify_tweets_explain">tap to receive tweet notifications</string>
+    <string name="notify_mentions">Notify Mentions</string>
+    <string name="notify_mentions_explain">tap to be notified about mentions</string>
+    <string name="notify_dms">Notify Direct Messages</string>
+    <string name="notify_dms_explain">tap to be notified about new direct messages</string>
+    <string name="use_location">Use Location</string>
+    <string name="use_location_explain">Tap to geo-tag your Tweets by default.</string>
+    <string name="updates_background">Updates in Background</string>
+    <string name="updates_background_explain">Tap to start automatic background updates</string>
+    <string name="updates_interval">Updates Interval</string>
+    <string name="updates_interval_explain">select the desired update interval</string>
+    <string name="disaster_mode">Disaster Mode</string>
+    <string name="disaster_mode_explain">Tap to enable disaster mode. Note that this enables Bluetooth.</string>
+    <string name="tds_communication">Twimight Server Communication</string>
+    <string name="tds_communication_explain">Tap to enable updates from Twimight Server</string>
+    <string name="location_updates">Location Updates</string>
+    <string name="location_updates_explain">Send periodic location updates to Twimight Server? Note that this will be of great use for the Disaster Mode when needed!</string>
+    
+    <!--Disaster mode  -->    
+    <string name="dis_mode_description">
+        If you loose Internet connectivity, activate the disaster mode
+    	in the Settings. Disaster tweets will spread epidemically
+        among all phones in disaster mode, even without 3G or WiFi.
+        Once connectivity is re-established, your Tweets will be published
+        to Twitter.
+        </string>
+    <string name="btstatus_resetting">resetting adapter</string>
+    <string name="btstatus_searching">searching</string>
+    <string name="btstatus_listening">listening</string>
+    <string name="btstatus_connecting_to">connecting to %s</string>
+    <string name="btstatus_connected_to">connected to %s</string>
+    
+</resources>

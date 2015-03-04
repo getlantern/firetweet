@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="fill_parent" android:layout_width="fill_parent"
+	android:orientation="vertical" android:id="@+id/showSearchListRoot">
+
+
+	<LinearLayout android:id="@+id/headerBarSearch"
+		android:layout_height="50dp" android:layout_width="match_parent"
+		android:orientation="horizontal" android:background="@drawable/top_bar_background"
+		android:gravity="center_vertical">
+		<LinearLayout android:layout_width="wrap_content"
+			android:layout_height="match_parent" android:orientation="horizontal"
+			android:layout_gravity="left">
+
+			<Button android:id="@+id/headerBarTweetsButton"
+				android:layout_width="wrap_content" android:layout_height="fill_parent"
+				android:background="@drawable/header_button" android:text="@string/tweets"
+				android:layout_marginRight="15dp" android:paddingLeft="15dp"
+				android:paddingRight="15dp" />
+			<Button android:id="@+id/headerBarUsersButton"
+				android:layout_width="wrap_content" android:layout_height="fill_parent"
+				android:background="@drawable/header_button" android:text="@string/users"
+				android:layout_marginRight="15dp" android:paddingLeft="15dp"
+				android:paddingRight="15dp" />
+		</LinearLayout>
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="match_parent" android:orientation="horizontal"
+			android:gravity="right">
+
+			<ImageButton android:id="@+id/headerBarSearchButtonS"
+				android:layout_width="40dp" android:layout_height="fill_parent"
+				android:src="@drawable/ic_twimight_search" android:minWidth="40dp"
+				android:background="@drawable/header_button" />
+		</LinearLayout>
+	</LinearLayout>
+
+	<ListView android:layout_height="fill_parent"
+		android:layout_width="fill_parent" android:id="@+id/searchList"
+		android:fastScrollEnabled="true" android:scrollingCache="true" android:divider="@color/twimightBackgroundLight"/>
+	<TextView android:id="@+id/searchListEmpty"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:text="@string/no_results" android:textSize="16sp"
+		android:layout_gravity="center" android:paddingTop="20dp" />
+
+</LinearLayout>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content" android:layout_width="fill_parent"
+	android:orientation="horizontal" android:id="@+id/rowLayout">
+
+	<ImageView android:id="@+id/imageView1"
+		android:layout_marginRight="5dip" android:layout_marginLeft="5dip" android:src="@drawable/default_profile"
+		android:layout_height="45dip" android:layout_width="45dip"
+		android:layout_marginTop="12dip"
+		android:background="@drawable/image_border" />
+
+
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:orientation="vertical"
+		android:descendantFocusability="beforeDescendants" android:layout_marginRight="5dip">
+
+		<LinearLayout android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:layout_marginTop="10dip">			
+			
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/textUser"
+				android:text="BOB" android:textStyle="bold" android:textColor="@color/twimightTextDark"
+				android:minLines="1" android:textSize="16sp" android:singleLine="true" />
+			
+			<ImageView android:id="@+id/showTweetVerified" android:src="@android:drawable/ic_secure"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:visibility="gone" android:layout_marginLeft="5dp" android:layout_marginTop="3dp" /> 
+
+			<ImageView android:id="@+id/topost" android:src="@drawable/ic_twimight_info"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:visibility="gone" android:layout_marginLeft="5dp" android:layout_marginTop="4dp"/>
+			
+			<ImageView android:id="@+id/favorite" android:src="@drawable/ic_twimight_favorite_on"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:visibility="gone" android:layout_marginLeft="5dp" android:layout_marginTop="3dp"/>
+			
+			<ImageView android:id="@+id/retweeted" android:src="@drawable/ic_twimight_retweet_on"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:visibility="gone" android:layout_marginLeft="5dp" android:layout_marginTop="5dp"/>
+			
+			
+
+			<TextView android:layout_height="wrap_content" android:id="@+id/tweetCreatedAt"
+				android:text="10 minutes ago" android:layout_gravity="right" android:singleLine="true"
+				android:gravity="right" android:textSize="16sp" android:layout_width="fill_parent"
+				android:textColor="@color/twimightTextLight" android:layout_marginLeft="5dp"/>
+
+		</LinearLayout>
+
+		<TextView android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:id="@+id/textText"
+			android:text="The latest status " android:textColor="@color/twimightTextDark"
+			android:textSize="15sp" android:layout_marginBottom="12dip"/>
+		
+		<LinearLayout android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:layout_marginTop="-12dip" 
+			android:orientation="horizontal">
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/textRetweeted_by"
+				android:text="" android:textColor="@color/twimightTextLight"
+				android:textSize="12sp" android:layout_marginLeft="2dip" 
+				android:visibility="gone" android:layout_marginBottom="12dip"/>
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/split_bar"
+				android:text="" android:textColor="@color/twimightTextLight"
+				android:textSize="12sp" android:layout_marginLeft="2dip" 
+				android:visibility="gone" android:layout_marginBottom="12dip"/>
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/linkDownloaded"
+				android:text=""
+				android:textSize="12sp" android:layout_marginLeft="2dip" 
+				android:visibility="gone" android:layout_marginBottom="12dip"/>
+		</LinearLayout>
+
+	</LinearLayout>
+</LinearLayout>

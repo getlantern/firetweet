@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2011 ETH Zurich. All rights reserved. This program and
+        the accompanying materials are made available under the terms of the GNU
+        Public License v2.0 which accompanies this distribution, and is available
+        at http://www.gnu.org/licenses/old-licenses/gpl-2.0.html Contributors: Paolo
+        Carta - Implementation Theus Hossmann - Implementation Dominik Schatzmann
+        - Message specification -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/showNewTweetRoot"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/twimightBackgroundLight"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+        <EditText android:id="@+id/tweetText" android:layout_width="260dp"
+                android:layout_height="100dp" android:layout_gravity="top"
+                android:gravity="top" android:inputType="textMultiLine" />
+
+        <LinearLayout android:id="@+id/linearLayout1"
+                android:layout_width="260dp" android:layout_height="wrap_content"
+                android:layout_gravity="right">
+			                
+                <ImageButton
+                    android:id="@+id/tweet_location"
+                    android:layout_width="50dp"
+                    android:layout_height="45dp"
+                    android:layout_margin="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/button_custom"
+                    android:contentDescription="Location"
+                    android:src="@drawable/ic_menu_mylocation" />
+                
+                <ImageButton
+                    android:id="@+id/tweet_photo"
+                    android:layout_width="50dp"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/button_custom"
+                    android:contentDescription="Photo"
+                    android:src="@drawable/ic_menu_gallery_on" />
+                
+                <TextView
+                    android:id="@+id/tweet_characters"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:paddingLeft="80dp"
+                    android:text="140"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/twimightTextDark" />
+
+        </LinearLayout>
+                
+		<LinearLayout
+		    android:id="@+id/linearLayout_photo_view"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginTop="10dp"
+		    android:gravity="center"
+		    android:orientation="horizontal" >
+   			
+		    <ImageButton
+		        android:id="@+id/upload_from_gallery"
+		        android:layout_width="50dp"
+		        android:layout_height="45dp"
+		        android:layout_marginLeft="15dp"
+		        android:background="@drawable/button_custom"
+		        android:src="@drawable/ic_menu_slideshow_off" />
+
+		    <ImageButton
+		        android:id="@+id/upload_from_camera"
+		        android:layout_width="50dp"
+		        android:layout_height="45dp"
+		        android:layout_marginLeft="15dp"
+		        android:background="@drawable/button_custom"
+		        android:src="@drawable/ic_camera_off" />
+		   
+		    <ImageButton
+		        android:id="@+id/preview_photo"
+		        android:layout_width="50dp"
+		        android:layout_height="45dp"
+		        android:layout_marginLeft="15dp"
+		        android:background="@drawable/button_custom"
+		        android:src="@drawable/ic_menu_zoom_off" />
+		    
+		    <ImageButton
+		        android:id="@+id/delete_photo"
+		        android:layout_width="50dp"
+		        android:layout_height="45dp"
+		        android:layout_marginLeft="15dp"
+		        android:layout_marginRight="15dp"
+		        android:background="@drawable/button_custom"
+		        android:src="@drawable/ic_menu_delete_off" />
+		    
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:gravity="center" >
+
+                <Button
+                    android:id="@+id/tweet_send"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/button_custom"
+                    android:paddingBottom="7dp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="7dp"
+                    android:text="Tweet"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/tweet_cancel"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@drawable/button_custom"
+                    android:paddingBottom="7dp"
+                    android:paddingTop="7dp"
+                    android:text="Cancel"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+        </LinearLayout>
+
+</LinearLayout>
+
+
+

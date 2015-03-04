@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="fill_parent" android:layout_width="fill_parent"
+	android:orientation="vertical" android:id="@+id/showDMUserListRoot">
+	<ListView android:layout_height="fill_parent"
+		android:layout_width="fill_parent" android:id="@+id/dmUserList"
+		android:fastScrollEnabled="true" android:scrollingCache="true" android:divider="@color/twimightBackgroundLight"/>
+
+	<TextView android:id="@+id/dmListEmpty" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="@string/no_dms" 
+		android:textSize="16sp" android:layout_gravity="center"
+		android:paddingTop="20dp"/>
+
+</LinearLayout>

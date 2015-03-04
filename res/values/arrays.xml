@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="listArray">
+        <item>1 min</item>
+        <item>5 min</item>
+        <item>15 min</item>
+        <item>30 min</item>
+        <item>1 hour</item>
+        <item>4 hours</item>
+        <item>12 hour</item>
+        <item>Once a day</item>
+    </string-array>
+    <string-array name="listValues">
+        <item>1</item>
+        <item>5</item>
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>240</item>
+        <item>720</item>
+        <item>1440</item>
+    </string-array>
+ 
+
+</resources>

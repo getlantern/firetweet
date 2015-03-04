@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+	<item>
+		<shape>
+			<solid android:color="@color/twimightBackgroundLight" />
+		</shape>
+	</item>
+
+	<!-- This is the bottom line -->
+	<item>
+		<shape>
+			<solid android:color="@color/twimightBackgroundLight" />
+			<stroke android:width="4dp" android:color="@color/twimightSeparator"
+				android:dashWidth="10dp" android:dashGap="7dp" />
+		</shape>
+	</item>
+
+	<!-- This is the main color -->
+	<item android:bottom="4dp">
+		<shape>
+			<solid android:color="@color/twimightBackgroundDark" />
+		</shape>
+	</item>
+
+</layer-list>
