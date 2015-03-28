@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.CardActionButton" parent="Widget.Base.ImageButton">
+        <item name="android:background">?android:selectableItemBackgroundBorderless</item>
+        <item name="android:color">?android:textColorSecondary</item>
+    </style>
+
+    <style name="Widget.Light.CardActionButton" parent="Widget.Base.ImageButton">
+        <item name="android:background">?android:selectableItemBackgroundBorderless</item>
+        <item name="android:color">?android:textColorSecondary</item>
+    </style>
+
+    <style name="Widget.ProfileImage.Large">
+        <item name="android:background">@drawable/bg_oval_white</item>
+        <item name="sivElevation">@dimen/elevation_card</item>
+        <item name="sivBorderWidth">2dp</item>
+        <item name="sivBackgroundColor">?android:colorBackground</item>
+    </style>
+
+    <style name="Widget.Light.ProfileImage.Large">
+        <item name="android:background">@drawable/bg_oval_white</item>
+        <item name="sivElevation">@dimen/elevation_card</item>
+        <item name="sivBorderWidth">2dp</item>
+        <item name="sivBackgroundColor">?android:colorBackground</item>
+    </style>
+
+    <style name="Widget.ProfileType" parent="Widget.Base">
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:elevation">@dimen/elevation_card</item>
+        <item name="android:outlineProvider">none</item>
+    </style>
+</resources>

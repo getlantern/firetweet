@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="Twidere">
+        <attr name="cardActionButtonStyle" format="reference"/>
+        <attr name="profileImageStyle" format="reference"/>
+        <attr name="profileImageStyleLarge" format="reference"/>
+        <attr name="menuIconColor" format="color"/>
+        <attr name="menuIconColorDisabled" format="color"/>
+        <attr name="menuIconColorActionBar" format="color"/>
+        <attr name="messageBubbleColor" format="color"/>
+        <attr name="cardItemBackgroundColor" format="color"/>
+        <attr name="ignorePadding" format="boolean"/>
+        <attr name="linePageIndicatorStyle" format="reference"/>
+    </declare-styleable>
+    <declare-styleable name="TabPagerIndicator">
+        <attr name="tabStripColor" format="color"/>
+        <attr name="tabIconColor" format="color"/>
+        <attr name="tabHorizontalPadding" format="dimension"/>
+        <attr name="tabVerticalPadding" format="dimension"/>
+        <attr name="tabDividerVerticalPadding" format="dimension"/>
+        <attr name="tabDividerHorizontalPadding" format="dimension"/>
+        <attr name="tabExpandEnabled" format="boolean"/>
+        <attr name="tabShowDivider" format="boolean"/>
+        <attr name="tabDisplayOption"/>
+    </declare-styleable>
+    <declare-styleable name="LinePageIndicator">
+        <!-- Whether or not the indicators should be centered. -->
+        <attr name="centered" format="boolean"/>
+        <!-- Color of the unselected lines that represent the pages. -->
+        <attr name="unselectedColor" format="color"/>
+        <!-- Color of the selected line that represents the current page. -->
+        <attr name="selectedColor" format="color"/>
+        <!-- Width of each indicator line. -->
+        <attr name="lineWidth" format="dimension"/>
+        <!-- Width of each indicator line's stroke. -->
+        <attr name="strokeWidth" format="dimension"/>
+        <!-- Width of the gap between each indicator line. -->
+        <attr name="gapWidth" format="dimension"/>
+        <!-- View background -->
+        <attr name="android:background"/>
+    </declare-styleable>
+    <declare-styleable name="ValueDependencyPreference">
+        <attr name="dependencyKey" format="string"/>
+        <attr name="dependencyValues" format="reference"/>
+        <attr name="dependencyValueDefault" format="string"/>
+    </declare-styleable>
+    <declare-styleable name="AccountsListPreference">
+        <attr name="switchKey" format="string"/>
+        <attr name="switchDefault" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="NotificationTypePreference">
+        <attr name="notificationType"/>
+    </declare-styleable>
+    <declare-styleable name="SeekBarDialogPreference">
+        <attr name="max" format="integer"/>
+        <attr name="min" format="integer"/>
+        <attr name="step" format="integer"/>
+        <attr name="progressTextSuffix" format="string"/>
+    </declare-styleable>
+    <declare-styleable name="AssetFontTextView">
+        <attr name="fontPath" format="string"/>
+    </declare-styleable>
+    <declare-styleable name="IconActionButton">
+        <attr name="iabColor" format="color"/>
+        <attr name="iabActivatedColor" format="color"/>
+        <attr name="iabDisabledColor" format="color"/>
+    </declare-styleable>
+    <declare-styleable name="ShapedImageView">
+        <attr name="sivBorder" format="boolean"/>
+        <attr name="sivBorderWidth" format="dimension"/>
+        <attr name="sivBorderColor" format="color"/>
+        <attr name="sivBackgroundColor" format="color"/>
+        <attr name="sivElevation" format="dimension"/>
+        <attr name="sivCornerRadius" format="dimension"/>
+        <attr name="sivCornerRadiusRatio" format="fraction"/>
+        <attr name="sivShape"/>
+    </declare-styleable>
+    <declare-styleable name="HeaderDrawerLayout">
+        <attr name="headerLayout" format="reference"/>
+        <attr name="contentLayout" format="reference"/>
+    </declare-styleable>
+    <attr name="notificationType">
+        <flag name="none" value="0"/>
+        <flag name="ringtone" value="1"/>
+        <flag name="vibration" value="2"/>
+        <flag name="light" value="4"/>
+    </attr>
+    <attr name="tabDisplayOption">
+        <flag name="label" value="0x1"/>
+        <flag name="icon" value="0x2"/>
+    </attr>
+    <attr name="sivShape">
+        <enum name="circle" value="0x1"/>
+        <enum name="rectangle" value="0x2"/>
+    </attr>
+</resources>
