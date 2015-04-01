@@ -83,22 +83,4 @@
             android:name="resid"
             android:value="@xml/settings_other"/>
     </header>
-    <header android:title="@string/about"/>
-    <header
-        android:fragment="org.mariotaku.twidere.fragment.SettingsDetailsFragment"
-        android:icon="@drawable/ic_action_info"
-        android:title="@string/about">
-        <extra
-            android:name="resid"
-            android:value="@xml/about"/>
-    </header>
-    <header
-        android:fragment="org.mariotaku.twidere.fragment.BrowserFragment"
-        android:icon="@drawable/ic_action_open_source"
-        android:title="@string/open_source_license">
-        <extra
-            android:name="uri"
-            android:value="file:///android_asset/gpl-3.0-standalone.html"/>
-    </header>
-
 </preference-headers>

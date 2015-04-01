@@ -87,7 +87,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:icon="@drawable/logo5"
-            android:label="FireTweet"
+            android:label="@string/app_name"
             android:launchMode="singleTop"
             android:theme="@style/Theme.Launcher"
             android:windowSoftInputMode="adjustNothing">

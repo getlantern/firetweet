@@ -43,7 +43,7 @@
     <string name="select_account">Select account</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="label_tweetstore_provider">Twidere database provider</string>
+    <string name="label_tweetstore_provider">FireTweet database provider</string>
     <string name="label_refresh_service">Refresh service</string>
     <string name="label_background_operation_service">Background operation service</string>
     <string name="open_in_browser">Open in browser</string>
@@ -56,7 +56,7 @@
     <string name="unfavorite">Unfavorite</string>
     <string name="reply">Reply</string>
     <string name="share">Share</string>
-    <string name="share_via_twidere">Share via Twidere</string>
+    <string name="share_via_twidere">Share via FireTweet</string>
     <string name="view_image">Image</string>
     <string name="view_map">Map</string>
     <string name="view_status">View tweet</string>
@@ -148,7 +148,7 @@
     <string name="created_at">Created at</string>
     <string name="search_hint">Search tweets or users</string>
     <string name="remember_position">Remember position</string>
-    <string name="remember_position_summary">Remember list/tab position before closing Twidere</string>
+    <string name="remember_position_summary">Remember list/tab position before closing FireTweet</string>
     <string name="user_blocked">Blocked this user.</string>
     <string name="users_blocked">Blocked these users.</string>
     <string name="user_unblocked">Unblocked this user.</string>
@@ -354,7 +354,7 @@
     <string name="action_accepting_follow_request">accepting follow request</string>
     <string name="action_denying_follow_request">denying follow request</string>
     <string name="status_is_duplicate">Your tweet is a duplicate.</string>
-    <string name="data_profiling_summary">Twidere took part in a research on predicting user\'s social behavior to pre-caching content started by students in UC Davis.\n\nHere are the data we wanted to collect and why:\nCollected data:\n1. User\'s twitter ID\n2. User\'s home timeline (prediction based on user\'s interest and social interaction)\n3. User\'s click on a tweet (prediction based on user\'s interest and social interaction)\n4. Coarse location (which is good predictor when user will access twitter)\n\nTwidere will upload collected data only when Wifi available and your device connected to charger, so It will not cost you extra bandwidth fee or drain your battery power.</string>
+    <string name="data_profiling_summary">FireTweet took part in a research on predicting user\'s social behavior to pre-caching content started by students in UC Davis.\n\nHere are the data we wanted to collect and why:\nCollected data:\n1. User\'s twitter ID\n2. User\'s home timeline (prediction based on user\'s interest and social interaction)\n3. User\'s click on a tweet (prediction based on user\'s interest and social interaction)\n4. Coarse location (which is good predictor when user will access twitter)\n\nFireTweet will upload collected data only when Wifi available and your device connected to charger, so It will not cost you extra bandwidth fee or drain your battery power.</string>
     <string name="data_profiling">Usage Statistics</string>
     <string name="enable_data_profiling">Enable Reporting</string>
     <string name="data_profiling_notification_ticker">Statistics Opted-In</string>
@@ -363,7 +363,7 @@
     <string name="silent_notifications">Silent notifications</string>
     <string name="silent_notifications_summary">Disable ringtone/vibrate for notifications</string>
     <string name="disable_background_service">Disable background service</string>
-    <string name="disable_background_service_summary">Twidere won\'t have background service if you disable auto refresh and data profiling, don\'t be silly!</string>
+    <string name="disable_background_service_summary">FireTweet won\'t have background service if you disable auto refresh and data profiling, don\'t be silly!</string>
     <string name="text_copied">Text copied to clipboard.</string>
     <string name="amount_usd">Amount (USD)</string>
     <string name="donate">Donate</string>
@@ -405,7 +405,7 @@
     <string name="preload_wifi_only">Preload using Wi-Fi only</string>
     <string name="disable_tab_swipe">Disable tab swipe</string>
     <string name="sign_in_method_introduction_title">How does it work?</string>
-    <string name="sign_in_method_introduction">Most clients like twicca open a browser asking you to type username and password, and then take you back to the clients. Sometimes this can become very inconvenient.\n\nTwidere uses simpler steps to sign in, without opening the browser. Don\'t worry about your password, Twidere will never store it, it\'s totally safe!</string>
+    <string name="sign_in_method_introduction">Most clients like twicca open a browser asking you to type username and password, and then take you back to the clients. Sometimes this can become very inconvenient.\n\nFireTweet uses simpler steps to sign in, without opening the browser. Don\'t worry about your password, FireTweet will never store it, it\'s totally safe!</string>
     <string name="quote_protected_status_notice">It\'s not recommended to quote protected tweets.</string>
     <string name="edit_draft">Edit draft</string>
     <string name="profile_image">Profile image</string>
@@ -475,7 +475,7 @@
     <string name="created_by">Created by <xliff:g id="created_by">%s</xliff:g></string>
     <string name="add_to_list">Add to list</string>
     <string name="account_delete_confirm_title">Delete account</string>
-    <string name="account_delete_confirm_message">This account will be deleted from Twidere.</string>
+    <string name="account_delete_confirm_message">This account will be deleted from FireTweet.</string>
     <string name="theme">Theme</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_light">Light</string>
@@ -507,15 +507,15 @@
     <string name="wizard_page_welcome_not_now">Not now</string>
     <string name="wizard_page_welcome_import_settings">Import settings</string>
     <string name="wizard_page_theme_text">Pick a theme you like.</string>
-    <string name="wizard_page_tabs_text">Add some tabs to Twidere.\nKeep track of people or things you care about.</string>
+    <string name="wizard_page_tabs_text">Add some tabs to FireTweet.\nKeep track of people or things you care about.</string>
     <string name="wizard_page_tabs_unchanged_message">You can add tabs in &quot;Settings&quot; - &quot;Tabs&quot;</string>
     <string name="wizard_page_cards_text">Config card items.</string>
     <string name="wizard_page_hints_text">Here are some useful hints.</string>
-    <string name="wizard_page_usage_statistics_text">Twidere took part in some research project that needs some usage data.</string>
+    <string name="wizard_page_usage_statistics_text">FireTweet took part in some research project that needs some usage data.</string>
     <string name="wizard_page_finished_title">Finished</string>
-    <string name="wizard_page_finished_text">Now Twidere is ready for use.</string>
+    <string name="wizard_page_finished_text">Now FireTweet is ready for use.</string>
     <string name="invalid_tab">Invalid tab</string>
-    <string name="send_crash_report">Send crash report of Twidere</string>
+    <string name="send_crash_report">Send crash report of FireTweet</string>
     <string name="add_to_filter">Add to filter</string>
     <string name="user_filter_name">User: <xliff:g id="name">%s</xliff:g></string>
     <string name="keyword_filter_name">Keyword: <xliff:g id="name">%s</xliff:g></string>
@@ -535,7 +535,7 @@
     <string name="signing_in_error_browser_sign_in_hint">Error while signing in, you may need to use browser sign in method. (This will ignore custom API settings during sign in)</string>
     <string name="report_user">Report <xliff:g id="name">%s</xliff:g></string>
     <string name="report_user_confirm_message">Report <xliff:g id="name">%s</xliff:g> for spam? You\'ll also block this user.</string>
-    <string name="twidere_test">Twidere test</string>
+    <string name="twidere_test">FireTweet test</string>
     <string name="donate_via_paypal">Donate via PayPal</string>
     <string name="pay_via_paypal">Pay via PayPal directly</string>
     <string name="pay_via_paypal_summary">When you see &quot;This recipient is not eligible to receive funds&quot;</string>
@@ -572,11 +572,11 @@
     <string name="view_replies">View Replies</string>
     <string name="compact_cards">Compact cards</string>
     <string name="compact_cards_summary">Display more cards on screen</string>
-    <string name="dashclock_home_unread_count_name">Twidere home unread count</string>
+    <string name="dashclock_home_unread_count_name">FireTweet home unread count</string>
     <string name="dashclock_home_unread_count_description">Home unread count</string>
-    <string name="dashclock_mentions_unread_count_name">Twidere mentions unread count</string>
+    <string name="dashclock_mentions_unread_count_name">FireTweet mentions unread count</string>
     <string name="dashclock_mentions_unread_count_description">Mentions unread count</string>
-    <string name="dashclock_messages_unread_count_name">Twidere messages unread count</string>
+    <string name="dashclock_messages_unread_count_name">FireTweet messages unread count</string>
     <string name="dashclock_messages_unread_count_description">Messages unread count</string>
     <string name="N_new_statuses_quantity_one"><xliff:g id="items">%d</xliff:g> new tweet</string>
     <string name="N_new_statuses_quantity_other"><xliff:g id="items">%d</xliff:g> new tweets</string>
