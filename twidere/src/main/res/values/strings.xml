@@ -41,6 +41,7 @@
     <string name="error_message_rate_limit">Twitter\'s rate limit exceeded, please retry <xliff:g id="time">%s</xliff:g></string>
     <string name="error_message_rate_limit_with_action">Twitter\'s rate limit exceeded while <xliff:g id="action">%1$s</xliff:g>, please retry <xliff:g id="time">%2$s</xliff:g></string>
     <string name="select_account">Select account</string>
+    <string name="nyan_sakamoto" translatable="false">Nyan Sakamoto!</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="label_tweetstore_provider">FireTweet database provider</string>
