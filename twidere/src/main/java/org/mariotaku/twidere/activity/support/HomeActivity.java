@@ -121,6 +121,8 @@ import java.util.Map.Entry;
 import edu.tsinghua.spice.Utilies.NetworkStateUtil;
 import edu.tsinghua.spice.Utilies.SpiceProfilingUtil;
 import edu.ucdavis.earlybird.ProfilingUtil;
+import go.Go;
+import go.flashlight.Flashlight;
 
 import static org.mariotaku.twidere.util.CompareUtils.classEquals;
 import static org.mariotaku.twidere.util.Utils.cleanDatabasesByItemLimit;
@@ -145,6 +147,8 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
     private SharedPreferences mPreferences;
 
     private AsyncTwitterWrapper mTwitterWrapper;
+
+    private static boolean lanternStarted = false;
 
     private NotificationManager mNotificationManager;
 
@@ -279,6 +283,29 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
         return null;
     }
 
+    private void startLantern() {
+        if (!lanternStarted) {
+            // Initializing application context.
+            try {
+                // init loads libgojni.so and starts the runtime
+                Go.init(getApplicationContext());
+                Flashlight.RunClientProxy("127.0.0.1:9192");
+                // specify that all of our HTTP traffic should be routed through
+                // our local proxy
+                System.setProperty("http.proxyHost", "127.0.0.1");
+                System.setProperty("http.proxyPort", "9192");
+                System.setProperty("https.proxyHost", "127.0.0.1");
+                System.setProperty("https.proxyPort", "9192");
+            } catch (Exception e) {
+                // if we're unable to start Lantern for any reason
+                // we just exit here
+                throw new RuntimeException(e);
+            }
+            lanternStarted = true;
+        }
+    }
+
+
     /**
      * Called when the context is first created.
      */
@@ -294,6 +321,9 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
             finish();
             return;
         }
+
+        startLantern();
+
         mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         mTwitterWrapper = getTwitterWrapper();
         mReadStateManager = TwidereApplication.getInstance(this).getReadStateManager();
@@ -943,7 +973,7 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
 
     }
 
-    private static class UpdateUnreadCountTask extends AsyncTask<Void, Void, Map<SupportTabSpec, Integer>> {
+    private static class UpdateUnreadCountTask extends AsyncTask<Object, Void, Map<SupportTabSpec, Integer>> {
         private final Context mContext;
         private final ReadStateManager mReadStateManager;
         private final TabPagerIndicator mIndicator;
@@ -957,7 +987,7 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
         }
 
         @Override
-        protected Map<SupportTabSpec, Integer> doInBackground(final Void... params) {
+        protected Map<SupportTabSpec, Integer> doInBackground(final Object... params) {
             final Map<SupportTabSpec, Integer> result = new HashMap<>();
             for (SupportTabSpec spec : mTabs) {
                 switch (spec.type) {
