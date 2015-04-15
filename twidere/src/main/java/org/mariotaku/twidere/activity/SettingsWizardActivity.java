@@ -161,12 +161,7 @@ public class SettingsWizardActivity extends Activity implements Constants {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*setContentView(R.layout.activity_settings_wizard);
-        mAdapter = new TabsAdapter(this, getFragmentManager(), null);
-        mViewPager.setAdapter(mAdapter);
-        mViewPager.setEnabled(false);
-        mIndicator.setViewPager(mViewPager);
-        initPages();*/
+        // only configure default tabs and skip setup sequence
         applyInitialSettings();
         exitWizard();
     }
