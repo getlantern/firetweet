@@ -21,6 +21,7 @@ package org.mariotaku.twidere.loader.support;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
 
 import org.mariotaku.twidere.model.ParcelableStatus;
 
@@ -50,15 +51,14 @@ public class MediaTimelineLoader extends Twitter4JStatusesLoader {
         mIsMyTimeline = userId > 0 ? accountId == userId : accountId == getAccountId(context, screenName);
     }
 
+    @NonNull
     @Override
-    protected ResponseList<Status> getStatuses(final Twitter twitter, final Paging paging) throws TwitterException {
-        if (twitter == null) return null;
+    protected ResponseList<Status> getStatuses(@NonNull final Twitter twitter, final Paging paging) throws TwitterException {
         if (mUserId != -1)
             return twitter.getMediaTimeline(mUserId, paging);
         else if (mUserScreenName != null)
             return twitter.getMediaTimeline(mUserScreenName, paging);
-        else
-            return null;
+        throw new TwitterException("Wrong user");
     }
 
     @Override

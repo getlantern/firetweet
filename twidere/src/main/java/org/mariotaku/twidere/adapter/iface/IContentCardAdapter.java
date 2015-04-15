@@ -22,27 +22,38 @@ package org.mariotaku.twidere.adapter.iface;
 import android.content.Context;
 
 import org.mariotaku.twidere.util.AsyncTwitterWrapper;
-import org.mariotaku.twidere.util.ImageLoaderWrapper;
 import org.mariotaku.twidere.util.ImageLoadingHandler;
+import org.mariotaku.twidere.util.MediaLoaderWrapper;
+import org.mariotaku.twidere.view.CardMediaContainer.PreviewStyle;
 import org.mariotaku.twidere.view.ShapedImageView.ShapeStyle;
 
 /**
  * Created by mariotaku on 15/1/3.
  */
 public interface IContentCardAdapter extends IGapSupportedAdapter, ContentCardClickListener {
-    ImageLoaderWrapper getImageLoader();
+    MediaLoaderWrapper getImageLoader();
 
     Context getContext();
 
     ImageLoadingHandler getImageLoadingHandler();
 
+    int getItemCount();
+
     @ShapeStyle
     int getProfileImageStyle();
 
+    @PreviewStyle
     int getMediaPreviewStyle();
 
     AsyncTwitterWrapper getTwitterWrapper();
 
     float getTextSize();
 
+    boolean isLoadMoreIndicatorVisible();
+
+    boolean isLoadMoreSupported();
+
+    void setLoadMoreSupported(boolean supported);
+
+    void setLoadMoreIndicatorVisible(boolean enabled);
 }

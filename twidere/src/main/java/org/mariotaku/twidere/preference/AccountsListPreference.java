@@ -25,6 +25,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
@@ -46,9 +47,9 @@ import org.mariotaku.twidere.Constants;
 import org.mariotaku.twidere.R;
 import org.mariotaku.twidere.app.TwidereApplication;
 import org.mariotaku.twidere.model.ParcelableAccount;
-import org.mariotaku.twidere.task.TwidereAsyncTask;
-import org.mariotaku.twidere.util.ImageLoaderWrapper;
-import org.mariotaku.twidere.util.Utils;
+import org.mariotaku.twidere.util.AsyncTaskUtils;
+import org.mariotaku.twidere.util.BitmapUtils;
+import org.mariotaku.twidere.util.MediaLoaderWrapper;
 
 import java.util.List;
 
@@ -90,7 +91,7 @@ public abstract class AccountsListPreference extends PreferenceCategory implemen
     @Override
     protected void onAttachedToHierarchy(final PreferenceManager preferenceManager) {
         super.onAttachedToHierarchy(preferenceManager);
-        new LoadAccountsTask(this).executeTask();
+        AsyncTaskUtils.executeTask(new LoadAccountsTask(this));
     }
 
     protected abstract void setupPreference(AccountItemPreference preference, ParcelableAccount account);
@@ -100,7 +101,7 @@ public abstract class AccountsListPreference extends PreferenceCategory implemen
 
         private final ParcelableAccount mAccount;
         private final SharedPreferences mSwitchPreference;
-        private final ImageLoaderWrapper mImageLoader;
+        private final MediaLoaderWrapper mImageLoader;
 
         private final String mSwitchKey;
         private final boolean mSwitchDefault;
@@ -115,7 +116,7 @@ public abstract class AccountsListPreference extends PreferenceCategory implemen
             mAccount = account;
             mSwitchPreference = context.getSharedPreferences(switchPreferenceName, Context.MODE_PRIVATE);
             final TwidereApplication app = TwidereApplication.getInstance(context);
-            mImageLoader = app.getImageLoaderWrapper();
+            mImageLoader = app.getMediaLoaderWrapper();
             mSwitchKey = switchKey;
             mSwitchDefault = switchDefault;
             mSwitchPreference.registerOnSharedPreferenceChangeListener(this);
@@ -131,23 +132,23 @@ public abstract class AccountsListPreference extends PreferenceCategory implemen
 
         @Override
         public void onLoadingCancelled(final String imageUri, final View view) {
-            setIcon(R.drawable.ic_profile_image_default);
+//            setIcon(R.drawable.ic_profile_image_default);
         }
 
         @Override
         public void onLoadingComplete(final String imageUri, final View view, final Bitmap loadedImage) {
-            final Bitmap roundedBitmap = Utils.getCircleBitmap(loadedImage);
+            final Bitmap roundedBitmap = BitmapUtils.getCircleBitmap(loadedImage);
             setIcon(new BitmapDrawable(getContext().getResources(), roundedBitmap));
         }
 
         @Override
         public void onLoadingFailed(final String imageUri, final View view, final FailReason failReason) {
-            setIcon(R.drawable.ic_profile_image_default);
+//            setIcon(R.drawable.ic_profile_image_default);
         }
 
         @Override
         public void onLoadingStarted(final String imageUri, final View view) {
-            setIcon(R.drawable.ic_profile_image_default);
+//            setIcon(R.drawable.ic_profile_image_default);
         }
 
         @Override
@@ -160,7 +161,7 @@ public abstract class AccountsListPreference extends PreferenceCategory implemen
             super.onAttachedToHierarchy(preferenceManager);
             setTitle(mAccount.name);
             setSummary(String.format("@%s", mAccount.screen_name));
-            setIcon(R.drawable.ic_profile_image_default);
+//            setIcon(R.drawable.ic_profile_image_default);
             mImageLoader.loadProfileImage(mAccount.profile_image_url, this);
         }
 
@@ -213,7 +214,7 @@ public abstract class AccountsListPreference extends PreferenceCategory implemen
         }
     }
 
-    private static class LoadAccountsTask extends TwidereAsyncTask<Void, Void, List<ParcelableAccount>> {
+    private static class LoadAccountsTask extends AsyncTask<Void, Void, List<ParcelableAccount>> {
 
         private final AccountsListPreference mPreference;
 

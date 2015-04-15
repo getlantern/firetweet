@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="org.mariotaku.twidere"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="org.mariotaku.twidere"
+          android:installLocation="auto">
 
     <uses-sdk/>
 
@@ -22,6 +21,9 @@
         android:name="android.hardware.touchscreen"
         android:required="false"/>
     <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="false"/>
+    <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true"/>
 
@@ -32,6 +34,7 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.NFC"/>
     <uses-permission android:name="org.mariotaku.twidere.permission.SHORTEN_STATUS"/>
     <uses-permission android:name="org.mariotaku.twidere.permission.UPLOAD_MEDIA"/>
     <uses-permission android:name="org.mariotaku.twidere.permission.SYNC_TIMELINE"/>
@@ -42,20 +45,26 @@
 
     <permission
         android:name="org.mariotaku.twidere.permission.SHORTEN_STATUS"
+        android:label="@string/permission_label_shorten_status"
+        android:description="@string/permission_description_shorten_status"
         android:permissionGroup="org.mariotaku.twidere.permission.PERMISSION_GROUP"/>
     <permission
         android:name="org.mariotaku.twidere.permission.UPLOAD_MEDIA"
+        android:label="@string/permission_label_upload_media"
+        android:description="@string/permission_description_upload_media"
         android:permissionGroup="org.mariotaku.twidere.permission.PERMISSION_GROUP"/>
     <permission
         android:name="org.mariotaku.twidere.permission.SYNC_TIMELINE"
+        android:label="@string/permission_label_sync_timeline"
+        android:description="@string/permission_description_sync_timeline"
         android:permissionGroup="org.mariotaku.twidere.permission.PERMISSION_GROUP"/>
 
     <application
         android:name=".app.TwidereApplication"
         android:allowBackup="true"
-        android:backupAgent="org.mariotaku.twidere.backup.TwidereBackupAgentHelper"
+        android:backupAgent=".backup.TwidereBackupAgentHelper"
         android:hardwareAccelerated="true"
-        android:icon="@drawable/logo5"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Blank">
         <uses-library
@@ -86,7 +95,7 @@
 
         <activity
             android:name=".activity.MainActivity"
-            android:icon="@drawable/logo5"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:theme="@style/Theme.Launcher"
@@ -102,7 +111,7 @@
         <activity
             android:name=".activity.MainHondaJOJOActivity"
             android:enabled="false"
-            android:icon="@drawable/ic_launcher_hondajojo"
+            android:icon="@mipmap/ic_launcher_hondajojo"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:theme="@style/Theme.Launcher"
@@ -156,7 +165,7 @@
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
-            <intent-filter android:label="@string/share_via_twidere">
+            <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.SEND"/>
                 <action android:name="android.intent.action.SEND_MULTIPLE"/>
 
@@ -172,12 +181,13 @@
         </activity>
         <activity
             android:name=".activity.support.QuickSearchBarActivity"
-            android:label="@android:string/search_go"
+            android:label="@string/search"
             android:launchMode="singleTop"
             android:theme="@style/Theme.Blank.Dialog"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="org.mariotaku.twidere.GLOBAL_SEARCH"/>
+
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
@@ -467,11 +477,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.DataProfilingSettingsActivity"
-            android:exported="false"
-            android:label="@string/data_profiling"
-            android:theme="@style/Theme.Blank"/>
-        <activity
             android:name=".activity.support.RequestPermissionsActivity"
             android:label="@string/permissions_request"
             android:theme="@style/Theme.Blank.Dialog">
@@ -548,6 +553,7 @@
                     android:scheme="https"/>
 
                 <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
@@ -571,11 +577,12 @@
         <activity
             android:name=".activity.TestActivity"
             android:enabled="false"
-            android:launchMode="singleTop"
             android:label="Twidere test"
+            android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -584,78 +591,17 @@
             android:launchMode="singleTop"
             android:theme="@style/Theme.Nyan"
             android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity
+            android:name=".activity.support.UsageStatisticsActivity"
+            android:theme="@android:style/Theme.NoDisplay"
+            android:label="@string/usage_statistics"/>
 
         <service
             android:name=".service.RefreshService"
-            android:label="@string/label_refresh_service"
-            android:settingsActivity=".activity.SettingsActivity"/>
+            android:label="@string/label_refresh_service"/>
         <service
             android:name=".service.BackgroundOperationService"
             android:label="@string/label_background_operation_service"/>
-        <service
-            android:name="edu.ucdavis.earlybird.UCDService"
-            android:settingsActivity=".activity.DataProfilingSettingsActivity"/>
-        <!--SPICE-->
-        <service
-            android:name="edu.tsinghua.spice.SpiceService"
-            android:settingsActivity=".activity.DataProfilingSettingsActivity"/>
-        <service
-            android:name=".service.DashClockHomeUnreadCountService"
-            android:icon="@drawable/ic_extension_twidere"
-            android:label="@string/dashclock_home_unread_count_name"
-            android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">
-            <intent-filter>
-                <action android:name="com.google.android.apps.dashclock.Extension"/>
-            </intent-filter>
-
-            <meta-data
-                android:name="protocolVersion"
-                android:value="2"/>
-            <meta-data
-                android:name="worldReadable"
-                android:value="true"/>
-            <meta-data
-                android:name="description"
-                android:value="@string/dashclock_home_unread_count_description"/>
-        </service>
-        <service
-            android:name=".service.DashClockMentionsUnreadCountService"
-            android:icon="@drawable/ic_extension_mentions"
-            android:label="@string/dashclock_mentions_unread_count_name"
-            android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">
-            <intent-filter>
-                <action android:name="com.google.android.apps.dashclock.Extension"/>
-            </intent-filter>
-
-            <meta-data
-                android:name="protocolVersion"
-                android:value="2"/>
-            <meta-data
-                android:name="worldReadable"
-                android:value="true"/>
-            <meta-data
-                android:name="description"
-                android:value="@string/dashclock_mentions_unread_count_description"/>
-        </service>
-        <service
-            android:name=".service.DashClockMessagesUnreadCountService"
-            android:icon="@drawable/ic_extension_messages"
-            android:label="@string/dashclock_messages_unread_count_name"
-            android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">
-            <intent-filter>
-                <action android:name="com.google.android.apps.dashclock.Extension"/>
-            </intent-filter>
-
-            <meta-data
-                android:name="protocolVersion"
-                android:value="2"/>
-            <meta-data
-                android:name="worldReadable"
-                android:value="true"/>
-            <meta-data
-                android:name="description"
-                android:value="@string/dashclock_messages_unread_count_description"/>
-        </service>
         <service
             android:name=".nyan.NyanWallpaperService"
             android:enabled="false"
@@ -714,6 +660,11 @@
                     android:scheme="android_secret_code"/>
             </intent-filter>
         </receiver>
+
+        <!-- Begin third Party components -->
+
+        <service
+            android:name="edu.ucdavis.earlybird.UCDService"/>
         <receiver
             android:name="edu.ucdavis.earlybird.UploadReceiver"
             android:exported="false">
@@ -724,7 +675,10 @@
                 <action android:name="edu.ucdavis.earlybird.UPLOAD_PROFILE"/>
             </intent-filter>
         </receiver>
-        <!--SPICE-->
+
+        <!-- SPICE -->
+        <service
+            android:name="edu.tsinghua.spice.SpiceService"/>
         <receiver
             android:name="edu.tsinghua.spice.SpiceUploadReceiver"
             android:exported="false">
@@ -735,6 +689,9 @@
                 <action android:name="edu.tsinghua.spice.UPLOAD_PROFILE"/>
             </intent-filter>
         </receiver>
+
+        <!-- Begin third Party components -->
+
     </application>
 
 </manifest>

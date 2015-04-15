@@ -20,7 +20,6 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="?android:actionBarSize"
     android:layout_height="wrap_content"
     android:background="?android:activatedBackgroundIndicator"
@@ -31,7 +30,6 @@
         style="?profileImageStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/element_spacing_normal"
-        tools:src="@drawable/ic_profile_image_default"/>
+        android:layout_margin="@dimen/element_spacing_normal"/>
 
 </LinearLayout>

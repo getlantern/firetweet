@@ -23,6 +23,7 @@ import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,7 +44,7 @@ import org.osmdroid.views.overlay.OverlayItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OpenStreetMapViewerActivity extends BaseSupportActivity implements Constants {
+public class OpenStreetMapViewerActivity extends BaseActionBarActivity implements Constants {
 
     private MapView mMapView;
     private double mLatitude, mLongitude;
@@ -109,9 +110,10 @@ public class OpenStreetMapViewerActivity extends BaseSupportActivity implements 
         setContentView(R.layout.activity_osm_viewer);
         mMapView.setMultiTouchControls(true);
         mMapView.setBuiltInZoomControls(true);
+        mMapView.setTilesScaledToDpi(true);
         final List<Overlay> overlays = mMapView.getOverlays();
         final GeoPoint gp = new GeoPoint((int) (latitude * 1E6), (int) (longitude * 1E6));
-        final Drawable d = getResources().getDrawable(R.drawable.ic_map_marker);
+        final Drawable d = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_map_marker, null);
         final Itemization markers = new Itemization(d, mMapView.getResourceProxy());
         final OverlayItem overlayitem = new OverlayItem("", "", gp);
         markers.addOverlay(overlayitem);

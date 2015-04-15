@@ -22,44 +22,15 @@
     android:id="@+id/right_drawer_container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:focusable="true"
+    android:focusableInTouchMode="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
+    <fragment
+        android:id="@+id/right_drawer"
+        class="org.mariotaku.twidere.fragment.support.QuickMenuFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
-
-        <fragment
-            android:id="@+id/right_drawer"
-            class="org.mariotaku.twidere.fragment.support.QuickMenuFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout="@layout/fragment_quick_menu"/>
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/element_spacing_normal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:alpha="0.5"
-            android:rotation="95.0"
-            android:text=": )"
-            android:textColor="@android:color/white"
-            android:textSize="48sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:alpha="0.5"
-            android:gravity="center"
-            android:text="Something awesome will appear soon"
-            android:textColor="@android:color/white"/>
-    </LinearLayout>
+        tools:layout="@layout/fragment_quick_menu"/>
 </org.mariotaku.twidere.view.RightDrawerFrameLayout>

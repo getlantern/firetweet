@@ -22,7 +22,9 @@ package org.mariotaku.twidere.activity.support;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -43,12 +45,11 @@ import org.mariotaku.twidere.fragment.support.SupportProgressDialogFragment;
 import org.mariotaku.twidere.loader.support.ParcelableUserLoader;
 import org.mariotaku.twidere.model.ParcelableUser;
 import org.mariotaku.twidere.model.SingleResponse;
-import org.mariotaku.twidere.task.TwidereAsyncTask;
-import org.mariotaku.twidere.task.TwidereAsyncTask.Status;
 import org.mariotaku.twidere.util.AsyncTaskManager;
+import org.mariotaku.twidere.util.AsyncTaskUtils;
 import org.mariotaku.twidere.util.AsyncTwitterWrapper.UpdateProfileBannerImageTask;
 import org.mariotaku.twidere.util.AsyncTwitterWrapper.UpdateProfileImageTask;
-import org.mariotaku.twidere.util.ImageLoaderWrapper;
+import org.mariotaku.twidere.util.MediaLoaderWrapper;
 import org.mariotaku.twidere.util.ParseUtils;
 import org.mariotaku.twidere.util.ThemeUtils;
 import org.mariotaku.twidere.util.TwitterWrapper;
@@ -69,7 +70,7 @@ import static org.mariotaku.twidere.util.Utils.getTwitterInstance;
 import static org.mariotaku.twidere.util.Utils.isMyAccount;
 import static org.mariotaku.twidere.util.Utils.showErrorMessage;
 
-public class UserProfileEditorActivity extends BaseSupportActivity implements OnSizeChangedListener, TextWatcher,
+public class UserProfileEditorActivity extends BaseActionBarActivity implements OnSizeChangedListener, TextWatcher,
         OnClickListener, LoaderCallbacks<SingleResponse<ParcelableUser>> {
 
     private static final int LOADER_ID_USER = 1;
@@ -79,9 +80,9 @@ public class UserProfileEditorActivity extends BaseSupportActivity implements On
     private static final int REQUEST_PICK_LINK_COLOR = 3;
     private static final int REQUEST_PICK_BACKGROUND_COLOR = 4;
 
-    private ImageLoaderWrapper mLazyImageLoader;
+    private MediaLoaderWrapper mLazyImageLoader;
     private AsyncTaskManager mAsyncTaskManager;
-    private TwidereAsyncTask<Void, Void, ?> mTask;
+    private AsyncTask<Void, Void, ?> mTask;
 
     private ImageView mProfileImageView;
     private ImageView mProfileBannerView;
@@ -130,7 +131,7 @@ public class UserProfileEditorActivity extends BaseSupportActivity implements On
             return;
         }
         mAsyncTaskManager = TwidereApplication.getInstance(this).getAsyncTaskManager();
-        mLazyImageLoader = TwidereApplication.getInstance(this).getImageLoaderWrapper();
+        mLazyImageLoader = TwidereApplication.getInstance(this).getMediaLoaderWrapper();
         mAccountId = accountId;
 
 
@@ -190,7 +191,8 @@ public class UserProfileEditorActivity extends BaseSupportActivity implements On
     @Override
     public void onClick(final View view) {
         final ParcelableUser user = mUser;
-        if (user == null || (mTask != null && mTask.getStatus() == Status.RUNNING)) return;
+        if (user == null || (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING))
+            return;
         switch (view.getId()) {
             case R.id.profile_image: {
                 break;
@@ -221,7 +223,7 @@ public class UserProfileEditorActivity extends BaseSupportActivity implements On
             }
             case R.id.profile_banner_remove: {
                 mTask = new RemoveProfileBannerTaskInternal(user.account_id);
-                mTask.executeTask();
+                AsyncTaskUtils.executeTask(mTask);
                 break;
             }
             case R.id.actionbar_cancel: {
@@ -237,7 +239,7 @@ public class UserProfileEditorActivity extends BaseSupportActivity implements On
                 final int backgroundColor = mBackgroundColor.getColor();
                 mTask = new UpdateProfileTaskInternal(this, mAccountId, mUser, name, url, location,
                         description, linkColor, backgroundColor);
-                mTask.executeTask();
+                AsyncTaskUtils.executeTask(mTask);
                 break;
             }
             case R.id.set_link_color: {
@@ -314,13 +316,13 @@ public class UserProfileEditorActivity extends BaseSupportActivity implements On
         if (resultCode == RESULT_CANCELED) return;
         switch (requestCode) {
             case REQUEST_UPLOAD_PROFILE_BANNER_IMAGE: {
-                if (mTask == null || mTask.getStatus() != Status.PENDING) return;
-                mTask.executeTask();
+                if (mTask == null || mTask.getStatus() != AsyncTask.Status.PENDING) return;
+                AsyncTaskUtils.executeTask(mTask);
                 break;
             }
             case REQUEST_UPLOAD_PROFILE_IMAGE: {
-                if (mTask == null || mTask.getStatus() != Status.PENDING) return;
-                mTask.executeTask();
+                if (mTask == null || mTask.getStatus() != AsyncTask.Status.PENDING) return;
+                AsyncTaskUtils.executeTask(mTask);
                 break;
             }
             case REQUEST_PICK_LINK_COLOR: {
@@ -420,10 +422,11 @@ public class UserProfileEditorActivity extends BaseSupportActivity implements On
         mDoneButton.setEnabled(isProfileChanged());
     }
 
-    static class UpdateProfileTaskInternal extends TwidereAsyncTask<Void, Void, SingleResponse<ParcelableUser>> {
+    static class UpdateProfileTaskInternal extends AsyncTask<Void, Void, SingleResponse<ParcelableUser>> {
 
         private static final String DIALOG_FRAGMENT_TAG = "updating_user_profile";
         private final UserProfileEditorActivity mActivity;
+        private final Handler mHandler;
         private final long mAccountId;
         private final ParcelableUser mOriginal;
         private final String mName;
@@ -439,6 +442,7 @@ public class UserProfileEditorActivity extends BaseSupportActivity implements On
                                          final String description, final int linkColor,
                                          final int backgroundColor) {
             mActivity = activity;
+            mHandler = new Handler(activity.getMainLooper());
             mAccountId = accountId;
             mOriginal = original;
             mName = name;
@@ -503,14 +507,19 @@ public class UserProfileEditorActivity extends BaseSupportActivity implements On
 
         @Override
         protected void onPreExecute() {
-            final DialogFragment df = SupportProgressDialogFragment.show(mActivity, DIALOG_FRAGMENT_TAG);
-            df.setCancelable(false);
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    final DialogFragment df = SupportProgressDialogFragment.show(mActivity, DIALOG_FRAGMENT_TAG);
+                    df.setCancelable(false);
+                }
+            });
             super.onPreExecute();
         }
 
     }
 
-    class RemoveProfileBannerTaskInternal extends TwidereAsyncTask<Void, Void, SingleResponse<Boolean>> {
+    class RemoveProfileBannerTaskInternal extends AsyncTask<Void, Void, SingleResponse<Boolean>> {
 
         private final long account_id;
 

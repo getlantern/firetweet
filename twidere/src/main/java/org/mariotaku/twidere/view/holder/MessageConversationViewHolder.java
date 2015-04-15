@@ -34,13 +34,14 @@ import org.mariotaku.twidere.adapter.MessageConversationAdapter;
 import org.mariotaku.twidere.model.ParcelableDirectMessage.CursorIndices;
 import org.mariotaku.twidere.model.ParcelableMedia;
 import org.mariotaku.twidere.util.ColorUtils;
-import org.mariotaku.twidere.util.ImageLoaderWrapper;
+import org.mariotaku.twidere.util.MediaLoaderWrapper;
 import org.mariotaku.twidere.util.SimpleValueSerializer;
 import org.mariotaku.twidere.util.TwidereLinkify;
 import org.mariotaku.twidere.util.Utils;
+import org.mariotaku.twidere.util.Utils.OnMediaClickListener;
 import org.mariotaku.twidere.view.CardMediaContainer;
 
-public class MessageConversationViewHolder extends ViewHolder {
+public class MessageConversationViewHolder extends ViewHolder implements OnMediaClickListener {
 
     public final CardMediaContainer mediaContainer;
     public final TextView text, time;
@@ -63,6 +64,7 @@ public class MessageConversationViewHolder extends ViewHolder {
         textColorPrimaryInverse = a.getColor(1, 0);
         textColorSecondary = a.getColor(2, 0);
         textColorSecondaryInverse = a.getColor(3, 0);
+        a.recycle();
         messageContent = (MessageBubbleView) itemView.findViewById(R.id.message_content);
         text = (TextView) itemView.findViewById(R.id.text);
         time = (TextView) itemView.findViewById(R.id.time);
@@ -72,7 +74,7 @@ public class MessageConversationViewHolder extends ViewHolder {
     public void displayMessage(Cursor cursor, CursorIndices indices) {
         final Context context = adapter.getContext();
         final TwidereLinkify linkify = adapter.getLinkify();
-        final ImageLoaderWrapper loader = adapter.getImageLoader();
+        final MediaLoaderWrapper loader = adapter.getImageLoader();
 
         final long accountId = cursor.getLong(indices.account_id);
         final long timestamp = cursor.getLong(indices.message_timestamp);
@@ -82,7 +84,12 @@ public class MessageConversationViewHolder extends ViewHolder {
         text.setMovementMethod(null);
         time.setText(Utils.formatToLongTimeString(context, timestamp));
         mediaContainer.setVisibility(media != null && media.length > 0 ? View.VISIBLE : View.GONE);
-        mediaContainer.displayMedia(media, loader, accountId, null, null);
+        mediaContainer.displayMedia(media, loader, accountId, this, null);
+    }
+
+    @Override
+    public void onMediaClick(View view, ParcelableMedia media, long accountId) {
+        Utils.openMedia(adapter.getContext(), adapter.getDirectMessage(getAdapterPosition()), media);
     }
 
     public void setMessageColor(int color) {

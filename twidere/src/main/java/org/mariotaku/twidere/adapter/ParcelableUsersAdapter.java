@@ -28,7 +28,7 @@ import org.mariotaku.twidere.R;
 import org.mariotaku.twidere.adapter.iface.IBaseCardAdapter;
 import org.mariotaku.twidere.app.TwidereApplication;
 import org.mariotaku.twidere.model.ParcelableUser;
-import org.mariotaku.twidere.util.ImageLoaderWrapper;
+import org.mariotaku.twidere.util.MediaLoaderWrapper;
 import org.mariotaku.twidere.util.MultiSelectManager;
 import org.mariotaku.twidere.util.Utils;
 import org.mariotaku.twidere.view.holder.UserViewListHolder;
@@ -45,7 +45,7 @@ import static org.mariotaku.twidere.util.Utils.getUserTypeIconRes;
 
 public class ParcelableUsersAdapter extends BaseArrayAdapter<ParcelableUser> implements IBaseCardAdapter {
 
-    private final ImageLoaderWrapper mProfileImageLoader;
+    private final MediaLoaderWrapper mProfileImageLoader;
     private final MultiSelectManager mMultiSelectManager;
     private final Context mContext;
 
@@ -60,7 +60,7 @@ public class ParcelableUsersAdapter extends BaseArrayAdapter<ParcelableUser> imp
         mContext = context;
         mLocale = context.getResources().getConfiguration().locale;
         final TwidereApplication app = TwidereApplication.getInstance(context);
-        mProfileImageLoader = app.getImageLoaderWrapper();
+        mProfileImageLoader = app.getMediaLoaderWrapper();
         mMultiSelectManager = app.getMultiSelectManager();
         configBaseCardAdapter(context, this);
     }
@@ -104,9 +104,7 @@ public class ParcelableUsersAdapter extends BaseArrayAdapter<ParcelableUser> imp
         } else {
             holder.profile_type.setImageDrawable(null);
         }
-        final String nick = getUserNickname(mContext, user.id);
-        holder.name.setText(TextUtils.isEmpty(nick) ? user.name : isNicknameOnly() ? nick : mContext.getString(
-                R.string.name_with_nickname, user.name, nick));
+        holder.name.setText(getUserNickname(mContext, user.id, user.name));
         holder.screen_name.setText("@" + user.screen_name);
         holder.description.setVisibility(TextUtils.isEmpty(user.description_unescaped) ? View.GONE : View.VISIBLE);
         holder.description.setText(user.description_unescaped);
@@ -117,8 +115,8 @@ public class ParcelableUsersAdapter extends BaseArrayAdapter<ParcelableUser> imp
         holder.statuses_count.setText(getLocalizedNumber(mLocale, user.statuses_count));
         holder.followers_count.setText(getLocalizedNumber(mLocale, user.followers_count));
         holder.friends_count.setText(getLocalizedNumber(mLocale, user.friends_count));
-        holder.profile_image.setVisibility(isDisplayProfileImage() ? View.VISIBLE : View.GONE);
-        if (isDisplayProfileImage()) {
+        holder.profile_image.setVisibility(isProfileImageDisplayed() ? View.VISIBLE : View.GONE);
+        if (isProfileImageDisplayed()) {
             mProfileImageLoader.displayProfileImage(holder.profile_image, user.profile_image_url);
         }
         return view;

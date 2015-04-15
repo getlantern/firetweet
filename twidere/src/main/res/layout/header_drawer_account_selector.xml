@@ -21,8 +21,11 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:layout_height="160dp"
+    tools:layout_width="280dp">
 
     <ImageView
         android:id="@+id/account_profile_banner"
@@ -32,7 +35,8 @@
         android:layout_alignTop="@id/profile_container"
         android:alpha="0.5"
         android:contentDescription="@string/profile_banner"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        tools:src="@drawable/nyan_stars_background"/>
 
     <FrameLayout
         android:id="@+id/profile_container"
@@ -56,7 +60,8 @@
                 android:layout_marginBottom="@dimen/element_spacing_mlarge"
                 android:layout_marginTop="@dimen/element_spacing_mlarge"
                 app:sivBorder="true"
-                app:sivBorderWidth="2dp"/>
+                app:sivBorderWidth="2dp"
+                tools:src="@mipmap/ic_launcher"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/other_accounts_list"
@@ -74,7 +79,8 @@
                 android:layout_alignParentBottom="true"
                 android:layout_below="@id/profile_image"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -86,25 +92,43 @@
                         android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:singleLine="true"
                         android:textAppearance="?android:textAppearanceSmall"
                         android:textColor="?android:textColorPrimary"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold"
+                        tools:text="Name"/>
 
                     <org.mariotaku.twidere.view.themed.ThemedTextView
                         android:id="@+id/screen_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:textAppearanceSmall"/>
+                        android:singleLine="true"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        tools:text="\@username"/>
 
                 </LinearLayout>
 
-                <org.mariotaku.twidere.view.themed.ThemedSwitch
-                    android:id="@+id/toggle"
+                <FrameLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0"/>
+                    android:layout_height="@dimen/element_size_normal">
+
+                    <org.mariotaku.twidere.view.TwidereActionMenuView
+                        android:id="@+id/toggle_menu"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </FrameLayout>
+
+
             </LinearLayout>
         </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/floating_profile_image_snapshot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:visibility="invisible"
+            tools:ignore="ContentDescription"/>
     </FrameLayout>
 
 </RelativeLayout>

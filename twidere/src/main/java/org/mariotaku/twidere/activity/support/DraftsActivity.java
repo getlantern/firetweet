@@ -19,7 +19,6 @@
 
 package org.mariotaku.twidere.activity.support;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.NotificationManager;
@@ -31,7 +30,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -39,6 +40,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
@@ -61,7 +63,7 @@ import org.mariotaku.twidere.model.DraftItem;
 import org.mariotaku.twidere.model.ParcelableMediaUpdate;
 import org.mariotaku.twidere.model.ParcelableStatusUpdate;
 import org.mariotaku.twidere.provider.TwidereDataStore.Drafts;
-import org.mariotaku.twidere.task.TwidereAsyncTask;
+import org.mariotaku.twidere.util.AsyncTaskUtils;
 import org.mariotaku.twidere.util.AsyncTwitterWrapper;
 import org.mariotaku.twidere.util.ThemeUtils;
 
@@ -71,7 +73,7 @@ import java.util.List;
 
 import static org.mariotaku.twidere.util.Utils.getDefaultTextSize;
 
-public class DraftsActivity extends BaseSupportActivity implements LoaderCallbacks<Cursor>, OnItemClickListener,
+public class DraftsActivity extends BaseActionBarActivity implements LoaderCallbacks<Cursor>, OnItemClickListener,
         MultiChoiceModeListener {
 
     private ContentResolver mResolver;
@@ -98,7 +100,7 @@ public class DraftsActivity extends BaseSupportActivity implements LoaderCallbac
                 final Cursor c = mAdapter.getCursor();
                 if (c == null || c.isClosed()) return false;
                 final SparseBooleanArray checked = mListView.getCheckedItemPositions();
-                final List<DraftItem> list = new ArrayList<DraftItem>();
+                final List<DraftItem> list = new ArrayList<>();
                 final DraftItem.CursorIndices indices = new DraftItem.CursorIndices(c);
                 for (int i = 0, j = checked.size(); i < j; i++) {
                     if (checked.valueAt(i) && c.moveToPosition(checked.keyAt(i))) {
@@ -189,7 +191,7 @@ public class DraftsActivity extends BaseSupportActivity implements LoaderCallbac
         mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         mTextSize = mPreferences.getInt(KEY_TEXT_SIZE, getDefaultTextSize(this));
         setContentView(R.layout.activity_drafts);
-        final ActionBar actionBar = getActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
@@ -269,8 +271,7 @@ public class DraftsActivity extends BaseSupportActivity implements LoaderCallbac
                 case DialogInterface.BUTTON_POSITIVE: {
                     final Bundle args = getArguments();
                     if (args == null) return;
-                    final DeleteDraftsTask task = new DeleteDraftsTask(getActivity(), args.getLongArray(EXTRA_IDS));
-                    task.executeTask();
+                    AsyncTaskUtils.executeTask(new DeleteDraftsTask(getActivity(), args.getLongArray(EXTRA_IDS)));
                     break;
                 }
             }
@@ -289,17 +290,19 @@ public class DraftsActivity extends BaseSupportActivity implements LoaderCallbac
 
     }
 
-    private static class DeleteDraftsTask extends TwidereAsyncTask<Void, Void, Integer> {
+    private static class DeleteDraftsTask extends AsyncTask<Void, Void, Integer> {
 
         private static final String FRAGMENT_TAG_DELETING_DRAFTS = "deleting_drafts";
         private final FragmentActivity mActivity;
         private final long[] mIds;
         private final NotificationManager mNotificationManager;
+        private Handler mHandler;
 
         private DeleteDraftsTask(final FragmentActivity activity, final long[] ids) {
             mActivity = activity;
             mNotificationManager = (NotificationManager) activity.getSystemService(NOTIFICATION_SERVICE);
             mIds = ids;
+            mHandler = new Handler(activity.getMainLooper());
         }
 
         @Override
@@ -345,9 +348,14 @@ public class DraftsActivity extends BaseSupportActivity implements LoaderCallbac
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            final SupportProgressDialogFragment f = SupportProgressDialogFragment.show(mActivity,
-                    FRAGMENT_TAG_DELETING_DRAFTS);
-            f.setCancelable(false);
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    final SupportProgressDialogFragment f = SupportProgressDialogFragment.show(mActivity,
+                            FRAGMENT_TAG_DELETING_DRAFTS);
+                    f.setCancelable(false);
+                }
+            });
         }
     }
 }

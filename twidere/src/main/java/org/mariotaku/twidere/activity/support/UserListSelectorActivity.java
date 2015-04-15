@@ -23,7 +23,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -42,7 +44,7 @@ import org.mariotaku.twidere.fragment.support.SupportProgressDialogFragment;
 import org.mariotaku.twidere.model.ParcelableUser;
 import org.mariotaku.twidere.model.ParcelableUserList;
 import org.mariotaku.twidere.model.SingleResponse;
-import org.mariotaku.twidere.task.TwidereAsyncTask;
+import org.mariotaku.twidere.util.AsyncTaskUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,7 +167,9 @@ public class UserListSelectorActivity extends BaseSupportDialogActivity implemen
                 getUserLists(mScreenName);
             }
         }
-        mEditScreenName.setAdapter(new UserHashtagAutoCompleteAdapter(this));
+        final UserHashtagAutoCompleteAdapter adapter = new UserHashtagAutoCompleteAdapter(this);
+        adapter.setAccountId(getAccountId());
+        mEditScreenName.setAdapter(adapter);
         mEditScreenName.setText(mScreenName);
         mUserListsListView.setAdapter(mUserListsAdapter = new SimpleParcelableUserListsAdapter(this));
         mUsersListView.setAdapter(mUsersAdapter = new SimpleParcelableUsersAdapter(this));
@@ -203,11 +207,11 @@ public class UserListSelectorActivity extends BaseSupportDialogActivity implemen
         return getIntent().getLongExtra(EXTRA_ACCOUNT_ID, -1);
     }
 
-    private void getUserLists(final String screen_name) {
-        if (screen_name == null) return;
-        mScreenName = screen_name;
-        final GetUserListsTask task = new GetUserListsTask(this, getAccountId(), screen_name);
-        task.executeTask();
+    private void getUserLists(final String screenName) {
+        if (screenName == null) return;
+        mScreenName = screenName;
+        final GetUserListsTask task = new GetUserListsTask(this, getAccountId(), screenName);
+        AsyncTaskUtils.executeTask(task);
     }
 
     private boolean isSelectingUser() {
@@ -216,27 +220,30 @@ public class UserListSelectorActivity extends BaseSupportDialogActivity implemen
 
     private void searchUser(final String name) {
         final SearchUsersTask task = new SearchUsersTask(this, getAccountId(), name);
-        task.executeTask();
+        AsyncTaskUtils.executeTask(task);
     }
 
-    private void setUserListsData(final List<ParcelableUserList> data, final boolean is_my_account) {
+    private void setUserListsData(final List<ParcelableUserList> data, final boolean isMyAccount) {
         mUserListsAdapter.setData(data, true);
         mUsersListContainer.setVisibility(View.GONE);
         mUserListsContainer.setVisibility(View.VISIBLE);
-        mCreateUserListContainer.setVisibility(is_my_account ? View.VISIBLE : View.GONE);
+        mCreateUserListContainer.setVisibility(isMyAccount ? View.VISIBLE : View.GONE);
     }
 
-    private static class GetUserListsTask extends TwidereAsyncTask<Void, Void, SingleResponse<List<ParcelableUserList>>> {
+    private static class GetUserListsTask extends AsyncTask<Void, Void, SingleResponse<List<ParcelableUserList>>> {
 
         private static final String FRAGMENT_TAG_GET_USER_LISTS = "get_user_lists";
+
         private final UserListSelectorActivity mActivity;
+        private final Handler mHandler;
         private final long mAccountId;
         private final String mScreenName;
 
-        GetUserListsTask(final UserListSelectorActivity activity, final long account_id, final String screen_name) {
+        GetUserListsTask(final UserListSelectorActivity activity, final long accountId, final String screenName) {
             mActivity = activity;
-            mAccountId = account_id;
-            mScreenName = screen_name;
+            mHandler = new Handler(activity.getMainLooper());
+            mAccountId = accountId;
+            mScreenName = screenName;
         }
 
         @Override
@@ -245,7 +252,7 @@ public class UserListSelectorActivity extends BaseSupportDialogActivity implemen
             if (twitter == null) return SingleResponse.getInstance();
             try {
                 final ResponseList<UserList> lists = twitter.getUserLists(mScreenName, true);
-                final List<ParcelableUserList> data = new ArrayList<ParcelableUserList>();
+                final List<ParcelableUserList> data = new ArrayList<>();
                 boolean is_my_account = mScreenName.equalsIgnoreCase(getAccountScreenName(mActivity, mAccountId));
                 for (final UserList item : lists) {
                     final User user = item.getUser();
@@ -283,21 +290,30 @@ public class UserListSelectorActivity extends BaseSupportDialogActivity implemen
 
         @Override
         protected void onPreExecute() {
-            SupportProgressDialogFragment.show(mActivity, FRAGMENT_TAG_GET_USER_LISTS).setCancelable(false);
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    final SupportProgressDialogFragment df = SupportProgressDialogFragment.show(mActivity, FRAGMENT_TAG_GET_USER_LISTS);
+                    df.setCancelable(false);
+                }
+            });
         }
 
     }
 
-    private static class SearchUsersTask extends TwidereAsyncTask<Void, Void, SingleResponse<List<ParcelableUser>>> {
+    private static class SearchUsersTask extends AsyncTask<Void, Void, SingleResponse<List<ParcelableUser>>> {
 
         private static final String FRAGMENT_TAG_SEARCH_USERS = "search_users";
         private final UserListSelectorActivity mActivity;
+        private final Handler mHandler;
+
         private final long mAccountId;
         private final String mName;
 
-        SearchUsersTask(final UserListSelectorActivity activity, final long account_id, final String name) {
+        SearchUsersTask(final UserListSelectorActivity activity, final long accountId, final String name) {
             mActivity = activity;
-            mAccountId = account_id;
+            mHandler = new Handler(activity.getMainLooper());
+            mAccountId = accountId;
             mName = name;
         }
 
@@ -331,7 +347,13 @@ public class UserListSelectorActivity extends BaseSupportDialogActivity implemen
 
         @Override
         protected void onPreExecute() {
-            SupportProgressDialogFragment.show(mActivity, FRAGMENT_TAG_SEARCH_USERS).setCancelable(false);
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    final SupportProgressDialogFragment df = SupportProgressDialogFragment.show(mActivity, FRAGMENT_TAG_SEARCH_USERS);
+                    df.setCancelable(false);
+                }
+            });
         }
 
     }

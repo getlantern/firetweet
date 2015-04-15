@@ -34,6 +34,7 @@ import org.mariotaku.twidere.view.themed.ThemedMultiAutoCompleteTextView;
 public class StatusComposeEditText extends ThemedMultiAutoCompleteTextView implements IThemedView {
 
     private UserHashtagAutoCompleteAdapter mAdapter;
+    private long mAccountId;
 
     public StatusComposeEditText(final Context context) {
         this(context, null);
@@ -45,7 +46,6 @@ public class StatusComposeEditText extends ThemedMultiAutoCompleteTextView imple
 
     public StatusComposeEditText(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
-        mAdapter = new UserHashtagAutoCompleteAdapter(this);
         setTokenizer(new ScreenNameTokenizer());
         setMovementMethod(ArrowKeyMovementMethod.getInstance());
         setRawInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
@@ -65,10 +65,11 @@ public class StatusComposeEditText extends ThemedMultiAutoCompleteTextView imple
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if (mAdapter == null || mAdapter.isCursorClosed()) {
+        if (!isInEditMode() && mAdapter == null) {
             mAdapter = new UserHashtagAutoCompleteAdapter(this);
         }
         setAdapter(mAdapter);
+        updateAccountId();
     }
 
     @Override
@@ -78,7 +79,16 @@ public class StatusComposeEditText extends ThemedMultiAutoCompleteTextView imple
             mAdapter.closeCursor();
             mAdapter = null;
         }
-//        setAdapter(null);
+    }
+
+    public void setAccountId(long accountId) {
+        mAccountId = accountId;
+        updateAccountId();
+    }
+
+    private void updateAccountId() {
+        if (mAdapter == null) return;
+        mAdapter.setAccountId(mAccountId);
     }
 
     @Override

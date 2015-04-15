@@ -21,6 +21,7 @@ package org.mariotaku.twidere.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v7.widget.RecyclerView;
 
 import org.mariotaku.twidere.model.ParcelableStatus;
 import org.mariotaku.twidere.model.ParcelableStatus.CursorIndices;
@@ -42,24 +43,20 @@ public class CursorStatusesAdapter extends AbsStatusesAdapter<Cursor> {
     @Override
     public boolean isGapItem(int position) {
         final Cursor c = mCursor;
-        return c != null && c.moveToPosition(position) && c.getInt(mIndices.is_gap) == 1;
+        if (c == null || !c.moveToPosition(position) || position == getStatusesCount() - 1)
+            return false;
+        return c.getInt(mIndices.is_gap) == 1;
     }
 
 
     @Override
     public long getItemId(int position) {
-        if (position == getStatusCount()) return -1;
+        if (position == getStatusesCount()) return Long.MAX_VALUE;
         final Cursor c = mCursor;
-        if (c != null && !c.isClosed() && c.moveToPosition(position)) {
-            final long account_id = c.getLong(mIndices.account_id);
-            final long id = c.getLong(mIndices.status_id);
-            final int prime = 31;
-            int result = 1;
-            result = prime * result + (int) (account_id ^ account_id >>> 32);
-            result = prime * result + (int) (id ^ id >>> 32);
-            return result;
+        if (c != null && c.moveToPosition(position)) {
+            return c.getLong(mIndices._id);
         }
-        return -1;
+        return RecyclerView.NO_ID;
     }
 
     @Override
@@ -70,28 +67,28 @@ public class CursorStatusesAdapter extends AbsStatusesAdapter<Cursor> {
 
     @Override
     public ParcelableStatus getStatus(int position) {
-        if (hasLoadMoreIndicator() && position == getStatusCount() - 1) return null;
+        if (isLoadMoreIndicatorVisible() && position == getStatusesCount() - 1) return null;
         final Cursor c = mCursor;
-        if (c != null && !c.isClosed() && c.moveToPosition(position)) {
+        if (c != null && c.moveToPosition(position)) {
             return new ParcelableStatus(c, mIndices);
         }
         return null;
     }
 
     @Override
-    public int getStatusCount() {
+    public int getStatusesCount() {
         if (mCursor == null) return 0;
         return mCursor.getCount();
     }
 
     @Override
     public long getStatusId(int position) {
-        if (position == getStatusCount()) return position;
+        if (position == getStatusesCount()) return -1;
         final Cursor c = mCursor;
-        if (c != null && !c.isClosed() && c.moveToPosition(position)) {
+        if (c != null && c.moveToPosition(position)) {
             return c.getLong(mIndices.status_id);
         }
-        return position;
+        return -1;
     }
 
     @Override

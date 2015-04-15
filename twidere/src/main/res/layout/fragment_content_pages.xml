@@ -20,6 +20,7 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -29,28 +30,32 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <View
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/element_spacing_xsmall"
-            android:layout_alignBottom="@+id/view_pager_tabs"
-            android:background="?android:dividerVertical"/>
+            android:layout_height="match_parent"
+            android:layout_below="@+id/view_pager_tabs"/>
 
         <org.mariotaku.twidere.view.TabPagerIndicator
             android:id="@+id/view_pager_tabs"
             android:layout_width="match_parent"
             android:layout_height="@dimen/element_size_normal"
+            android:outlineProvider="background"
             android:textColor="?android:textColorSecondary"
             app:tabDividerVerticalPadding="@dimen/element_spacing_mlarge"
             app:tabExpandEnabled="true"
             app:tabHorizontalPadding="@dimen/element_spacing_large"
             app:tabIconColor="?android:colorForeground"
-            app:tabShowDivider="true"/>
+            app:tabShowDivider="true"
+            tools:ignore="UnusedAttribute"/>
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/view_pager"
+        <View
+            android:id="@+id/pager_window_overlay"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/view_pager_tabs"/>
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/view_pager"
+            android:layout_alignTop="@+id/view_pager"
+            android:background="?android:windowContentOverlay"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -59,6 +64,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
+        android:padding="@dimen/element_spacing_large"
         android:visibility="gone">
 
         <org.mariotaku.twidere.view.ActionIconView

@@ -1,18 +1,16 @@
 import java.text.SimpleDateFormat
 
 apply plugin: 'com.android.application'
-apply plugin: 'aar-link-sources'
+apply from: rootProject.file('global.gradle')
 apply from: rootProject.file('signing.gradle')
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion '21.1.2'
 
     defaultConfig {
         applicationId "org.mariotaku.twidere"
         minSdkVersion 14
-        targetSdkVersion 21
-        versionCode 99
+        targetSdkVersion 22
+        versionCode 106
         versionName "0.3.0"
         multiDexEnabled true
     }
@@ -30,9 +28,6 @@ android {
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/ASL2.0'
     }
-    lintOptions {
-        abortOnError false
-    }
     productFlavors {
         google {
         }
@@ -41,8 +36,17 @@ android {
     }
     buildTypes {
         debug {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+            versionNameSuffix String.format(" (dev %s)", format.format(new Date()))
+        }
+        release {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd")
             versionNameSuffix String.format(" (dev %s)", format.format(new Date()))
+        }
+    }
+    sourceSets {
+        main {
+            res.srcDirs = [project.file("src/$name/res"), project.file("src/$name/res-localized")]
         }
     }
 }
@@ -51,6 +55,8 @@ repositories {
     jcenter()
     mavenCentral()
     maven { url 'https://repo.commonsware.com.s3.amazonaws.com' }
+    maven { url 'https://github.com/suckgamony/RapidDecoder/raw/master/repository' }
+    maven { url "https://jitpack.io" }
 }
 
 configurations.all {
@@ -60,36 +66,35 @@ configurations.all {
 dependencies {
 //    wearApp project(':twidere.wear')
     compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support:support-v13:21.0.3'
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.android.support:cardview-v7:21.0.3'
-    compile 'com.android.support:recyclerview-v7:21.0.3'
-    compile 'com.android.support:palette-v7:21.0.3'
+    compile 'com.android.support:support-v13:22.0.0'
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:cardview-v7:22.0.0'
+    compile 'com.android.support:recyclerview-v7:22.0.0'
     compile 'com.sothree.slidinguppanel:library:3.0.0'
     compile 'com.twitter:twitter-text:1.11.1'
-    aarLinkSources 'com.twitter:twitter-text:1.11.1:sources@jar'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
-    compile 'org.apache.commons:commons-csv:1.1'
-    compile 'com.google.android.apps.dashclock:dashclock-api:2.0.0'
     compile 'com.squareup:otto:1.3.6'
     compile 'dnsjava:dnsjava:2.1.7'
     compile 'com.commonsware.cwac:merge:1.1.1'
-    compile 'com.diegocarloslima:byakugallery:0.1.0'
-    compile 'com.rengwuxian.materialedittext:library:1.8.3'
-    compile 'com.pnikosis:materialish-progress:1.4'
-    compile 'com.squareup.okhttp:okhttp:2.2.0'
-    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.2'
-    aarLinkSources 'com.squareup.okhttp:okhttp:2.2.0:sources@jar'
-    googleCompile 'com.google.android.gms:play-services:6.5.87'
+    compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.1.3'
+    compile 'com.rengwuxian.materialedittext:library:2.0.3'
+    compile 'com.pnikosis:materialish-progress:1.5'
+    compile 'com.squareup.okhttp:okhttp:2.3.0'
+    // Disabled temporarilly due to attribute clash with subsampling-scale-image-view
+    // compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.3'
+    compile 'com.github.mariotaku:MessageBubbleView:1.0'
+    compile 'com.github.mariotaku:DragSortListView:0.6.1'
+    compile 'com.github.mariotaku:SlidingMenu:1.3'
+    compile 'com.github.uucky:ColorPicker-Android:0.9.1'
+    compile 'com.sprylab.android.texturevideoview:texturevideoview:1.0.0'
+    compile 'com.squareup:pollexor:2.0.2'
+    googleCompile 'com.google.android.gms:play-services-maps:7.0.0'
     googleCompile 'com.google.maps.android:android-maps-utils:0.3.4'
     fdroidCompile 'org.osmdroid:osmdroid-android:4.3'
-    fdroidCompile 'org.slf4j:slf4j-simple:1.7.10'
+    fdroidCompile 'org.slf4j:slf4j-simple:1.7.12'
+    debugCompile 'im.dino:dbinspector:3.1.0@aar'
     compile project(':twidere.component.common')
     compile project(':twidere.component.nyan')
-    compile project(':SlidingMenu')
-    compile project(':DragSortListView')
-    compile project(':MessageBubbleView')
-    compile project(':ColorPicker')
     compile fileTree(dir: 'libs/main', include: ['*.jar'])
-    googleCompile fileTree(dir: 'libs/google', include: ['*.jar'])
+//    googleCompile fileTree(dir: 'libs/google', include: ['*.jar'])
 }

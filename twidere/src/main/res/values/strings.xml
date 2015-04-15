@@ -41,7 +41,6 @@
     <string name="error_message_rate_limit">Twitter\'s rate limit exceeded, please retry <xliff:g id="time">%s</xliff:g></string>
     <string name="error_message_rate_limit_with_action">Twitter\'s rate limit exceeded while <xliff:g id="action">%1$s</xliff:g>, please retry <xliff:g id="time">%2$s</xliff:g></string>
     <string name="select_account">Select account</string>
-    <string name="nyan_sakamoto" translatable="false">Nyan Sakamoto!</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="label_tweetstore_provider">FireTweet database provider</string>
@@ -57,7 +56,6 @@
     <string name="unfavorite">Unfavorite</string>
     <string name="reply">Reply</string>
     <string name="share">Share</string>
-    <string name="share_via_twidere">Share via FireTweet</string>
     <string name="view_image">Image</string>
     <string name="view_map">Map</string>
     <string name="view_status">View tweet</string>
@@ -101,8 +99,8 @@
     <string name="users_favorited_this">Users favorited this</string>
     <string name="reply_to">Reply to <xliff:g id="user_name">%s</xliff:g></string>
     <string name="quote_user">Quote <xliff:g id="user_name">%s</xliff:g></string>
-    <string name="time_source"><xliff:g id="time">%1$s</xliff:g>, via <xliff:g id="source">%2$s</xliff:g></string>
-    <string name="source">via <xliff:g id="source">%s</xliff:g></string>
+    <string name="time_source"><xliff:g id="time">%1$s</xliff:g> · <xliff:g id="source">%2$s</xliff:g></string>
+    <string name="source"><xliff:g id="source">%s</xliff:g></string>
     <string name="filters">Filters</string>
     <string name="users">Users</string>
     <string name="user">User</string>
@@ -275,8 +273,8 @@
     <string name="view">View</string>
     <string name="custom_host_mapping">Custom host mapping</string>
     <string name="custom_host_mapping_summary">Host mapping like /etc/hosts, but does not require any additional permissions.</string>
-    <string name="host">Host</string>
-    <string name="address">Address (Can be another host address)</string>
+    <string name="host_mapping_host">Host</string>
+    <string name="host_mapping_address">Address (Can be another host address)</string>
     <string name="add_host_mapping">Add host mapping</string>
     <string name="tcp_dns_query">TCP DNS Query</string>
     <string name="tcp_dns_query_summary">Use TCP Protocol to make DNS requests, which can avoid DNS Cache Poisoning.</string>
@@ -355,19 +353,11 @@
     <string name="action_accepting_follow_request">accepting follow request</string>
     <string name="action_denying_follow_request">denying follow request</string>
     <string name="status_is_duplicate">Your tweet is a duplicate.</string>
-    <string name="data_profiling_summary">FireTweet took part in a research on predicting user\'s social behavior to pre-caching content started by students in UC Davis.\n\nHere are the data we wanted to collect and why:\nCollected data:\n1. User\'s twitter ID\n2. User\'s home timeline (prediction based on user\'s interest and social interaction)\n3. User\'s click on a tweet (prediction based on user\'s interest and social interaction)\n4. Coarse location (which is good predictor when user will access twitter)\n\nFireTweet will upload collected data only when Wifi available and your device connected to charger, so It will not cost you extra bandwidth fee or drain your battery power.</string>
-    <string name="data_profiling">Usage Statistics</string>
-    <string name="enable_data_profiling">Enable Reporting</string>
-    <string name="data_profiling_notification_ticker">Statistics Opted-In</string>
-    <string name="data_profiling_notification_title">Usage Statistics</string>
-    <string name="data_profiling_notification_desc">Enable or Disable Usage Statistics</string>
     <string name="silent_notifications">Silent notifications</string>
     <string name="silent_notifications_summary">Disable ringtone/vibrate for notifications</string>
     <string name="disable_background_service">Disable background service</string>
     <string name="disable_background_service_summary">FireTweet won\'t have background service if you disable auto refresh and data profiling, don\'t be silly!</string>
     <string name="text_copied">Text copied to clipboard.</string>
-    <string name="amount_usd">Amount (USD)</string>
-    <string name="donate">Donate</string>
     <string name="hashtag">Hashtag</string>
     <string name="links">Links</string>
     <string name="edit_profile">Edit profile</string>
@@ -537,15 +527,10 @@
     <string name="report_user">Report <xliff:g id="name">%s</xliff:g></string>
     <string name="report_user_confirm_message">Report <xliff:g id="name">%s</xliff:g> for spam? You\'ll also block this user.</string>
     <string name="twidere_test">FireTweet test</string>
-    <string name="donate_via_paypal">Donate via PayPal</string>
-    <string name="pay_via_paypal">Pay via PayPal directly</string>
-    <string name="pay_via_paypal_summary">When you see &quot;This recipient is not eligible to receive funds&quot;</string>
-    <string name="donate_via_alipay">Donate via Alipay</string>
     <string name="staggered_home_timeline">Staggered Home Timeline</string>
     <string name="unread_count">Unread count</string>
     <string name="developed_by">Developed by</string>
     <string name="project_account">Project account</string>
-    <string name="donators">Donators</string>
     <string name="translators">Translators</string>
     <string name="translate">Translate</string>
     <string name="sponsored_by">Sponsored by</string>
@@ -604,7 +589,6 @@
     <string name="tab_display_option_label">Label</string>
     <string name="tab_display_option_icon_and_label">Icon and label</string>
     <string name="highlight_and_underline">Highlight and underline</string>
-    <string name="twip_api_version_notice_message">TWIP can\'t handle Rest Base URL that doesn\'t end with \"/1.1/\" correctly.\n\n You may need to add \"/1.1/\" at the end of Rest Base URL to avoid issues when uploading images.</string>
     <string name="back">Back</string>
     <string name="theme_font_family">Theme font family</string>
     <string name="translation_destination">Translation destination</string>
@@ -702,12 +686,11 @@
     <string name="round">Round</string>
     <string name="square">Square</string>
     <string name="profile_image_style">Profile image style</string>
-    <string name="default_profile_image_style">round</string>
     <string name="media_preview_style">Media preview style</string>
     <string name="draft_saved">Draft saved</string>
     <string name="open_twitter_links">Open Twitter links</string>
     <string name="N_others_quantity_one">another</string>
-    <string name="N_others_quantity_other"><xliff:g id="retweet_count">%d</xliff:g> others</string>
+    <string name="N_others_quantity_other"><xliff:g id="count">%d</xliff:g> others</string>
     <string name="type_name_to_search">Type name to search</string>
     <string name="no_user_found">No user found</string>
     <string name="members">Members</string>
@@ -726,5 +709,41 @@
     <string name="usage_statistics">Usage statistics</string>
     <string name="research_ucdavis_earlybird">UCDavis Earlybird</string>
     <string name="research_tsinghua_spice">Tsinghua Spice</string>
+    <string name="unknown_location">Unknown location</string>
+    <string name="ellipsis">…</string>
+    <string name="designed_by">Designed by</string>
+    <string name="designer_name">Uucky Lee</string>
+    <string name="import_export_settings">Import/Export settings</string>
+    <string name="usage_statistics_header_summary">FireTweet took part in some research project, join these projects will make FireTweet and some other application better.</string>
+    <string name="no_tab">No tab</string>
+    <string name="user_protected_summary">You need to send follow request to this protected user to see tweets</string>
+    <string name="no_account">No account</string>
+    <string name="permission_description_shorten_status">Application can shorten tweet for FireTweet, so it can access your tweet to send.</string>
+    <string name="permission_description_upload_media">Application can upload media for FireTweet, so it can access media in your tweet to send.</string>
+    <string name="permission_description_sync_timeline">Application can sync read position for FireTweet, so it can access your read position.</string>
+    <string name="usage_statistics_notification_summary">Help us improve FireTweet!</string>
+    <string name="from_name">From <xliff:g id="name">%1$s</xliff:g></string>
+    <string name="from_name_and_name">From <xliff:g id="name">%1$s</xliff:g> and <xliff:g id="name">%2$s</xliff:g></string>
+    <string name="from_name_and_N_others">From <xliff:g id="name">%1$s</xliff:g> and <xliff:g id="name">%2$d</xliff:g> others</string>
+    <string name="projects_we_took_part">Projects we took part</string>
+    <string name="activated_accounts">Activated accounts</string>
+    <string name="search">Search</string>
+    <string name="crop">Crop</string>
+    <string name="scale">Scale</string>
+    <string name="user_type_verified">Verified</string>
+    <string name="user_type_protected">Protected</string>
+    <string name="tweet_hashtag">Tweet #<xliff:g id="text">%1$s</xliff:g></string>
+    <string name="share_status">Share tweet</string>
+    <string name="pebble_notifications">Pebble Notifications</string>
+    <string name="pebble_notifications_summary">Send Notifications to your Pebble</string>
+    <!-- 'Tweet' here is a verb -->
+    <string name="tweet_from_name">Tweet from <xliff:g id="text">%1$s</xliff:g></string>
+    <string name="permission_label_shorten_status">Shorten tweet</string>
+    <string name="permission_label_upload_media">Upload media</string>
+    <string name="permission_label_sync_timeline">Sync timeline</string>
+    <string name="thumbor_integration">Thumbor integration</string>
+    <string name="server_address">Server address</string>
+    <string name="security_key">Security key</string>
+
 
 </resources>

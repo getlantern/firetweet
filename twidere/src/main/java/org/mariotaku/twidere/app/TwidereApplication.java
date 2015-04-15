@@ -23,12 +23,14 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 
 import com.nostra13.universalimageloader.cache.disc.DiskCache;
@@ -41,17 +43,19 @@ import com.nostra13.universalimageloader.utils.L;
 import com.squareup.otto.Bus;
 
 import org.mariotaku.twidere.Constants;
+import org.mariotaku.twidere.activity.AssistLauncherActivity;
 import org.mariotaku.twidere.activity.MainActivity;
 import org.mariotaku.twidere.activity.MainHondaJOJOActivity;
 import org.mariotaku.twidere.service.RefreshService;
 import org.mariotaku.twidere.util.AsyncTaskManager;
 import org.mariotaku.twidere.util.AsyncTwitterWrapper;
-import org.mariotaku.twidere.util.ImageLoaderWrapper;
+import org.mariotaku.twidere.util.MediaLoaderWrapper;
 import org.mariotaku.twidere.util.MessagesManager;
 import org.mariotaku.twidere.util.MultiSelectManager;
+import org.mariotaku.twidere.util.ReadStateManager;
 import org.mariotaku.twidere.util.StrictModeUtils;
-import org.mariotaku.twidere.util.ThemeUtils;
 import org.mariotaku.twidere.util.Utils;
+import org.mariotaku.twidere.util.VideoLoader;
 import org.mariotaku.twidere.util.content.TwidereSQLiteOpenHelper;
 import org.mariotaku.twidere.util.imageloader.TwidereImageDownloader;
 import org.mariotaku.twidere.util.imageloader.URLFileNameGenerator;
@@ -67,14 +71,17 @@ import static org.mariotaku.twidere.util.UserColorNameUtils.initUserColor;
 import static org.mariotaku.twidere.util.Utils.getBestCacheDir;
 import static org.mariotaku.twidere.util.Utils.getInternalCacheDir;
 import static org.mariotaku.twidere.util.Utils.initAccountColor;
-import static org.mariotaku.twidere.util.Utils.startProfilingServiceIfNeeded;
 import static org.mariotaku.twidere.util.Utils.startRefreshServiceIfNeeded;
+import static org.mariotaku.twidere.util.Utils.startUsageStatisticsServiceIfNeeded;
 
 public class TwidereApplication extends MultiDexApplication implements Constants,
         OnSharedPreferenceChangeListener {
 
+    private static final String KEY_UCD_DATA_PROFILING = "ucd_data_profiling";
+    private static final String KEY_SPICE_DATA_PROFILING = "spice_data_profiling";
+
     private Handler mHandler;
-    private ImageLoaderWrapper mImageLoaderWrapper;
+    private MediaLoaderWrapper mMediaLoaderWrapper;
     private ImageLoader mImageLoader;
     private AsyncTaskManager mAsyncTaskManager;
     private SharedPreferences mPreferences;
@@ -87,6 +94,8 @@ public class TwidereApplication extends MultiDexApplication implements Constants
     private HostAddressResolver mResolver;
     private SQLiteDatabase mDatabase;
     private Bus mMessageBus;
+    private VideoLoader mVideoLoader;
+    private ReadStateManager mReadStateManager;
 
     public AsyncTaskManager getAsyncTaskManager() {
         if (mAsyncTaskManager != null) return mAsyncTaskManager;
@@ -105,7 +114,7 @@ public class TwidereApplication extends MultiDexApplication implements Constants
 
     public ImageDownloader getFullImageDownloader() {
         if (mFullImageDownloader != null) return mFullImageDownloader;
-        return mFullImageDownloader = new TwidereImageDownloader(this, true);
+        return mFullImageDownloader = new TwidereImageDownloader(this, true, true);
     }
 
     public Handler getHandler() {
@@ -117,9 +126,14 @@ public class TwidereApplication extends MultiDexApplication implements Constants
         return mResolver = new TwidereHostAddressResolver(this);
     }
 
+    public ReadStateManager getReadStateManager() {
+        if (mReadStateManager != null) return mReadStateManager;
+        return mReadStateManager = new ReadStateManager(this);
+    }
+
     public ImageDownloader getImageDownloader() {
         if (mImageDownloader != null) return mImageDownloader;
-        return mImageDownloader = new TwidereImageDownloader(this, false);
+        return mImageDownloader = new TwidereImageDownloader(this, false, true);
     }
 
     public ImageLoader getImageLoader() {
@@ -137,15 +151,20 @@ public class TwidereApplication extends MultiDexApplication implements Constants
         return mImageLoader = loader;
     }
 
-    public ImageLoaderWrapper getImageLoaderWrapper() {
-        if (mImageLoaderWrapper != null) return mImageLoaderWrapper;
-        return mImageLoaderWrapper = new ImageLoaderWrapper(getImageLoader());
+    public VideoLoader getVideoLoader() {
+        if (mVideoLoader != null) return mVideoLoader;
+        final VideoLoader loader = new VideoLoader(this);
+        return mVideoLoader = loader;
     }
 
-    public static TwidereApplication getInstance(final Context context) {
-        if (context == null) return null;
-        final Context app = context.getApplicationContext();
-        return app instanceof TwidereApplication ? (TwidereApplication) app : null;
+    public MediaLoaderWrapper getMediaLoaderWrapper() {
+        if (mMediaLoaderWrapper != null) return mMediaLoaderWrapper;
+        return mMediaLoaderWrapper = new MediaLoaderWrapper(getImageLoader(), getVideoLoader());
+    }
+
+    @NonNull
+    public static TwidereApplication getInstance(@NonNull final Context context) {
+        return (TwidereApplication) context.getApplicationContext();
     }
 
     public Bus getMessageBus() {
@@ -184,7 +203,6 @@ public class TwidereApplication extends MultiDexApplication implements Constants
         if (Utils.isDebugBuild()) {
             StrictModeUtils.detectAllVmPolicy();
         }
-        setTheme(ThemeUtils.getThemeResource(this));
         super.onCreate();
         mHandler = new Handler();
         mMessageBus = new Bus();
@@ -199,23 +217,43 @@ public class TwidereApplication extends MultiDexApplication implements Constants
         final ComponentName main2 = new ComponentName(this, MainHondaJOJOActivity.class);
         final boolean mainDisabled = pm.getComponentEnabledSetting(main) != PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
         final boolean main2Disabled = pm.getComponentEnabledSetting(main2) != PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
-        final boolean no_entry = mainDisabled && main2Disabled;
-        if (no_entry) {
+        final boolean noEntry = mainDisabled && main2Disabled;
+        if (noEntry) {
             pm.setComponentEnabledSetting(main, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                     PackageManager.DONT_KILL_APP);
         } else if (!mainDisabled) {
             pm.setComponentEnabledSetting(main2, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                     PackageManager.DONT_KILL_APP);
         }
+        if (!Utils.isComposeNowSupported()) {
+            final ComponentName assist = new ComponentName(this, AssistLauncherActivity.class);
+            pm.setComponentEnabledSetting(assist, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    PackageManager.DONT_KILL_APP);
+        }
 
-        startProfilingServiceIfNeeded(this);
+        migrateUsageStatisticsPreferences();
+        startUsageStatisticsServiceIfNeeded(this);
         startRefreshServiceIfNeeded(this);
+    }
+
+    private void migrateUsageStatisticsPreferences() {
+        final boolean hasUsageStatistics = mPreferences.contains(KEY_USAGE_STATISTICS);
+        if (hasUsageStatistics) return;
+        if (mPreferences.contains(KEY_UCD_DATA_PROFILING) || mPreferences.contains(KEY_SPICE_DATA_PROFILING)) {
+            final boolean prevUsageEnabled = mPreferences.getBoolean(KEY_UCD_DATA_PROFILING, false)
+                    || mPreferences.getBoolean(KEY_SPICE_DATA_PROFILING, false);
+            final Editor editor = mPreferences.edit();
+            editor.putBoolean(KEY_USAGE_STATISTICS, prevUsageEnabled);
+            editor.remove(KEY_UCD_DATA_PROFILING);
+            editor.remove(KEY_SPICE_DATA_PROFILING);
+            editor.apply();
+        }
     }
 
     @Override
     public void onLowMemory() {
-        if (mImageLoaderWrapper != null) {
-            mImageLoaderWrapper.clearMemoryCache();
+        if (mMediaLoaderWrapper != null) {
+            mMediaLoaderWrapper.clearMemoryCache();
         }
         super.onLowMemory();
     }
@@ -228,18 +266,16 @@ public class TwidereApplication extends MultiDexApplication implements Constants
         } else if (KEY_ENABLE_PROXY.equals(key) || KEY_CONNECTION_TIMEOUT.equals(key) || KEY_PROXY_HOST.equals(key)
                 || KEY_PROXY_PORT.equals(key) || KEY_FAST_IMAGE_LOADING.equals(key)) {
             reloadConnectivitySettings();
-        } else if (KEY_UCD_DATA_PROFILING.equals(key)) {
+        } else if (KEY_USAGE_STATISTICS.equals(key)) {
             stopService(new Intent(this, UCDService.class));
-            startProfilingServiceIfNeeded(this);
-        }
-        //spice
-        else if (KEY_SPICE_DATA_PROFILING.equals(key)) {
+            startUsageStatisticsServiceIfNeeded(this);
+            //spice
             stopService(new Intent(this, SpiceService.class));
-            startProfilingServiceIfNeeded(this);
-        }
-        //end
-        else if (KEY_CONSUMER_KEY.equals(key) || KEY_CONSUMER_SECRET.equals(key) || KEY_API_URL_FORMAT.equals(key)
-                || KEY_AUTH_TYPE.equals(key) || KEY_SAME_OAUTH_SIGNING_URL.equals(key)) {
+            startUsageStatisticsServiceIfNeeded(this);
+            //end
+        } else if (KEY_CONSUMER_KEY.equals(key) || KEY_CONSUMER_SECRET.equals(key) || KEY_API_URL_FORMAT.equals(key)
+                || KEY_AUTH_TYPE.equals(key) || KEY_SAME_OAUTH_SIGNING_URL.equals(key) || KEY_THUMBOR_ENABLED.equals(key)
+                || KEY_THUMBOR_ADDRESS.equals(key) || KEY_THUMBOR_SECURITY_KEY.equals(key)) {
             final SharedPreferences.Editor editor = preferences.edit();
             editor.putLong(KEY_API_LAST_CHANGE, System.currentTimeMillis());
             editor.apply();
@@ -249,6 +285,9 @@ public class TwidereApplication extends MultiDexApplication implements Constants
     public void reloadConnectivitySettings() {
         if (mImageDownloader != null) {
             mImageDownloader.reloadConnectivitySettings();
+        }
+        if (mFullImageDownloader != null) {
+            mFullImageDownloader.reloadConnectivitySettings();
         }
     }
 

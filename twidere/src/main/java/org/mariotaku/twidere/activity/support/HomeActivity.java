@@ -19,9 +19,6 @@
 
 package org.mariotaku.twidere.activity.support;
 
-import android.animation.Animator;
-import android.animation.Animator.AnimatorListener;
-import android.animation.ObjectAnimator;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.SearchManager;
@@ -29,13 +26,15 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,7 +45,6 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.widget.Toolbar;
-import android.util.Property;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -71,10 +69,8 @@ import com.squareup.otto.Subscribe;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.mariotaku.twidere.R;
-import org.mariotaku.twidere.activity.DataProfilingSettingsActivity;
 import org.mariotaku.twidere.activity.SettingsActivity;
 import org.mariotaku.twidere.activity.SettingsWizardActivity;
-import org.mariotaku.twidere.activity.iface.IControlBarActivity;
 import org.mariotaku.twidere.adapter.support.SupportTabsAdapter;
 import org.mariotaku.twidere.app.TwidereApplication;
 import org.mariotaku.twidere.fragment.CustomTabsFragment;
@@ -89,7 +85,9 @@ import org.mariotaku.twidere.graphic.EmptyDrawable;
 import org.mariotaku.twidere.model.ParcelableAccount;
 import org.mariotaku.twidere.model.SupportTabSpec;
 import org.mariotaku.twidere.provider.TwidereDataStore.Accounts;
-import org.mariotaku.twidere.task.TwidereAsyncTask;
+import org.mariotaku.twidere.provider.TwidereDataStore.Mentions;
+import org.mariotaku.twidere.provider.TwidereDataStore.Statuses;
+import org.mariotaku.twidere.util.AsyncTaskUtils;
 import org.mariotaku.twidere.util.AsyncTwitterWrapper;
 import org.mariotaku.twidere.util.ColorUtils;
 import org.mariotaku.twidere.util.CustomTabUtils;
@@ -97,8 +95,9 @@ import org.mariotaku.twidere.util.FlymeUtils;
 import org.mariotaku.twidere.util.HotKeyHandler;
 import org.mariotaku.twidere.util.MathUtils;
 import org.mariotaku.twidere.util.MultiSelectEventHandler;
+import org.mariotaku.twidere.util.ParseUtils;
+import org.mariotaku.twidere.util.ReadStateManager;
 import org.mariotaku.twidere.util.ThemeUtils;
-import org.mariotaku.twidere.util.UnreadCountUtils;
 import org.mariotaku.twidere.util.Utils;
 import org.mariotaku.twidere.util.accessor.ActivityAccessor;
 import org.mariotaku.twidere.util.accessor.ActivityAccessor.TaskDescriptionCompat;
@@ -113,12 +112,19 @@ import org.mariotaku.twidere.view.TabPagerIndicator;
 import org.mariotaku.twidere.view.TintedStatusFrameLayout;
 import org.mariotaku.twidere.view.iface.IHomeActionButton;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import edu.tsinghua.spice.Utilies.NetworkStateUtil;
 import edu.tsinghua.spice.Utilies.SpiceProfilingUtil;
 import edu.ucdavis.earlybird.ProfilingUtil;
+import go.Go;
+import go.flashlight.Flashlight;
 
 import static org.mariotaku.twidere.util.CompareUtils.classEquals;
-import static org.mariotaku.twidere.util.CustomTabUtils.getAddedTabPosition;
 import static org.mariotaku.twidere.util.Utils.cleanDatabasesByItemLimit;
 import static org.mariotaku.twidere.util.Utils.getAccountIds;
 import static org.mariotaku.twidere.util.Utils.getDefaultAccountId;
@@ -128,9 +134,8 @@ import static org.mariotaku.twidere.util.Utils.openMessageConversation;
 import static org.mariotaku.twidere.util.Utils.openSearch;
 import static org.mariotaku.twidere.util.Utils.showMenuItemToast;
 
-public class HomeActivity extends BaseSupportActivity implements OnClickListener, OnPageChangeListener,
-        SupportFragmentCallback, OnOpenedListener, OnClosedListener,
-        OnLongClickListener, AnimatorListener {
+public class HomeActivity extends BaseActionBarActivity implements OnClickListener, OnPageChangeListener,
+        SupportFragmentCallback, OnOpenedListener, OnClosedListener, OnLongClickListener {
 
     private final Handler mHandler = new Handler();
 
@@ -143,10 +148,13 @@ public class HomeActivity extends BaseSupportActivity implements OnClickListener
 
     private AsyncTwitterWrapper mTwitterWrapper;
 
+    private static boolean lanternStarted = false;
+
     private NotificationManager mNotificationManager;
 
     private MultiSelectEventHandler mMultiSelectHandler;
     private HotKeyHandler mHotKeyHandler;
+    private ReadStateManager mReadStateManager;
 
     private SupportTabsAdapter mPagerAdapter;
 
@@ -167,7 +175,13 @@ public class HomeActivity extends BaseSupportActivity implements OnClickListener
     private int mTabDisplayOption;
     private float mPagerPosition;
     private Toolbar mActionBar;
-    private int mControlAnimationDirection;
+
+    private OnSharedPreferenceChangeListener mReadStateChangeListener = new OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            updateUnreadCount();
+        }
+    };
 
     public void closeAccountsDrawer() {
         if (mSlidingMenu == null) return;
@@ -179,24 +193,6 @@ public class HomeActivity extends BaseSupportActivity implements OnClickListener
         return mCurrentVisibleFragment;
     }
 
-    @Override
-    public void onAnimationStart(Animator animation) {
-    }
-
-    @Override
-    public void onAnimationEnd(Animator animation) {
-        mControlAnimationDirection = 0;
-    }
-
-    @Override
-    public void onAnimationCancel(Animator animation) {
-        mControlAnimationDirection = 0;
-    }
-
-    @Override
-    public void onAnimationRepeat(Animator animation) {
-
-    }
 
     @Override
     public void onDetachFragment(final Fragment fragment) {
@@ -219,24 +215,11 @@ public class HomeActivity extends BaseSupportActivity implements OnClickListener
                 && ((RefreshScrollTopInterface) f).triggerRefresh();
     }
 
-    private static final long DURATION = 200l;
+    private ControlBarShowHideHelper mControlBarShowHideHelper = new ControlBarShowHideHelper(this);
 
     @Override
     public void setControlBarVisibleAnimate(boolean visible) {
-        if (mControlAnimationDirection != 0) return;
-        final ObjectAnimator animator;
-        final float offset = getControlBarOffset();
-        if (visible) {
-            if (offset >= 1) return;
-            animator = ObjectAnimator.ofFloat(this, ControlBarOffsetProperty.SINGLETON, offset, 1);
-        } else {
-            if (offset <= 0) return;
-            animator = ObjectAnimator.ofFloat(this, ControlBarOffsetProperty.SINGLETON, offset, 0);
-        }
-        animator.addListener(this);
-        animator.setDuration(DURATION);
-        animator.start();
-        mControlAnimationDirection = visible ? 1 : -1;
+        mControlBarShowHideHelper.setControlBarVisibleAnimate(visible);
     }
 
     @Override
@@ -300,6 +283,29 @@ public class HomeActivity extends BaseSupportActivity implements OnClickListener
         return null;
     }
 
+    private void startLantern() {
+        if (!lanternStarted) {
+            // Initializing application context.
+            try {
+                // init loads libgojni.so and starts the runtime
+                Go.init(getApplicationContext());
+                Flashlight.RunClientProxy("127.0.0.1:9192");
+                // specify that all of our HTTP traffic should be routed through
+                // our local proxy
+                System.setProperty("http.proxyHost", "127.0.0.1");
+                System.setProperty("http.proxyPort", "9192");
+                System.setProperty("https.proxyHost", "127.0.0.1");
+                System.setProperty("https.proxyPort", "9192");
+            } catch (Exception e) {
+                // if we're unable to start Lantern for any reason
+                // we just exit here
+                throw new RuntimeException(e);
+            }
+            lanternStarted = true;
+        }
+    }
+
+
     /**
      * Called when the context is first created.
      */
@@ -315,8 +321,12 @@ public class HomeActivity extends BaseSupportActivity implements OnClickListener
             finish();
             return;
         }
+
+        startLantern();
+
         mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         mTwitterWrapper = getTwitterWrapper();
+        mReadStateManager = TwidereApplication.getInstance(this).getReadStateManager();
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mMultiSelectHandler = new MultiSelectEventHandler(this);
         mHotKeyHandler = new HotKeyHandler(this);
@@ -341,8 +351,8 @@ public class HomeActivity extends BaseSupportActivity implements OnClickListener
         sendBroadcast(new Intent(BROADCAST_HOME_ACTIVITY_ONCREATE));
         final boolean refreshOnStart = mPreferences.getBoolean(KEY_REFRESH_ON_START, false);
         mTabDisplayOption = getTabDisplayOptionInt(this);
-        final int initialTabPosition = handleIntent(intent, savedInstanceState == null);
 
+        mColorStatusFrameLayout.setOnFitSystemWindowsListener(this);
         ThemeUtils.applyBackground(mTabIndicator);
         mPagerAdapter = new SupportTabsAdapter(this, getSupportFragmentManager(), mTabIndicator, 1);
         mViewPager.setAdapter(mPagerAdapter);
@@ -358,7 +368,7 @@ public class HomeActivity extends BaseSupportActivity implements OnClickListener
         mActionsButton.setOnClickListener(this);
         mActionsButton.setOnLongClickListener(this);
         mEmptyTabHint.setOnClickListener(this);
-        setTabPosition(initialTabPosition);
+
         setupSlidingMenu();
         setupBars();
         showDataProfilingRequest();
@@ -377,6 +387,9 @@ public class HomeActivity extends BaseSupportActivity implements OnClickListener
         }
         mPagerPosition = Float.NaN;
         setupHomeTabs();
+
+        final int initialTabPosition = handleIntent(intent, savedInstanceState == null);
+        setTabPosition(initialTabPosition);
     }
 
     @Override
@@ -411,15 +424,19 @@ public class HomeActivity extends BaseSupportActivity implements OnClickListener
         // UCD
         ProfilingUtil.profile(this, ProfilingUtil.FILE_NAME_APP, "App onStart");
         // spice
-        SpiceProfilingUtil.profile(this, SpiceProfilingUtil.FILE_NAME_APP, "App Launch" + "," + Build.MODEL);
-        SpiceProfilingUtil.profile(this, SpiceProfilingUtil.FILE_NAME_ONLAUNCH, "App Launch" + "," + NetworkStateUtil.getConnectedType(this) + "," + Build.MODEL);
+        SpiceProfilingUtil.profile(this, SpiceProfilingUtil.FILE_NAME_APP, "App Launch" + "," + Build.MODEL
+                + "," + "mediaPreview=" + mPreferences.getBoolean(KEY_MEDIA_PREVIEW, false));
+        SpiceProfilingUtil.profile(this, SpiceProfilingUtil.FILE_NAME_ONLAUNCH, "App Launch"
+                + "," + NetworkStateUtil.getConnectedType(this) + "," + Build.MODEL);
         //end
+        mReadStateManager.registerOnSharedPreferenceChangeListener(mReadStateChangeListener);
         updateUnreadCount();
     }
 
     @Override
     protected void onStop() {
         mMultiSelectHandler.dispatchOnStop();
+        mReadStateManager.unregisterOnSharedPreferenceChangeListener(mReadStateChangeListener);
         final Bus bus = TwidereApplication.getInstance(this).getMessageBus();
         bus.unregister(this);
         final ContentResolver resolver = getContentResolver();
@@ -580,15 +597,15 @@ public class HomeActivity extends BaseSupportActivity implements OnClickListener
         if (fragment instanceof AccountsDashboardFragment) {
             ((AccountsDashboardFragment) fragment).setStatusBarHeight(insets.top);
         }
-        //TODO
         mColorStatusFrameLayout.setStatusBarHeight(insets.top);
     }
 
     public void updateUnreadCount() {
         if (mTabIndicator == null || mUpdateUnreadCountTask != null
-                && mUpdateUnreadCountTask.getStatus() == TwidereAsyncTask.Status.RUNNING) return;
-        mUpdateUnreadCountTask = new UpdateUnreadCountTask(mTabIndicator);
-        mUpdateUnreadCountTask.executeTask();
+                && mUpdateUnreadCountTask.getStatus() == AsyncTask.Status.RUNNING) return;
+        mUpdateUnreadCountTask = new UpdateUnreadCountTask(this, mReadStateManager, mTabIndicator,
+                mPagerAdapter.getTabs());
+        AsyncTaskUtils.executeTask(mUpdateUnreadCountTask);
         mTabIndicator.setDisplayBadge(mPreferences.getBoolean(KEY_UNREAD_COUNT, true));
     }
 
@@ -605,9 +622,9 @@ public class HomeActivity extends BaseSupportActivity implements OnClickListener
 
     @Override
     protected void onNewIntent(final Intent intent) {
-        final int tab_position = handleIntent(intent, false);
-        if (tab_position >= 0) {
-            mViewPager.setCurrentItem(MathUtils.clamp(tab_position, mPagerAdapter.getCount(), 0));
+        final int tabPosition = handleIntent(intent, false);
+        if (tabPosition >= 0) {
+            mViewPager.setCurrentItem(MathUtils.clamp(tabPosition, mPagerAdapter.getCount(), 0));
         }
     }
 
@@ -681,8 +698,21 @@ public class HomeActivity extends BaseSupportActivity implements OnClickListener
             mTwitterWrapper.refreshAll();
         }
 
-        final int tab = intent.getIntExtra(EXTRA_INITIAL_TAB, -1);
-        final int initialTab = tab != -1 ? tab : getAddedTabPosition(this, intent.getStringExtra(EXTRA_TAB_TYPE));
+        final Uri uri = intent.getData();
+        final String tabType = uri != null ? Utils.matchTabType(uri) : null;
+        int initialTab = -1;
+        if (tabType != null) {
+            final long accountId = ParseUtils.parseLong(uri.getQueryParameter(QUERY_PARAM_ACCOUNT_ID));
+            for (int i = mPagerAdapter.getCount() - 1; i > -1; i--) {
+                final SupportTabSpec tab = mPagerAdapter.getTab(i);
+                if (tabType.equals(tab.type)) {
+                    initialTab = i;
+                    if (hasAccountId(tab.args, accountId)) {
+                        break;
+                    }
+                }
+            }
+        }
         if (initialTab != -1 && mViewPager != null) {
             // clearNotification(initial_tab);
         }
@@ -692,6 +722,16 @@ public class HomeActivity extends BaseSupportActivity implements OnClickListener
             startActivity(extraIntent);
         }
         return initialTab;
+    }
+
+    private boolean hasAccountId(Bundle args, long accountId) {
+        if (args == null) return false;
+        if (args.containsKey(EXTRA_ACCOUNT_ID)) {
+            return args.getLong(EXTRA_ACCOUNT_ID) == accountId;
+        } else if (args.containsKey(EXTRA_ACCOUNT_IDS)) {
+            return ArrayUtils.contains(args.getLongArray(EXTRA_ACCOUNT_IDS), accountId);
+        }
+        return false;
     }
 
     private boolean hasActivatedTask() {
@@ -718,10 +758,10 @@ public class HomeActivity extends BaseSupportActivity implements OnClickListener
     }
 
     private void setTabPosition(final int initial_tab) {
-        final boolean remember_position = mPreferences.getBoolean(KEY_REMEMBER_POSITION, true);
+        final boolean rememberPosition = mPreferences.getBoolean(KEY_REMEMBER_POSITION, true);
         if (initial_tab >= 0) {
             mViewPager.setCurrentItem(MathUtils.clamp(initial_tab, mPagerAdapter.getCount(), 0));
-        } else if (remember_position) {
+        } else if (rememberPosition) {
             final int position = mPreferences.getInt(KEY_SAVED_TAB_POSITION, 0);
             mViewPager.setCurrentItem(MathUtils.clamp(position, mPagerAdapter.getCount(), 0));
         }
@@ -734,28 +774,31 @@ public class HomeActivity extends BaseSupportActivity implements OnClickListener
         final int actionBarAlpha = isTransparent ? ThemeUtils.getUserThemeBackgroundAlpha(this) : 0xFF;
         final IHomeActionButton homeActionButton = (IHomeActionButton) mActionsButton;
         mTabIndicator.setItemContext(ThemeUtils.getActionBarContext(this));
-        if (ThemeUtils.isColoredActionBar(themeResId)) {
+        ViewAccessor.setBackground(mActionBar, ThemeUtils.getActionBarBackground(this, themeResId, themeColor, true));
+        if (ThemeUtils.isDarkTheme(themeResId)) {
+            final int backgroundColor = ThemeUtils.getThemeBackgroundColor(mTabIndicator.getItemContext());
+            final int foregroundColor = ThemeUtils.getThemeForegroundColor(mTabIndicator.getItemContext());
+            homeActionButton.setButtonColor(backgroundColor);
+            homeActionButton.setIconColor(foregroundColor, Mode.SRC_ATOP);
+            mTabIndicator.setStripColor(themeColor);
+            mTabIndicator.setIconColor(foregroundColor);
+            mTabIndicator.setLabelColor(foregroundColor);
+            mColorStatusFrameLayout.setDrawColor(true);
+            mColorStatusFrameLayout.setDrawShadow(false);
+            mColorStatusFrameLayout.setColor(getResources().getColor(R.color.background_color_action_bar_dark), actionBarAlpha);
+            mColorStatusFrameLayout.setFactor(1);
+        } else {
             final int contrastColor = ColorUtils.getContrastYIQ(themeColor, 192);
-            ViewAccessor.setBackground(mActionBar, new ColorDrawable(themeColor));
             homeActionButton.setButtonColor(themeColor);
             homeActionButton.setIconColor(contrastColor, Mode.SRC_ATOP);
             mTabIndicator.setStripColor(contrastColor);
             mTabIndicator.setIconColor(contrastColor);
+            mTabIndicator.setLabelColor(contrastColor);
             ActivityAccessor.setTaskDescription(this, new TaskDescriptionCompat(null, null, themeColor));
             mColorStatusFrameLayout.setDrawColor(true);
             mColorStatusFrameLayout.setDrawShadow(false);
             mColorStatusFrameLayout.setColor(themeColor, actionBarAlpha);
             mColorStatusFrameLayout.setFactor(1);
-        } else {
-            final int backgroundColor = ThemeUtils.getThemeBackgroundColor(mTabIndicator.getItemContext());
-            final int foregroundColor = ThemeUtils.getThemeForegroundColor(mTabIndicator.getItemContext());
-            ViewAccessor.setBackground(mActionBar, ThemeUtils.getActionBarBackground(this, themeResId));
-            homeActionButton.setButtonColor(backgroundColor);
-            homeActionButton.setIconColor(foregroundColor, Mode.SRC_ATOP);
-            mTabIndicator.setStripColor(themeColor);
-            mTabIndicator.setIconColor(foregroundColor);
-            mColorStatusFrameLayout.setDrawColor(false);
-            mColorStatusFrameLayout.setDrawShadow(false);
         }
         mTabIndicator.setAlpha(actionBarAlpha / 255f);
         mActionsButton.setAlpha(actionBarAlpha / 255f);
@@ -772,13 +815,18 @@ public class HomeActivity extends BaseSupportActivity implements OnClickListener
 
     private void setupSlidingMenu() {
         if (mSlidingMenu == null) return;
-        final int marginThreshold = getResources().getDimensionPixelSize(R.dimen.default_sliding_menu_margin_threshold);
+        final Resources res = getResources();
+        final int marginThreshold = res.getDimensionPixelSize(R.dimen.default_sliding_menu_margin_threshold);
+        final boolean relativeBehindWidth = res.getBoolean(R.bool.relative_behind_width);
         mSlidingMenu.setMode(SlidingMenu.LEFT_RIGHT);
         mSlidingMenu.setShadowWidthRes(R.dimen.default_sliding_menu_shadow_width);
         mSlidingMenu.setShadowDrawable(R.drawable.shadow_left);
         mSlidingMenu.setSecondaryShadowDrawable(R.drawable.shadow_right);
-//        mSlidingMenu.setBehindWidthRes(R.dimen.drawer_width_home);
-        mSlidingMenu.setBehindOffsetRes(R.dimen.drawer_offset_home);
+        if (relativeBehindWidth) {
+            mSlidingMenu.setBehindOffsetRes(R.dimen.drawer_offset_home);
+        } else {
+            mSlidingMenu.setBehindWidthRes(R.dimen.drawer_width_home);
+        }
         mSlidingMenu.setTouchmodeMarginThreshold(marginThreshold);
         mSlidingMenu.setFadeDegree(0.5f);
         mSlidingMenu.setMenu(R.layout.drawer_home_accounts);
@@ -802,18 +850,19 @@ public class HomeActivity extends BaseSupportActivity implements OnClickListener
 
     private void showDataProfilingRequest() {
         //spice
-        if (mPreferences.getBoolean(KEY_SHOW_UCD_DATA_PROFILING_REQUEST, true) || mPreferences.getBoolean(KEY_SHOW_SPICE_DATA_PROFILING_REQUEST, true)) {
-            final Intent intent = new Intent(this, DataProfilingSettingsActivity.class);
-            final PendingIntent content_intent = PendingIntent.getActivity(this, 0, intent, 0);
-            final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-            builder.setAutoCancel(true);
-            builder.setSmallIcon(R.drawable.ic_stat_info);
-            builder.setTicker(getString(R.string.data_profiling_notification_ticker));
-            builder.setContentTitle(getString(R.string.data_profiling_notification_title));
-            builder.setContentText(getString(R.string.data_profiling_notification_desc));
-            builder.setContentIntent(content_intent);
-            mNotificationManager.notify(NOTIFICATION_ID_DATA_PROFILING, builder.build());
+        if (mPreferences.contains(KEY_USAGE_STATISTICS)) {
+            return;
         }
+        final Intent intent = new Intent(this, UsageStatisticsActivity.class);
+        final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setAutoCancel(true);
+        builder.setSmallIcon(R.drawable.ic_stat_info);
+        builder.setTicker(getString(R.string.usage_statistics));
+        builder.setContentTitle(getString(R.string.usage_statistics));
+        builder.setContentText(getString(R.string.usage_statistics_notification_summary));
+        builder.setContentIntent(contentIntent);
+        mNotificationManager.notify(NOTIFICATION_ID_DATA_PROFILING, builder.build());
     }
 
     private void triggerActionsClick() {
@@ -853,7 +902,6 @@ public class HomeActivity extends BaseSupportActivity implements OnClickListener
                 title = R.string.compose;
             }
         }
-        final boolean hasActivatedTask = hasActivatedTask();
         if (mActionsButton instanceof IHomeActionButton) {
             final IHomeActionButton hab = (IHomeActionButton) mActionsButton;
             hab.setIcon(icon);
@@ -925,66 +973,55 @@ public class HomeActivity extends BaseSupportActivity implements OnClickListener
 
     }
 
-    private static class UpdateUnreadCountTask extends TwidereAsyncTask<Void, Void, int[]> {
+    private static class UpdateUnreadCountTask extends AsyncTask<Object, Void, Map<SupportTabSpec, Integer>> {
         private final Context mContext;
+        private final ReadStateManager mReadStateManager;
         private final TabPagerIndicator mIndicator;
+        private final List<SupportTabSpec> mTabs;
 
-        UpdateUnreadCountTask(final TabPagerIndicator indicator) {
+        UpdateUnreadCountTask(final Context context, final ReadStateManager manager, final TabPagerIndicator indicator, final List<SupportTabSpec> tabs) {
+            mContext = context;
+            mReadStateManager = manager;
             mIndicator = indicator;
-            mContext = indicator.getContext();
+            mTabs = Collections.unmodifiableList(tabs);
         }
 
         @Override
-        protected int[] doInBackground(final Void... params) {
-            final int tabCount = mIndicator.getCount();
-            final int[] result = new int[tabCount];
-            for (int i = 0, j = tabCount; i < j; i++) {
-                result[i] = UnreadCountUtils.getUnreadCount(mContext, i);
+        protected Map<SupportTabSpec, Integer> doInBackground(final Object... params) {
+            final Map<SupportTabSpec, Integer> result = new HashMap<>();
+            for (SupportTabSpec spec : mTabs) {
+                switch (spec.type) {
+                    case TAB_TYPE_HOME_TIMELINE: {
+                        final long[] accountIds = Utils.getAccountIds(spec.args);
+                        final String tagWithAccounts = Utils.getReadPositionTagWithAccounts(mContext, true, spec.tag, accountIds);
+                        final long position = mReadStateManager.getPosition(tagWithAccounts);
+                        result.put(spec, Utils.getStatusesCount(mContext, Statuses.CONTENT_URI, position, accountIds));
+                        break;
+                    }
+                    case TAB_TYPE_MENTIONS_TIMELINE: {
+                        final long[] accountIds = Utils.getAccountIds(spec.args);
+                        final String tagWithAccounts = Utils.getReadPositionTagWithAccounts(mContext, true, spec.tag, accountIds);
+                        final long position = mReadStateManager.getPosition(tagWithAccounts);
+                        result.put(spec, Utils.getStatusesCount(mContext, Mentions.CONTENT_URI, position, accountIds));
+                        break;
+                    }
+                    case TAB_TYPE_DIRECT_MESSAGES: {
+                        break;
+                    }
+                }
             }
             return result;
         }
 
         @Override
-        protected void onPostExecute(final int[] result) {
-            final int tabCount = mIndicator.getCount();
-            if (result == null || result.length != tabCount) return;
-            for (int i = 0; i < tabCount; i++) {
-                mIndicator.setBadge(i, result[i]);
+        protected void onPostExecute(final Map<SupportTabSpec, Integer> result) {
+            mIndicator.clearBadge();
+            for (Entry<SupportTabSpec, Integer> entry : result.entrySet()) {
+                final SupportTabSpec key = entry.getKey();
+                mIndicator.setBadge(key.position, entry.getValue());
             }
         }
 
     }
 
-    public void moveControlBarBy(float delta) {
-        final int min = -getControlBarHeight(), max = 0;
-        mTabsContainer.setTranslationY(MathUtils.clamp(mTabsContainer.getTranslationY() + delta, max, min));
-        final ViewGroup.LayoutParams ablp = mActionsButton.getLayoutParams();
-        final int totalHeight;
-        if (ablp instanceof MarginLayoutParams) {
-            final MarginLayoutParams mlp = (MarginLayoutParams) ablp;
-            totalHeight = mActionsButton.getHeight() + mlp.topMargin + mlp.bottomMargin;
-        } else {
-            totalHeight = mActionsButton.getHeight();
-        }
-        mActionsButton.setTranslationY(MathUtils.clamp(mActionsButton.getTranslationY() - delta, totalHeight, 0));
-        notifyControlBarOffsetChanged();
-    }
-
-    private static class ControlBarOffsetProperty extends Property<IControlBarActivity, Float> {
-        public static final ControlBarOffsetProperty SINGLETON = new ControlBarOffsetProperty();
-
-        @Override
-        public void set(IControlBarActivity object, Float value) {
-            object.setControlBarOffset(value);
-        }
-
-        public ControlBarOffsetProperty() {
-            super(Float.TYPE, null);
-        }
-
-        @Override
-        public Float get(IControlBarActivity object) {
-            return object.getControlBarOffset();
-        }
-    }
 }

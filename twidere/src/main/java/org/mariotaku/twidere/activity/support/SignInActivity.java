@@ -19,7 +19,6 @@
 
 package org.mariotaku.twidere.activity.support;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
@@ -31,9 +30,17 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,8 +56,9 @@ import org.mariotaku.twidere.R;
 import org.mariotaku.twidere.activity.SettingsActivity;
 import org.mariotaku.twidere.app.TwidereApplication;
 import org.mariotaku.twidere.fragment.support.BaseSupportDialogFragment;
+import org.mariotaku.twidere.fragment.support.SupportProgressDialogFragment;
 import org.mariotaku.twidere.provider.TwidereDataStore.Accounts;
-import org.mariotaku.twidere.task.TwidereAsyncTask;
+import org.mariotaku.twidere.util.AsyncTaskUtils;
 import org.mariotaku.twidere.util.ContentValuesCreator;
 import org.mariotaku.twidere.util.OAuthPasswordAuthenticator;
 import org.mariotaku.twidere.util.OAuthPasswordAuthenticator.AuthenticationException;
@@ -61,8 +69,8 @@ import org.mariotaku.twidere.util.ThemeUtils;
 import org.mariotaku.twidere.util.TwitterContentUtils;
 import org.mariotaku.twidere.util.Utils;
 import org.mariotaku.twidere.util.accessor.ViewAccessor;
-import org.mariotaku.twidere.util.net.TwidereHostResolverFactory;
 import org.mariotaku.twidere.util.net.OkHttpClientFactory;
+import org.mariotaku.twidere.util.net.TwidereHostResolverFactory;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterConstants;
@@ -76,9 +84,6 @@ import twitter4j.auth.TwipOModeAuthorization;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
-import go.Go;
-import go.flashlight.Flashlight;
-
 import static android.text.TextUtils.isEmpty;
 import static org.mariotaku.twidere.util.ContentValuesCreator.createAccount;
 import static org.mariotaku.twidere.util.Utils.getActivatedAccountIds;
@@ -87,13 +92,13 @@ import static org.mariotaku.twidere.util.Utils.isUserLoggedIn;
 import static org.mariotaku.twidere.util.Utils.showErrorMessage;
 import static org.mariotaku.twidere.util.Utils.trim;
 
-public class SignInActivity extends BaseSupportActivity implements TwitterConstants, OnClickListener,
+public class SignInActivity extends BaseActionBarActivity implements TwitterConstants, OnClickListener,
         TextWatcher {
 
     private static final String TWITTER_SIGNUP_URL = "https://twitter.com/signup";
     private static final String EXTRA_API_LAST_CHANGE = "api_last_change";
-
-    private static boolean lanternStarted = false;
+    public static final String FRAGMENT_TAG_SIGN_IN_PROGRESS = "sign_in_progress";
+    private static final String DEFAULT_TWITTER_API_URL_FORMAT = "https://[DOMAIN.]twitter.com/";
 
     private String mAPIUrlFormat;
     private int mAuthType;
@@ -143,7 +148,7 @@ public class SignInActivity extends BaseSupportActivity implements TwitterConsta
                 break;
             }
             case REQUEST_BROWSER_SIGN_IN: {
-                if (resultCode == BaseSupportActivity.RESULT_OK && data != null) {
+                if (resultCode == BaseActionBarActivity.RESULT_OK && data != null) {
                     doLogin(data);
                 }
                 break;
@@ -154,12 +159,12 @@ public class SignInActivity extends BaseSupportActivity implements TwitterConsta
 
     @Override
     public void onBackPressed() {
-        if (mTask != null && mTask.getStatus() == TwidereAsyncTask.Status.RUNNING && !mBackPressed) {
+        if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING && !mBackPressed) {
             final Toast toast = Toast.makeText(this, R.string.signing_in_please_wait, Toast.LENGTH_SHORT);
             toast.show();
             return;
         }
-        if (mTask != null && mTask.getStatus() == TwidereAsyncTask.Status.RUNNING) {
+        if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING) {
             mTask.cancel(false);
         }
         super.onBackPressed();
@@ -184,6 +189,9 @@ public class SignInActivity extends BaseSupportActivity implements TwitterConsta
             }
         }
     }
+
+
+
 
     @Override
     public void onSupportContentChanged() {
@@ -219,14 +227,14 @@ public class SignInActivity extends BaseSupportActivity implements TwitterConsta
                 break;
             }
             case MENU_SETTINGS: {
-                if (mTask != null && mTask.getStatus() == TwidereAsyncTask.Status.RUNNING)
+                if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING)
                     return false;
                 final Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 break;
             }
             case MENU_EDIT_API: {
-                if (mTask != null && mTask.getStatus() == TwidereAsyncTask.Status.RUNNING)
+                if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING)
                     return false;
                 setDefaultAPI();
                 final Intent intent = new Intent(this, APIEditorActivity.class);
@@ -241,7 +249,7 @@ public class SignInActivity extends BaseSupportActivity implements TwitterConsta
             }
             case MENU_OPEN_IN_BROWSER: {
                 if (mAuthType != Accounts.AUTH_TYPE_OAUTH || mTask != null
-                        && mTask.getStatus() == TwidereAsyncTask.Status.RUNNING) return false;
+                        && mTask.getStatus() == AsyncTask.Status.RUNNING) return false;
                 saveEditedText();
                 final Intent intent = new Intent(this, BrowserSignInActivity.class);
                 intent.putExtra(Accounts.CONSUMER_KEY, mConsumerKey);
@@ -285,43 +293,17 @@ public class SignInActivity extends BaseSupportActivity implements TwitterConsta
         setSignInButton();
     }
 
-
-    private void startLantern() {
-        if (!lanternStarted) {
-            // Initializing application context.
-            try {
-                // init loads libgojni.so and starts the runtime
-                Go.init(getApplicationContext());
-                Flashlight.RunClientProxy("127.0.0.1:9192");
-                // specify that all of our HTTP traffic should be routed through
-                // our local proxy
-                System.setProperty("http.proxyHost", "127.0.0.1");
-                System.setProperty("http.proxyPort", "9192");
-                System.setProperty("https.proxyHost", "127.0.0.1");
-                System.setProperty("https.proxyPort", "9192");
-            } catch (Exception e) {
-                // if we're unable to start Lantern for any reason
-                // we just exit here
-                throw new RuntimeException(e);
-            }
-            lanternStarted = true;
-        }
-    }
-
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
-
-        startLantern();
-
         mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
         mResolver = getContentResolver();
         mApplication = TwidereApplication.getInstance(this);
         setContentView(R.layout.activity_sign_in);
-        setProgressBarIndeterminateVisibility(false);
+        setSupportProgressBarIndeterminateVisibility(false);
         final long[] account_ids = getActivatedAccountIds(this);
-        final ActionBar actionBar = getActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(account_ids.length > 0);
         }
@@ -353,7 +335,7 @@ public class SignInActivity extends BaseSupportActivity implements TwitterConsta
     }
 
     private void doLogin() {
-        if (mTask != null && mTask.getStatus() == TwidereAsyncTask.Status.RUNNING) {
+        if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING) {
             mTask.cancel(true);
         }
         saveEditedText();
@@ -361,12 +343,12 @@ public class SignInActivity extends BaseSupportActivity implements TwitterConsta
         final Configuration conf = getConfiguration();
         mTask = new SignInTask(this, conf, mUsername, mPassword, mAuthType, mAPIUrlFormat,
                 mSameOAuthSigningUrl, mNoVersionSuffix);
-        mTask.executeTask();
+        AsyncTaskUtils.executeTask(mTask);
     }
 
     private void doLogin(final Intent intent) {
         if (intent == null) return;
-        if (mTask != null && mTask.getStatus() == TwidereAsyncTask.Status.RUNNING) {
+        if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING) {
             mTask.cancel(true);
         }
         saveEditedText();
@@ -377,7 +359,7 @@ public class SignInActivity extends BaseSupportActivity implements TwitterConsta
         final String verifier = intent.getStringExtra(EXTRA_OAUTH_VERIFIER);
         mTask = new BrowserSignInTask(this, conf, token, secret, verifier, mAPIUrlFormat,
                 mSameOAuthSigningUrl, mNoVersionSuffix);
-        mTask.executeTask();
+        AsyncTaskUtils.executeTask(mTask);
     }
 
     private Configuration getConfiguration() {
@@ -392,16 +374,17 @@ public class SignInActivity extends BaseSupportActivity implements TwitterConsta
         } else {
             Utils.setUserAgent(this, cb);
         }
-        if (!isEmpty(mAPIUrlFormat)) {
-            final String versionSuffix = mNoVersionSuffix ? null : "/1.1/";
-            cb.setRestBaseURL(Utils.getApiUrl(mAPIUrlFormat, "api", versionSuffix));
-            cb.setOAuthBaseURL(Utils.getApiUrl(mAPIUrlFormat, "api", "/oauth/"));
-            cb.setUploadBaseURL(Utils.getApiUrl(mAPIUrlFormat, "upload", versionSuffix));
-            if (!mSameOAuthSigningUrl) {
-                cb.setSigningRestBaseURL(DEFAULT_SIGNING_REST_BASE_URL);
-                cb.setSigningOAuthBaseURL(DEFAULT_SIGNING_OAUTH_BASE_URL);
-                cb.setSigningUploadBaseURL(DEFAULT_SIGNING_UPLOAD_BASE_URL);
-            }
+        final String apiUrlFormat = TextUtils.isEmpty(mAPIUrlFormat) ? DEFAULT_TWITTER_API_URL_FORMAT : mAPIUrlFormat;
+        final String versionSuffix = mNoVersionSuffix ? null : "/1.1/";
+        cb.setRestBaseURL(Utils.getApiUrl(apiUrlFormat, "api", versionSuffix));
+        cb.setOAuthBaseURL(Utils.getApiUrl(apiUrlFormat, "api", "/oauth/"));
+        cb.setUploadBaseURL(Utils.getApiUrl(apiUrlFormat, "upload", versionSuffix));
+        cb.setOAuthAuthorizationURL(Utils.getApiUrl(apiUrlFormat, null, "/oauth/authorize"));
+        cb.setHttpUserAgent(Utils.generateBrowserUserAgent());
+        if (!mSameOAuthSigningUrl) {
+            cb.setSigningRestBaseURL(DEFAULT_SIGNING_REST_BASE_URL);
+            cb.setSigningOAuthBaseURL(DEFAULT_SIGNING_OAUTH_BASE_URL);
+            cb.setSigningUploadBaseURL(DEFAULT_SIGNING_UPLOAD_BASE_URL);
         }
         if (isEmpty(mConsumerKey) || isEmpty(mConsumerSecret)) {
             cb.setOAuthConsumerKey(TWITTER_CONSUMER_KEY_3);
@@ -466,6 +449,11 @@ public class SignInActivity extends BaseSupportActivity implements TwitterConsta
     }
 
     void onSignInResult(final SignInResponse result) {
+        final FragmentManager fm = getSupportFragmentManager();
+        final Fragment f = fm.findFragmentByTag(FRAGMENT_TAG_SIGN_IN_PROGRESS);
+        if (f instanceof DialogFragment) {
+            ((DialogFragment) f).dismiss();
+        }
         if (result != null) {
             if (result.succeed) {
                 final ContentValues values;
@@ -517,23 +505,26 @@ public class SignInActivity extends BaseSupportActivity implements TwitterConsta
                 }
             }
         }
-        setProgressBarIndeterminateVisibility(false);
-        mEditPassword.setEnabled(true);
-        mEditUsername.setEnabled(true);
-        mSignInButton.setEnabled(true);
-        mSignUpButton.setEnabled(true);
         setSignInButton();
     }
 
+    private final Handler mHandler = new Handler();
+
     void onSignInStart() {
-        setProgressBarIndeterminateVisibility(true);
-        mEditPassword.setEnabled(false);
-        mEditUsername.setEnabled(false);
-        mSignInButton.setEnabled(false);
-        mSignUpButton.setEnabled(false);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (isFinishing()) return;
+                final FragmentManager fm = getSupportFragmentManager();
+                final FragmentTransaction ft = fm.beginTransaction();
+                final SupportProgressDialogFragment fragment = new SupportProgressDialogFragment();
+                fragment.setCancelable(false);
+                fragment.show(ft, FRAGMENT_TAG_SIGN_IN_PROGRESS);
+            }
+        });
     }
 
-    public static abstract class AbstractSignInTask extends TwidereAsyncTask<Void, Void, SignInResponse> {
+    public static abstract class AbstractSignInTask extends AsyncTask<Object, Void, SignInResponse> {
 
         protected final Configuration conf;
         protected final SignInActivity callback;
@@ -589,7 +580,7 @@ public class SignInActivity extends BaseSupportActivity implements TwitterConsta
         }
 
         @Override
-        protected SignInResponse doInBackground(final Void... params) {
+        protected SignInResponse doInBackground(final Object... params) {
             try {
                 final Twitter twitter = new TwitterFactory(conf).getInstance();
                 final AccessToken access_token = twitter.getOAuthAccessToken(new RequestToken(conf, request_token,
@@ -648,7 +639,7 @@ public class SignInActivity extends BaseSupportActivity implements TwitterConsta
         }
 
         @Override
-        protected SignInResponse doInBackground(final Void... params) {
+        protected SignInResponse doInBackground(final Object... params) {
             try {
                 switch (auth_type) {
                     case Accounts.AUTH_TYPE_OAUTH:

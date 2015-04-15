@@ -24,7 +24,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import org.mariotaku.twidere.Constants;
 import org.mariotaku.twidere.fragment.iface.RefreshScrollTopInterface;
@@ -36,6 +38,7 @@ import org.mariotaku.twidere.view.iface.PagerIndicator.TabProvider;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static org.mariotaku.twidere.util.CustomTabUtils.getTabIconDrawable;
 import static org.mariotaku.twidere.util.Utils.announceForAccessibilityCompat;
@@ -43,7 +46,9 @@ import static org.mariotaku.twidere.util.Utils.announceForAccessibilityCompat;
 public class SupportTabsAdapter extends SupportFixedFragmentStatePagerAdapter implements TabProvider, TabListener,
         Constants {
 
-    private final ArrayList<SupportTabSpec> mTabs = new ArrayList<SupportTabSpec>();
+    private static final String EXTRA_ADAPTER_POSITION = "adapter_position";
+
+    private final ArrayList<SupportTabSpec> mTabs = new ArrayList<>();
 
     private final Context mContext;
     private final PagerIndicator mIndicator;
@@ -68,8 +73,8 @@ public class SupportTabsAdapter extends SupportFixedFragmentStatePagerAdapter im
     }
 
     public void addTab(final Class<? extends Fragment> cls, final Bundle args, final String name, final Integer icon,
-                       final int position) {
-        addTab(new SupportTabSpec(name, icon, cls, args, position));
+                       final int position, final String tag) {
+        addTab(new SupportTabSpec(name, icon, cls, args, position, tag));
     }
 
     public void addTab(final SupportTabSpec spec) {
@@ -93,15 +98,19 @@ public class SupportTabsAdapter extends SupportFixedFragmentStatePagerAdapter im
     }
 
     @Override
-    public Fragment getItem(final int position) {
-        final Fragment fragment = Fragment.instantiate(mContext, mTabs.get(position).cls.getName());
-        fragment.setArguments(mTabs.get(position).args);
-        return fragment;
+    public int getItemPosition(Object object) {
+        if (!(object instanceof Fragment)) return POSITION_NONE;
+        final Bundle args = ((Fragment) object).getArguments();
+        if (args == null) return POSITION_NONE;
+        return args.getInt(EXTRA_ADAPTER_POSITION, POSITION_NONE);
     }
 
     @Override
-    public Drawable getPageIcon(final int position) {
-        return getTabIconDrawable(mContext, mTabs.get(position).icon);
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+        if (mIndicator != null) {
+            mIndicator.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -114,16 +123,29 @@ public class SupportTabsAdapter extends SupportFixedFragmentStatePagerAdapter im
         return 1.0f / mColumns;
     }
 
+    @Override
+    public Fragment getItem(final int position) {
+        final Fragment fragment = Fragment.instantiate(mContext, mTabs.get(position).cls.getName());
+        fragment.setArguments(getPageArguments(mTabs.get(position).args, position));
+        return fragment;
+    }
+
+    @Override
+    public void startUpdate(ViewGroup container) {
+        super.startUpdate(container);
+    }
+
+    @Override
+    public Drawable getPageIcon(final int position) {
+        return getTabIconDrawable(mContext, mTabs.get(position).icon);
+    }
+
     public SupportTabSpec getTab(final int position) {
         return position >= 0 && position < mTabs.size() ? mTabs.get(position) : null;
     }
 
-    @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
-        if (mIndicator != null) {
-            mIndicator.notifyDataSetChanged();
-        }
+    public List<SupportTabSpec> getTabs() {
+        return mTabs;
     }
 
     @Override
@@ -137,6 +159,7 @@ public class SupportTabsAdapter extends SupportFixedFragmentStatePagerAdapter im
 
     @Override
     public void onPageSelected(final int position) {
+        Log.d(LOGTAG, "onPageSelected " + position);
         if (mIndicator == null) return;
         announceForAccessibilityCompat(mContext, (View) mIndicator, getPageTitle(position), getClass());
     }
@@ -149,5 +172,13 @@ public class SupportTabsAdapter extends SupportFixedFragmentStatePagerAdapter im
         if (f instanceof RefreshScrollTopInterface)
             return ((RefreshScrollTopInterface) f).triggerRefresh();
         return false;
+    }
+
+    private Bundle getPageArguments(Bundle args, int position) {
+        if (args == null) {
+            args = new Bundle();
+        }
+        args.putInt(EXTRA_ADAPTER_POSITION, position);
+        return args;
     }
 }

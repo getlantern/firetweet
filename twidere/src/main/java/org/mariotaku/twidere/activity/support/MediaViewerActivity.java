@@ -17,12 +17,12 @@
 package org.mariotaku.twidere.activity.support;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
@@ -38,38 +38,41 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLayoutChangeListener;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
-import com.diegocarloslima.byakugallery.lib.TileBitmapDrawable;
-import com.diegocarloslima.byakugallery.lib.TileBitmapDrawable.OnInitializeListener;
+import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+import com.pnikosis.materialishprogress.ProgressWheel;
+import com.sprylab.android.widget.TextureVideoView;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.mariotaku.twidere.Constants;
 import org.mariotaku.twidere.R;
 import org.mariotaku.twidere.adapter.support.SupportFixedFragmentStatePagerAdapter;
+import org.mariotaku.twidere.app.TwidereApplication;
 import org.mariotaku.twidere.fragment.support.BaseSupportFragment;
+import org.mariotaku.twidere.fragment.support.ViewStatusDialogFragment;
 import org.mariotaku.twidere.loader.support.TileImageLoader;
 import org.mariotaku.twidere.loader.support.TileImageLoader.DownloadListener;
 import org.mariotaku.twidere.loader.support.TileImageLoader.Result;
 import org.mariotaku.twidere.model.ParcelableMedia;
+import org.mariotaku.twidere.model.ParcelableMedia.VideoInfo.Variant;
+import org.mariotaku.twidere.model.ParcelableStatus;
 import org.mariotaku.twidere.util.SaveImageTask;
 import org.mariotaku.twidere.util.ThemeUtils;
 import org.mariotaku.twidere.util.Utils;
-import org.mariotaku.twidere.view.TouchImageView;
-import org.mariotaku.twidere.view.TouchImageView.ZoomListener;
+import org.mariotaku.twidere.util.VideoLoader;
+import org.mariotaku.twidere.util.VideoLoader.VideoLoadingListener;
 
 import java.io.File;
-import java.io.FileDescriptor;
-import java.io.IOException;
-import java.io.RandomAccessFile;
 
-import pl.droidsonroids.gif.GifDrawable;
 
 public final class MediaViewerActivity extends ThemedActionBarActivity implements Constants, OnPageChangeListener {
 
     private ViewPager mViewPager;
     private MediaPagerAdapter mAdapter;
     private ActionBar mActionBar;
+    private View mMediaStatusContainer;
+
 
     @Override
     public int getThemeColor() {
@@ -111,6 +114,7 @@ public final class MediaViewerActivity extends ThemedActionBarActivity implement
     public void onSupportContentChanged() {
         super.onSupportContentChanged();
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
+        mMediaStatusContainer = findViewById(R.id.media_status_container);
     }
 
     @Override
@@ -132,6 +136,20 @@ public final class MediaViewerActivity extends ThemedActionBarActivity implement
         if (currentIndex != -1) {
             mViewPager.setCurrentItem(currentIndex, false);
         }
+        if (intent.hasExtra(EXTRA_STATUS)) {
+            mMediaStatusContainer.setVisibility(View.VISIBLE);
+            final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            final Fragment f = new ViewStatusDialogFragment();
+            final Bundle args = new Bundle();
+            args.putParcelable(EXTRA_STATUS, intent.getParcelableExtra(EXTRA_STATUS));
+            args.putBoolean(EXTRA_SHOW_MEDIA_PREVIEW, false);
+            args.putBoolean(EXTRA_SHOW_EXTRA_TYPE, false);
+            f.setArguments(args);
+            ft.replace(R.id.media_status, f);
+            ft.commit();
+        } else {
+            mMediaStatusContainer.setVisibility(View.GONE);
+        }
     }
 
     private boolean isBarShowing() {
@@ -146,26 +164,129 @@ public final class MediaViewerActivity extends ThemedActionBarActivity implement
         } else {
             mActionBar.hide();
         }
+
+        mMediaStatusContainer.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     private void toggleBar() {
         setBarVisibility(!isBarShowing());
     }
 
-    public static final class ImagePageFragment extends BaseSupportFragment
-            implements DownloadListener, LoaderCallbacks<Result>, OnLayoutChangeListener, OnClickListener, ZoomListener {
+    public boolean hasStatus() {
+        return getIntent().hasExtra(EXTRA_STATUS);
+    }
 
-        private TouchImageView mImageView;
-        private ProgressBar mProgressBar;
+    public static final class VideoPageFragment extends BaseSupportFragment
+            implements VideoLoadingListener {
+
+        private static final String[] SUPPORTED_VIDEO_TYPES;
+
+        static {
+            SUPPORTED_VIDEO_TYPES = new String[]{"video/mp4"};
+        }
+
+        private TextureVideoView mVideoView;
+        private VideoLoader mVideoLoader;
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.fragment_media_page_video, container, false);
+        }
+
+        @Override
+        public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+            super.onActivityCreated(savedInstanceState);
+            mVideoLoader = TwidereApplication.getInstance(getActivity()).getVideoLoader();
+            final String url = getBestVideoUrl(getMedia());
+            if (url != null) {
+                mVideoLoader.loadVideo(url, this);
+            }
+        }
+
+        private String getBestVideoUrl(ParcelableMedia media) {
+            if (media == null || media.video_info == null) return null;
+            for (Variant variant : media.video_info.variants) {
+                if (ArrayUtils.contains(SUPPORTED_VIDEO_TYPES, variant.content_type)) {
+                    return variant.url;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public void onBaseViewCreated(View view, Bundle savedInstanceState) {
+            super.onBaseViewCreated(view, savedInstanceState);
+            mVideoView = (TextureVideoView) view.findViewById(R.id.video_view);
+        }
+
+        @Override
+        public void onVideoLoadingCancelled(String uri, VideoLoadingListener listener) {
+
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+        }
+
+        @Override
+        public void onDestroyView() {
+            super.onDestroyView();
+        }
+
+        @Override
+        public void onPause() {
+            super.onPause();
+        }
+
+        @Override
+        public void setUserVisibleHint(boolean isVisibleToUser) {
+            super.setUserVisibleHint(isVisibleToUser);
+//            if (mVideoView != null && mVideoView.isPlaying()) {
+//                mVideoView.pause();
+//            }
+        }
+
+        @Override
+        public void onVideoLoadingComplete(String uri, VideoLoadingListener listener, File file) {
+            mVideoView.setVideoURI(Uri.fromFile(file));
+            mVideoView.start();
+        }
+
+        @Override
+        public void onVideoLoadingFailed(String uri, VideoLoadingListener listener, Exception e) {
+        }
+
+        @Override
+        public void onVideoLoadingProgressUpdate(String uri, VideoLoadingListener listener, int current, int total) {
+
+        }
+
+        private ParcelableMedia getMedia() {
+            final Bundle args = getArguments();
+            return args.getParcelable(EXTRA_MEDIA);
+        }
+
+        @Override
+        public void onVideoLoadingStarted(String uri, VideoLoadingListener listener) {
+
+        }
+    }
+
+    public static final class ImagePageFragment extends BaseSupportFragment
+            implements DownloadListener, LoaderCallbacks<Result>, OnLayoutChangeListener, OnClickListener {
+
+        private SubsamplingScaleImageView mImageView;
+        private ProgressWheel mProgressBar;
         private boolean mLoaderInitialized;
-        private long mContentLength;
+        private float mContentLength;
         private SaveImageTask mSaveImageTask;
 
         @Override
         public void onBaseViewCreated(View view, @Nullable Bundle savedInstanceState) {
             super.onBaseViewCreated(view, savedInstanceState);
-            mImageView = (TouchImageView) view.findViewById(R.id.image_view);
-            mProgressBar = (ProgressBar) view.findViewById(R.id.progress);
+            mImageView = (SubsamplingScaleImageView) view.findViewById(R.id.image_view);
+            mProgressBar = (ProgressWheel) view.findViewById(R.id.progress);
         }
 
         @Override
@@ -177,11 +298,16 @@ public final class MediaViewerActivity extends ThemedActionBarActivity implement
         @Override
         public Loader<Result> onCreateLoader(final int id, final Bundle args) {
             mProgressBar.setVisibility(View.VISIBLE);
-            mProgressBar.setIndeterminate(true);
+            mProgressBar.spin();
             invalidateOptionsMenu();
-            final ParcelableMedia media = args.getParcelable(EXTRA_MEDIA);
+            final ParcelableMedia media = getMedia();
             final long accountId = args.getLong(EXTRA_ACCOUNT_ID, -1);
             return new TileImageLoader(getActivity(), this, accountId, Uri.parse(media.media_url));
+        }
+
+        private ParcelableMedia getMedia() {
+            final Bundle args = getArguments();
+            return args.getParcelable(EXTRA_MEDIA);
         }
 
         @Override
@@ -190,40 +316,24 @@ public final class MediaViewerActivity extends ThemedActionBarActivity implement
                 mImageView.setVisibility(View.VISIBLE);
                 mImageView.setTag(data.file);
                 if (data.useDecoder) {
-                    TileBitmapDrawable.attachTileBitmapDrawable(mImageView, data.file.getAbsolutePath(),
-                            null, new OnInitializeListener() {
-                                @Override
-                                public void onStartInitialization() {
-
-                                }
-
-                                @Override
-                                public void onEndInitialization() {
-                                    mImageView.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            updateScaleLimit();
-                                        }
-                                    });
-                                }
-                            });
+                    mImageView.setImage(ImageSource.uri(Uri.fromFile(data.file)));
                 } else if ("image/gif".equals(data.options.outMimeType)) {
-                    try {
-                        final FileDescriptor fd = new RandomAccessFile(data.file, "r").getFD();
-                        mImageView.setImageDrawable(new GifDrawable(fd));
-                    } catch (IOException e) {
-                        mImageView.setImageDrawable(null);
-                        mImageView.setTag(null);
-                        mImageView.setVisibility(View.GONE);
-                        Utils.showErrorMessage(getActivity(), null, e, true);
-                    }
+//                    try {
+//                        final FileDescriptor fd = new RandomAccessFile(data.file, "r").getFD();
+//                        mImageView.setImageDrawable(new GifDrawable(fd));
+//                    } catch (IOException e) {
+//                        mImageView.setImage(null);
+//                        mImageView.setTag(null);
+//                        mImageView.setVisibility(View.GONE);
+//                        Utils.showErrorMessage(getActivity(), null, e, true);
+//                    }
                     updateScaleLimit();
                 } else {
-                    mImageView.setImageBitmap(data.bitmap);
+                    mImageView.setImage(ImageSource.bitmap(data.bitmap));
                     updateScaleLimit();
                 }
             } else {
-                mImageView.setImageDrawable(null);
+                mImageView.setImage(null);
                 mImageView.setTag(null);
                 mImageView.setVisibility(View.GONE);
                 Utils.showErrorMessage(getActivity(), null, data.exception, true);
@@ -235,15 +345,15 @@ public final class MediaViewerActivity extends ThemedActionBarActivity implement
 
         @Override
         public void onLoaderReset(final Loader<TileImageLoader.Result> loader) {
-            final Drawable drawable = mImageView.getDrawable();
-            if (drawable instanceof GifDrawable) {
-                ((GifDrawable) drawable).recycle();
-            }
+//            final Drawable drawable = mImageView.getDrawable();
+//            if (drawable instanceof GifDrawable) {
+//                ((GifDrawable) drawable).recycle();
+//            }
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_media_page, container, false);
+            return inflater.inflate(R.layout.fragment_media_page_image, container, false);
         }
 
         @Override
@@ -263,6 +373,12 @@ public final class MediaViewerActivity extends ThemedActionBarActivity implement
                 final Uri fileUri = Uri.fromFile(file);
                 intent.setDataAndType(fileUri, Utils.getImageMimeType(file));
                 intent.putExtra(Intent.EXTRA_STREAM, fileUri);
+                final MediaViewerActivity activity = (MediaViewerActivity) getActivity();
+                if (activity.hasStatus()) {
+                    final ParcelableStatus status = activity.getStatus();
+                    intent.putExtra(Intent.EXTRA_TEXT, Utils.getStatusShareText(activity, status));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, Utils.getStatusShareSubject(activity, status));
+                }
                 shareProvider.setShareIntent(intent);
             }
         }
@@ -281,6 +397,10 @@ public final class MediaViewerActivity extends ThemedActionBarActivity implement
                 }
                 case R.id.save: {
                     saveToGallery();
+                    return true;
+                }
+                case R.id.refresh: {
+                    loadImage();
                     return true;
                 }
             }
@@ -311,17 +431,11 @@ public final class MediaViewerActivity extends ThemedActionBarActivity implement
             startActivity(intent);
         }
 
-        private ParcelableMedia getMedia() {
-            final Bundle args = getArguments();
-            return args.getParcelable(EXTRA_MEDIA);
-        }
-
         @Override
         public void onActivityCreated(@Nullable Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
             setHasOptionsMenu(true);
             mImageView.setOnClickListener(this);
-            mImageView.setZoomListener(this);
             loadImage();
         }
 
@@ -350,18 +464,18 @@ public final class MediaViewerActivity extends ThemedActionBarActivity implement
         @Override
         public void onDownloadStart(final long total) {
             mContentLength = total;
-            mProgressBar.setIndeterminate(total <= 0);
-            mProgressBar.setMax(total > 0 ? (int) (total / 1024) : 0);
+            mProgressBar.spin();
         }
 
         @Override
         public void onProgressUpdate(final long downloaded) {
-            if (mContentLength == 0) {
-                mProgressBar.setIndeterminate(true);
+            if (mContentLength <= 0) {
+                if (!mProgressBar.isSpinning()) {
+                    mProgressBar.spin();
+                }
                 return;
             }
-            mProgressBar.setIndeterminate(false);
-            mProgressBar.setProgress((int) (downloaded / 1024));
+            mProgressBar.setProgress(downloaded / mContentLength);
         }
 
         @Override
@@ -369,13 +483,11 @@ public final class MediaViewerActivity extends ThemedActionBarActivity implement
 
         }
 
-        @Override
         public void onZoomOut() {
             final MediaViewerActivity activity = (MediaViewerActivity) getActivity();
             activity.setBarVisibility(true);
         }
 
-        @Override
         public void onZoomIn() {
             final MediaViewerActivity activity = (MediaViewerActivity) getActivity();
             activity.setBarVisibility(false);
@@ -392,17 +504,21 @@ public final class MediaViewerActivity extends ThemedActionBarActivity implement
         }
 
         private void updateScaleLimit() {
-            final int viewWidth = mImageView.getWidth(), viewHeight = mImageView.getHeight();
-            final Drawable drawable = mImageView.getDrawable();
-            if (drawable == null || viewWidth <= 0 || viewHeight <= 0) return;
-            final int drawableWidth = drawable.getIntrinsicWidth();
-            final int drawableHeight = drawable.getIntrinsicHeight();
-            if (drawableWidth <= 0 || drawableHeight <= 0) return;
-            final float widthRatio = viewWidth / (float) drawableWidth;
-            final float heightRatio = viewHeight / (float) drawableHeight;
-            mImageView.setMaxScale(Math.max(1, Math.max(heightRatio, widthRatio)));
-            mImageView.resetScale();
+//            final int viewWidth = mImageView.getWidth(), viewHeight = mImageView.getHeight();
+//            final Drawable drawable = mImageView.getDrawable();
+//            if (drawable == null || viewWidth <= 0 || viewHeight <= 0) return;
+//            final int drawableWidth = drawable.getIntrinsicWidth();
+//            final int drawableHeight = drawable.getIntrinsicHeight();
+//            if (drawableWidth <= 0 || drawableHeight <= 0) return;
+//            final float widthRatio = viewWidth / (float) drawableWidth;
+//            final float heightRatio = viewHeight / (float) drawableHeight;
+//            mImageView.setMaxScale(Math.max(1, Math.max(heightRatio, widthRatio)));
+//            mImageView.resetScale();
         }
+    }
+
+    private ParcelableStatus getStatus() {
+        return getIntent().getParcelableExtra(EXTRA_STATUS);
     }
 
     private static class MediaPagerAdapter extends SupportFixedFragmentStatePagerAdapter {
@@ -424,10 +540,18 @@ public final class MediaViewerActivity extends ThemedActionBarActivity implement
 
         @Override
         public Fragment getItem(int position) {
+            final ParcelableMedia media = mMedia[position];
             final Bundle args = new Bundle();
             args.putLong(EXTRA_ACCOUNT_ID, mAccountId);
-            args.putParcelable(EXTRA_MEDIA, mMedia[position]);
-            return Fragment.instantiate(mActivity, ImagePageFragment.class.getName(), args);
+            args.putParcelable(EXTRA_MEDIA, media);
+            switch (media.type) {
+                case ParcelableMedia.TYPE_VIDEO: {
+                    return Fragment.instantiate(mActivity, VideoPageFragment.class.getName(), args);
+                }
+                default: {
+                    return Fragment.instantiate(mActivity, ImagePageFragment.class.getName(), args);
+                }
+            }
         }
 
         public void setMedia(long accountId, ParcelableMedia[] media) {

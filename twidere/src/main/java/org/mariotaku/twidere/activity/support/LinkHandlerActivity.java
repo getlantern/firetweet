@@ -19,8 +19,8 @@
 
 package org.mariotaku.twidere.activity.support;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.support.v4.view.WindowCompat;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,7 +44,7 @@ import org.mariotaku.twidere.fragment.iface.IBaseFragment.SystemWindowsInsetsCal
 import org.mariotaku.twidere.fragment.iface.IBasePullToRefreshFragment;
 import org.mariotaku.twidere.fragment.iface.RefreshScrollTopInterface;
 import org.mariotaku.twidere.fragment.iface.SupportFragmentCallback;
-import org.mariotaku.twidere.util.FlymeUtils;
+import org.mariotaku.twidere.fragment.support.SearchFragment;
 import org.mariotaku.twidere.util.MultiSelectEventHandler;
 import org.mariotaku.twidere.util.ThemeUtils;
 import org.mariotaku.twidere.util.Utils;
@@ -54,14 +55,34 @@ import org.mariotaku.twidere.view.TintedStatusFrameLayout;
 import static org.mariotaku.twidere.util.Utils.createFragmentForIntent;
 import static org.mariotaku.twidere.util.Utils.matchLinkId;
 
-public class LinkHandlerActivity extends BaseSupportActivity implements OnClickListener,
-        OnLongClickListener, SystemWindowsInsetsCallback, IControlBarActivity {
+public class LinkHandlerActivity extends BaseActionBarActivity implements OnClickListener,
+        OnLongClickListener, SystemWindowsInsetsCallback, IControlBarActivity, SupportFragmentCallback {
+
+    private ControlBarShowHideHelper mControlBarShowHideHelper = new ControlBarShowHideHelper(this);
 
     private MultiSelectEventHandler mMultiSelectHandler;
-
     private TintedStatusFrameLayout mMainContent;
-
     private boolean mFinishOnly;
+
+    @Override
+    public Fragment getCurrentVisibleFragment() {
+        return getSupportFragmentManager().findFragmentById(R.id.main_content);
+    }
+
+    @Override
+    public void onDetachFragment(Fragment fragment) {
+
+    }
+
+    @Override
+    public void onSetUserVisibleHint(Fragment fragment, boolean isVisibleToUser) {
+
+    }
+
+    @Override
+    public boolean triggerRefresh(int position) {
+        return false;
+    }
 
     @Override
     public void onClick(final View v) {
@@ -109,7 +130,7 @@ public class LinkHandlerActivity extends BaseSupportActivity implements OnClickL
 
     @Override
     protected IBasePullToRefreshFragment getCurrentPullToRefreshFragment() {
-        final Fragment fragment = getSupportFragmentManager().findFragmentById(android.R.id.content);
+        final Fragment fragment = getCurrentVisibleFragment();
         if (fragment instanceof IBasePullToRefreshFragment)
             return (IBasePullToRefreshFragment) fragment;
         else if (fragment instanceof SupportFragmentCallback) {
@@ -128,7 +149,6 @@ public class LinkHandlerActivity extends BaseSupportActivity implements OnClickL
         final Uri data = intent.getData();
         final int linkId = matchLinkId(data);
         requestWindowFeatures(getWindow(), linkId, data);
-        setUiOptions(getWindow(), linkId, data);
         super.onCreate(savedInstanceState);
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -136,6 +156,7 @@ public class LinkHandlerActivity extends BaseSupportActivity implements OnClickL
             setActionBarBackground(actionBar, linkId, data);
         }
         setContentView(R.layout.activity_content_fragment);
+        mMainContent.setOnFitSystemWindowsListener(this);
         setStatusBarColor(linkId, data);
         setTaskInfo(linkId, data);
         setSupportProgressBarIndeterminateVisibility(false);
@@ -157,17 +178,8 @@ public class LinkHandlerActivity extends BaseSupportActivity implements OnClickL
     }
 
     @Override
-    public boolean getSystemWindowsInsets(Rect insets) {
-        final boolean result = super.getSystemWindowsInsets(insets);
-//        if (result) {
-//            insets.bottom = 0;
-//        }
-        return result;
-    }
-
-    @Override
-    public void fitSystemWindows(Rect insets) {
-        super.fitSystemWindows(insets);
+    public void onFitSystemWindows(Rect insets) {
+        super.onFitSystemWindows(insets);
         final Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_content);
         if (fragment instanceof IBaseFragment) {
             ((IBaseFragment) fragment).requestFitSystemWindows();
@@ -190,8 +202,8 @@ public class LinkHandlerActivity extends BaseSupportActivity implements OnClickL
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             window.addFlags(LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-        window.requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
-        window.requestFeature(Window.FEATURE_ACTION_MODE_OVERLAY);
+        supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_BAR_OVERLAY);
+        supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_MODE_OVERLAY);
         final int transitionRes;
         switch (linkId) {
             case LINK_ID_USER: {
@@ -213,14 +225,25 @@ public class LinkHandlerActivity extends BaseSupportActivity implements OnClickL
         }
     }
 
+    @SuppressLint("AppCompatMethod")
     private void setActionBarBackground(ActionBar actionBar, int linkId, Uri data) {
         switch (linkId) {
             case LINK_ID_USER: {
                 break;
             }
+            case LINK_ID_SEARCH:
+            case LINK_ID_USER_LISTS: {
+                ThemeUtils.applyActionBarBackground(actionBar, this, getCurrentThemeResourceId(),
+                        getCurrentThemeColor(), false);
+                ThemeUtils.applyActionBarBackground(getActionBar(), this, getCurrentThemeResourceId(),
+                        getCurrentThemeColor(), true);
+                break;
+            }
             default: {
                 ThemeUtils.applyActionBarBackground(actionBar, this, getCurrentThemeResourceId(),
-                        getCurrentThemeColor());
+                        getCurrentThemeColor(), true);
+                ThemeUtils.applyActionBarBackground(getActionBar(), this, getCurrentThemeResourceId(),
+                        getCurrentThemeColor(), true);
                 break;
             }
         }
@@ -232,16 +255,20 @@ public class LinkHandlerActivity extends BaseSupportActivity implements OnClickL
             case LINK_ID_USER: {
                 mMainContent.setShadowColor(0xA0000000);
                 mMainContent.setDrawShadow(false);
-                mMainContent.setDrawColor(!ThemeUtils.isDarkTheme(getCurrentThemeResourceId()));
+                mMainContent.setDrawColor(true);
                 break;
             }
             default: {
                 mMainContent.setDrawShadow(false);
-                mMainContent.setDrawColor(!ThemeUtils.isDarkTheme(getCurrentThemeResourceId()));
+                mMainContent.setDrawColor(true);
                 mMainContent.setFactor(1);
                 final int color = getCurrentThemeColor();
                 final int alpha = getCurrentThemeBackgroundAlpha();
-                mMainContent.setColor(color, alpha);
+                if (ThemeUtils.isDarkTheme(getCurrentThemeResourceId())) {
+                    mMainContent.setColor(getResources().getColor(R.color.background_color_action_bar_dark), alpha);
+                } else {
+                    mMainContent.setColor(color, alpha);
+                }
                 break;
             }
         }
@@ -257,16 +284,6 @@ public class LinkHandlerActivity extends BaseSupportActivity implements OnClickL
                     ActivityAccessor.setTaskDescription(this, new TaskDescriptionCompat(null, null,
                             getCurrentThemeColor()));
                 }
-                break;
-            }
-        }
-    }
-
-    private void setUiOptions(final Window window, int linkId, final Uri uri) {
-        if (!FlymeUtils.hasSmartBar()) return;
-        switch (linkId) {
-            case LINK_ID_USER: {
-                window.setUiOptions(ActivityInfo.UIOPTION_SPLIT_ACTION_BAR_WHEN_NARROW);
                 break;
             }
         }
@@ -388,13 +405,26 @@ public class LinkHandlerActivity extends BaseSupportActivity implements OnClickL
     }
 
     @Override
-    public void setControlBarOffset(float offset) {
+    public void setControlBarVisibleAnimate(boolean visible) {
+        // Currently only search page needs this pattern, so we only enable this feature for it.
+        if (!(getCurrentVisibleFragment() instanceof SearchFragment)) return;
+        mControlBarShowHideHelper.setControlBarVisibleAnimate(visible);
+    }
 
+
+    @Override
+    public void setControlBarOffset(float offset) {
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar == null) return;
+        actionBar.setHideOffset(Math.round((1 - offset) * getControlBarHeight()));
+        notifyControlBarOffsetChanged();
     }
 
     @Override
     public float getControlBarOffset() {
-        return 0;
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar == null) return 0;
+        return 1f - actionBar.getHideOffset() / (float) getControlBarHeight();
     }
 
     @Override

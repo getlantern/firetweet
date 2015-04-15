@@ -19,20 +19,16 @@
 
 package org.mariotaku.twidere.util;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
-import android.text.ClipboardManager;
 
-@SuppressWarnings("deprecation")
 public final class ClipboardUtils {
 
-	public static CharSequence getText(final Context context) {
-		if (context == null) return null;
-		return ((ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE)).getText();
-	}
-
-	public static boolean setText(final Context context, final CharSequence text) {
-		if (context == null) return false;
-		((ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE)).setText(text != null ? text : "");
-		return true;
-	}
+    public static boolean setText(final Context context, final CharSequence text) {
+        if (context == null) return false;
+        final ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        clipboardManager.setPrimaryClip(ClipData.newPlainText(text, text));
+        return true;
+    }
 }

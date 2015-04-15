@@ -21,9 +21,6 @@ package org.mariotaku.twidere.util.net;
 
 import android.content.Context;
 
-import org.mariotaku.twidere.app.TwidereApplication;
-import org.mariotaku.twidere.util.net.OkHttpClientImpl;
-
 import twitter4j.http.HttpClient;
 import twitter4j.http.HttpClientConfiguration;
 import twitter4j.http.HttpClientFactory;
@@ -32,12 +29,14 @@ import twitter4j.http.HttpClientFactory;
  * Created by mariotaku on 15/1/22.
  */
 public class OkHttpClientFactory implements HttpClientFactory {
-    public OkHttpClientFactory(Context context) {
+    private final Context context;
 
+    public OkHttpClientFactory(Context context) {
+        this.context = context;
     }
 
     @Override
     public HttpClient getInstance(HttpClientConfiguration conf) {
-        return new OkHttpClientImpl(conf);
+        return new OkHttpClientImpl(context, conf);
     }
 }

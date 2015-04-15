@@ -36,13 +36,6 @@ public class HomeTimelineFragment extends CursorStatusesFragment {
     }
 
     @Override
-    protected void updateRefreshState() {
-        final AsyncTwitterWrapper twitter = getTwitterWrapper();
-        if (twitter == null) return;
-        setRefreshing(twitter.isHomeTimelineRefreshing());
-    }
-
-    @Override
     protected int getNotificationType() {
         return NOTIFICATION_ID_HOME_TIMELINE;
     }
@@ -51,6 +44,19 @@ public class HomeTimelineFragment extends CursorStatusesFragment {
     protected boolean isFilterEnabled() {
         final SharedPreferences pref = getSharedPreferences();
         return pref != null && pref.getBoolean(KEY_FILTERS_IN_HOME_TIMELINE, true);
+    }
+
+    @Override
+    protected void updateRefreshState() {
+        final AsyncTwitterWrapper twitter = getTwitterWrapper();
+        if (twitter == null) return;
+        setRefreshing(twitter.isHomeTimelineRefreshing());
+    }
+
+    @Override
+    public boolean isRefreshing() {
+        final AsyncTwitterWrapper twitter = getTwitterWrapper();
+        return twitter != null && twitter.isHomeTimelineRefreshing();
     }
 
     @Override
@@ -63,4 +69,8 @@ public class HomeTimelineFragment extends CursorStatusesFragment {
         return twitter.getHomeTimelineAsync(accountIds, maxIds, sinceIds);
     }
 
+    @Override
+    protected String getReadPositionTag() {
+        return TAB_TYPE_HOME_TIMELINE;
+    }
 }

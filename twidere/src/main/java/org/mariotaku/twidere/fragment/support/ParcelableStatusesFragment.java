@@ -21,6 +21,7 @@ package org.mariotaku.twidere.fragment.support;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -112,9 +113,18 @@ public abstract class ParcelableStatusesFragment extends AbsStatusesFragment<Lis
     }
 
     @Override
-    protected void onLoadMoreStatuses() {
+    protected void onLoadingFinished() {
+        setRefreshEnabled(true);
+        setRefreshing(false);
+        setLoadMoreIndicatorVisible(false);
+    }
+
+
+    @Override
+    public void onLoadMoreContents() {
+        super.onLoadMoreContents();
         final IStatusesAdapter<List<ParcelableStatus>> adapter = getAdapter();
-        final long[] maxIds = new long[]{adapter.getStatus(adapter.getStatusCount() - 1).id};
+        final long[] maxIds = new long[]{adapter.getStatus(adapter.getStatusesCount() - 1).id};
         getStatuses(null, maxIds, null);
     }
 
@@ -133,7 +143,7 @@ public abstract class ParcelableStatusesFragment extends AbsStatusesFragment<Lis
     public boolean triggerRefresh() {
         final IStatusesAdapter<List<ParcelableStatus>> adapter = getAdapter();
         final long[] accountIds = getAccountIds();
-        if (adapter.getStatusCount() > 0) {
+        if (adapter.getStatusesCount() > 0) {
             final long[] sinceIds = new long[]{adapter.getStatus(0).id};
             getStatuses(accountIds, null, sinceIds);
         } else {
@@ -145,6 +155,12 @@ public abstract class ParcelableStatusesFragment extends AbsStatusesFragment<Lis
     protected long getAccountId() {
         final Bundle args = getArguments();
         return args != null ? args.getLong(EXTRA_ACCOUNT_ID, -1) : -1;
+    }
+
+    @Override
+    public boolean isRefreshing() {
+        final LoaderManager lm = getLoaderManager();
+        return lm.hasRunningLoaders();
     }
 
     protected String[] getSavedStatusesFileArgs() {

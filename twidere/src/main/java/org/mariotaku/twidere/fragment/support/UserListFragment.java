@@ -29,6 +29,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Rect;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter.CreateNdefMessageCallback;
+import android.nfc.NfcEvent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -66,7 +70,8 @@ import org.mariotaku.twidere.model.ParcelableUser;
 import org.mariotaku.twidere.model.ParcelableUserList;
 import org.mariotaku.twidere.model.SingleResponse;
 import org.mariotaku.twidere.util.AsyncTwitterWrapper;
-import org.mariotaku.twidere.util.ImageLoaderWrapper;
+import org.mariotaku.twidere.util.LinkCreator;
+import org.mariotaku.twidere.util.MediaLoaderWrapper;
 import org.mariotaku.twidere.util.OnLinkClickHandler;
 import org.mariotaku.twidere.util.ParseUtils;
 import org.mariotaku.twidere.util.ThemeUtils;
@@ -94,7 +99,7 @@ public class UserListFragment extends BaseSupportFragment implements OnClickList
         LoaderCallbacks<SingleResponse<ParcelableUserList>>, DrawerCallback,
         SystemWindowsInsetsCallback, SupportFragmentCallback {
 
-    private ImageLoaderWrapper mProfileImageLoader;
+    private MediaLoaderWrapper mProfileImageLoader;
     private AsyncTwitterWrapper mTwitterWrapper;
 
     private ImageView mProfileImageView;
@@ -290,6 +295,18 @@ public class UserListFragment extends BaseSupportFragment implements OnClickList
 
         final FragmentActivity activity = getActivity();
 
+        Utils.setNdefPushMessageCallback(activity, new CreateNdefMessageCallback() {
+
+            @Override
+            public NdefMessage createNdefMessage(NfcEvent event) {
+                final ParcelableUserList userList = getUserList();
+                if (userList == null) return null;
+                return new NdefMessage(new NdefRecord[]{
+                        NdefRecord.createUri(LinkCreator.getTwitterUserListLink(userList.user_screen_name, userList.name)),
+                });
+            }
+        });
+
         mHeaderDrawerLayout.setDrawerCallback(this);
 
         mPagerAdapter = new SupportTabsAdapter(activity, getChildFragmentManager());
@@ -304,13 +321,17 @@ public class UserListFragment extends BaseSupportFragment implements OnClickList
         }
 
         mTwitterWrapper = getApplication().getTwitterWrapper();
-        mProfileImageLoader = getApplication().getImageLoaderWrapper();
+        mProfileImageLoader = getApplication().getMediaLoaderWrapper();
         mProfileImageView.setOnClickListener(this);
         mUserListDetails.setOnClickListener(this);
         mRetryButton.setOnClickListener(this);
         getUserListInfo(false);
 
         setupUserPages();
+    }
+
+    private ParcelableUserList getUserList() {
+        return mUserList;
     }
 
     @Override
@@ -550,9 +571,9 @@ public class UserListFragment extends BaseSupportFragment implements OnClickList
             tabArgs.putLong(EXTRA_LIST_ID, args.getLong(EXTRA_LIST_ID, -1));
             tabArgs.putString(EXTRA_LIST_NAME, args.getString(EXTRA_LIST_NAME));
         }
-        mPagerAdapter.addTab(UserListTimelineFragment.class, tabArgs, getString(R.string.statuses), null, 0);
-        mPagerAdapter.addTab(UserListMembersFragment.class, tabArgs, getString(R.string.members), null, 1);
-        mPagerAdapter.addTab(UserListSubscribersFragment.class, tabArgs, getString(R.string.subscribers), null, 2);
+        mPagerAdapter.addTab(UserListTimelineFragment.class, tabArgs, getString(R.string.statuses), null, 0, null);
+        mPagerAdapter.addTab(UserListMembersFragment.class, tabArgs, getString(R.string.members), null, 1, null);
+        mPagerAdapter.addTab(UserListSubscribersFragment.class, tabArgs, getString(R.string.subscribers), null, 2, null);
         mPagerIndicator.notifyDataSetChanged();
     }
 

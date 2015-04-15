@@ -45,6 +45,16 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_launcher_web"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.25"
+                android:padding="@dimen/element_spacing_normal"
+                android:text="@string/wizard_page_finished_text"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="@dimen/text_size_wizard_text"
+                android:textStyle="normal"/>
         </LinearLayout>
 
         <FrameLayout
@@ -65,7 +75,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="?android:colorActivatedHighlight"
                 android:textSize="@dimen/text_size_wizard_nav_item"
-                android:textStyle="bold|italic"/>
+                android:textStyle="bold"/>
         </FrameLayout>
     </LinearLayout>
 

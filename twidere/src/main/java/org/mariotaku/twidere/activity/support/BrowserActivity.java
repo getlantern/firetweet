@@ -23,6 +23,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Toast;
@@ -30,7 +31,7 @@ import android.widget.Toast;
 import org.mariotaku.twidere.R;
 import org.mariotaku.twidere.fragment.BaseWebViewFragment;
 
-public class BrowserActivity extends BaseSupportActivity {
+public class BrowserActivity extends BaseActionBarActivity {
 
     private Uri mUri = Uri.parse("about:blank");
 
@@ -46,9 +47,12 @@ public class BrowserActivity extends BaseSupportActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         mUri = getIntent().getData();
         if (mUri == null) {
             Toast.makeText(this, R.string.error_occurred, Toast.LENGTH_SHORT).show();

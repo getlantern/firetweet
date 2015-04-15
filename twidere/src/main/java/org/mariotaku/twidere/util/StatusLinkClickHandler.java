@@ -32,14 +32,14 @@ public class StatusLinkClickHandler extends OnLinkClickHandler {
     private ParcelableStatus mStatus;
 
     @Override
-    protected void openMedia(long account_id, boolean sensitive, String link, int start, int end) {
+    protected void openMedia(long accountId, long extraId, boolean sensitive, String link, int start, int end) {
         final ParcelableStatus status = mStatus;
         final ParcelableMedia current = findByLink(status.media, link);
-        Utils.openMedia(context, account_id, sensitive, current, status.media);
+        Utils.openMedia(context, status, current);
     }
 
-    private ParcelableMedia findByLink(ParcelableMedia[] media, String link) {
-        if (link == null) return null;
+    public static ParcelableMedia findByLink(ParcelableMedia[] media, String link) {
+        if (link == null || media == null) return null;
         for (ParcelableMedia mediaItem : media) {
             if (link.equals(mediaItem.media_url) || link.equals(mediaItem.page_url))
                 return mediaItem;

@@ -22,8 +22,8 @@ import org.mariotaku.twidere.app.TwidereApplication;
 import org.mariotaku.twidere.loader.support.MediaTimelineLoader;
 import org.mariotaku.twidere.model.ParcelableMedia;
 import org.mariotaku.twidere.model.ParcelableStatus;
-import org.mariotaku.twidere.util.ImageLoaderWrapper;
 import org.mariotaku.twidere.util.ImageLoadingHandler;
+import org.mariotaku.twidere.util.MediaLoaderWrapper;
 import org.mariotaku.twidere.util.SimpleDrawerCallback;
 import org.mariotaku.twidere.view.HeaderDrawerLayout.DrawerCallback;
 import org.mariotaku.twidere.view.MediaSizeImageView;
@@ -144,7 +144,7 @@ public class UserMediaTimelineFragment extends BaseSupportFragment
         final String screenName = args.getString(EXTRA_SCREEN_NAME);
         final int tabPosition = args.getInt(EXTRA_TAB_POSITION, -1);
         return new MediaTimelineLoader(context, accountId, userId, screenName, sinceId, maxId, null,
-                null, tabPosition, false);
+                null, tabPosition, true);
     }
 
     @Override
@@ -161,13 +161,13 @@ public class UserMediaTimelineFragment extends BaseSupportFragment
     private static class MediaTimelineAdapter extends Adapter<MediaTimelineViewHolder> {
 
         private final LayoutInflater mInflater;
-        private final ImageLoaderWrapper mImageLoader;
+        private final MediaLoaderWrapper mImageLoader;
         private final ImageLoadingHandler mLoadingHandler;
         private List<ParcelableStatus> mData;
 
         MediaTimelineAdapter(Context context) {
             mInflater = LayoutInflater.from(context);
-            mImageLoader = TwidereApplication.getInstance(context).getImageLoaderWrapper();
+            mImageLoader = TwidereApplication.getInstance(context).getMediaLoaderWrapper();
             mLoadingHandler = new ImageLoadingHandler(R.id.media_image_progress);
         }
 
@@ -208,7 +208,7 @@ public class UserMediaTimelineFragment extends BaseSupportFragment
             mediaTextView = (TextView) itemView.findViewById(R.id.media_text);
         }
 
-        public void setMedia(ImageLoaderWrapper loader, ImageLoadingHandler loadingHandler, ParcelableStatus status) {
+        public void setMedia(MediaLoaderWrapper loader, ImageLoadingHandler loadingHandler, ParcelableStatus status) {
             final ParcelableMedia[] media = status.media;
             if (media == null || media.length < 1) return;
             final ParcelableMedia firstMedia = media[0];

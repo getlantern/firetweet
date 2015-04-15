@@ -33,7 +33,7 @@ import com.twitter.Extractor;
 
 import org.mariotaku.twidere.Constants;
 import org.mariotaku.twidere.R;
-import org.mariotaku.twidere.activity.support.BaseSupportActivity;
+import org.mariotaku.twidere.activity.support.BaseActionBarActivity;
 import org.mariotaku.twidere.app.TwidereApplication;
 import org.mariotaku.twidere.menu.AccountActionProvider;
 import org.mariotaku.twidere.model.ParcelableAccount;
@@ -64,13 +64,13 @@ public class MultiSelectEventHandler implements Constants, ActionMode.Callback, 
 
     private ActionMode mActionMode;
 
-    private final BaseSupportActivity mActivity;
+    private final BaseActionBarActivity mActivity;
 
     private AccountActionProvider mAccountActionProvider;
 
     public static final int MENU_GROUP = 201;
 
-    public MultiSelectEventHandler(final BaseSupportActivity activity) {
+    public MultiSelectEventHandler(final BaseActionBarActivity activity) {
         mActivity = activity;
     }
 
@@ -182,7 +182,7 @@ public class MultiSelectEventHandler implements Constants, ActionMode.Callback, 
             final ParcelableAccount account = intent.getParcelableExtra(EXTRA_ACCOUNT);
             mMultiSelectManager.setAccountId(account.account_id);
             if (mAccountActionProvider != null) {
-                mAccountActionProvider.setAccountId(account.account_id);
+                mAccountActionProvider.setSelectedAccountIds(account.account_id);
             }
             mode.invalidate();
         }
@@ -193,7 +193,7 @@ public class MultiSelectEventHandler implements Constants, ActionMode.Callback, 
     public boolean onCreateActionMode(final ActionMode mode, final Menu menu) {
         mode.getMenuInflater().inflate(R.menu.action_multi_select_contents, menu);
         mAccountActionProvider = (AccountActionProvider) menu.findItem(MENU_SELECT_ACCOUNT).getActionProvider();
-        mAccountActionProvider.setAccountId(mMultiSelectManager.getFirstSelectAccountId());
+        mAccountActionProvider.setSelectedAccountIds(mMultiSelectManager.getFirstSelectAccountId());
         return true;
     }
 

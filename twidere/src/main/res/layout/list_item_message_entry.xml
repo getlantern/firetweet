@@ -26,6 +26,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:selectableItemBackground"
+    android:focusable="true"
+    android:focusableInTouchMode="false"
     android:minHeight="?android:listPreferredItemHeight"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/element_spacing_normal"
@@ -44,8 +46,7 @@
         android:layout_marginLeft="@dimen/element_spacing_normal"
         android:layout_marginRight="@dimen/element_spacing_normal"
         android:layout_marginTop="@dimen/element_spacing_small"
-        android:contentDescription="@string/profile_image"
-        tools:src="@drawable/ic_profile_image_default"/>
+        android:contentDescription="@string/profile_image"/>
 
 
     <RelativeLayout

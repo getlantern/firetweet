@@ -2,30 +2,39 @@ package org.mariotaku.twidere.view.holder;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.PorterDuff.Mode;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.mariotaku.twidere.Constants;
 import org.mariotaku.twidere.R;
 import org.mariotaku.twidere.adapter.iface.ContentCardClickListener;
 import org.mariotaku.twidere.adapter.iface.IStatusesAdapter;
+import org.mariotaku.twidere.app.TwidereApplication;
+import org.mariotaku.twidere.model.ParcelableLocation;
 import org.mariotaku.twidere.model.ParcelableMedia;
 import org.mariotaku.twidere.model.ParcelableStatus;
 import org.mariotaku.twidere.model.ParcelableStatus.CursorIndices;
 import org.mariotaku.twidere.util.AsyncTwitterWrapper;
-import org.mariotaku.twidere.util.ImageLoaderWrapper;
 import org.mariotaku.twidere.util.ImageLoadingHandler;
+import org.mariotaku.twidere.util.MediaLoaderWrapper;
+import org.mariotaku.twidere.util.SharedPreferencesWrapper;
 import org.mariotaku.twidere.util.SimpleValueSerializer;
+import org.mariotaku.twidere.util.TwidereLinkify;
 import org.mariotaku.twidere.util.TwitterCardUtils;
 import org.mariotaku.twidere.util.UserColorNameUtils;
 import org.mariotaku.twidere.util.Utils;
+import org.mariotaku.twidere.util.Utils.OnMediaClickListener;
 import org.mariotaku.twidere.view.CardMediaContainer;
+import org.mariotaku.twidere.view.ForegroundColorView;
 import org.mariotaku.twidere.view.ShapedImageView;
 import org.mariotaku.twidere.view.ShortTimeView;
 import org.mariotaku.twidere.view.iface.IColorLabelView;
@@ -34,13 +43,19 @@ import java.util.Locale;
 
 import twitter4j.TranslationResult;
 
+import static org.mariotaku.twidere.util.HtmlEscapeHelper.toPlainText;
+import static org.mariotaku.twidere.util.UserColorNameUtils.getUserNickname;
 import static org.mariotaku.twidere.util.Utils.getUserTypeIconRes;
 
 /**
+ * IDE gives me warning if I don't change default comment, so I write this XD
+ * <p/>
  * Created by mariotaku on 14/11/19.
  */
-public class StatusViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
+public class StatusViewHolder extends RecyclerView.ViewHolder implements Constants, OnClickListener,
+        OnMediaClickListener {
 
+    @NonNull
     private final IStatusesAdapter<?> adapter;
 
     private final ImageView replyRetweetIcon;
@@ -48,21 +63,20 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements OnClick
     private final ImageView profileTypeView;
     private final ImageView extraTypeView;
     private final TextView textView;
+    private final TextView quoteTextView;
     private final TextView nameView, screenNameView;
+    private final TextView quotedNameView, quotedScreenNameView;
     private final TextView replyRetweetView;
     private final ShortTimeView timeView;
-    private final CardMediaContainer mediaPreviewContainer;
+    private final CardMediaContainer mediaPreview;
     private final TextView replyCountView, retweetCountView, favoriteCountView;
+    private final View quotedNameContainer;
     private final IColorLabelView itemContent;
+    private final ForegroundColorView quoteIndicator;
 
     private StatusClickListener statusClickListener;
 
-
-    public StatusViewHolder(View itemView) {
-        this(null, itemView);
-    }
-
-    public StatusViewHolder(IStatusesAdapter<?> adapter, View itemView) {
+    public StatusViewHolder(@NonNull final IStatusesAdapter<?> adapter, @NonNull final View itemView) {
         super(itemView);
         this.adapter = adapter;
         itemContent = (IColorLabelView) itemView.findViewById(R.id.item_content);
@@ -70,13 +84,19 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements OnClick
         profileTypeView = (ImageView) itemView.findViewById(R.id.profile_type);
         extraTypeView = (ImageView) itemView.findViewById(R.id.extra_type);
         textView = (TextView) itemView.findViewById(R.id.text);
+        quoteTextView = (TextView) itemView.findViewById(R.id.quote_text);
         nameView = (TextView) itemView.findViewById(R.id.name);
         screenNameView = (TextView) itemView.findViewById(R.id.screen_name);
+        quotedNameView = (TextView) itemView.findViewById(R.id.quoted_name);
+        quotedScreenNameView = (TextView) itemView.findViewById(R.id.quoted_screen_name);
         replyRetweetIcon = (ImageView) itemView.findViewById(R.id.reply_retweet_icon);
         replyRetweetView = (TextView) itemView.findViewById(R.id.reply_retweet_status);
         timeView = (ShortTimeView) itemView.findViewById(R.id.time);
 
-        mediaPreviewContainer = (CardMediaContainer) itemView.findViewById(R.id.media_preview_container);
+        mediaPreview = (CardMediaContainer) itemView.findViewById(R.id.media_preview);
+        quotedNameContainer = itemView.findViewById(R.id.quoted_name_container);
+
+        quoteIndicator = (ForegroundColorView) itemView.findViewById(R.id.quote_indicator);
 
         replyCountView = (TextView) itemView.findViewById(R.id.reply_count);
         retweetCountView = (TextView) itemView.findViewById(R.id.retweet_count);
@@ -86,51 +106,45 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements OnClick
     }
 
     public void displaySampleStatus() {
-        nameView.setText("User");
-        screenNameView.setText("@user");
+        profileImageView.setImageResource(R.mipmap.ic_launcher);
+        nameView.setText(TWIDERE_PREVIEW_NAME);
+        screenNameView.setText("@" + TWIDERE_PREVIEW_SCREEN_NAME);
+        textView.setText(toPlainText(TWIDERE_PREVIEW_TEXT_HTML));
         timeView.setTime(System.currentTimeMillis());
-        textView.setText(R.string.sample_status_text);
-        mediaPreviewContainer.displayMedia(R.drawable.profile_image_nyan_sakamoto,
-                R.drawable.profile_image_nyan_sakamoto_santa);
+        mediaPreview.displayMedia(R.drawable.nyan_stars_background);
     }
 
     public void displayStatus(final ParcelableStatus status, final boolean displayInReplyTo) {
-        displayStatus(adapter.getContext(), adapter.getImageLoader(),
-                adapter.getImageLoadingHandler(), adapter.getTwitterWrapper(),
-                adapter.isMediaPreviewEnabled(), adapter.shouldShowAccountsColor(),
-                displayInReplyTo, adapter.isNameFirst(), adapter.isNicknameOnly(),
-                adapter.getProfileImageStyle(), adapter.getMediaPreviewStyle(),
-                status, null);
+        displayStatus(status, null, displayInReplyTo, true);
     }
 
-    public void displayStatus(@NonNull final Context context,
-                              @NonNull final ImageLoaderWrapper loader,
-                              @NonNull final ImageLoadingHandler handler,
-                              @NonNull final AsyncTwitterWrapper twitter,
-                              final boolean displayMediaPreview, final boolean displayAccountsColor,
-                              final boolean displayInReplyTo, boolean nameFirst, boolean nicknameOnly,
-                              final int profileImageStyle, final int mediaPreviewStyle,
-                              @NonNull final ParcelableStatus status,
-                              @Nullable final TranslationResult translation) {
-        final ParcelableMedia[] media = status.media;
+    public void displayStatus(@NonNull final ParcelableStatus status, @Nullable final TranslationResult translation,
+                              final boolean displayInReplyTo, final boolean shouldDisplayExtraType) {
+        final MediaLoaderWrapper loader = adapter.getImageLoader();
+        final AsyncTwitterWrapper twitter = adapter.getTwitterWrapper();
+        final TwidereLinkify linkify = adapter.getTwidereLinkify();
+        final Context context = adapter.getContext();
+        final boolean nameFirst = adapter.isNameFirst();
 
-        replyRetweetIcon.setColorFilter(replyRetweetView.getCurrentTextColor(), Mode.SRC_ATOP);
+        final long reply_count = status.reply_count;
+        final long retweet_count;
+        final long favorite_count;
+
         if (status.retweet_id > 0) {
             final String retweetedBy = UserColorNameUtils.getDisplayName(context, status.retweeted_by_id,
-                    status.retweeted_by_name, status.retweeted_by_screen_name, nameFirst, nicknameOnly);
+                    status.retweeted_by_name, status.retweeted_by_screen_name, nameFirst);
             replyRetweetView.setText(context.getString(R.string.name_retweeted, retweetedBy));
             replyRetweetIcon.setImageResource(R.drawable.ic_activity_action_retweet);
             replyRetweetView.setVisibility(View.VISIBLE);
             replyRetweetIcon.setVisibility(View.VISIBLE);
         } else if (status.in_reply_to_status_id > 0 && status.in_reply_to_user_id > 0 && displayInReplyTo) {
             final String inReplyTo = UserColorNameUtils.getDisplayName(context, status.in_reply_to_user_id,
-                    status.in_reply_to_name, status.in_reply_to_screen_name, nameFirst, nicknameOnly);
+                    status.in_reply_to_name, status.in_reply_to_screen_name, nameFirst);
             replyRetweetView.setText(context.getString(R.string.in_reply_to_name, inReplyTo));
             replyRetweetIcon.setImageResource(R.drawable.ic_activity_action_reply);
             replyRetweetView.setVisibility(View.VISIBLE);
             replyRetweetIcon.setVisibility(View.VISIBLE);
         } else {
-            replyRetweetView.setText(null);
             replyRetweetView.setVisibility(View.GONE);
             replyRetweetIcon.setVisibility(View.GONE);
         }
@@ -144,52 +158,102 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements OnClick
             profileTypeView.setVisibility(View.GONE);
         }
 
-        nameView.setText(status.user_name);
-        screenNameView.setText("@" + status.user_screen_name);
-        timeView.setTime(status.timestamp);
+        if (status.is_quote) {
+            quotedNameView.setText(getUserNickname(context, status.user_id, status.user_name, true));
+            quotedScreenNameView.setText("@" + status.user_screen_name);
+            timeView.setTime(status.quote_timestamp);
+            nameView.setText(getUserNickname(context, status.quoted_by_user_id, status.quoted_by_user_name, true));
+            screenNameView.setText("@" + status.quoted_by_user_screen_name);
 
-        final int userColor = UserColorNameUtils.getUserColor(context, status.user_id);
-        itemContent.drawStart(userColor);
+            if (adapter.getLinkHighlightingStyle() == VALUE_LINK_HIGHLIGHT_OPTION_CODE_NONE) {
+                quoteTextView.setText(status.quote_text_unescaped);
+            } else {
+                quoteTextView.setText(Html.fromHtml(status.quote_text_html));
+                linkify.applyAllLinks(quoteTextView, status.account_id, getLayoutPosition(),
+                        status.is_possibly_sensitive, adapter.getLinkHighlightingStyle());
+                quoteTextView.setMovementMethod(null);
+            }
 
-        if (displayAccountsColor) {
+            quotedNameContainer.setVisibility(View.VISIBLE);
+            quoteTextView.setVisibility(View.VISIBLE);
+            quoteIndicator.setVisibility(View.VISIBLE);
+
+            quoteIndicator.setColor(UserColorNameUtils.getUserColor(context, status.user_id));
+
+            if (adapter.isProfileImageEnabled()) {
+                profileTypeView.setVisibility(View.VISIBLE);
+                profileImageView.setVisibility(View.VISIBLE);
+                loader.displayProfileImage(profileImageView, status.quoted_by_user_profile_image);
+            } else {
+                profileTypeView.setVisibility(View.GONE);
+                profileImageView.setVisibility(View.GONE);
+                loader.cancelDisplayTask(profileImageView);
+            }
+
+            final int userColor = UserColorNameUtils.getUserColor(context, status.quoted_by_user_id);
+            itemContent.drawStart(userColor);
+        } else {
+            nameView.setText(getUserNickname(context, status.user_id, status.user_name, true));
+            screenNameView.setText("@" + status.user_screen_name);
+            timeView.setTime(status.timestamp);
+
+            quotedNameContainer.setVisibility(View.GONE);
+            quoteTextView.setVisibility(View.GONE);
+            quoteIndicator.setVisibility(View.GONE);
+
+            if (adapter.isProfileImageEnabled()) {
+                final String user_profile_image_url = status.user_profile_image_url;
+                profileTypeView.setVisibility(View.VISIBLE);
+                profileImageView.setVisibility(View.VISIBLE);
+                loader.displayProfileImage(profileImageView, user_profile_image_url);
+            } else {
+                profileTypeView.setVisibility(View.GONE);
+                profileImageView.setVisibility(View.GONE);
+                loader.cancelDisplayTask(profileImageView);
+            }
+            final int userColor = UserColorNameUtils.getUserColor(context, status.user_id);
+            itemContent.drawStart(userColor);
+        }
+
+
+        if (adapter.shouldShowAccountsColor()) {
             itemContent.drawEnd(Utils.getAccountColor(context, status.account_id));
         } else {
             itemContent.drawEnd();
         }
-        profileImageView.setStyle(profileImageStyle);
 
-        loader.displayProfileImage(profileImageView, status.user_profile_image_url);
 
-        if (displayMediaPreview) {
-            mediaPreviewContainer.setStyle(mediaPreviewStyle);
-            if (media != null && media.length > 0) {
-                mediaPreviewContainer.setVisibility(View.VISIBLE);
-            } else {
-                mediaPreviewContainer.setVisibility(View.GONE);
-            }
-            mediaPreviewContainer.displayMedia(media, loader, status.account_id, null, handler);
+        if (adapter.isMediaPreviewEnabled()) {
+            mediaPreview.setStyle(adapter.getMediaPreviewStyle());
+            mediaPreview.setVisibility(status.media != null && status.media.length > 0 ? View.VISIBLE : View.GONE);
+            mediaPreview.displayMedia(status.media, loader, status.account_id, this,
+                    adapter.getImageLoadingHandler());
         } else {
-            mediaPreviewContainer.setVisibility(View.GONE);
+            mediaPreview.setVisibility(View.GONE);
         }
-        if (translation != null) {
-            textView.setText(translation.getText());
-        } else {
+        if (adapter.getLinkHighlightingStyle() == VALUE_LINK_HIGHLIGHT_OPTION_CODE_NONE) {
             textView.setText(status.text_unescaped);
+        } else {
+            textView.setText(Html.fromHtml(status.text_html));
+            linkify.applyAllLinks(textView, status.account_id, getLayoutPosition(),
+                    status.is_possibly_sensitive,
+                    adapter.getLinkHighlightingStyle());
+            textView.setMovementMethod(null);
         }
 
-        if (status.reply_count > 0) {
-            replyCountView.setText(Utils.getLocalizedNumber(Locale.getDefault(), status.reply_count));
+        if (reply_count > 0) {
+            replyCountView.setText(Utils.getLocalizedNumber(Locale.getDefault(), reply_count));
         } else {
             replyCountView.setText(null);
         }
 
-        final long retweet_count;
         if (twitter.isDestroyingStatus(status.account_id, status.my_retweet_id)) {
             retweetCountView.setActivated(false);
-            retweet_count = Math.max(0, status.favorite_count - 1);
+            retweet_count = Math.max(0, status.retweet_count - 1);
         } else {
             final boolean creatingRetweet = twitter.isCreatingRetweet(status.account_id, status.id);
-            retweetCountView.setActivated(creatingRetweet || Utils.isMyRetweet(status));
+            retweetCountView.setActivated(creatingRetweet || Utils.isMyRetweet(status.account_id,
+                    status.retweeted_by_id, status.my_retweet_id));
             retweet_count = status.retweet_count + (creatingRetweet ? 1 : 0);
         }
         if (retweet_count > 0) {
@@ -197,9 +261,6 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements OnClick
         } else {
             retweetCountView.setText(null);
         }
-        retweetCountView.setEnabled(!status.user_is_protected);
-
-        final long favorite_count;
         if (twitter.isDestroyingFavorite(status.account_id, status.id)) {
             favoriteCountView.setActivated(false);
             favorite_count = Math.max(0, status.favorite_count - 1);
@@ -213,23 +274,26 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements OnClick
         } else {
             favoriteCountView.setText(null);
         }
-        displayExtraTypeIcon(status.card_name, status.media != null ? status.media.length : 0);
+        if (shouldDisplayExtraType) {
+            displayExtraTypeIcon(status.card_name, status.media, status.location, status.place_full_name);
+        } else {
+            extraTypeView.setVisibility(View.GONE);
+        }
     }
 
     public void displayStatus(@NonNull Cursor cursor, @NonNull CursorIndices indices,
                               final boolean displayInReplyTo) {
-        final ImageLoaderWrapper loader = adapter.getImageLoader();
+        final MediaLoaderWrapper loader = adapter.getImageLoader();
         final AsyncTwitterWrapper twitter = adapter.getTwitterWrapper();
+        final TwidereLinkify linkify = adapter.getTwidereLinkify();
         final Context context = adapter.getContext();
         final boolean nameFirst = adapter.isNameFirst();
-        final boolean nicknameOnly = adapter.isNicknameOnly();
 
         final long reply_count = cursor.getLong(indices.reply_count);
         final long retweet_count;
         final long favorite_count;
 
         final long account_id = cursor.getLong(indices.account_id);
-        final long timestamp = cursor.getLong(indices.status_timestamp);
         final long user_id = cursor.getLong(indices.user_id);
         final long status_id = cursor.getLong(indices.status_id);
         final long retweet_id = cursor.getLong(indices.retweet_id);
@@ -238,29 +302,30 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements OnClick
         final long in_reply_to_status_id = cursor.getLong(indices.in_reply_to_status_id);
         final long in_reply_to_user_id = cursor.getLong(indices.in_reply_to_user_id);
 
-        final boolean user_is_protected = cursor.getInt(indices.is_protected) == 1;
-
         final String user_name = cursor.getString(indices.user_name);
         final String user_screen_name = cursor.getString(indices.user_screen_name);
-        final String user_profile_image_url = cursor.getString(indices.user_profile_image_url);
-        final String retweeted_by_name = cursor.getString(indices.retweeted_by_user_name);
-        final String retweeted_by_screen_name = cursor.getString(indices.retweeted_by_user_screen_name);
-        final String in_reply_to_name = cursor.getString(indices.in_reply_to_user_name);
-        final String in_reply_to_screen_name = cursor.getString(indices.in_reply_to_user_screen_name);
         final String card_name = cursor.getString(indices.card_name);
+        final String place_full_name = cursor.getString(indices.place_full_name);
 
-        final ParcelableMedia[] media = SimpleValueSerializer.fromSerializedString(cursor.getString(indices.media), ParcelableMedia.SIMPLE_CREATOR);
+        final ParcelableMedia[] media = SimpleValueSerializer.fromSerializedString(
+                cursor.getString(indices.media), ParcelableMedia.SIMPLE_CREATOR);
+        final ParcelableLocation location = ParcelableLocation.fromString(
+                cursor.getString(indices.location));
 
         if (retweet_id > 0) {
+            final String retweeted_by_name = cursor.getString(indices.retweeted_by_user_name);
+            final String retweeted_by_screen_name = cursor.getString(indices.retweeted_by_user_screen_name);
             final String retweetedBy = UserColorNameUtils.getDisplayName(context, retweeted_by_id,
-                    retweeted_by_name, retweeted_by_screen_name, nameFirst, nicknameOnly);
+                    retweeted_by_name, retweeted_by_screen_name, nameFirst);
             replyRetweetView.setText(context.getString(R.string.name_retweeted, retweetedBy));
             replyRetweetIcon.setImageResource(R.drawable.ic_activity_action_retweet);
             replyRetweetView.setVisibility(View.VISIBLE);
             replyRetweetIcon.setVisibility(View.VISIBLE);
         } else if (in_reply_to_status_id > 0 && in_reply_to_user_id > 0 && displayInReplyTo) {
+            final String in_reply_to_name = cursor.getString(indices.in_reply_to_user_name);
+            final String in_reply_to_screen_name = cursor.getString(indices.in_reply_to_user_screen_name);
             final String inReplyTo = UserColorNameUtils.getDisplayName(context, in_reply_to_user_id,
-                    in_reply_to_name, in_reply_to_screen_name, nameFirst, nicknameOnly);
+                    in_reply_to_name, in_reply_to_screen_name, nameFirst);
             replyRetweetView.setText(context.getString(R.string.in_reply_to_name, inReplyTo));
             replyRetweetIcon.setImageResource(R.drawable.ic_activity_action_reply);
             replyRetweetView.setVisibility(View.VISIBLE);
@@ -270,8 +335,8 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements OnClick
             replyRetweetIcon.setVisibility(View.GONE);
         }
 
-        final int typeIconRes = getUserTypeIconRes(cursor.getInt(indices.is_verified) == 1,
-                user_is_protected);
+        final int typeIconRes = getUserTypeIconRes(cursor.getShort(indices.is_verified) == 1,
+                cursor.getShort(indices.is_protected) == 1);
         if (typeIconRes != 0) {
             profileTypeView.setImageResource(typeIconRes);
             profileTypeView.setVisibility(View.VISIBLE);
@@ -280,12 +345,64 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements OnClick
             profileTypeView.setVisibility(View.GONE);
         }
 
-        nameView.setText(user_name);
-        screenNameView.setText("@" + user_screen_name);
-        timeView.setTime(timestamp);
+        if (cursor.getShort(indices.is_quote) == 1) {
+            quotedNameView.setText(user_name);
+            quotedScreenNameView.setText("@" + user_screen_name);
+            timeView.setTime(cursor.getLong(indices.quote_timestamp));
+            nameView.setText(cursor.getString(indices.quoted_by_user_name));
+            screenNameView.setText("@" + cursor.getString(indices.quoted_by_user_screen_name));
 
-        final int userColor = UserColorNameUtils.getUserColor(context, user_id);
-        itemContent.drawStart(userColor);
+            if (adapter.getLinkHighlightingStyle() == VALUE_LINK_HIGHLIGHT_OPTION_CODE_NONE) {
+                quoteTextView.setText(cursor.getString(indices.quote_text_unescaped));
+            } else {
+                quoteTextView.setText(Html.fromHtml(cursor.getString(indices.quote_text_html)));
+                linkify.applyAllLinks(quoteTextView, account_id, getLayoutPosition(),
+                        cursor.getShort(indices.is_possibly_sensitive) == 1,
+                        adapter.getLinkHighlightingStyle());
+                quoteTextView.setMovementMethod(null);
+            }
+
+            quotedNameContainer.setVisibility(View.VISIBLE);
+            quoteTextView.setVisibility(View.VISIBLE);
+            quoteIndicator.setVisibility(View.VISIBLE);
+
+            quoteIndicator.setColor(UserColorNameUtils.getUserColor(context, user_id));
+
+            if (adapter.isProfileImageEnabled()) {
+                profileTypeView.setVisibility(View.VISIBLE);
+                profileImageView.setVisibility(View.VISIBLE);
+                loader.displayProfileImage(profileImageView, cursor.getString(indices.quoted_by_user_profile_image));
+            } else {
+                profileTypeView.setVisibility(View.GONE);
+                profileImageView.setVisibility(View.GONE);
+                loader.cancelDisplayTask(profileImageView);
+            }
+
+            final int userColor = UserColorNameUtils.getUserColor(context, cursor.getLong(indices.quoted_by_user_id));
+            itemContent.drawStart(userColor);
+        } else {
+            nameView.setText(user_name);
+            screenNameView.setText("@" + user_screen_name);
+            timeView.setTime(cursor.getLong(indices.status_timestamp));
+
+            quotedNameContainer.setVisibility(View.GONE);
+            quoteTextView.setVisibility(View.GONE);
+            quoteIndicator.setVisibility(View.GONE);
+
+            if (adapter.isProfileImageEnabled()) {
+                final String user_profile_image_url = cursor.getString(indices.user_profile_image_url);
+                profileTypeView.setVisibility(View.VISIBLE);
+                profileImageView.setVisibility(View.VISIBLE);
+                loader.displayProfileImage(profileImageView, user_profile_image_url);
+            } else {
+                profileTypeView.setVisibility(View.GONE);
+                profileImageView.setVisibility(View.GONE);
+                loader.cancelDisplayTask(profileImageView);
+            }
+            final int userColor = UserColorNameUtils.getUserColor(context, user_id);
+            itemContent.drawStart(userColor);
+        }
+
 
         if (adapter.shouldShowAccountsColor()) {
             itemContent.drawEnd(Utils.getAccountColor(context, account_id));
@@ -293,20 +410,24 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements OnClick
             itemContent.drawEnd();
         }
 
-        profileImageView.setStyle(adapter.getProfileImageStyle());
 
-        loader.displayProfileImage(profileImageView, user_profile_image_url);
-
-        final String text_unescaped = cursor.getString(indices.text_unescaped);
         if (adapter.isMediaPreviewEnabled()) {
-            mediaPreviewContainer.setStyle(adapter.getMediaPreviewStyle());
-            mediaPreviewContainer.setVisibility(media != null && media.length > 0 ? View.VISIBLE : View.GONE);
-            mediaPreviewContainer.displayMedia(media, loader, account_id, null,
+            mediaPreview.setStyle(adapter.getMediaPreviewStyle());
+            mediaPreview.setVisibility(media != null && media.length > 0 ? View.VISIBLE : View.GONE);
+            mediaPreview.displayMedia(media, loader, account_id, this,
                     adapter.getImageLoadingHandler());
         } else {
-            mediaPreviewContainer.setVisibility(View.GONE);
+            mediaPreview.setVisibility(View.GONE);
         }
-        textView.setText(text_unescaped);
+        if (adapter.getLinkHighlightingStyle() == VALUE_LINK_HIGHLIGHT_OPTION_CODE_NONE) {
+            textView.setText(cursor.getString(indices.text_unescaped));
+        } else {
+            textView.setText(Html.fromHtml(cursor.getString(indices.text_html)));
+            linkify.applyAllLinks(textView, account_id, getLayoutPosition(),
+                    cursor.getShort(indices.is_possibly_sensitive) == 1,
+                    adapter.getLinkHighlightingStyle());
+            textView.setMovementMethod(null);
+        }
 
         if (reply_count > 0) {
             replyCountView.setText(Utils.getLocalizedNumber(Locale.getDefault(), reply_count));
@@ -328,15 +449,12 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements OnClick
         } else {
             retweetCountView.setText(null);
         }
-        retweetCountView.setEnabled(!user_is_protected);
-
-        favoriteCountView.setActivated(cursor.getInt(indices.is_favorite) == 1);
         if (twitter.isDestroyingFavorite(account_id, status_id)) {
             favoriteCountView.setActivated(false);
             favorite_count = Math.max(0, cursor.getLong(indices.favorite_count) - 1);
         } else {
             final boolean creatingFavorite = twitter.isCreatingFavorite(account_id, status_id);
-            favoriteCountView.setActivated(creatingFavorite || cursor.getInt(indices.is_favorite) == 1);
+            favoriteCountView.setActivated(creatingFavorite || cursor.getShort(indices.is_favorite) == 1);
             favorite_count = cursor.getLong(indices.favorite_count) + (creatingFavorite ? 1 : 0);
         }
         if (favorite_count > 0) {
@@ -344,7 +462,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements OnClick
         } else {
             favoriteCountView.setText(null);
         }
-        displayExtraTypeIcon(card_name, media != null ? media.length : 0);
+        displayExtraTypeIcon(card_name, media, location, place_full_name);
     }
 
     public CardView getCardView() {
@@ -362,7 +480,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements OnClick
     @Override
     public void onClick(View v) {
         if (statusClickListener == null) return;
-        final int position = getPosition();
+        final int position = getAdapterPosition();
         switch (v.getId()) {
             case R.id.item_content: {
                 statusClickListener.onStatusClick(this, position);
@@ -385,6 +503,13 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements OnClick
         }
     }
 
+    @Override
+    public void onMediaClick(View view, ParcelableMedia media, long accountId) {
+        if (statusClickListener == null) return;
+        final int position = getAdapterPosition();
+        statusClickListener.onMediaClick(this, media, position);
+    }
+
     public void setOnClickListeners() {
         setStatusClickListener(adapter);
     }
@@ -396,7 +521,6 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements OnClick
 
         itemView.setOnClickListener(this);
         profileImageView.setOnClickListener(this);
-        mediaPreviewContainer.setOnClickListener(this);
         replyCountView.setOnClickListener(this);
         retweetCountView.setOnClickListener(this);
         favoriteCountView.setOnClickListener(this);
@@ -404,8 +528,11 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements OnClick
 
     public void setTextSize(final float textSize) {
         nameView.setTextSize(textSize);
+        quotedNameView.setTextSize(textSize);
         textView.setTextSize(textSize);
+        quoteTextView.setTextSize(textSize);
         screenNameView.setTextSize(textSize * 0.85f);
+        quotedScreenNameView.setTextSize(textSize * 0.85f);
         timeView.setTextSize(textSize * 0.85f);
         replyRetweetView.setTextSize(textSize * 0.75f);
         replyCountView.setTextSize(textSize);
@@ -415,9 +542,11 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements OnClick
 
     public void setupViewOptions() {
         setTextSize(adapter.getTextSize());
+        mediaPreview.setStyle(adapter.getMediaPreviewStyle());
+        profileImageView.setStyle(adapter.getProfileImageStyle());
     }
 
-    private void displayExtraTypeIcon(String cardName, int mediaLength) {
+    private void displayExtraTypeIcon(String cardName, ParcelableMedia[] media, ParcelableLocation location, String placeFullName) {
         if (TwitterCardUtils.CARD_NAME_AUDIO.equals(cardName)) {
             extraTypeView.setImageResource(R.drawable.ic_action_music);
             extraTypeView.setVisibility(View.VISIBLE);
@@ -427,18 +556,216 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements OnClick
         } else if (TwitterCardUtils.CARD_NAME_PLAYER.equals(cardName)) {
             extraTypeView.setImageResource(R.drawable.ic_action_play_circle);
             extraTypeView.setVisibility(View.VISIBLE);
-        } else if (mediaLength > 0) {
-            extraTypeView.setImageResource(R.drawable.ic_action_gallery);
+        } else if (media != null && media.length > 0) {
+            if (hasVideo(media)) {
+                extraTypeView.setImageResource(R.drawable.ic_action_movie);
+            } else {
+                extraTypeView.setImageResource(R.drawable.ic_action_gallery);
+            }
+            extraTypeView.setVisibility(View.VISIBLE);
+        } else if (ParcelableLocation.isValidLocation(location) || !TextUtils.isEmpty(placeFullName)) {
+            extraTypeView.setImageResource(R.drawable.ic_action_location);
             extraTypeView.setVisibility(View.VISIBLE);
         } else {
             extraTypeView.setVisibility(View.GONE);
         }
     }
 
+    private boolean hasVideo(ParcelableMedia[] media) {
+        for (ParcelableMedia mediaItem : media) {
+            if (mediaItem.type == ParcelableMedia.TYPE_VIDEO) return true;
+        }
+        return false;
+    }
+
     public static interface StatusClickListener extends ContentCardClickListener {
+
+        boolean isProfileImageEnabled();
 
         void onStatusClick(StatusViewHolder holder, int position);
 
+        void onMediaClick(StatusViewHolder holder, ParcelableMedia media, int position);
+
         void onUserProfileClick(StatusViewHolder holder, int position);
+    }
+
+    public static final class DummyStatusHolderAdapter implements IStatusesAdapter<Object> {
+
+        private final Context context;
+        private final MediaLoaderWrapper loader;
+        private final ImageLoadingHandler handler;
+        private final AsyncTwitterWrapper twitter;
+        private final TwidereLinkify linkify;
+        private final int profileImageStyle, mediaPreviewStyle;
+        private final boolean nameFirst;
+        private final boolean displayProfileImage;
+        private boolean displayMediaPreview;
+
+        public DummyStatusHolderAdapter(Context context) {
+            this.context = context;
+
+            final SharedPreferencesWrapper preferences = SharedPreferencesWrapper.getInstance(context,
+                    SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+            final TwidereApplication app = TwidereApplication.getInstance(context);
+            loader = app.getMediaLoaderWrapper();
+            handler = new ImageLoadingHandler(R.id.media_preview_progress);
+            twitter = app.getTwitterWrapper();
+            linkify = new TwidereLinkify(null);
+
+            profileImageStyle = Utils.getProfileImageStyle(preferences.getString(KEY_PROFILE_IMAGE_STYLE, null));
+            mediaPreviewStyle = Utils.getMediaPreviewStyle(preferences.getString(KEY_MEDIA_PREVIEW_STYLE, null));
+            nameFirst = preferences.getBoolean(KEY_NAME_FIRST, true);
+            displayProfileImage = preferences.getBoolean(KEY_DISPLAY_PROFILE_IMAGE, true);
+            displayMediaPreview = preferences.getBoolean(KEY_MEDIA_PREVIEW, false);
+        }
+
+        @Override
+        public MediaLoaderWrapper getImageLoader() {
+            return loader;
+        }
+
+        @Override
+        public Context getContext() {
+            return context;
+        }
+
+        @Override
+        public ImageLoadingHandler getImageLoadingHandler() {
+            return handler;
+        }
+
+        @Override
+        public int getItemCount() {
+            return 0;
+        }
+
+        @Override
+        public int getProfileImageStyle() {
+            return profileImageStyle;
+        }
+
+        @Override
+        public int getMediaPreviewStyle() {
+            return mediaPreviewStyle;
+        }
+
+        @Override
+        public AsyncTwitterWrapper getTwitterWrapper() {
+            return twitter;
+        }
+
+        @Override
+        public float getTextSize() {
+            return 0;
+        }
+
+        @Override
+        public boolean isLoadMoreIndicatorVisible() {
+            return false;
+        }
+
+        @Override
+        public boolean isLoadMoreSupported() {
+            return false;
+        }
+
+        @Override
+        public boolean isProfileImageEnabled() {
+            return displayProfileImage;
+        }
+
+        @Override
+        public void onItemActionClick(ViewHolder holder, int id, int position) {
+
+        }
+
+        @Override
+        public void onItemMenuClick(ViewHolder holder, View menuView, int position) {
+
+        }
+
+        @Override
+        public void onStatusClick(StatusViewHolder holder, int position) {
+
+        }
+
+        @Override
+        public void onMediaClick(StatusViewHolder holder, ParcelableMedia media, int position) {
+
+        }
+
+        @Override
+        public void onUserProfileClick(StatusViewHolder holder, int position) {
+
+        }
+
+        @Override
+        public boolean isGapItem(int position) {
+            return false;
+        }
+
+        @Override
+        public void onGapClick(ViewHolder holder, int position) {
+
+        }
+
+        @Override
+        public void setLoadMoreSupported(boolean supported) {
+
+        }
+
+        @Override
+        public void setLoadMoreIndicatorVisible(boolean enabled) {
+
+        }
+
+        @Override
+        public ParcelableStatus getStatus(int position) {
+            return null;
+        }
+
+        @Override
+        public int getStatusesCount() {
+            return 0;
+        }
+
+        @Override
+        public long getStatusId(int position) {
+            return 0;
+        }
+
+        @Override
+        public TwidereLinkify getTwidereLinkify() {
+            return linkify;
+        }
+
+        @Override
+        public boolean isMediaPreviewEnabled() {
+            return displayMediaPreview;
+        }
+
+        @Override
+        public int getLinkHighlightingStyle() {
+            return 0;
+        }
+
+        @Override
+        public boolean isNameFirst() {
+            return nameFirst;
+        }
+
+        @Override
+        public void setData(Object o) {
+
+        }
+
+        public void setMediaPreviewEnabled(boolean enabled) {
+            displayMediaPreview = enabled;
+        }
+
+        @Override
+        public boolean shouldShowAccountsColor() {
+            return false;
+        }
     }
 }

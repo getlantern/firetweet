@@ -11,7 +11,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.FixedLinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.SparseIntArray;
@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import org.mariotaku.twidere.R;
 import org.mariotaku.twidere.adapter.decorator.DividerItemDecoration;
+import org.mariotaku.twidere.util.ThemeUtils;
 import org.mariotaku.twidere.view.iface.PagerIndicator;
 
 import java.lang.annotation.Retention;
@@ -69,6 +70,7 @@ public class TabPagerIndicator extends RecyclerView implements PagerIndicator {
         setVerticalPadding(a.getDimensionPixelSize(R.styleable.TabPagerIndicator_tabHorizontalPadding, 0));
         setStripColor(a.getColor(R.styleable.TabPagerIndicator_tabStripColor, 0));
         setIconColor(a.getColor(R.styleable.TabPagerIndicator_tabIconColor, 0));
+        setLabelColor(a.getColor(R.styleable.TabPagerIndicator_tabLabelColor, ThemeUtils.getTextColorPrimary(context)));
         setTabDisplayOption(a.getInt(R.styleable.TabPagerIndicator_tabDisplayOption, ICON));
         setTabShowDivider(a.getBoolean(R.styleable.TabPagerIndicator_tabShowDivider, false));
         final int dividerVerticalPadding = a.getDimensionPixelSize(R.styleable.TabPagerIndicator_tabDividerVerticalPadding, 0);
@@ -97,6 +99,9 @@ public class TabPagerIndicator extends RecyclerView implements PagerIndicator {
         return mIndicatorAdapter.getItemContext();
     }
 
+    public void getTabSpecs() {
+    }
+
     public void setItemContext(Context context) {
         mIndicatorAdapter.setItemContext(context);
     }
@@ -118,7 +123,7 @@ public class TabPagerIndicator extends RecyclerView implements PagerIndicator {
 
     @Override
     public void onPageSelected(int position) {
-        mIndicatorAdapter.notifyDataSetChanged();
+        notifyDataSetChanged();
         if (mPageChangeListener == null) return;
         smoothScrollToPosition(position);
         mPageChangeListener.onPageSelected(position);
@@ -134,12 +139,20 @@ public class TabPagerIndicator extends RecyclerView implements PagerIndicator {
         mIndicatorAdapter.setBadge(position, count);
     }
 
+    public void clearBadge() {
+        mIndicatorAdapter.clearBadge();
+    }
+
     public void setDisplayBadge(boolean display) {
         mIndicatorAdapter.setDisplayBadge(display);
     }
 
     public void setIconColor(int color) {
         mIndicatorAdapter.setIconColor(color);
+    }
+
+    public void setLabelColor(int color) {
+        mIndicatorAdapter.setLabelColor(color);
     }
 
     public void setStripColor(int color) {
@@ -313,12 +326,14 @@ public class TabPagerIndicator extends RecyclerView implements PagerIndicator {
 
         @Override
         public void onClick(View v) {
-            indicator.dispatchTabClick(getPosition());
+            indicator.dispatchTabClick(getAdapterPosition());
         }
 
         @Override
         public boolean onLongClick(View v) {
-            return indicator.dispatchTabLongClick(getPosition());
+            final int position = getAdapterPosition();
+            if (position == RecyclerView.NO_POSITION) return false;
+            return indicator.dispatchTabLongClick(position);
         }
 
         public void setBadge(int count, boolean display) {
@@ -337,6 +352,10 @@ public class TabPagerIndicator extends RecyclerView implements PagerIndicator {
             } else {
                 iconView.clearColorFilter();
             }
+        }
+
+        public void setLabelColor(int color) {
+            labelView.setTextColor(color);
         }
 
         public void setPadding(int horizontalPadding, int verticalPadding) {
@@ -359,7 +378,7 @@ public class TabPagerIndicator extends RecyclerView implements PagerIndicator {
         }
     }
 
-    private static class TabLayoutManager extends LinearLayoutManager {
+    private static class TabLayoutManager extends FixedLinearLayoutManager {
 
         private final TabPagerIndicator mIndicator;
 
@@ -385,6 +404,12 @@ public class TabPagerIndicator extends RecyclerView implements PagerIndicator {
         }
     }
 
+    public void updateAppearance() {
+        final int positionStart = mLayoutManager.findFirstVisibleItemPosition();
+        final int itemCount = mLayoutManager.findLastVisibleItemPosition() - positionStart;
+        mIndicatorAdapter.notifyItemRangeChanged(positionStart, itemCount);
+    }
+
     private static class TabPagerIndicatorAdapter extends Adapter<TabItemHolder> {
 
         private final TabPagerIndicator mIndicator;
@@ -393,7 +418,7 @@ public class TabPagerIndicator extends RecyclerView implements PagerIndicator {
         private LayoutInflater mInflater;
 
         private TabProvider mTabProvider;
-        private int mStripColor, mIconColor;
+        private int mStripColor, mIconColor, mLabelColor;
         private boolean mDisplayBadge;
 
         public TabPagerIndicatorAdapter(TabPagerIndicator indicator) {
@@ -414,7 +439,11 @@ public class TabPagerIndicator extends RecyclerView implements PagerIndicator {
         public TabItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             if (mIndicator == null) throw new IllegalStateException("item context not set");
             final View view = mInflater.inflate(R.layout.layout_tab_item, parent, false);
-            return new TabItemHolder(mIndicator, view);
+            final TabItemHolder holder = new TabItemHolder(mIndicator, view);
+            holder.setStripHeight(mIndicator.getStripHeight());
+            holder.setPadding(mIndicator.getTabHorizontalPadding(), mIndicator.getTabVerticalPadding());
+            holder.setDisplayOption(mIndicator.isIconDisplayed(), mIndicator.isLabelDisplayed());
+            return holder;
         }
 
         @Override
@@ -422,12 +451,11 @@ public class TabPagerIndicator extends RecyclerView implements PagerIndicator {
             final Drawable icon = mTabProvider.getPageIcon(position);
             final CharSequence title = mTabProvider.getPageTitle(position);
             holder.setTabData(icon, title, mIndicator.getCurrentItem() == position);
-            holder.setPadding(mIndicator.getTabHorizontalPadding(), mIndicator.getTabVerticalPadding());
-            holder.setStripHeight(mIndicator.getStripHeight());
+            holder.setBadge(mUnreadCounts.get(position, 0), mDisplayBadge);
+
             holder.setStripColor(mStripColor);
             holder.setIconColor(mIconColor);
-            holder.setBadge(mUnreadCounts.get(position, 0), mDisplayBadge);
-            holder.setDisplayOption(mIndicator.isIconDisplayed(), mIndicator.isLabelDisplayed());
+            holder.setLabelColor(mLabelColor);
         }
 
         @Override
@@ -438,27 +466,37 @@ public class TabPagerIndicator extends RecyclerView implements PagerIndicator {
 
         public void setBadge(int position, int count) {
             mUnreadCounts.put(position, count);
+            notifyItemChanged(position);
+        }
+
+        public void clearBadge() {
+            mUnreadCounts.clear();
             notifyDataSetChanged();
         }
 
         public void setDisplayBadge(boolean display) {
             mDisplayBadge = display;
-            notifyDataSetChanged();
+//            notifyDataSetChanged();
         }
 
         public void setIconColor(int color) {
             mIconColor = color;
+//            notifyDataSetChanged();
+        }
+
+        public void setLabelColor(int color) {
+            mLabelColor = color;
             notifyDataSetChanged();
         }
 
         public void setStripColor(int color) {
             mStripColor = color;
-            notifyDataSetChanged();
+//            notifyDataSetChanged();
         }
 
         public void setTabProvider(TabProvider tabProvider) {
             mTabProvider = tabProvider;
-            notifyDataSetChanged();
+//            notifyDataSetChanged();
         }
     }
 }

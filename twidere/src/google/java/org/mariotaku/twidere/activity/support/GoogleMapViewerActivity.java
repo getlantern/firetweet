@@ -19,11 +19,11 @@
 
 package org.mariotaku.twidere.activity.support;
 
-import android.app.ActionBar;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -38,7 +38,7 @@ import org.mariotaku.twidere.fragment.support.WebMapFragment;
 import org.mariotaku.twidere.util.ParseUtils;
 import org.mariotaku.twidere.util.ThemeUtils;
 
-public class GoogleMapViewerActivity extends BaseSupportActivity implements Constants {
+public class GoogleMapViewerActivity extends BaseActionBarActivity implements Constants {
 
     @Override
     public int getThemeResourceId() {
@@ -92,7 +92,7 @@ public class GoogleMapViewerActivity extends BaseSupportActivity implements Cons
             finish();
             return;
         }
-        final ActionBar actionBar = getActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }

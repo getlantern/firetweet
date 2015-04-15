@@ -21,6 +21,7 @@ package org.mariotaku.twidere.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -33,14 +34,19 @@ import android.widget.TextView;
 import org.mariotaku.twidere.Constants;
 import org.mariotaku.twidere.R;
 import org.mariotaku.twidere.model.ParcelableMedia;
-import org.mariotaku.twidere.util.ImageLoaderWrapper;
 import org.mariotaku.twidere.util.ImageLoadingHandler;
+import org.mariotaku.twidere.util.MediaLoaderWrapper;
 import org.mariotaku.twidere.util.Utils.OnMediaClickListener;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * Created by mariotaku on 14/12/17.
  */
 public class CardMediaContainer extends ViewGroup implements Constants {
+
+    private static final float WIDTH_HEIGHT_RATIO = 0.5f;
 
     private final int mMaxColumns;
     private final int mHorizontalSpacing, mVerticalSpacing;
@@ -82,7 +88,7 @@ public class CardMediaContainer extends ViewGroup implements Constants {
     }
 
     public void displayMedia(@Nullable final ParcelableMedia[] mediaArray,
-                             @NonNull final ImageLoaderWrapper loader,
+                             @NonNull final MediaLoaderWrapper loader,
                              final long accountId,
                              final OnMediaClickListener mediaClickListener,
                              final ImageLoadingHandler loadingHandler) {
@@ -111,6 +117,7 @@ public class CardMediaContainer extends ViewGroup implements Constants {
             if (i < k) {
                 final ParcelableMedia media = mediaArray[i];
                 loader.displayPreviewImage(imageView, media.page_url, loadingHandler);
+                child.setTag(media);
                 child.setVisibility(VISIBLE);
                 if (i == j - 1) {
                     final TextView moreIndicator = (TextView) child.findViewById(R.id.more_media);
@@ -139,28 +146,88 @@ public class CardMediaContainer extends ViewGroup implements Constants {
         final int[] childIndices = createChildIndices();
         final int childCount = getChildIndicesInLayout(this, childIndices);
         if (childCount > 0) {
-            final double childSqrt = Math.sqrt(childCount);
-            final int columnCount = (int) (childSqrt % 1 == 0 ? Math.ceil(childSqrt) : Math.min(childCount, mMaxColumns));
-            final int rowCount = (int) Math.ceil(childCount / (double) columnCount);
-            final int firstRowColumnCount = childCount - (columnCount * (rowCount - 1));
-            for (int i = 0; i < rowCount; i++) {
-                final int currColumnCount = i == 0 ? firstRowColumnCount : columnCount;
-                final int childT;
-                if (i == 0) {
-                    childT = getPaddingTop();
-                } else if (i == 1) {
-                    childT = getChildAt(childIndices[0]).getBottom() + mVerticalSpacing;
-                } else {
-                    childT = getChildAt(childIndices[firstRowColumnCount + columnCount * (i - 1)]).getBottom() + mVerticalSpacing;
-                }
-                for (int j = 0; j < currColumnCount; j++) {
-                    final int childIdx = i == 0 ? j : firstRowColumnCount + columnCount * (i - 1) + j;
-                    final View child = getChildAt(childIndices[childIdx]);
-                    final int childL = j == 0 ? getPaddingLeft() : (getChildAt(childIndices[childIdx - 1]).getRight() + mHorizontalSpacing);
-                    child.layout(childL, childT, childL + child.getMeasuredWidth(), childT + child.getMeasuredHeight());
-                }
+            if (childCount == 1) {
+                layout1Media(childIndices);
+            } else if (childCount == 3) {
+                layout3Media(mHorizontalSpacing, mVerticalSpacing, childIndices);
+            } else {
+                layoutGridMedia(childCount, 2, mHorizontalSpacing, mVerticalSpacing, childIndices);
             }
         }
+    }
+
+    private void measure1Media(int contentWidth, int[] childIndices) {
+        final View child = getChildAt(childIndices[0]);
+        final int childHeight = Math.round(contentWidth * WIDTH_HEIGHT_RATIO);
+        final int widthSpec = MeasureSpec.makeMeasureSpec(contentWidth, MeasureSpec.EXACTLY);
+        final int heightSpec = MeasureSpec.makeMeasureSpec(childHeight, MeasureSpec.EXACTLY);
+        child.measure(widthSpec, heightSpec);
+    }
+
+    private void layout1Media(int[] childIndices) {
+        final View child = getChildAt(childIndices[0]);
+        final int left = getPaddingLeft(), top = getPaddingTop();
+        final int right = left + child.getMeasuredWidth(), bottom = top + child.getMeasuredHeight();
+        child.layout(left, top, right, bottom);
+    }
+
+    private int measureGridMedia(int childCount, int columnCount, int contentWidth,
+                                 float widthHeightRatio, int horizontalSpacing, int verticalSpacing,
+                                 int[] childIndices) {
+        final int childWidth = (contentWidth - horizontalSpacing * (columnCount - 1)) / columnCount;
+        final int childHeight = Math.round(childWidth * widthHeightRatio);
+        final int widthSpec = MeasureSpec.makeMeasureSpec(childWidth, MeasureSpec.EXACTLY);
+        final int heightSpec = MeasureSpec.makeMeasureSpec(childHeight, MeasureSpec.EXACTLY);
+        for (int i = 0; i < childCount; i++) {
+            getChildAt(childIndices[i]).measure(widthSpec, heightSpec);
+        }
+        final int rowsCount = (int) Math.ceil(childCount / (double) columnCount);
+        return rowsCount * childHeight + (rowsCount - 1) * verticalSpacing;
+    }
+
+    private void layoutGridMedia(int childCount, int columnCount, int horizontalSpacing,
+                                 int verticalSpacing, int[] childIndices) {
+        final int initialLeft = getPaddingLeft();
+        int left = initialLeft, top = getPaddingTop();
+        for (int i = 0; i < childCount; i++) {
+            final int colIdx = i % columnCount;
+            final View child = getChildAt(childIndices[i]);
+            child.layout(left, top, left + child.getMeasuredWidth(), top + child.getMeasuredHeight());
+            if (colIdx == columnCount - 1) {
+                // Last item in this row, set top of next row to last view bottom + verticalSpacing
+                top = child.getBottom() + verticalSpacing;
+                // And reset left to initial left
+                left = initialLeft;
+            } else {
+                // The left of next item is right + horizontalSpacing of previous item
+                left = child.getRight() + horizontalSpacing;
+            }
+        }
+    }
+
+    private void measure3Media(int contentWidth, int horizontalSpacing, int[] childIndices) {
+        final View child0 = getChildAt(childIndices[0]), child1 = getChildAt(childIndices[1]),
+                child2 = getChildAt(childIndices[2]);
+        final int childWidth = (contentWidth - horizontalSpacing) / 2;
+        final int sizeSpec = MeasureSpec.makeMeasureSpec(childWidth, MeasureSpec.EXACTLY);
+        child0.measure(sizeSpec, sizeSpec);
+        final int childRightHeight = Math.round(childWidth - horizontalSpacing) / 2;
+        final int heightSpec = MeasureSpec.makeMeasureSpec(childRightHeight, MeasureSpec.EXACTLY);
+        child1.measure(sizeSpec, heightSpec);
+        child2.measure(sizeSpec, heightSpec);
+    }
+
+    private void layout3Media(int horizontalSpacing, int verticalSpacing, int[] childIndices) {
+        final int left = getPaddingLeft(), top = getPaddingTop();
+        final View child0 = getChildAt(childIndices[0]), child1 = getChildAt(childIndices[1]),
+                child2 = getChildAt(childIndices[2]);
+        child0.layout(left, top, left + child0.getMeasuredWidth(), top + child0.getMeasuredHeight());
+        final int rightColLeft = child0.getRight() + horizontalSpacing;
+        child1.layout(rightColLeft, top, rightColLeft + child1.getMeasuredWidth(),
+                top + child1.getMeasuredHeight());
+        final int child2Top = child1.getBottom() + verticalSpacing;
+        child2.layout(rightColLeft, child2Top, rightColLeft + child2.getMeasuredWidth(),
+                child2Top + child2.getMeasuredHeight());
     }
 
     @Override
@@ -171,26 +238,23 @@ public class CardMediaContainer extends ViewGroup implements Constants {
         final int childCount = getChildIndicesInLayout(this, childIndices);
         int heightSum = 0;
         if (childCount > 0) {
-            final double childSqrt = Math.sqrt(childCount);
-            final int columnCount = (int) (childSqrt % 1 == 0 ? Math.ceil(childSqrt) : Math.min(childCount, mMaxColumns));
-            final int rowCount = (int) Math.ceil(childCount / (double) columnCount);
-            final int firstRowColumnCount = childCount - (columnCount * (rowCount - 1));
-            for (int i = 0; i < rowCount; i++) {
-                final int currColumnCount = i == 0 ? firstRowColumnCount : columnCount;
-                final int columnWidth = (contentWidth - (mHorizontalSpacing * (currColumnCount - 1))) / currColumnCount;
-                final int columnHeight = columnWidth;
-                heightSum = heightSum + columnHeight;
-                final int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(columnWidth, MeasureSpec.EXACTLY);
-                final int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(columnHeight, MeasureSpec.EXACTLY);
-                for (int j = 0; j < currColumnCount; j++) {
-                    final int childIdx = i == 0 ? j : firstRowColumnCount + columnCount * (i - 1) + j;
-                    getChildAt(childIndices[childIdx]).measure(childWidthMeasureSpec, childHeightMeasureSpec);
-                }
+            if (childCount == 1) {
+                measure1Media(contentWidth, childIndices);
+                heightSum = Math.round(contentWidth * WIDTH_HEIGHT_RATIO);
+            } else if (childCount == 2) {
+                measureGridMedia(childCount, 2, contentWidth, 1, mHorizontalSpacing, mVerticalSpacing,
+                        childIndices);
+                heightSum = Math.round(contentWidth * WIDTH_HEIGHT_RATIO);
+            } else if (childCount == 3) {
+                measure3Media(contentWidth, mHorizontalSpacing, childIndices);
+                heightSum = Math.round(contentWidth * WIDTH_HEIGHT_RATIO);
+            } else {
+                heightSum = measureGridMedia(childCount, 2, contentWidth, WIDTH_HEIGHT_RATIO,
+                        mHorizontalSpacing, mVerticalSpacing, childIndices);
             }
-            heightSum = heightSum + (mVerticalSpacing * rowCount - 1);
         }
-        heightSum = heightSum + getPaddingTop() + getPaddingBottom();
-        setMeasuredDimension(widthMeasureSpec, MeasureSpec.makeMeasureSpec(heightSum, MeasureSpec.EXACTLY));
+        final int height = heightSum + getPaddingTop() + getPaddingBottom();
+        setMeasuredDimension(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
     }
 
     private int[] createChildIndices() {
@@ -225,6 +289,12 @@ public class CardMediaContainer extends ViewGroup implements Constants {
             if (mListener == null) return;
             mListener.onMediaClick(v, (ParcelableMedia) v.getTag(), mAccountId);
         }
+
+    }
+
+    @IntDef({VALUE_MEDIA_PREVIEW_STYLE_CODE_SCALE, VALUE_MEDIA_PREVIEW_STYLE_CODE_CROP})
+    @Retention(RetentionPolicy.SOURCE)
+    public static @interface PreviewStyle {
 
     }
 }

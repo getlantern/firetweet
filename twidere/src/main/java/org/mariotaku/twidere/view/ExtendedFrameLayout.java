@@ -81,10 +81,34 @@ public class ExtendedFrameLayout extends FrameLayout implements IExtendedView {
 
     @Override
     protected boolean fitSystemWindows(@NonNull Rect insets) {
+//        if (mOnFitSystemWindowsListener != null && Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+//            mOnFitSystemWindowsListener.onFitSystemWindows(insets);
+//        }
         if (mOnFitSystemWindowsListener != null) {
             mOnFitSystemWindowsListener.onFitSystemWindows(insets);
         }
         return super.fitSystemWindows(insets);
+    }
+
+    Rect insets = new Rect();
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+//        if (mOnFitSystemWindowsListener != null && Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+//            final OnFitSystemWindowsListener l = mOnFitSystemWindowsListener;
+//            final Activity activity = Utils.findActivity(getContext());
+//            if (activity instanceof ActionBarActivity) {
+//                final ActionBarActivity actionBarActivity = (ActionBarActivity) activity;
+//                insets.top = Utils.getActionBarHeight(actionBarActivity.getSupportActionBar());
+//                l.onFitSystemWindows(insets);
+//            } else if (activity != null && activity.getWindow().hasFeature(Window.FEATURE_ACTION_BAR
+//                    | Window.FEATURE_ACTION_BAR_OVERLAY)) {
+//                insets.top = Utils.getActionBarHeight(activity.getActionBar());
+//                l.onFitSystemWindows(insets);
+//            }
+//        }
+
     }
 
     @Override

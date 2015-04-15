@@ -24,11 +24,22 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
 
+import org.mariotaku.querybuilder.Columns;
+import org.mariotaku.querybuilder.Columns.Column;
+import org.mariotaku.querybuilder.Expression;
 import org.mariotaku.querybuilder.NewColumn;
+import org.mariotaku.querybuilder.OnConflict;
+import org.mariotaku.querybuilder.SQLQuery;
 import org.mariotaku.querybuilder.SQLQueryBuilder;
+import org.mariotaku.querybuilder.SetValue;
+import org.mariotaku.querybuilder.Table;
+import org.mariotaku.querybuilder.query.SQLCreateIndexQuery;
 import org.mariotaku.querybuilder.query.SQLCreateTableQuery;
-import org.mariotaku.querybuilder.query.SQLCreateViewQuery;
+import org.mariotaku.querybuilder.query.SQLCreateTriggerQuery.Event;
+import org.mariotaku.querybuilder.query.SQLCreateTriggerQuery.Type;
+import org.mariotaku.querybuilder.query.SQLDeleteQuery;
 import org.mariotaku.twidere.Constants;
 import org.mariotaku.twidere.provider.TwidereDataStore.Accounts;
 import org.mariotaku.twidere.provider.TwidereDataStore.CachedHashtags;
@@ -85,11 +96,96 @@ public final class TwidereSQLiteOpenHelper extends SQLiteOpenHelper implements C
         db.execSQL(createTable(Tabs.TABLE_NAME, Tabs.COLUMNS, Tabs.TYPES, true));
         db.execSQL(createTable(SavedSearches.TABLE_NAME, SavedSearches.COLUMNS, SavedSearches.TYPES, true));
         db.execSQL(createTable(SearchHistory.TABLE_NAME, SearchHistory.COLUMNS, SearchHistory.TYPES, true));
-        db.execSQL(createDirectMessagesView().getSQL());
-        db.execSQL(createDirectMessageConversationEntriesView().getSQL());
+
+        createViews(db);
+        createTriggers(db);
+        createIndices(db);
+
         db.setTransactionSuccessful();
         db.endTransaction();
     }
+
+    private void createIndices(SQLiteDatabase db) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return;
+        db.execSQL(createIndex("statuses_index", Statuses.TABLE_NAME, new String[]{Statuses.ACCOUNT_ID}, true));
+        db.execSQL(createIndex("mentions_index", Mentions.TABLE_NAME, new String[]{Statuses.ACCOUNT_ID}, true));
+        db.execSQL(createIndex("messages_inbox_index", DirectMessages.Inbox.TABLE_NAME, new String[]{DirectMessages.ACCOUNT_ID}, true));
+        db.execSQL(createIndex("messages_outbox_index", DirectMessages.Outbox.TABLE_NAME, new String[]{DirectMessages.ACCOUNT_ID}, true));
+    }
+
+    private void createViews(SQLiteDatabase db) {
+        db.execSQL(SQLQueryBuilder.createView(true, DirectMessages.TABLE_NAME)
+                .as(DirectMessagesQueryBuilder.build()).buildSQL());
+        db.execSQL(SQLQueryBuilder.createView(true, DirectMessages.ConversationEntries.TABLE_NAME)
+                .as(ConversationsEntryQueryBuilder.build()).buildSQL());
+    }
+
+    private void createTriggers(SQLiteDatabase db) {
+        db.execSQL(SQLQueryBuilder.dropTrigger(true, "delete_old_statuses").getSQL());
+        db.execSQL(SQLQueryBuilder.dropTrigger(true, "delete_old_mentions").getSQL());
+        db.execSQL(SQLQueryBuilder.dropTrigger(true, "delete_old_cached_statuses").getSQL());
+        db.execSQL(SQLQueryBuilder.dropTrigger(true, "delete_old_received_messages").getSQL());
+        db.execSQL(SQLQueryBuilder.dropTrigger(true, "delete_old_sent_messages").getSQL());
+        db.execSQL(SQLQueryBuilder.dropTrigger(true, "on_user_cache_update_trigger").getSQL());
+        db.execSQL(SQLQueryBuilder.dropTrigger(true, "delete_old_cached_hashtags").getSQL());
+        db.execSQL(createDeleteDuplicateStatusTrigger("delete_old_statuses", Statuses.TABLE_NAME).getSQL());
+        db.execSQL(createDeleteDuplicateStatusTrigger("delete_old_mentions", Mentions.TABLE_NAME).getSQL());
+        db.execSQL(createDeleteDuplicateStatusTrigger("delete_old_cached_statuses", CachedStatuses.TABLE_NAME).getSQL());
+        db.execSQL(createDeleteDuplicateMessageTrigger("delete_old_received_messages", DirectMessages.Inbox.TABLE_NAME).getSQL());
+        db.execSQL(createDeleteDuplicateMessageTrigger("delete_old_sent_messages", DirectMessages.Outbox.TABLE_NAME).getSQL());
+
+        // Update user info in filtered users
+        final Table cachedUsersTable = new Table(CachedUsers.TABLE_NAME);
+        final Table filteredUsersTable = new Table(Filters.Users.TABLE_NAME);
+        db.execSQL(SQLQueryBuilder.createTrigger(false, true, "on_user_cache_update_trigger")
+                .type(Type.BEFORE)
+                .event(Event.INSERT)
+                .on(cachedUsersTable)
+                .forEachRow(true)
+                .actions(SQLQueryBuilder.update(OnConflict.REPLACE, filteredUsersTable)
+                        .set(new SetValue(new Column(Filters.Users.NAME), new Column(Table.NEW, CachedUsers.NAME)),
+                                new SetValue(new Column(Filters.Users.SCREEN_NAME), new Column(Table.NEW, CachedUsers.SCREEN_NAME)))
+                        .where(Expression.equals(new Column(Filters.Users.USER_ID), new Column(Table.NEW, CachedUsers.USER_ID)))
+                        .build())
+                .buildSQL());
+
+        // Delete duplicated hashtags ignoring case
+        final Table cachedHashtagsTable = new Table(CachedHashtags.TABLE_NAME);
+        db.execSQL(SQLQueryBuilder.createTrigger(false, true, "delete_old_cached_hashtags")
+                .type(Type.BEFORE)
+                .event(Event.INSERT)
+                .on(cachedHashtagsTable)
+                .forEachRow(true)
+                .actions(SQLQueryBuilder.deleteFrom(cachedHashtagsTable)
+                        .where(Expression.like(new Column(CachedHashtags.NAME), new Column(Table.NEW, CachedHashtags.NAME)))
+                        .build())
+                .buildSQL());
+
+    }
+
+    private SQLQuery createDeleteDuplicateStatusTrigger(String triggerName, String tableName) {
+        final Table table = new Table(tableName);
+        final SQLDeleteQuery deleteOld = SQLQueryBuilder.deleteFrom(table).where(Expression.and(
+                Expression.equals(new Column(Statuses.ACCOUNT_ID), new Column(Table.NEW, Statuses.ACCOUNT_ID)),
+                Expression.equals(new Column(Statuses.STATUS_ID), new Column(Table.NEW, Statuses.STATUS_ID))
+        )).build();
+        return SQLQueryBuilder.createTrigger(false, true, triggerName)
+                .type(Type.BEFORE).event(Event.INSERT).on(table).forEachRow(true)
+                .actions(deleteOld).build();
+    }
+
+
+    private SQLQuery createDeleteDuplicateMessageTrigger(String triggerName, String tableName) {
+        final Table table = new Table(tableName);
+        final SQLDeleteQuery deleteOld = SQLQueryBuilder.deleteFrom(table).where(Expression.and(
+                Expression.equals(new Column(DirectMessages.ACCOUNT_ID), new Column(Table.NEW, DirectMessages.ACCOUNT_ID)),
+                Expression.equals(new Column(DirectMessages.MESSAGE_ID), new Column(Table.NEW, DirectMessages.MESSAGE_ID))
+        )).build();
+        return SQLQueryBuilder.createTrigger(false, true, triggerName)
+                .type(Type.BEFORE).event(Event.INSERT).on(table).forEachRow(true)
+                .actions(deleteOld).build();
+    }
+
 
     @Override
     public void onDowngrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
@@ -111,19 +207,6 @@ public final class TwidereSQLiteOpenHelper extends SQLiteOpenHelper implements C
             values.put(Accounts.CONSUMER_SECRET, trim(pref_consumer_secret));
             db.update(Accounts.TABLE_NAME, values, null, null);
         }
-    }
-
-    private SQLCreateViewQuery createDirectMessageConversationEntriesView() {
-        final SQLCreateViewQuery.Builder qb = SQLQueryBuilder.createView(true,
-                DirectMessages.ConversationEntries.TABLE_NAME);
-        qb.as(ConversationsEntryQueryBuilder.build());
-        return qb.build();
-    }
-
-    private SQLCreateViewQuery createDirectMessagesView() {
-        final SQLCreateViewQuery.Builder qb = SQLQueryBuilder.createView(true, DirectMessages.TABLE_NAME);
-        qb.as(DirectMessagesQueryBuilder.build());
-        return qb.build();
     }
 
     private void handleVersionChange(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
@@ -166,8 +249,9 @@ public final class TwidereSQLiteOpenHelper extends SQLiteOpenHelper implements C
         safeUpgrade(db, SavedSearches.TABLE_NAME, SavedSearches.COLUMNS, SavedSearches.TYPES, true, null);
         safeUpgrade(db, SearchHistory.TABLE_NAME, SearchHistory.COLUMNS, SearchHistory.TYPES, true, null);
         db.beginTransaction();
-        db.execSQL(createDirectMessagesView().getSQL());
-        db.execSQL(createDirectMessageConversationEntriesView().getSQL());
+        createViews(db);
+        createTriggers(db);
+        createIndices(db);
         db.setTransactionSuccessful();
         db.endTransaction();
     }
@@ -176,6 +260,14 @@ public final class TwidereSQLiteOpenHelper extends SQLiteOpenHelper implements C
                                       final boolean createIfNotExists) {
         final SQLCreateTableQuery.Builder qb = SQLQueryBuilder.createTable(createIfNotExists, tableName);
         qb.columns(NewColumn.createNewColumns(columns, types));
+        return qb.buildSQL();
+    }
+
+    private static String createIndex(final String indexName, final String tableName, final String[] columns,
+                                      final boolean createIfNotExists) {
+        final SQLCreateIndexQuery.Builder qb = SQLQueryBuilder.createIndex(false, createIfNotExists);
+        qb.name(indexName);
+        qb.on(new Table(tableName), new Columns(columns));
         return qb.buildSQL();
     }
 

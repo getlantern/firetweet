@@ -27,16 +27,18 @@ import android.widget.TextView;
 
 import org.mariotaku.twidere.R;
 import org.mariotaku.twidere.app.TwidereApplication;
-import org.mariotaku.twidere.fragment.support.DirectMessagesConversationFragment;
+import org.mariotaku.twidere.fragment.support.MessagesConversationFragment;
 import org.mariotaku.twidere.model.ParcelableAccount;
-import org.mariotaku.twidere.util.ImageLoaderWrapper;
+import org.mariotaku.twidere.util.MediaLoaderWrapper;
 
 import java.util.Collection;
 
 public class AccountsSpinnerAdapter extends ArrayAdapter<ParcelableAccount> {
 
-    private final ImageLoaderWrapper mImageLoader;
+    private final MediaLoaderWrapper mImageLoader;
     private final boolean mDisplayProfileImage;
+    private final Context mContext;
+    private String mDummyItemText;
 
     public AccountsSpinnerAdapter(final Context context) {
         this(context, R.layout.list_item_user);
@@ -44,9 +46,10 @@ public class AccountsSpinnerAdapter extends ArrayAdapter<ParcelableAccount> {
 
     public AccountsSpinnerAdapter(final Context context, int itemViewResource) {
         super(context, itemViewResource);
-        mImageLoader = TwidereApplication.getInstance(context).getImageLoaderWrapper();
-        mDisplayProfileImage = context.getSharedPreferences(DirectMessagesConversationFragment.SHARED_PREFERENCES_NAME,
-                Context.MODE_PRIVATE).getBoolean(DirectMessagesConversationFragment.KEY_DISPLAY_PROFILE_IMAGE, true);
+        mContext = context;
+        mImageLoader = TwidereApplication.getInstance(context).getMediaLoaderWrapper();
+        mDisplayProfileImage = context.getSharedPreferences(MessagesConversationFragment.SHARED_PREFERENCES_NAME,
+                Context.MODE_PRIVATE).getBoolean(MessagesConversationFragment.KEY_DISPLAY_PROFILE_IMAGE, true);
     }
 
     public AccountsSpinnerAdapter(final Context context, final Collection<ParcelableAccount> accounts) {
@@ -95,12 +98,22 @@ public class AccountsSpinnerAdapter extends ArrayAdapter<ParcelableAccount> {
                     mImageLoader.displayProfileImage(icon, item.profile_image_url);
                 } else {
                     mImageLoader.cancelDisplayTask(icon);
-                    icon.setImageResource(R.drawable.ic_profile_image_default);
+//                    icon.setImageResource(R.drawable.ic_profile_image_default);
                 }
             }
         } else if (text1 != null) {
-            text1.setText(R.string.none);
+            text1.setText(mDummyItemText);
         }
+    }
+
+
+    public void setDummyItemText(int textRes) {
+        setDummyItemText(mContext.getString(textRes));
+    }
+
+    public void setDummyItemText(String text) {
+        mDummyItemText = text;
+        notifyDataSetChanged();
     }
 
 }

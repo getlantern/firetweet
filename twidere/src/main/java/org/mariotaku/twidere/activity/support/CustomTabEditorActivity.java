@@ -28,6 +28,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.PorterDuff.Mode;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -53,7 +54,7 @@ import org.mariotaku.twidere.model.CustomTabConfiguration.ExtraConfiguration;
 import org.mariotaku.twidere.model.ParcelableAccount;
 import org.mariotaku.twidere.model.ParcelableUser;
 import org.mariotaku.twidere.model.ParcelableUserList;
-import org.mariotaku.twidere.util.ImageLoaderWrapper;
+import org.mariotaku.twidere.util.MediaLoaderWrapper;
 import org.mariotaku.twidere.util.ParseUtils;
 import org.mariotaku.twidere.util.ThemeUtils;
 
@@ -71,7 +72,7 @@ import static org.mariotaku.twidere.util.UserColorNameUtils.getUserNickname;
 
 public class CustomTabEditorActivity extends BaseSupportDialogActivity implements OnClickListener {
 
-    private ImageLoaderWrapper mImageLoader;
+    private MediaLoaderWrapper mImageLoader;
     private SharedPreferences mPreferences;
 
     private AccountsSpinnerAdapter mAccountsAdapter;
@@ -213,34 +214,29 @@ public class CustomTabEditorActivity extends BaseSupportDialogActivity implement
         final TextView text1 = (TextView) view.findViewById(android.R.id.text1);
         final TextView text2 = (TextView) view.findViewById(android.R.id.text2);
         final ImageView icon = (ImageView) view.findViewById(android.R.id.icon);
-        final boolean display_profile_image = mPreferences.getBoolean(KEY_DISPLAY_PROFILE_IMAGE, true);
-        final boolean nickname_only = mPreferences.getBoolean(KEY_NICKNAME_ONLY, false);
-        final boolean display_name = mPreferences.getBoolean(KEY_NAME_FIRST, true);
+        final boolean displayProfileImage = mPreferences.getBoolean(KEY_DISPLAY_PROFILE_IMAGE, true);
+        final boolean displayName = mPreferences.getBoolean(KEY_NAME_FIRST, true);
         text1.setVisibility(View.VISIBLE);
         text2.setVisibility(View.VISIBLE);
-        icon.setVisibility(display_profile_image ? View.VISIBLE : View.GONE);
+        icon.setVisibility(displayProfileImage ? View.VISIBLE : View.GONE);
         if (value instanceof ParcelableUser) {
             final ParcelableUser user = (ParcelableUser) value;
-            final String nick = getUserNickname(this, user.id);
-            text1.setText(TextUtils.isEmpty(nick) ? user.name : nickname_only ? nick : getString(
-                    R.string.name_with_nickname, user.name, nick));
+            text1.setText(getUserNickname(this, user.id, user.name));
             text2.setText("@" + user.screen_name);
-            if (display_profile_image) {
+            if (displayProfileImage) {
                 mImageLoader.displayProfileImage(icon, user.profile_image_url);
             }
         } else if (value instanceof ParcelableUserList) {
             final ParcelableUserList user_list = (ParcelableUserList) value;
             final String created_by;
-            if (display_name) {
+            if (displayName) {
                 created_by = "@" + user_list.user_screen_name;
             } else {
-                final String nick = getUserNickname(this, user_list.user_id);
-                created_by = TextUtils.isEmpty(nick) ? user_list.user_name : nickname_only ? nick : getString(
-                        R.string.name_with_nickname, user_list.user_name, nick);
+                created_by = getUserNickname(this, user_list.user_id, user_list.user_name);
             }
             text1.setText(user_list.name);
             text2.setText(getString(R.string.created_by, created_by));
-            if (display_profile_image) {
+            if (displayProfileImage) {
                 mImageLoader.displayProfileImage(icon, user_list.user_profile_image_url);
             }
         } else if (value instanceof CharSequence) {
@@ -274,7 +270,7 @@ public class CustomTabEditorActivity extends BaseSupportDialogActivity implement
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
-        mImageLoader = TwidereApplication.getInstance(this).getImageLoaderWrapper();
+        mImageLoader = TwidereApplication.getInstance(this).getMediaLoaderWrapper();
         final Intent intent = getIntent();
         final String type = mTabType = intent.getStringExtra(EXTRA_TYPE);
         final CustomTabConfiguration conf = getTabConfiguration(type);
@@ -297,16 +293,18 @@ public class CustomTabEditorActivity extends BaseSupportDialogActivity implement
         }
         if (!isEditMode()) {
             mTabConfiguration = conf;
-            final boolean has_secondary_field = conf.getSecondaryFieldType() != CustomTabConfiguration.FIELD_TYPE_NONE;
-            final boolean account_id_none = conf.getAccountRequirement() == CustomTabConfiguration.ACCOUNT_NONE;
-            mAccountContainer.setVisibility(account_id_none ? View.GONE : View.VISIBLE);
-            mSecondaryFieldContainer.setVisibility(has_secondary_field ? View.VISIBLE : View.GONE);
+            final boolean hasSecondaryField = conf.getSecondaryFieldType() != CustomTabConfiguration.FIELD_TYPE_NONE;
+            final boolean accountIdNone = conf.getAccountRequirement() == CustomTabConfiguration.ACCOUNT_NONE;
+            mAccountContainer.setVisibility(accountIdNone ? View.GONE : View.VISIBLE);
+            mSecondaryFieldContainer.setVisibility(hasSecondaryField ? View.VISIBLE : View.GONE);
             final boolean accountIdRequired = conf.getAccountRequirement() == CustomTabConfiguration.ACCOUNT_REQUIRED;
             if (!accountIdRequired) {
                 mAccountsAdapter.add(ParcelableAccount.dummyInstance());
             }
             final boolean officialKeyOnly = intent.getBooleanExtra(EXTRA_OFFICIAL_KEY_ONLY, false);
-            mAccountsAdapter.addAll(ParcelableAccount.getAccountsList(this, false, officialKeyOnly));
+            final boolean forcePrivateAPIs = intent.getBooleanExtra(KEY_FORCE_USING_PRIVATE_APIS, false);
+            mAccountsAdapter.addAll(ParcelableAccount.getAccountsList(this, false, !forcePrivateAPIs && officialKeyOnly));
+            mAccountsAdapter.setDummyItemText(R.string.activated_accounts);
             switch (conf.getSecondaryFieldType()) {
                 case CustomTabConfiguration.FIELD_TYPE_USER: {
                     mSecondaryFieldLabel.setText(R.string.user);
@@ -430,6 +428,7 @@ public class CustomTabEditorActivity extends BaseSupportDialogActivity implement
             }
         }
 
+        @NonNull
         @Override
         public Dialog onCreateDialog(final Bundle savedInstanceState) {
             final Bundle args = getArguments();

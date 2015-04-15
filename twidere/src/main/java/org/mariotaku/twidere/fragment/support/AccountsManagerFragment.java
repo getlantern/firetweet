@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -30,7 +29,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.ListView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.mobeta.android.dslv.DragSortListView;
 import com.mobeta.android.dslv.DragSortListView.DropListener;
@@ -55,13 +55,26 @@ import java.util.ArrayList;
 /**
  * Created by mariotaku on 14/10/26.
  */
-public class AccountsManagerFragment extends BaseSupportListFragment implements LoaderCallbacks<Cursor>, DropListener, OnSharedPreferenceChangeListener {
+public class AccountsManagerFragment extends BaseSupportFragment implements LoaderCallbacks<Cursor>, DropListener, OnSharedPreferenceChangeListener {
 
     private static final String FRAGMENT_TAG_ACCOUNT_DELETION = "account_deletion";
 
     private AccountsAdapter mAdapter;
     private SharedPreferences mPreferences;
     private ParcelableAccount mSelectedAccount;
+
+    private DragSortListView mListView;
+    private View mEmptyView;
+    private View mListContainer, mProgressContainer;
+    private TextView mEmptyText;
+    private ImageView mEmptyIcon;
+
+
+    private void setListShown(boolean shown) {
+        mListContainer.setVisibility(shown ? View.VISIBLE : View.GONE);
+        mProgressContainer.setVisibility(shown ? View.GONE : View.VISIBLE);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -84,9 +97,9 @@ public class AccountsManagerFragment extends BaseSupportListFragment implements 
                     return;
                 final ContentValues values = new ContentValues();
                 values.put(Accounts.COLOR, data.getIntExtra(EXTRA_COLOR, Color.WHITE));
-                final String where = Accounts.ACCOUNT_ID + " = " + mSelectedAccount.account_id;
+                final Expression where = Expression.equals(Accounts.ACCOUNT_ID, mSelectedAccount.account_id);
                 final ContentResolver cr = getContentResolver();
-                cr.update(Accounts.CONTENT_URI, values, where, null);
+                cr.update(Accounts.CONTENT_URI, values, where.getSQL(), null);
                 return;
             }
         }
@@ -106,12 +119,6 @@ public class AccountsManagerFragment extends BaseSupportListFragment implements 
         mSelectedAccount = mAdapter.getAccount(info.position);
         if (mSelectedAccount == null) return false;
         switch (item.getItemId()) {
-            case MENU_SET_AS_DEFAULT: {
-                final Editor editor = mPreferences.edit();
-                editor.putLong(KEY_DEFAULT_ACCOUNT_ID, mSelectedAccount.account_id);
-                editor.apply();
-                return true;
-            }
             case MENU_SET_COLOR: {
                 final Intent intent = new Intent(getActivity(), ColorPickerDialogActivity.class);
                 intent.putExtra(EXTRA_COLOR, mSelectedAccount.color);
@@ -170,9 +177,16 @@ public class AccountsManagerFragment extends BaseSupportListFragment implements 
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        l.showContextMenuForChild(v);
+    public void onBaseViewCreated(View view, Bundle savedInstanceState) {
+        super.onBaseViewCreated(view, savedInstanceState);
+        mListView = (DragSortListView) view.findViewById(android.R.id.list);
+        mEmptyView = view.findViewById(android.R.id.empty);
+        mEmptyIcon = (ImageView) view.findViewById(R.id.empty_icon);
+        mEmptyText = (TextView) view.findViewById(R.id.empty_text);
+        mListContainer = view.findViewById(R.id.list_container);
+        mProgressContainer = view.findViewById(R.id.progress_container);
     }
+
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
@@ -182,8 +196,6 @@ public class AccountsManagerFragment extends BaseSupportListFragment implements 
         menu.setHeaderTitle(account.name);
         final MenuInflater inflater = new MenuInflater(v.getContext());
         inflater.inflate(R.menu.action_manager_account, menu);
-        final boolean isDefault = Utils.getDefaultAccountId(getActivity()) == account.account_id;
-        Utils.setMenuItemAvailability(menu, MENU_SET_AS_DEFAULT, !isDefault);
     }
 
     @Override
@@ -202,22 +214,20 @@ public class AccountsManagerFragment extends BaseSupportListFragment implements 
         mAdapter = new AccountsAdapter(activity);
         Utils.configBaseAdapter(activity, mAdapter);
         mAdapter.setSortEnabled(true);
-        setListAdapter(mAdapter);
-        final DragSortListView listView = (DragSortListView) getListView();
-        listView.setDragEnabled(true);
-        listView.setDropListener(this);
-        listView.setOnCreateContextMenuListener(this);
+        mListView.setAdapter(mAdapter);
+        mListView.setDragEnabled(true);
+        mListView.setDropListener(this);
+        mListView.setOnCreateContextMenuListener(this);
+        mListView.setEmptyView(mEmptyView);
+        mEmptyText.setText(R.string.no_account);
+        mEmptyIcon.setImageResource(R.drawable.ic_info_error_generic);
         getLoaderManager().initLoader(0, null, this);
+        setListShown(false);
     }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-        final View view = inflater.inflate(android.R.layout.list_content, null, false);
-        final ListView originalList = (ListView) view.findViewById(android.R.id.list);
-        final ViewGroup listContainer = (ViewGroup) originalList.getParent();
-        listContainer.removeView(originalList);
-        inflater.inflate(R.layout.fragment_custom_tabs, listContainer, true);
-        return view;
+        return inflater.inflate(R.layout.fragment_list_with_empty_view, container, false);
     }
 
     @Override
@@ -228,6 +238,7 @@ public class AccountsManagerFragment extends BaseSupportListFragment implements 
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        setListShown(true);
         mAdapter.changeCursor(cursor);
     }
 
@@ -238,10 +249,9 @@ public class AccountsManagerFragment extends BaseSupportListFragment implements 
 
     @Override
     public void drop(int from, int to) {
-        final DragSortListView listView = (DragSortListView) getListView();
         mAdapter.drop(from, to);
-        if (listView.getChoiceMode() != AbsListView.CHOICE_MODE_NONE) {
-            listView.moveCheckState(from, to);
+        if (mListView.getChoiceMode() != AbsListView.CHOICE_MODE_NONE) {
+            mListView.moveCheckState(from, to);
         }
         saveAccountPositions();
     }

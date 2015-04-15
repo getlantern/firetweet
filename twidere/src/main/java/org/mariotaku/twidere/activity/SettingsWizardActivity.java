@@ -30,6 +30,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -57,7 +58,7 @@ import org.mariotaku.twidere.model.SupportTabSpec;
 import org.mariotaku.twidere.preference.WizardPageHeaderPreference;
 import org.mariotaku.twidere.preference.WizardPageNavPreference;
 import org.mariotaku.twidere.provider.TwidereDataStore.Tabs;
-import org.mariotaku.twidere.task.TwidereAsyncTask;
+import org.mariotaku.twidere.util.AsyncTaskUtils;
 import org.mariotaku.twidere.util.CustomTabUtils;
 import org.mariotaku.twidere.util.MathUtils;
 import org.mariotaku.twidere.util.ParseUtils;
@@ -85,17 +86,19 @@ public class SettingsWizardActivity extends Activity implements Constants {
     private TabsAdapter mAdapter;
 
     private AbsInitialSettingsTask mTask;
+    private AbsInitialSettingsTask mTabTask;
+
 
     public void applyInitialSettings() {
-        if (mTask != null && mTask.getStatus() == TwidereAsyncTask.Status.RUNNING) return;
+        if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING) return;
         mTask = new InitialSettingsTask(this);
-        mTask.executeTask();
+        AsyncTaskUtils.executeTask(mTask);
     }
 
     public void applyInitialTabSettings() {
-        if (mTask != null && mTask.getStatus() == TwidereAsyncTask.Status.RUNNING) return;
-        mTask = new InitialTabSettingsTask(this);
-        mTask.executeTask();
+        if (mTabTask != null && mTabTask.getStatus() == AsyncTask.Status.RUNNING) return;
+        mTabTask = new InitialTabSettingsTask(this);
+        AsyncTaskUtils.executeTask(mTabTask);
     }
 
     public void exitWizard() {
@@ -158,12 +161,14 @@ public class SettingsWizardActivity extends Activity implements Constants {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings_wizard);
+        /*setContentView(R.layout.activity_settings_wizard);
         mAdapter = new TabsAdapter(this, getFragmentManager(), null);
         mViewPager.setAdapter(mAdapter);
         mViewPager.setEnabled(false);
         mIndicator.setViewPager(mViewPager);
-        initPages();
+        initPages();*/
+        applyInitialSettings();
+        exitWizard();
     }
 
     private void initPages() {
@@ -261,7 +266,7 @@ public class SettingsWizardActivity extends Activity implements Constants {
 
         @Override
         protected int getPreferenceResource() {
-            return R.xml.settings_cards;
+            return R.xml.preferences_cards;
         }
     }
 
@@ -441,7 +446,7 @@ public class SettingsWizardActivity extends Activity implements Constants {
 
         @Override
         protected int getPreferenceResource() {
-            return R.xml.settings_theme;
+            return R.xml.preferences_theme;
         }
     }
 
@@ -503,7 +508,7 @@ public class SettingsWizardActivity extends Activity implements Constants {
         }
     }
 
-    static abstract class AbsInitialSettingsTask extends TwidereAsyncTask<Void, Void, Boolean> {
+    static abstract class AbsInitialSettingsTask extends AsyncTask<Object, Void, Boolean> {
 
         private static final String FRAGMENT_TAG = "initial_settings_dialog";
 
@@ -517,7 +522,7 @@ public class SettingsWizardActivity extends Activity implements Constants {
         }
 
         @Override
-        protected Boolean doInBackground(final Void... params) {
+        protected Boolean doInBackground(final Object... params) {
             final ContentResolver resolver = mActivity.getContentResolver();
             final List<SupportTabSpec> tabs = CustomTabUtils.getHomeTabs(mActivity);
             if (wasConfigured(tabs)) return true;

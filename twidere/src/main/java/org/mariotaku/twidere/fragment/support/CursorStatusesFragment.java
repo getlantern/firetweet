@@ -25,6 +25,7 @@ import android.content.SharedPreferences;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.Loader;
@@ -38,14 +39,14 @@ import org.mariotaku.twidere.adapter.CursorStatusesAdapter;
 import org.mariotaku.twidere.loader.support.ExtendedCursorLoader;
 import org.mariotaku.twidere.provider.TwidereDataStore.Accounts;
 import org.mariotaku.twidere.provider.TwidereDataStore.Statuses;
-import org.mariotaku.twidere.task.TwidereAsyncTask;
+import org.mariotaku.twidere.util.AsyncTaskUtils;
 import org.mariotaku.twidere.util.Utils;
 import org.mariotaku.twidere.util.message.FavoriteCreatedEvent;
 import org.mariotaku.twidere.util.message.FavoriteDestroyedEvent;
+import org.mariotaku.twidere.util.message.GetStatusesTaskEvent;
 import org.mariotaku.twidere.util.message.StatusDestroyedEvent;
 import org.mariotaku.twidere.util.message.StatusListChangedEvent;
 import org.mariotaku.twidere.util.message.StatusRetweetedEvent;
-import org.mariotaku.twidere.util.message.TaskStateChangedEvent;
 
 import static org.mariotaku.twidere.util.Utils.buildStatusFilterWhereClause;
 import static org.mariotaku.twidere.util.Utils.getNewestStatusIdsFromDatabase;
@@ -57,6 +58,11 @@ import static org.mariotaku.twidere.util.Utils.shouldEnableFiltersForRTs;
  * Created by mariotaku on 14/12/3.
  */
 public abstract class CursorStatusesFragment extends AbsStatusesFragment<Cursor> {
+
+    @Override
+    protected void onLoadingFinished() {
+
+    }
 
     private ContentObserver mContentObserver;
 
@@ -84,15 +90,20 @@ public abstract class CursorStatusesFragment extends AbsStatusesFragment<Cursor>
 
     @Override
     protected Object createMessageBusCallback() {
-        return new ParcelableStatusesBusCallback();
+        return new CursorStatusesBusCallback();
     }
 
 
-    protected class ParcelableStatusesBusCallback {
+    protected class CursorStatusesBusCallback {
 
         @Subscribe
-        public void notifyTaskStateChanged(TaskStateChangedEvent event) {
-            updateRefreshState();
+        public void notifyGetStatusesTaskChanged(GetStatusesTaskEvent event) {
+            if (!event.uri.equals(getContentUri())) return;
+            setRefreshing(event.running);
+            if (!event.running) {
+                setLoadMoreIndicatorVisible(false);
+                setRefreshEnabled(true);
+            }
         }
 
         @Subscribe
@@ -137,10 +148,16 @@ public abstract class CursorStatusesFragment extends AbsStatusesFragment<Cursor>
             }
         };
         cr.registerContentObserver(Accounts.CONTENT_URI, true, mContentObserver);
+        updateRefreshState();
     }
 
     protected void reloadStatuses() {
-        getLoaderManager().restartLoader(0, getArguments(), this);
+        final Bundle args = new Bundle(), fragmentArgs = getArguments();
+        if (fragmentArgs != null) {
+            args.putAll(fragmentArgs);
+            args.putBoolean(EXTRA_FROM_USER, true);
+        }
+        getLoaderManager().restartLoader(0, args, this);
     }
 
     @Override
@@ -161,8 +178,14 @@ public abstract class CursorStatusesFragment extends AbsStatusesFragment<Cursor>
     }
 
     @Override
-    protected void onLoadMoreStatuses() {
-        new TwidereAsyncTask<Void, Void, long[][]>() {
+    public void onLoaderReset(Loader<Cursor> loader) {
+        getAdapter().setData(null);
+    }
+
+    @Override
+    public void onLoadMoreContents() {
+        super.onLoadMoreContents();
+        AsyncTaskUtils.executeTask(new AsyncTask<Void, Void, long[][]>() {
 
             @Override
             protected long[][] doInBackground(final Void... params) {
@@ -177,15 +200,15 @@ public abstract class CursorStatusesFragment extends AbsStatusesFragment<Cursor>
                 getStatuses(result[0], result[1], result[2]);
             }
 
-        }.executeTask();
+        });
     }
 
     @Override
     public boolean triggerRefresh() {
-        new TwidereAsyncTask<Void, Void, long[][]>() {
+        AsyncTaskUtils.executeTask(new AsyncTask<Object, Void, long[][]>() {
 
             @Override
-            protected long[][] doInBackground(final Void... params) {
+            protected long[][] doInBackground(final Object... params) {
                 final long[][] result = new long[3][];
                 result[0] = getAccountIds();
                 result[2] = getNewestStatusIds(result[0]);
@@ -197,7 +220,7 @@ public abstract class CursorStatusesFragment extends AbsStatusesFragment<Cursor>
                 getStatuses(result[0], result[1], result[2]);
             }
 
-        }.executeTask();
+        });
         return true;
     }
 

@@ -58,6 +58,7 @@ public class HeaderDrawerLayout extends ViewGroup {
     private boolean mTouchDown, mTouchingScrollableContent;
 
     private int mHeaderOffset;
+    private int mTop;
 
     public HeaderDrawerLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -152,7 +153,9 @@ public class HeaderDrawerLayout extends ViewGroup {
 
     public int getHeaderTop() {
         return mContainer.getTop();
-    }    @Override
+    }
+
+    @Override
     public void computeScroll() {
         boolean invalidate = mDragHelper.continueSettling(true);
         if (!mTouchDown && mScroller.computeScrollOffset()) {
@@ -187,7 +190,9 @@ public class HeaderDrawerLayout extends ViewGroup {
 
     private boolean canScrollCallback(float dy) {
         return mDrawerCallback.canScroll(dy);
-    }    @Override
+    }
+
+    @Override
     protected void onFinishInflate() {
         if (getChildCount() != 1) {
             throw new IllegalArgumentException("Add subview by XML is not allowed.");
@@ -245,8 +250,10 @@ public class HeaderDrawerLayout extends ViewGroup {
 
     private void notifyOffsetChanged() {
         final int top = getHeaderTop();
+        if (mTop == top) return;
         mHeaderOffset = top - getPaddingTop();
         mDrawerCallback.topChanged(top);
+        mTop = top;
     }
 
     private void offsetHeaderBy(int dy) {
@@ -263,7 +270,9 @@ public class HeaderDrawerLayout extends ViewGroup {
 
     private void setScrollingHeaderByGesture(boolean scrolling) {
         mScrollingHeaderByGesture = scrolling;
-    }    @Override
+    }
+
+    @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         final View child = getChildAt(0);
 
@@ -275,6 +284,7 @@ public class HeaderDrawerLayout extends ViewGroup {
     }
 
     private boolean shouldLayoutHeaderBottomCallback() {
+        if (mDragCallback == null) return false;
         return mDrawerCallback.shouldLayoutHeaderBottom();
     }
 
@@ -542,11 +552,5 @@ public class HeaderDrawerLayout extends ViewGroup {
             mParent.notifyOffsetChanged();
         }
     }
-
-
-
-
-
-
 
 }

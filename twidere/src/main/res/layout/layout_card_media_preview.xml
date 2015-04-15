@@ -18,14 +18,18 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content">
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:showIn="@layout/card_item_status_common">
 
     <FrameLayout
         android:id="@+id/media_preview_item_0"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:foreground="?android:selectableItemBackground">
 
         <include layout="@layout/layout_card_media_preview_item"/>
     </FrameLayout>
@@ -33,7 +37,8 @@
     <FrameLayout
         android:id="@+id/media_preview_item_1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:foreground="?android:selectableItemBackground">
 
         <include layout="@layout/layout_card_media_preview_item"/>
     </FrameLayout>
@@ -41,32 +46,17 @@
     <FrameLayout
         android:id="@+id/media_preview_item_2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:foreground="?android:selectableItemBackground">
 
         <include layout="@layout/layout_card_media_preview_item"/>
     </FrameLayout>
-
 
     <FrameLayout
         android:id="@+id/media_preview_item_3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <include layout="@layout/layout_card_media_preview_item"/>
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/media_preview_item_4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <include layout="@layout/layout_card_media_preview_item"/>
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/media_preview_item_5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:foreground="?android:selectableItemBackground">
 
         <include layout="@layout/layout_card_media_preview_item"/>
 

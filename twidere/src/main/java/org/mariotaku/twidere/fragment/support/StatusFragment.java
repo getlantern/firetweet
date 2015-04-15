@@ -20,15 +20,18 @@
 package org.mariotaku.twidere.fragment.support;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.net.Uri;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter.CreateNdefMessageCallback;
+import android.nfc.NfcEvent;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -40,29 +43,36 @@ import android.support.v4.content.Loader;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.FixedLinearLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.LayoutParams;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.text.Html;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
+import android.text.style.URLSpan;
+import android.view.ActionMode;
+import android.view.ActionMode.Callback;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
 
-import org.apache.http.protocol.HTTP;
 import org.mariotaku.twidere.R;
-import org.mariotaku.twidere.activity.support.AccountSelectorActivity;
+import org.mariotaku.twidere.activity.iface.IThemedActivity;
 import org.mariotaku.twidere.activity.support.ColorPickerDialogActivity;
 import org.mariotaku.twidere.adapter.AbsStatusesAdapter.StatusAdapterListener;
 import org.mariotaku.twidere.adapter.decorator.DividerItemDecoration;
@@ -74,18 +84,20 @@ import org.mariotaku.twidere.loader.support.StatusRepliesLoader;
 import org.mariotaku.twidere.model.ListResponse;
 import org.mariotaku.twidere.model.ParcelableAccount;
 import org.mariotaku.twidere.model.ParcelableAccount.ParcelableCredentials;
+import org.mariotaku.twidere.model.ParcelableLocation;
 import org.mariotaku.twidere.model.ParcelableMedia;
 import org.mariotaku.twidere.model.ParcelableStatus;
 import org.mariotaku.twidere.model.SingleResponse;
-import org.mariotaku.twidere.task.TwidereAsyncTask;
-import org.mariotaku.twidere.task.TwidereAsyncTask.Status;
 import org.mariotaku.twidere.text.method.StatusContentMovementMethod;
+import org.mariotaku.twidere.util.AsyncTaskUtils;
 import org.mariotaku.twidere.util.AsyncTwitterWrapper;
 import org.mariotaku.twidere.util.ClipboardUtils;
 import org.mariotaku.twidere.util.CompareUtils;
-import org.mariotaku.twidere.util.ImageLoaderWrapper;
 import org.mariotaku.twidere.util.ImageLoadingHandler;
-import org.mariotaku.twidere.util.StatisticUtils;
+import org.mariotaku.twidere.util.LinkCreator;
+import org.mariotaku.twidere.util.MediaLoaderWrapper;
+import org.mariotaku.twidere.util.SharedPreferencesWrapper;
+import org.mariotaku.twidere.util.StatusAdapterLinkClickHandler;
 import org.mariotaku.twidere.util.StatusLinkClickHandler;
 import org.mariotaku.twidere.util.ThemeUtils;
 import org.mariotaku.twidere.util.TwidereLinkify;
@@ -93,6 +105,8 @@ import org.mariotaku.twidere.util.TwitterCardUtils;
 import org.mariotaku.twidere.util.UserColorNameUtils;
 import org.mariotaku.twidere.util.Utils;
 import org.mariotaku.twidere.util.Utils.OnMediaClickListener;
+import org.mariotaku.twidere.view.CardMediaContainer;
+import org.mariotaku.twidere.view.ForegroundColorView;
 import org.mariotaku.twidere.view.ShapedImageView;
 import org.mariotaku.twidere.view.StatusTextView;
 import org.mariotaku.twidere.view.TwitterCardContainer;
@@ -100,39 +114,32 @@ import org.mariotaku.twidere.view.holder.GapViewHolder;
 import org.mariotaku.twidere.view.holder.LoadIndicatorViewHolder;
 import org.mariotaku.twidere.view.holder.StatusViewHolder;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import edu.tsinghua.spice.Utilies.SpiceProfilingUtil;
-import edu.tsinghua.spice.Utilies.TypeMapingUtil;
+import edu.tsinghua.spice.Utilies.TypeMappingUtil;
 import twitter4j.TwitterException;
 
 import static android.text.TextUtils.isEmpty;
-import static android.text.TextUtils.substring;
 import static org.mariotaku.twidere.util.UserColorNameUtils.clearUserColor;
-import static org.mariotaku.twidere.util.UserColorNameUtils.clearUserNickname;
-import static org.mariotaku.twidere.util.UserColorNameUtils.getUserColor;
 import static org.mariotaku.twidere.util.UserColorNameUtils.getUserNickname;
 import static org.mariotaku.twidere.util.UserColorNameUtils.setUserColor;
 import static org.mariotaku.twidere.util.Utils.findStatus;
 import static org.mariotaku.twidere.util.Utils.formatToLongTimeString;
 import static org.mariotaku.twidere.util.Utils.getLocalizedNumber;
 import static org.mariotaku.twidere.util.Utils.getUserTypeIconRes;
-import static org.mariotaku.twidere.util.Utils.isMyRetweet;
 import static org.mariotaku.twidere.util.Utils.openStatus;
 import static org.mariotaku.twidere.util.Utils.openUserProfile;
+import static org.mariotaku.twidere.util.Utils.setMenuForStatus;
 import static org.mariotaku.twidere.util.Utils.showErrorMessage;
-import static org.mariotaku.twidere.util.Utils.showOkMessage;
 
 /**
  * Created by mariotaku on 14/12/5.
  */
-public class StatusFragment extends BaseSupportFragment
-        implements LoaderCallbacks<SingleResponse<ParcelableStatus>>, OnMediaClickListener, StatusAdapterListener {
+public class StatusFragment extends BaseSupportFragment implements LoaderCallbacks<SingleResponse<ParcelableStatus>>,
+        OnMediaClickListener, StatusAdapterListener {
 
     private static final int LOADER_ID_DETAIL_STATUS = 1;
     private static final int LOADER_ID_STATUS_REPLIES = 2;
@@ -173,6 +180,17 @@ public class StatusFragment extends BaseSupportFragment
         @Override
         public void onLoaderReset(Loader<List<ParcelableStatus>> loader) {
 
+        }
+    };
+    private PopupMenu mPopupMenu;
+    private ParcelableStatus mSelectedStatus;
+    private OnMenuItemClickListener mOnStatusMenuItemClickListener = new OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            final ParcelableStatus status = mSelectedStatus;
+            if (status == null) return false;
+            return Utils.handleMenuItemClick(getActivity(), StatusFragment.this,
+                    getFragmentManager(), getTwitterWrapper(), status, item);
         }
     };
 
@@ -217,6 +235,16 @@ public class StatusFragment extends BaseSupportFragment
         if (view == null) throw new AssertionError();
         final Context context = view.getContext();
         final boolean compact = Utils.isCompactCards(context);
+        Utils.setNdefPushMessageCallback(getActivity(), new CreateNdefMessageCallback() {
+            @Override
+            public NdefMessage createNdefMessage(NfcEvent event) {
+                final ParcelableStatus status = getStatus();
+                if (status == null) return null;
+                return new NdefMessage(new NdefRecord[]{
+                        NdefRecord.createUri(LinkCreator.getTwitterStatusLink(status.user_screen_name, status.id)),
+                });
+            }
+        });
         mLayoutManager = new StatusListLinearLayoutManager(context, mRecyclerView);
         mItemDecoration = new DividerItemDecoration(context, mLayoutManager.getOrientation());
         if (compact) {
@@ -235,8 +263,41 @@ public class StatusFragment extends BaseSupportFragment
     }
 
     @Override
+    public void onBaseViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onBaseViewCreated(view, savedInstanceState);
+        mStatusContent = view.findViewById(R.id.status_content);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        mProgressContainer = view.findViewById(R.id.progress_container);
+        mErrorContainer = view.findViewById(R.id.error_retry_container);
+    }
+
+    @Override
+    protected void fitSystemWindows(Rect insets) {
+        super.fitSystemWindows(insets);
+        final View view = getView();
+        if (view != null) {
+            view.setPadding(insets.left, insets.top, insets.right, insets.bottom);
+        }
+    }
+
+    @Override
     public void onGapClick(GapViewHolder holder, int position) {
 
+    }
+
+    @Override
+    public void onMediaClick(StatusViewHolder holder, ParcelableMedia media, int position) {
+        final ParcelableStatus status = mStatusAdapter.getStatus(position);
+        if (status == null) return;
+        Utils.openMedia(getActivity(), status, media);
+        SpiceProfilingUtil.log(getActivity(),
+                status.id + ",Clicked," + status.account_id + "," + status.user_id + "," + status.text_plain.length()
+                        + "," + media.media_url + "," + TypeMappingUtil.getMediaType(media.type)
+                        + "," + mStatusAdapter.isMediaPreviewEnabled() + "," + status.timestamp);
+        SpiceProfilingUtil.profile(getActivity(), status.account_id,
+                status.id + ",Clicked," + status.account_id + "," + status.user_id + "," + status.text_plain.length()
+                        + "," + media.media_url + "," + TypeMappingUtil.getMediaType(media.type)
+                        + "," + mStatusAdapter.isMediaPreviewEnabled() + "," + status.timestamp);
     }
 
     @Override
@@ -275,8 +336,20 @@ public class StatusFragment extends BaseSupportFragment
     }
 
     @Override
-    public void onStatusMenuClick(StatusViewHolder holder, View itemView, int position) {
+    public void onStatusMenuClick(StatusViewHolder holder, View menuView, int position) {
         //TODO show status menu
+        if (mPopupMenu != null) {
+            mPopupMenu.dismiss();
+        }
+        final PopupMenu popupMenu = new PopupMenu(mStatusAdapter.getContext(), menuView,
+                Gravity.NO_GRAVITY, R.attr.actionOverflowMenuStyle, 0);
+        popupMenu.setOnMenuItemClickListener(mOnStatusMenuItemClickListener);
+        popupMenu.inflate(R.menu.action_status);
+        final ParcelableStatus status = mStatusAdapter.getStatus(position);
+        setMenuForStatus(mStatusAdapter.getContext(), popupMenu.getMenu(), status);
+        popupMenu.show();
+        mPopupMenu = popupMenu;
+        mSelectedStatus = status;
     }
 
     @Override
@@ -291,31 +364,29 @@ public class StatusFragment extends BaseSupportFragment
     public void onMediaClick(View view, ParcelableMedia media, long accountId) {
         final ParcelableStatus status = mStatusAdapter.getStatus();
         if (status == null) return;
-        Utils.openMediaDirectly(getActivity(), accountId, media, status.media);
+        Utils.openMediaDirectly(getActivity(), accountId, status, media, status.media);
         //spice
         SpiceProfilingUtil.log(getActivity(),
-                status.id + ",Clicked,"  + accountId + "," + status.user_id  + "," + status.text_plain.length() + "," + media.media_url + "," + TypeMapingUtil.getMediaType(media.type) + "," + status.timestamp );
-        SpiceProfilingUtil.profile(getActivity(),accountId,
-                status.id + ",Clicked,"  + accountId + "," + status.user_id  + "," + status.text_plain.length() + "," + media.media_url + "," + TypeMapingUtil.getMediaType(media.type) + "," + status.timestamp);
+                status.id + ",Clicked," + status.account_id + "," + status.user_id + "," + status.text_plain.length()
+                        + "," + media.media_url + "," + TypeMappingUtil.getMediaType(media.type)
+                        + "," + mStatusAdapter.isMediaPreviewEnabled() + "," + status.timestamp);
+        SpiceProfilingUtil.profile(getActivity(), status.account_id,
+                status.id + ",Clicked," + status.account_id + "," + status.user_id + "," + status.text_plain.length()
+                        + "," + media.media_url + "," + TypeMappingUtil.getMediaType(media.type)
+                        + "," + mStatusAdapter.isMediaPreviewEnabled() + "," + status.timestamp);
         //end
     }
 
-    @Override
-    public void onBaseViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onBaseViewCreated(view, savedInstanceState);
-        mStatusContent = view.findViewById(R.id.status_content);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        mProgressContainer = view.findViewById(R.id.progress_container);
-        mErrorContainer = view.findViewById(R.id.error_retry_container);
+    private void addConversation(ParcelableStatus status, int position) {
+        mStatusAdapter.addConversation(status, position);
     }
 
-    @Override
-    protected void fitSystemWindows(Rect insets) {
-        super.fitSystemWindows(insets);
-        final View view = getView();
-        if (view != null) {
-            view.setPadding(insets.left, insets.top, insets.right, insets.bottom);
-        }
+    private DividerItemDecoration getItemDecoration() {
+        return mItemDecoration;
+    }
+
+    private ParcelableStatus getStatus() {
+        return mStatusAdapter.getStatus();
     }
 
     @Override
@@ -336,11 +407,6 @@ public class StatusFragment extends BaseSupportFragment
                 final int position = mStatusAdapter.findPositionById(itemId);
                 mLayoutManager.scrollToPositionWithOffset(position, top);
             }
-            try {
-                StatisticUtils.writeStatusOpen(status, null, 0);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             setState(STATE_LOADED);
         } else {
             //TODO show errors
@@ -349,11 +415,11 @@ public class StatusFragment extends BaseSupportFragment
     }
 
     private void loadConversation(ParcelableStatus status) {
-        if (mLoadConversationTask != null && mLoadConversationTask.getStatus() == Status.RUNNING) {
+        if (AsyncTaskUtils.isTaskRunning(mLoadConversationTask)) {
             mLoadConversationTask.cancel(true);
         }
         mLoadConversationTask = new LoadConversationTask(this);
-        mLoadConversationTask.executeTask(status);
+        AsyncTaskUtils.executeTask(mLoadConversationTask, status);
     }
 
     private void loadReplies(ParcelableStatus status) {
@@ -369,18 +435,44 @@ public class StatusFragment extends BaseSupportFragment
         getLoaderManager().initLoader(LOADER_ID_STATUS_REPLIES, args, mRepliesLoaderCallback);
         mRepliesLoaderInitialized = true;
         //spice
-        if (status.media != null) {
+        if (status.media == null) {
             SpiceProfilingUtil.profile(getActivity(), status.account_id,
-                    status.id + ",Preview," + status.account_id + "," + status.user_id + "," + status.text_plain.length() + "," + TypeMapingUtil.getMediaType(status.media[0].type) + "," + status.timestamp );
-            SpiceProfilingUtil.log(getActivity(),
-                    status.id + ",Preview," + status.account_id + "," + status.user_id + "," + status.text_plain.length() + "," + TypeMapingUtil.getMediaType(status.media[0].type) + "," + status.timestamp );
-        }   else {
-            SpiceProfilingUtil.profile(getActivity(), status.account_id,
-                    status.id + ",Words," + status.account_id + "," + status.user_id + "," + status.text_plain.length() + "," + status.timestamp );
-            SpiceProfilingUtil.log(getActivity(),status.account_id + ",Words," + status.user_id + "," + status.text_plain.length() + "," + status.timestamp );
+                    status.id + ",Words," + status.account_id + "," + status.user_id + "," + status.reply_count
+                            + "," + status.retweet_count + "," + status.favorite_count
+                            + "," + status.text_plain.length() + "," + status.timestamp);
+            SpiceProfilingUtil.log(getActivity(), status.id + ",Words," + status.account_id + "," + status.user_id
+                    + "," + status.reply_count + "," + status.retweet_count + "," + status.favorite_count
+                    + "," + status.text_plain.length() + "," + status.timestamp);
+        } else {
+            for (final ParcelableMedia spiceMedia : status.media) {
+                if (spiceMedia.type == ParcelableMedia.TYPE_IMAGE) {
+                    SpiceProfilingUtil.profile(getActivity(), status.account_id,
+                            status.id + ",PreviewM," + status.account_id + "," + status.user_id
+                                    + "," + status.reply_count + "," + status.retweet_count + "," + status.favorite_count
+                                    + "," + status.text_plain.length() + "," + TypeMappingUtil.getMediaType(spiceMedia.type)
+                                    + "," + spiceMedia.media_url + "," + spiceMedia.width + "x" + spiceMedia.height
+                                    + "," + status.timestamp);
+                    SpiceProfilingUtil.log(getActivity(),
+                            status.id + ",PreviewM," + status.account_id + "," + status.user_id
+                                    + "," + status.reply_count + "," + status.retweet_count + "," + status.favorite_count
+                                    + "," + status.text_plain.length() + "," + TypeMappingUtil.getMediaType(spiceMedia.type)
+                                    + "," + spiceMedia.media_url + "," + spiceMedia.width + "x" + spiceMedia.height
+                                    + "," + status.timestamp);
+                } else {
+                    SpiceProfilingUtil.profile(getActivity(), status.account_id,
+                            status.id + ",PreviewO," + status.account_id + "," + status.user_id
+                                    + "," + status.reply_count + "," + status.retweet_count + "," + status.favorite_count
+                                    + "," + status.text_plain.length() + "," + TypeMappingUtil.getMediaType(spiceMedia.type)
+                                    + "," + spiceMedia.media_url + "," + status.timestamp);
+                    SpiceProfilingUtil.log(getActivity(),
+                            status.id + ",PreviewO," + status.account_id + "," + status.user_id
+                                    + "," + status.reply_count + "," + status.retweet_count + "," + status.favorite_count
+                                    + "," + status.text_plain.length() + "," + TypeMappingUtil.getMediaType(spiceMedia.type)
+                                    + "," + spiceMedia.media_url + "," + status.timestamp);
+                }
+            }
         }
         //end
-
     }
 
     private void setConversation(List<ParcelableStatus> data) {
@@ -413,6 +505,413 @@ public class StatusFragment extends BaseSupportFragment
         mErrorContainer.setVisibility(state == STATE_ERROR ? View.VISIBLE : View.GONE);
     }
 
+    private static class DetailStatusViewHolder extends ViewHolder implements OnClickListener,
+            ActionMenuView.OnMenuItemClickListener {
+
+        private final StatusAdapter adapter;
+
+        private final CardView cardView;
+
+        private final ActionMenuView menuBar;
+        private final TextView nameView, screenNameView;
+        private final StatusTextView textView;
+        private final TextView quoteTextView;
+        private final TextView quotedNameView, quotedScreenNameView;
+        private final ShapedImageView profileImageView;
+        private final ImageView profileTypeView;
+        private final TextView timeSourceView;
+        private final TextView retweetedByView;
+        private final View repliesContainer, retweetsContainer, favoritesContainer;
+        private final TextView repliesCountView, retweetsCountView, favoritesCountView;
+
+        private final View profileContainer;
+        private final View retweetedByContainer;
+        private final View mediaPreviewContainer;
+        private final View mediaPreviewLoad;
+        private final CardMediaContainer mediaPreview;
+
+        private final View quotedNameContainer;
+        private final ForegroundColorView quoteIndicator;
+
+        private final TextView locationView;
+        private final TwitterCardContainer twitterCard;
+        private final StatusLinkClickHandler linkClickHandler;
+        private final TwidereLinkify linkify;
+
+        public DetailStatusViewHolder(StatusAdapter adapter, View itemView) {
+            super(itemView);
+            this.linkClickHandler = new StatusLinkClickHandler(adapter.getContext(), null);
+            this.linkify = new TwidereLinkify(linkClickHandler, false);
+            this.adapter = adapter;
+            cardView = (CardView) itemView.findViewById(R.id.card);
+            menuBar = (ActionMenuView) itemView.findViewById(R.id.menu_bar);
+            nameView = (TextView) itemView.findViewById(R.id.name);
+            screenNameView = (TextView) itemView.findViewById(R.id.screen_name);
+            textView = (StatusTextView) itemView.findViewById(R.id.text);
+            profileImageView = (ShapedImageView) itemView.findViewById(R.id.profile_image);
+            profileTypeView = (ImageView) itemView.findViewById(R.id.profile_type);
+            timeSourceView = (TextView) itemView.findViewById(R.id.time_source);
+            retweetedByView = (TextView) itemView.findViewById(R.id.retweeted_by);
+            retweetedByContainer = itemView.findViewById(R.id.retweeted_by_container);
+            repliesContainer = itemView.findViewById(R.id.replies_container);
+            retweetsContainer = itemView.findViewById(R.id.retweets_container);
+            favoritesContainer = itemView.findViewById(R.id.favorites_container);
+            repliesCountView = (TextView) itemView.findViewById(R.id.replies_count);
+            retweetsCountView = (TextView) itemView.findViewById(R.id.retweets_count);
+            favoritesCountView = (TextView) itemView.findViewById(R.id.favorites_count);
+            mediaPreviewContainer = itemView.findViewById(R.id.media_preview_container);
+            mediaPreviewLoad = itemView.findViewById(R.id.media_preview_load);
+            mediaPreview = (CardMediaContainer) itemView.findViewById(R.id.media_preview);
+            locationView = (TextView) itemView.findViewById(R.id.location_view);
+            profileContainer = itemView.findViewById(R.id.profile_container);
+            twitterCard = (TwitterCardContainer) itemView.findViewById(R.id.twitter_card);
+
+            quoteTextView = (TextView) itemView.findViewById(R.id.quote_text);
+            quotedNameView = (TextView) itemView.findViewById(R.id.quoted_name);
+            quotedScreenNameView = (TextView) itemView.findViewById(R.id.quoted_screen_name);
+            quotedNameContainer = itemView.findViewById(R.id.quoted_name_container);
+            quoteIndicator = (ForegroundColorView) itemView.findViewById(R.id.quote_indicator);
+
+            setIsRecyclable(false);
+            initViews();
+        }
+
+        public void displayStatus(ParcelableStatus status) {
+            if (status == null) return;
+            final StatusFragment fragment = adapter.getFragment();
+            final Context context = adapter.getContext();
+            final Resources resources = context.getResources();
+            final MediaLoaderWrapper loader = adapter.getImageLoader();
+            final boolean nameFirst = adapter.isNameFirst();
+
+            linkClickHandler.setStatus(status);
+
+            if (status.retweet_id > 0) {
+                final String retweetedBy = UserColorNameUtils.getDisplayName(context, status.retweeted_by_id,
+                        status.retweeted_by_name, status.retweeted_by_screen_name, nameFirst);
+                retweetedByView.setText(context.getString(R.string.name_retweeted, retweetedBy));
+                retweetedByContainer.setVisibility(View.VISIBLE);
+            } else {
+                retweetedByView.setText(null);
+                retweetedByContainer.setVisibility(View.GONE);
+            }
+
+            if (status.is_quote) {
+                quotedNameView.setText(getUserNickname(context, status.user_id, status.user_name, true));
+                quotedScreenNameView.setText("@" + status.user_screen_name);
+
+                nameView.setText(getUserNickname(context, status.quoted_by_user_id, status.quoted_by_user_name, true));
+                screenNameView.setText("@" + status.quoted_by_user_screen_name);
+
+                quoteTextView.setText(Html.fromHtml(status.quote_text_html));
+                linkify.applyAllLinks(quoteTextView, status.account_id, getLayoutPosition(),
+                        status.is_possibly_sensitive, adapter.getLinkHighlightingStyle());
+                timeSourceView.setMovementMethod(LinkMovementMethod.getInstance());
+
+                loader.displayProfileImage(profileImageView, status.quoted_by_user_profile_image);
+
+                quotedNameContainer.setVisibility(View.VISIBLE);
+                quoteTextView.setVisibility(View.VISIBLE);
+                quoteIndicator.setVisibility(View.VISIBLE);
+
+            } else {
+                nameView.setText(getUserNickname(context, status.user_id, status.user_name, true));
+                screenNameView.setText("@" + status.user_screen_name);
+
+                loader.displayProfileImage(profileImageView, status.user_profile_image_url);
+
+                quotedNameContainer.setVisibility(View.GONE);
+                quoteTextView.setVisibility(View.GONE);
+                quoteIndicator.setVisibility(View.GONE);
+            }
+
+            textView.setText(Html.fromHtml(status.text_html));
+            linkify.applyAllLinks(textView, status.account_id, getAdapterPosition(), status.is_possibly_sensitive);
+            ThemeUtils.applyParagraphSpacing(textView, 1.1f);
+
+            final String timeString = formatToLongTimeString(context, status.timestamp);
+            final String sourceHtml = status.source;
+            if (!isEmpty(timeString) && !isEmpty(sourceHtml)) {
+                timeSourceView.setText(Html.fromHtml(context.getString(R.string.time_source,
+                        timeString, sourceHtml)));
+            } else if (isEmpty(timeString) && !isEmpty(sourceHtml)) {
+                timeSourceView.setText(Html.fromHtml(context.getString(R.string.source,
+                        sourceHtml)));
+            } else if (!isEmpty(timeString) && isEmpty(sourceHtml)) {
+                timeSourceView.setText(timeString);
+            }
+            timeSourceView.setMovementMethod(LinkMovementMethod.getInstance());
+
+            if (!TextUtils.isEmpty(status.place_full_name)) {
+                locationView.setVisibility(View.VISIBLE);
+                locationView.setText(status.place_full_name);
+                locationView.setClickable(ParcelableLocation.isValidLocation(status.location));
+            } else if (ParcelableLocation.isValidLocation(status.location)) {
+                locationView.setVisibility(View.VISIBLE);
+                locationView.setText(R.string.view_map);
+                locationView.setClickable(true);
+            } else {
+                locationView.setVisibility(View.GONE);
+                locationView.setText(null);
+            }
+
+            retweetsContainer.setVisibility(!status.user_is_protected ? View.VISIBLE : View.GONE);
+            repliesContainer.setVisibility(status.reply_count < 0 ? View.GONE : View.VISIBLE);
+            final Locale locale = context.getResources().getConfiguration().locale;
+            repliesCountView.setText(getLocalizedNumber(locale, status.reply_count));
+            retweetsCountView.setText(getLocalizedNumber(locale, status.retweet_count));
+            favoritesCountView.setText(getLocalizedNumber(locale, status.favorite_count));
+
+            final int typeIconRes = getUserTypeIconRes(status.user_is_verified, status.user_is_protected);
+            final int typeDescriptionRes = Utils.getUserTypeDescriptionRes(status.user_is_verified, status.user_is_protected);
+            if (typeIconRes != 0 && typeDescriptionRes != 0) {
+                profileTypeView.setImageResource(typeIconRes);
+                profileTypeView.setContentDescription(context.getString(typeDescriptionRes));
+                profileTypeView.setVisibility(View.VISIBLE);
+            } else {
+                profileTypeView.setImageDrawable(null);
+                profileTypeView.setContentDescription(null);
+                profileTypeView.setVisibility(View.GONE);
+            }
+
+            if (status.media == null) {
+                mediaPreviewContainer.setVisibility(View.GONE);
+            } else if (adapter.isDetailMediaExpanded()) {
+                mediaPreviewContainer.setVisibility(View.VISIBLE);
+                mediaPreviewLoad.setVisibility(View.GONE);
+                mediaPreview.setVisibility(View.VISIBLE);
+                mediaPreview.displayMedia(status.media, loader, status.account_id,
+                        adapter.getFragment(), adapter.getImageLoadingHandler());
+            } else {
+                mediaPreviewContainer.setVisibility(View.VISIBLE);
+                mediaPreviewLoad.setVisibility(View.VISIBLE);
+                mediaPreview.setVisibility(View.GONE);
+            }
+
+            if (TwitterCardUtils.isCardSupported(status.card)) {
+                final Point size = TwitterCardUtils.getCardSize(status.card);
+                twitterCard.setVisibility(View.VISIBLE);
+                if (size != null) {
+                    twitterCard.setCardSize(size.x, size.y);
+                } else {
+                    twitterCard.setCardSize(0, 0);
+                }
+                final Fragment cardFragment = TwitterCardUtils.createCardFragment(status.card);
+                final FragmentManager fm = fragment.getChildFragmentManager();
+                final FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.twitter_card, cardFragment);
+                ft.commit();
+            } else {
+                twitterCard.setVisibility(View.GONE);
+            }
+
+            Utils.setMenuForStatus(context, menuBar.getMenu(), status, adapter.getStatusAccount());
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.media_preview_load: {
+                    adapter.setDetailMediaExpanded(true);
+                    break;
+                }
+                case R.id.profile_container: {
+                    final ParcelableStatus status = adapter.getStatus(getPosition());
+                    final Fragment fragment = adapter.getFragment();
+                    final FragmentActivity activity = fragment.getActivity();
+                    final Bundle activityOption = Utils.makeSceneTransitionOption(activity,
+                            new Pair<View, String>(profileImageView, UserFragment.TRANSITION_NAME_PROFILE_IMAGE),
+                            new Pair<View, String>(profileTypeView, UserFragment.TRANSITION_NAME_PROFILE_TYPE));
+                    openUserProfile(activity, status.account_id, status.user_id, status.user_screen_name,
+                            activityOption);
+                    break;
+                }
+                case R.id.retweets_container: {
+                    final ParcelableStatus status = adapter.getStatus(getPosition());
+                    final Fragment fragment = adapter.getFragment();
+                    final FragmentActivity activity = fragment.getActivity();
+                    Utils.openStatusRetweeters(activity, status.account_id, status.id);
+                    break;
+                }
+                case R.id.retweeted_by_container: {
+                    final ParcelableStatus status = adapter.getStatus(getPosition());
+                    if (status.retweet_id > 0) {
+                        Utils.openUserProfile(adapter.getContext(), status.account_id, status.user_id,
+                                status.user_screen_name, null);
+                    }
+                    break;
+                }
+                case R.id.location_view: {
+                    final ParcelableStatus status = adapter.getStatus(getAdapterPosition());
+                    final ParcelableLocation location = status.location;
+                    if (!ParcelableLocation.isValidLocation(location)) return;
+                    Utils.openMap(adapter.getContext(), location.latitude, location.longitude);
+                    break;
+                }
+            }
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            final StatusFragment fragment = adapter.getFragment();
+            final ParcelableStatus status = adapter.getStatus(getAdapterPosition());
+            if (status == null || fragment == null) return false;
+            final AsyncTwitterWrapper twitter = fragment.getTwitterWrapper();
+            final FragmentActivity activity = fragment.getActivity();
+            final FragmentManager fm = fragment.getFragmentManager();
+            return Utils.handleMenuItemClick(activity, fragment, fm, twitter, status, item);
+        }
+
+        private void initViews() {
+//            menuBar.setOnMenuItemClickListener(this);
+            menuBar.setOnMenuItemClickListener(this);
+            final StatusFragment fragment = adapter.getFragment();
+            final FragmentActivity activity = fragment.getActivity();
+            final MenuInflater inflater = activity.getMenuInflater();
+            inflater.inflate(R.menu.menu_status, menuBar.getMenu());
+            ThemeUtils.wrapMenuIcon(menuBar, MENU_GROUP_STATUS_SHARE);
+            mediaPreviewLoad.setOnClickListener(this);
+            profileContainer.setOnClickListener(this);
+            retweetsContainer.setOnClickListener(this);
+            retweetedByContainer.setOnClickListener(this);
+            locationView.setOnClickListener(this);
+
+            final float defaultTextSize = adapter.getTextSize();
+            nameView.setTextSize(defaultTextSize * 1.25f);
+            quotedNameView.setTextSize(defaultTextSize * 1.25f);
+            textView.setTextSize(defaultTextSize * 1.25f);
+            quoteTextView.setTextSize(defaultTextSize * 1.25f);
+            screenNameView.setTextSize(defaultTextSize * 0.85f);
+            quotedScreenNameView.setTextSize(defaultTextSize * 0.85f);
+            locationView.setTextSize(defaultTextSize * 0.85f);
+            timeSourceView.setTextSize(defaultTextSize * 0.85f);
+
+            textView.setMovementMethod(StatusContentMovementMethod.getInstance());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                quoteTextView.setCustomSelectionActionModeCallback(new StatusActionModeCallback(quoteTextView, fragment, activity));
+                textView.setCustomSelectionActionModeCallback(new StatusActionModeCallback(textView, fragment, activity));
+            }
+        }
+
+
+        private static class StatusActionModeCallback implements Callback {
+            private final TextView textView;
+            private final StatusFragment fragment;
+            private final FragmentActivity activity;
+
+            public StatusActionModeCallback(TextView textView, StatusFragment fragment, FragmentActivity activity) {
+                this.textView = textView;
+                this.fragment = fragment;
+                this.activity = activity;
+            }
+
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                final FragmentActivity activity = fragment.getActivity();
+                if (activity instanceof IThemedActivity) {
+                    final int themeRes = ((IThemedActivity) activity).getCurrentThemeResourceId();
+                    final int accentColor = ((IThemedActivity) activity).getCurrentThemeColor();
+                    ThemeUtils.applySupportActionModeBackground(mode, fragment.getActivity(), themeRes, accentColor, true);
+                }
+                mode.getMenuInflater().inflate(R.menu.action_status_text_selection, menu);
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                final int start = textView.getSelectionStart(), end = textView.getSelectionEnd();
+                final SpannableString string = SpannableString.valueOf(textView.getText());
+                final URLSpan[] spans = string.getSpans(start, end, URLSpan.class);
+                final boolean avail = spans.length == 1 && URLUtil.isValidUrl(spans[0].getURL());
+                Utils.setMenuItemAvailability(menu, android.R.id.copyUrl, avail);
+                return true;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                switch (item.getItemId()) {
+                    case android.R.id.copyUrl: {
+                        final int start = textView.getSelectionStart(), end = textView.getSelectionEnd();
+                        final SpannableString string = SpannableString.valueOf(textView.getText());
+                        final URLSpan[] spans = string.getSpans(start, end, URLSpan.class);
+                        if (spans.length != 1) return true;
+                        ClipboardUtils.setText(activity, spans[0].getURL());
+                        mode.finish();
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+
+            }
+        }
+    }
+
+    static class LoadConversationTask extends AsyncTask<ParcelableStatus, ParcelableStatus,
+            ListResponse<ParcelableStatus>> {
+
+        final Context context;
+        final StatusFragment fragment;
+
+        LoadConversationTask(final StatusFragment fragment) {
+            context = fragment.getActivity();
+            this.fragment = fragment;
+        }
+
+        @Override
+        protected ListResponse<ParcelableStatus> doInBackground(final ParcelableStatus... params) {
+            final ArrayList<ParcelableStatus> list = new ArrayList<>();
+            try {
+                ParcelableStatus status = params[0];
+                final long account_id = status.account_id;
+                while (status.in_reply_to_status_id > 0 && !isCancelled()) {
+                    status = findStatus(context, account_id, status.in_reply_to_status_id);
+                    publishProgress(status);
+                    list.add(0, status);
+                }
+            } catch (final TwitterException e) {
+                return ListResponse.getListInstance(e);
+            }
+            return ListResponse.getListInstance(list);
+        }
+
+        @Override
+        protected void onPostExecute(final ListResponse<ParcelableStatus> data) {
+            if (data.hasData()) {
+                fragment.setConversation(data.getData());
+            } else {
+                showErrorMessage(context, context.getString(R.string.action_getting_status), data.getException(), true);
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(ParcelableStatus... values) {
+            for (ParcelableStatus status : values) {
+//                fragment.addConversation(status, 0);
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+        }
+
+    }
+
+    private static class SpaceViewHolder extends ViewHolder {
+
+        public SpaceViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(final Loader<SingleResponse<ParcelableStatus>> loader) {
+
+    }
+
     private static class StatusAdapter extends Adapter<ViewHolder> implements IStatusesAdapter<List<ParcelableStatus>> {
 
         private static final int VIEW_TYPE_DETAIL_STATUS = 0;
@@ -424,16 +923,23 @@ public class StatusFragment extends BaseSupportFragment
         private final Context mContext;
         private final StatusFragment mFragment;
         private final LayoutInflater mInflater;
-        private final ImageLoaderWrapper mImageLoader;
+        private final MediaLoaderWrapper mImageLoader;
         private final ImageLoadingHandler mImageLoadingHandler;
+        private final TwidereLinkify mTwidereLinkify;
 
-        private final boolean mNameFirst, mNicknameOnly;
+        private final boolean mNameFirst;
         private final int mCardLayoutResource;
         private final int mTextSize;
         private final int mCardBackgroundColor;
         private final boolean mIsCompact;
         private final int mProfileImageStyle;
+        private final int mMediaPreviewStyle;
+        private final int mLinkHighligingStyle;
         private final boolean mDisplayMediaPreview;
+        private final boolean mDisplayProfileImage;
+
+        private boolean mLoadMoreSupported;
+        private boolean mLoadMoreIndicatorVisible;
 
         private ParcelableStatus mStatus;
         private ParcelableCredentials mStatusAccount;
@@ -445,25 +951,37 @@ public class StatusFragment extends BaseSupportFragment
         public StatusAdapter(StatusFragment fragment, boolean compact) {
             final Context context = fragment.getActivity();
             final Resources res = context.getResources();
-            final SharedPreferences preferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME,
-                    Context.MODE_PRIVATE);
+            final SharedPreferencesWrapper preferences = SharedPreferencesWrapper.getInstance(context,
+                    SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
             mFragment = fragment;
             mContext = context;
             mInflater = LayoutInflater.from(context);
-            mImageLoader = TwidereApplication.getInstance(context).getImageLoaderWrapper();
+            mImageLoader = TwidereApplication.getInstance(context).getMediaLoaderWrapper();
             mImageLoadingHandler = new ImageLoadingHandler(R.id.media_preview_progress);
             mCardBackgroundColor = ThemeUtils.getCardBackgroundColor(context);
             mNameFirst = preferences.getBoolean(KEY_NAME_FIRST, true);
-            mNicknameOnly = preferences.getBoolean(KEY_NICKNAME_ONLY, true);
             mTextSize = preferences.getInt(KEY_TEXT_SIZE, res.getInteger(R.integer.default_text_size));
             mProfileImageStyle = Utils.getProfileImageStyle(preferences.getString(KEY_PROFILE_IMAGE_STYLE, null));
+            mMediaPreviewStyle = Utils.getMediaPreviewStyle(preferences.getString(KEY_MEDIA_PREVIEW_STYLE, null));
+            mLinkHighligingStyle = Utils.getLinkHighlightingStyleInt(preferences.getString(KEY_LINK_HIGHLIGHT_OPTION, null));
             mIsCompact = compact;
+            mDisplayProfileImage = preferences.getBoolean(KEY_DISPLAY_PROFILE_IMAGE, true);
             mDisplayMediaPreview = preferences.getBoolean(KEY_MEDIA_PREVIEW, false);
             if (compact) {
                 mCardLayoutResource = R.layout.card_item_status_compact;
             } else {
                 mCardLayoutResource = R.layout.card_item_status;
             }
+            mTwidereLinkify = new TwidereLinkify(new StatusAdapterLinkClickHandler<>(this));
+        }
+
+        public void addConversation(ParcelableStatus status, int position) {
+            if (mConversation == null) {
+                mConversation = new ArrayList<>();
+            }
+            mConversation.add(position, status);
+            notifyDataSetChanged();
+            updateItemDecoration();
         }
 
         public int findPositionById(long itemId) {
@@ -477,7 +995,7 @@ public class StatusFragment extends BaseSupportFragment
             return mFragment;
         }
 
-        public ImageLoaderWrapper getImageLoader() {
+        public MediaLoaderWrapper getImageLoader() {
             return mImageLoader;
         }
 
@@ -491,21 +1009,66 @@ public class StatusFragment extends BaseSupportFragment
         }
 
         @Override
+        public int getProfileImageStyle() {
+            return mProfileImageStyle;
+        }
+
+        @Override
+        public int getMediaPreviewStyle() {
+            return mMediaPreviewStyle;
+        }
+
+        @Override
+        public AsyncTwitterWrapper getTwitterWrapper() {
+            return mFragment.getTwitterWrapper();
+        }
+
+        public float getTextSize() {
+            return mTextSize;
+        }
+
+        @Override
+        public boolean isLoadMoreIndicatorVisible() {
+            return mLoadMoreIndicatorVisible;
+        }
+
+        @Override
+        public boolean isLoadMoreSupported() {
+            return mLoadMoreSupported;
+        }
+
+        @Override
+        public void setLoadMoreSupported(boolean supported) {
+            mLoadMoreSupported = supported;
+            if (!supported) {
+                mLoadMoreIndicatorVisible = false;
+            }
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public void setLoadMoreIndicatorVisible(boolean enabled) {
+            if (mLoadMoreIndicatorVisible == enabled) return;
+            mLoadMoreIndicatorVisible = enabled && mLoadMoreSupported;
+            notifyDataSetChanged();
+        }
+
+        @Override
         public ParcelableStatus getStatus(int position) {
             final int conversationCount = getConversationCount();
             if (position == getItemCount() - 1) {
                 return null;
             } else if (position < conversationCount) {
-                return mConversation.get(position);
+                return mConversation != null ? mConversation.get(position) : null;
             } else if (position > conversationCount) {
-                return mReplies.get(position - conversationCount - 1);
+                return mReplies != null ? mReplies.get(position - conversationCount - 1) : null;
             } else {
                 return mStatus;
             }
         }
 
         @Override
-        public int getStatusCount() {
+        public int getStatusesCount() {
             return getConversationCount() + 1 + getRepliesCount() + 1;
         }
 
@@ -516,41 +1079,22 @@ public class StatusFragment extends BaseSupportFragment
         }
 
         @Override
+        public TwidereLinkify getTwidereLinkify() {
+            return mTwidereLinkify;
+        }
+
+        @Override
         public boolean isMediaPreviewEnabled() {
             return mDisplayMediaPreview;
         }
 
         @Override
-        public int getProfileImageStyle() {
-            return mProfileImageStyle;
+        public int getLinkHighlightingStyle() {
+            return mLinkHighligingStyle;
         }
 
-        @Override
-        public int getMediaPreviewStyle() {
-            return 0;
-        }
-
-        @Override
-        public final void onStatusClick(StatusViewHolder holder, int position) {
-            if (mStatusAdapterListener != null) {
-                mStatusAdapterListener.onStatusClick(holder, position);
-            }
-        }
-
-        @Override
-        public void onUserProfileClick(StatusViewHolder holder, int position) {
-            final Context context = getContext();
-            final ParcelableStatus status = getStatus(position);
-            final View profileImageView = holder.getProfileImageView();
-            final View profileTypeView = holder.getProfileTypeView();
-            if (context instanceof FragmentActivity) {
-                final Bundle options = Utils.makeSceneTransitionOption((FragmentActivity) context,
-                        new Pair<>(profileImageView, UserFragment.TRANSITION_NAME_PROFILE_IMAGE),
-                        new Pair<>(profileTypeView, UserFragment.TRANSITION_NAME_PROFILE_TYPE));
-                Utils.openUserProfile(context, status.account_id, status.user_id, status.user_screen_name, options);
-            } else {
-                Utils.openUserProfile(context, status.account_id, status.user_id, status.user_screen_name, null);
-            }
+        public boolean isNameFirst() {
+            return mNameFirst;
         }
 
         @Override
@@ -561,15 +1105,6 @@ public class StatusFragment extends BaseSupportFragment
         @Override
         public boolean shouldShowAccountsColor() {
             return false;
-        }
-
-        @Override
-        public AsyncTwitterWrapper getTwitterWrapper() {
-            return mFragment.getTwitterWrapper();
-        }
-
-        public float getTextSize() {
-            return mTextSize;
         }
 
         public ParcelableStatus getStatus() {
@@ -590,20 +1125,6 @@ public class StatusFragment extends BaseSupportFragment
             updateItemDecoration();
         }
 
-        private void updateItemDecoration() {
-            final DividerItemDecoration decoration = mFragment.getItemDecoration();
-            decoration.setDecorationStart(0);
-            if (mReplies != null) {
-//                decoration.setDecorationEndOffset(2);
-                decoration.setDecorationEnd(getItemCount() - 2);
-            } else {
-//                decoration.setDecorationEndOffset(3);
-                decoration.setDecorationEnd(getItemCount() - 3);
-            }
-            mFragment.mRecyclerView.invalidateItemDecorations();
-        }
-
-
         @Override
         public boolean isGapItem(int position) {
             return false;
@@ -616,27 +1137,38 @@ public class StatusFragment extends BaseSupportFragment
             }
         }
 
-        public boolean isNameFirst() {
-            return mNameFirst;
-        }
-
-        public boolean isNicknameOnly() {
-            return mNicknameOnly;
+        @Override
+        public boolean isProfileImageEnabled() {
+            return mDisplayProfileImage;
         }
 
         @Override
-        public void onViewDetachedFromWindow(ViewHolder holder) {
-            super.onViewDetachedFromWindow(holder);
-            if (holder instanceof DetailStatusViewHolder) {
-                mCachedHolder = (DetailStatusViewHolder) holder;
+        public final void onStatusClick(StatusViewHolder holder, int position) {
+            if (mStatusAdapterListener != null) {
+                mStatusAdapterListener.onStatusClick(holder, position);
             }
         }
 
         @Override
-        public void onViewAttachedToWindow(ViewHolder holder) {
-            super.onViewAttachedToWindow(holder);
-            if (mCachedHolder == holder) {
-                mCachedHolder = null;
+        public void onMediaClick(StatusViewHolder holder, ParcelableMedia media, int position) {
+            if (mStatusAdapterListener != null) {
+                mStatusAdapterListener.onMediaClick(holder, media, position);
+            }
+        }
+
+        @Override
+        public void onUserProfileClick(StatusViewHolder holder, int position) {
+            final Context context = getContext();
+            final ParcelableStatus status = getStatus(position);
+            final View profileImageView = holder.getProfileImageView();
+            final View profileTypeView = holder.getProfileTypeView();
+            if (context instanceof FragmentActivity) {
+                final Bundle options = Utils.makeSceneTransitionOption((FragmentActivity) context,
+                        new Pair<>(profileImageView, UserFragment.TRANSITION_NAME_PROFILE_IMAGE),
+                        new Pair<>(profileTypeView, UserFragment.TRANSITION_NAME_PROFILE_TYPE));
+                Utils.openUserProfile(context, status.account_id, status.user_id, status.user_screen_name, options);
+            } else {
+                Utils.openUserProfile(context, status.account_id, status.user_id, status.user_screen_name, null);
             }
         }
 
@@ -664,6 +1196,7 @@ public class StatusFragment extends BaseSupportFragment
                         cardView.setCardBackgroundColor(mCardBackgroundColor);
                     }
                     final StatusViewHolder holder = new StatusViewHolder(this, view);
+                    holder.setupViewOptions();
                     holder.setOnClickListeners();
                     return holder;
                 }
@@ -686,7 +1219,7 @@ public class StatusFragment extends BaseSupportFragment
                 case VIEW_TYPE_DETAIL_STATUS: {
                     final ParcelableStatus status = getStatus(position);
                     final DetailStatusViewHolder detailHolder = (DetailStatusViewHolder) holder;
-                    detailHolder.showStatus(status);
+                    detailHolder.displayStatus(status);
                     break;
                 }
                 case VIEW_TYPE_LIST_STATUS: {
@@ -730,7 +1263,23 @@ public class StatusFragment extends BaseSupportFragment
 
         @Override
         public int getItemCount() {
-            return getStatusCount();
+            return getStatusesCount();
+        }
+
+        @Override
+        public void onViewAttachedToWindow(ViewHolder holder) {
+            super.onViewAttachedToWindow(holder);
+            if (mCachedHolder == holder) {
+                mCachedHolder = null;
+            }
+        }
+
+        @Override
+        public void onViewDetachedFromWindow(ViewHolder holder) {
+            super.onViewDetachedFromWindow(holder);
+            if (holder instanceof DetailStatusViewHolder) {
+                mCachedHolder = (DetailStatusViewHolder) holder;
+            }
         }
 
         @Override
@@ -783,425 +1332,24 @@ public class StatusFragment extends BaseSupportFragment
         private int getRepliesCount() {
             return mReplies != null ? mReplies.size() : 1;
         }
-    }
 
-    private DividerItemDecoration getItemDecoration() {
-        return mItemDecoration;
-    }
-
-    @Override
-    public void onLoaderReset(final Loader<SingleResponse<ParcelableStatus>> loader) {
-
-    }
-
-    static class LoadConversationTask extends TwidereAsyncTask<ParcelableStatus, ParcelableStatus,
-            ListResponse<ParcelableStatus>> {
-
-        final Context context;
-        final StatusFragment fragment;
-
-        LoadConversationTask(final StatusFragment fragment) {
-            context = fragment.getActivity();
-            this.fragment = fragment;
+        private int getStatusPosition() {
+            return getConversationCount();
         }
 
-        @Override
-        protected ListResponse<ParcelableStatus> doInBackground(final ParcelableStatus... params) {
-            final ArrayList<ParcelableStatus> list = new ArrayList<>();
-            try {
-                ParcelableStatus status = params[0];
-                final long account_id = status.account_id;
-                while (status.in_reply_to_status_id > 0 && !isCancelled()) {
-                    status = findStatus(context, account_id, status.in_reply_to_status_id);
-                    publishProgress(status);
-                    list.add(0, status);
-                }
-            } catch (final TwitterException e) {
-                return ListResponse.getListInstance(e);
-            }
-            return ListResponse.getListInstance(list);
-        }
-
-        @Override
-        protected void onCancelled() {
-        }
-
-        @Override
-        protected void onPostExecute(final ListResponse<ParcelableStatus> data) {
-            if (data.hasData()) {
-                fragment.setConversation(data.getData());
+        private void updateItemDecoration() {
+            final DividerItemDecoration decoration = mFragment.getItemDecoration();
+            decoration.setDecorationStart(0);
+            if (mReplies != null) {
+                decoration.setDecorationEndOffset(2);
             } else {
-                showErrorMessage(context, context.getString(R.string.action_getting_status), data.getException(), true);
+                decoration.setDecorationEndOffset(3);
             }
-        }
-
-        @Override
-        protected void onProgressUpdate(ParcelableStatus... values) {
-            super.onProgressUpdate(values);
-        }
-
-    }
-
-    private static class SpaceViewHolder extends ViewHolder {
-
-        public SpaceViewHolder(View itemView) {
-            super(itemView);
+            mFragment.mRecyclerView.invalidateItemDecorations();
         }
     }
 
-    private static class DetailStatusViewHolder extends ViewHolder implements OnClickListener,
-            ActionMenuView.OnMenuItemClickListener {
-
-        private final StatusAdapter adapter;
-
-        private final CardView cardView;
-
-        private final ActionMenuView menuBar;
-        private final TextView nameView, screenNameView;
-        private final StatusTextView textView;
-        private final ShapedImageView profileImageView;
-        private final ImageView profileTypeView;
-        private final TextView timeSourceView;
-        private final TextView retweetedByView;
-        private final View repliesContainer, retweetsContainer, favoritesContainer;
-        private final TextView repliesCountView, retweetsCountView, favoritesCountView;
-
-        private final View profileContainer;
-        private final View retweetedByContainer;
-        private final View mediaPreviewContainer;
-        private final View mediaPreviewLoad;
-        private final LinearLayout mediaPreviewGrid;
-
-        private final View locationContainer;
-        private final TwitterCardContainer twitterCard;
-
-        public DetailStatusViewHolder(StatusAdapter adapter, View itemView) {
-            super(itemView);
-            this.adapter = adapter;
-            cardView = (CardView) itemView.findViewById(R.id.card);
-            menuBar = (ActionMenuView) itemView.findViewById(R.id.menu_bar);
-            nameView = (TextView) itemView.findViewById(R.id.name);
-            screenNameView = (TextView) itemView.findViewById(R.id.screen_name);
-            textView = (StatusTextView) itemView.findViewById(R.id.text);
-            profileImageView = (ShapedImageView) itemView.findViewById(R.id.profile_image);
-            profileTypeView = (ImageView) itemView.findViewById(R.id.profile_type);
-            timeSourceView = (TextView) itemView.findViewById(R.id.time_source);
-            retweetedByView = (TextView) itemView.findViewById(R.id.retweeted_by);
-            retweetedByContainer = itemView.findViewById(R.id.retweeted_by_container);
-            repliesContainer = itemView.findViewById(R.id.replies_container);
-            retweetsContainer = itemView.findViewById(R.id.retweets_container);
-            favoritesContainer = itemView.findViewById(R.id.favorites_container);
-            repliesCountView = (TextView) itemView.findViewById(R.id.replies_count);
-            retweetsCountView = (TextView) itemView.findViewById(R.id.retweets_count);
-            favoritesCountView = (TextView) itemView.findViewById(R.id.favorites_count);
-            mediaPreviewContainer = itemView.findViewById(R.id.media_preview);
-            mediaPreviewLoad = itemView.findViewById(R.id.media_preview_load);
-            mediaPreviewGrid = (LinearLayout) itemView.findViewById(R.id.media_preview_grid);
-            locationContainer = itemView.findViewById(R.id.location_container);
-            profileContainer = itemView.findViewById(R.id.profile_container);
-            twitterCard = (TwitterCardContainer) itemView.findViewById(R.id.twitter_card);
-
-            setIsRecyclable(false);
-            initViews();
-        }
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.media_preview_load: {
-                    adapter.setDetailMediaExpanded(true);
-                    break;
-                }
-                case R.id.profile_container: {
-                    final ParcelableStatus status = adapter.getStatus(getPosition());
-                    final Fragment fragment = adapter.getFragment();
-                    final FragmentActivity activity = fragment.getActivity();
-                    final Bundle activityOption = Utils.makeSceneTransitionOption(activity,
-                            new Pair<View, String>(profileImageView, UserFragment.TRANSITION_NAME_PROFILE_IMAGE),
-                            new Pair<View, String>(profileTypeView, UserFragment.TRANSITION_NAME_PROFILE_TYPE));
-                    openUserProfile(activity, status.account_id, status.user_id, status.user_screen_name,
-                            activityOption);
-                    break;
-                }
-                case R.id.retweets_container: {
-                    final ParcelableStatus status = adapter.getStatus(getPosition());
-                    final Fragment fragment = adapter.getFragment();
-                    final FragmentActivity activity = fragment.getActivity();
-                    Utils.openStatusRetweeters(activity, status.account_id, status.id);
-                    break;
-                }
-                case R.id.retweeted_by_container: {
-                    final ParcelableStatus status = adapter.getStatus(getPosition());
-                    if (status.retweet_id > 0) {
-                        Utils.openUserProfile(adapter.getContext(), status.account_id, status.user_id,
-                                status.user_screen_name, null);
-                    }
-                    break;
-                }
-            }
-        }
-
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
-            final StatusFragment fragment = adapter.getFragment();
-            final ParcelableStatus status = adapter.getStatus(getPosition());
-            if (status == null || fragment == null) return false;
-            final AsyncTwitterWrapper twitter = fragment.getTwitterWrapper();
-            final FragmentActivity activity = fragment.getActivity();
-            switch (item.getItemId()) {
-                case MENU_COPY: {
-                    if (ClipboardUtils.setText(activity, status.text_plain)) {
-                        showOkMessage(activity, R.string.text_copied, false);
-                    }
-                    break;
-                }
-                case MENU_RETWEET: {
-                    if (isMyRetweet(status)) {
-                        twitter.cancelRetweetAsync(status.account_id, status.id, status.my_retweet_id);
-                    } else {
-                        twitter.retweetStatusAsync(status.account_id, status.id);
-                    }
-                    break;
-                }
-                case MENU_QUOTE: {
-                    final Intent intent = new Intent(INTENT_ACTION_QUOTE);
-                    intent.putExtra(EXTRA_STATUS, status);
-                    fragment.startActivity(intent);
-                    break;
-                }
-                case MENU_REPLY: {
-                    final Intent intent = new Intent(INTENT_ACTION_REPLY);
-                    intent.putExtra(EXTRA_STATUS, status);
-                    fragment.startActivity(intent);
-                    break;
-                }
-                case MENU_FAVORITE: {
-                    if (status.is_favorite) {
-                        twitter.destroyFavoriteAsync(status.account_id, status.id);
-                        //spice
-                        SpiceProfilingUtil.profile(adapter.getContext(),
-                                status.account_id, status.id + ",Unfavor,"  + status.account_id + "," + status.user_id  + "," + status.timestamp);
-                        SpiceProfilingUtil.log(adapter.getContext(),status.id + ",Unfavor,"  + status.account_id + "," + status.user_id  + "," + status.timestamp);
-                        //end
-                    } else {
-                        twitter.createFavoriteAsync(status.account_id, status.id);
-                        //spice
-                        SpiceProfilingUtil.profile(adapter.getContext(),
-                                status.account_id, status.id + ",Favor,"  + status.account_id + "," + status.user_id  + "," + status.timestamp);
-                        SpiceProfilingUtil.log(adapter.getContext(),status.id + ",Favor,"  + status.account_id + "," + status.user_id  + "," + status.timestamp);
-                        //end
-                    }
-                    break;
-                }
-                case MENU_DELETE: {
-                    DestroyStatusDialogFragment.show(fragment.getFragmentManager(), status);
-                    break;
-                }
-                case MENU_ADD_TO_FILTER: {
-                    AddStatusFilterDialogFragment.show(fragment.getFragmentManager(), status);
-                    break;
-                }
-                case MENU_SET_COLOR: {
-                    final Intent intent = new Intent(activity, ColorPickerDialogActivity.class);
-                    final int color = getUserColor(activity, status.user_id, true);
-                    if (color != 0) {
-                        intent.putExtra(EXTRA_COLOR, color);
-                    }
-                    intent.putExtra(EXTRA_CLEAR_BUTTON, color != 0);
-                    intent.putExtra(EXTRA_ALPHA_SLIDER, false);
-                    fragment.startActivityForResult(intent, REQUEST_SET_COLOR);
-                    break;
-                }
-                case MENU_CLEAR_NICKNAME: {
-                    clearUserNickname(activity, status.user_id);
-                    adapter.notifyDataSetChanged();
-                    break;
-                }
-                case MENU_SET_NICKNAME: {
-                    final String nick = getUserNickname(activity, status.user_id, true);
-                    SetUserNicknameDialogFragment.show(fragment.getFragmentManager(), status.user_id, nick);
-                    break;
-                }
-                case MENU_TRANSLATE: {
-                    final ParcelableCredentials account
-                            = ParcelableAccount.getCredentials(activity, status.account_id);
-                    if (Utils.isOfficialCredentials(activity, account)) {
-                        StatusTranslateDialogFragment.show(fragment.getFragmentManager(), status);
-                    } else {
-                        final Resources resources = fragment.getResources();
-                        final Locale locale = resources.getConfiguration().locale;
-                        try {
-                            final String template = "http://translate.google.com/#%s|%s|%s";
-                            final String sourceLang = "auto";
-                            final String targetLang = URLEncoder.encode(locale.getLanguage(), HTTP.UTF_8);
-                            final String text = URLEncoder.encode(status.text_unescaped, HTTP.UTF_8);
-                            final Uri uri = Uri.parse(String.format(Locale.ROOT, template, sourceLang, targetLang, text));
-                            final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                            intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                            fragment.startActivity(intent);
-                        } catch (UnsupportedEncodingException ignore) {
-
-                        }
-                    }
-                    break;
-                }
-                case MENU_OPEN_WITH_ACCOUNT: {
-                    final Intent intent = new Intent(INTENT_ACTION_SELECT_ACCOUNT);
-                    intent.setClass(activity, AccountSelectorActivity.class);
-                    intent.putExtra(EXTRA_SINGLE_SELECTION, true);
-                    fragment.startActivityForResult(intent, REQUEST_SELECT_ACCOUNT);
-                    break;
-                }
-                default: {
-                    if (item.getIntent() != null) {
-                        try {
-                            fragment.startActivity(item.getIntent());
-                        } catch (final ActivityNotFoundException e) {
-                            Log.w(LOGTAG, e);
-                            return false;
-                        }
-                    }
-                    break;
-                }
-            }
-            return true;
-        }
-
-        public void showStatus(ParcelableStatus status) {
-            if (status == null) return;
-            final StatusFragment fragment = adapter.getFragment();
-            final Context context = adapter.getContext();
-            final Resources resources = context.getResources();
-            final ImageLoaderWrapper loader = adapter.getImageLoader();
-            final boolean nameFirst = adapter.isNameFirst();
-            final boolean nicknameOnly = adapter.isNicknameOnly();
-
-            if (status.retweet_id > 0) {
-                final String retweetedBy = UserColorNameUtils.getDisplayName(context, status.retweeted_by_id,
-                        status.retweeted_by_name, status.retweeted_by_screen_name, nameFirst, nicknameOnly);
-                retweetedByView.setText(context.getString(R.string.name_retweeted, retweetedBy));
-                retweetedByContainer.setVisibility(View.VISIBLE);
-            } else {
-                retweetedByView.setText(null);
-                retweetedByContainer.setVisibility(View.GONE);
-            }
-
-            final String nickname = getUserNickname(context, status.user_id, true);
-            if (TextUtils.isEmpty(nickname)) {
-                nameView.setText(status.user_name);
-            } else if (nicknameOnly) {
-                nameView.setText(nickname);
-            } else {
-                nameView.setText(context.getString(R.string.name_with_nickname, status.user_name,
-                        nickname));
-            }
-            screenNameView.setText("@" + status.user_screen_name);
-
-            textView.setText(Html.fromHtml(status.text_html));
-            final StatusLinkClickHandler linkClickHandler = new StatusLinkClickHandler(context, null);
-            linkClickHandler.setStatus(status);
-            final TwidereLinkify linkify = new TwidereLinkify(linkClickHandler);
-            linkify.applyAllLinks(textView, status.account_id, status.is_possibly_sensitive);
-            ThemeUtils.applyParagraphSpacing(textView, 1.1f);
-
-            textView.setMovementMethod(StatusContentMovementMethod.getInstance());
-//            textView.setCustomSelectionActionModeCallback(this);
-
-
-            final String timeString = formatToLongTimeString(context, status.timestamp);
-            final String sourceHtml = status.source;
-            if (!isEmpty(timeString) && !isEmpty(sourceHtml)) {
-                timeSourceView.setText(Html.fromHtml(context.getString(R.string.time_source,
-                        timeString, sourceHtml)));
-            } else if (isEmpty(timeString) && !isEmpty(sourceHtml)) {
-                timeSourceView.setText(Html.fromHtml(context.getString(R.string.source,
-                        sourceHtml)));
-            } else if (!isEmpty(timeString) && isEmpty(sourceHtml)) {
-                timeSourceView.setText(timeString);
-            }
-            timeSourceView.setMovementMethod(LinkMovementMethod.getInstance());
-
-
-            retweetsContainer.setVisibility(!status.user_is_protected ? View.VISIBLE : View.GONE);
-            repliesContainer.setVisibility(status.reply_count < 0 ? View.GONE : View.VISIBLE);
-            final Locale locale = context.getResources().getConfiguration().locale;
-            repliesCountView.setText(getLocalizedNumber(locale, status.reply_count));
-            retweetsCountView.setText(getLocalizedNumber(locale, status.retweet_count));
-            favoritesCountView.setText(getLocalizedNumber(locale, status.favorite_count));
-
-            loader.displayProfileImage(profileImageView, status.user_profile_image_url);
-
-            final int typeIconRes = getUserTypeIconRes(status.user_is_verified, status.user_is_protected);
-            if (typeIconRes != 0) {
-                profileTypeView.setImageResource(typeIconRes);
-                profileTypeView.setVisibility(View.VISIBLE);
-            } else {
-                profileTypeView.setImageDrawable(null);
-                profileTypeView.setVisibility(View.GONE);
-            }
-
-            if (status.media == null) {
-                mediaPreviewContainer.setVisibility(View.GONE);
-            } else if (adapter.isDetailMediaExpanded()) {
-                mediaPreviewContainer.setVisibility(View.VISIBLE);
-                mediaPreviewLoad.setVisibility(View.GONE);
-                mediaPreviewGrid.setVisibility(View.VISIBLE);
-                mediaPreviewGrid.removeAllViews();
-                final int maxColumns = resources.getInteger(R.integer.grid_column_image_preview);
-                Utils.addToLinearLayout(mediaPreviewGrid, loader, status.media, status.account_id,
-                        maxColumns, adapter.getFragment());
-            } else {
-                mediaPreviewContainer.setVisibility(View.VISIBLE);
-                mediaPreviewLoad.setVisibility(View.VISIBLE);
-                mediaPreviewGrid.setVisibility(View.GONE);
-                mediaPreviewGrid.removeAllViews();
-            }
-
-            if (TwitterCardUtils.isCardSupported(status.card)) {
-                final Point size = TwitterCardUtils.getCardSize(status.card);
-                twitterCard.setVisibility(View.VISIBLE);
-                if (size != null) {
-                    twitterCard.setCardSize(size.x, size.y);
-                } else {
-                    twitterCard.setCardSize(0, 0);
-                }
-                final Fragment cardFragment = TwitterCardUtils.createCardFragment(status.card);
-                final FragmentManager fm = fragment.getChildFragmentManager();
-                final FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.twitter_card, cardFragment);
-                ft.commit();
-            } else {
-                twitterCard.setVisibility(View.GONE);
-                final FragmentManager fm = fragment.getChildFragmentManager();
-//                final FragmentTransaction ft = fm.beginTransaction();
-            }
-
-            Utils.setMenuForStatus(context, menuBar.getMenu(), status, adapter.getStatusAccount());
-        }
-
-        private void initViews() {
-//            menuBar.setOnMenuItemClickListener(this);
-            menuBar.setOnMenuItemClickListener(this);
-            final FragmentActivity activity = adapter.getFragment().getActivity();
-            final MenuInflater inflater = activity.getMenuInflater();
-            inflater.inflate(R.menu.menu_status, menuBar.getMenu());
-            ThemeUtils.wrapMenuIcon(menuBar, MENU_GROUP_STATUS_SHARE);
-            mediaPreviewLoad.setOnClickListener(this);
-            profileContainer.setOnClickListener(this);
-            retweetsContainer.setOnClickListener(this);
-            retweetedByContainer.setOnClickListener(this);
-
-            final float defaultTextSize = adapter.getTextSize();
-            nameView.setTextSize(defaultTextSize * 1.25f);
-            textView.setTextSize(defaultTextSize * 1.25f);
-            screenNameView.setTextSize(defaultTextSize * 0.85f);
-            timeSourceView.setTextSize(defaultTextSize * 0.85f);
-        }
-
-
-    }
-
-    private static class StatusListLinearLayoutManager extends LinearLayoutManager {
+    private static class StatusListLinearLayoutManager extends FixedLinearLayoutManager {
 
         private final RecyclerView recyclerView;
 
@@ -1244,5 +1392,6 @@ public class StatusFragment extends BaseSupportFragment
         }
 
     }
+
 
 }

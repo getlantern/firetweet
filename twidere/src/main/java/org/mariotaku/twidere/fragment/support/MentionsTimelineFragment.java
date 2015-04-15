@@ -45,10 +45,9 @@ public class MentionsTimelineFragment extends CursorStatusesFragment {
     }
 
     @Override
-    protected void updateRefreshState() {
+    public boolean isRefreshing() {
         final AsyncTwitterWrapper twitter = getTwitterWrapper();
-        if (twitter == null) return;
-        setRefreshing(twitter.isMentionsTimelineRefreshing());
+        return twitter != null && twitter.isMentionsTimelineRefreshing();
     }
 
     @Override
@@ -63,10 +62,22 @@ public class MentionsTimelineFragment extends CursorStatusesFragment {
     }
 
     @Override
+    protected void updateRefreshState() {
+        final AsyncTwitterWrapper twitter = getTwitterWrapper();
+        if (twitter == null) return;
+        setRefreshing(twitter.isMentionsTimelineRefreshing());
+    }
+
+    @Override
     public int getStatuses(long[] accountIds, long[] maxIds, long[] sinceIds) {
         final AsyncTwitterWrapper twitter = getTwitterWrapper();
         if (twitter == null) return -1;
         return twitter.getMentionsTimelineAsync(accountIds, maxIds, sinceIds);
+    }
+
+    @Override
+    protected String getReadPositionTag() {
+        return TAB_TYPE_MENTIONS_TIMELINE;
     }
 
 }

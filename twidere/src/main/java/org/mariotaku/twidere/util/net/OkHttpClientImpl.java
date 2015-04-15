@@ -19,8 +19,11 @@
 
 package org.mariotaku.twidere.util.net;
 
+import android.content.Context;
+import android.net.SSLCertificateSocketFactory;
 import android.net.Uri;
 
+import com.nostra13.universalimageloader.utils.IoUtils;
 import com.squareup.okhttp.Headers;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
@@ -28,22 +31,29 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request.Builder;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
+import com.squareup.okhttp.internal.Internal;
+import com.squareup.okhttp.internal.Network;
 
 import org.mariotaku.twidere.TwidereConstants;
-import org.mariotaku.twidere.util.Utils;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.Proxy.Type;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPInputStream;
 
+import javax.net.SocketFactory;
+
+import okio.BufferedSink;
 import twitter4j.TwitterException;
 import twitter4j.auth.Authorization;
 import twitter4j.http.HostAddressResolver;
@@ -60,11 +70,13 @@ import twitter4j.http.RequestMethod;
 public class OkHttpClientImpl implements HttpClient, TwidereConstants {
 
     public static final MediaType APPLICATION_FORM_URLENCODED = MediaType.parse("application/x-www-form-urlencoded; charset=UTF-8");
+    private final Context context;
     private final HttpClientConfiguration conf;
     private final OkHttpClient client;
     private final HostAddressResolver resolver;
 
-    public OkHttpClientImpl(HttpClientConfiguration conf) {
+    public OkHttpClientImpl(Context context, HttpClientConfiguration conf) {
+        this.context = context;
         this.conf = conf;
         this.resolver = conf.getHostAddressResolverFactory().getInstance(conf);
         this.client = createHttpClient(conf);
@@ -73,8 +85,11 @@ public class OkHttpClientImpl implements HttpClient, TwidereConstants {
     @Override
     public HttpResponse request(HttpRequest req) throws TwitterException {
         final Builder builder = new Builder();
-        for (Entry<String, String> headerEntry : req.getRequestHeaders().entrySet()) {
-            builder.header(headerEntry.getKey(), headerEntry.getValue());
+        for (Entry<String, List<String>> headerEntry : req.getRequestHeaders().entrySet()) {
+            final String name = headerEntry.getKey();
+            for (String value : headerEntry.getValue()) {
+                builder.addHeader(name, value);
+            }
         }
         final Authorization authorization = req.getAuthorization();
         if (authorization != null) {
@@ -83,9 +98,10 @@ public class OkHttpClientImpl implements HttpClient, TwidereConstants {
                 builder.header("Authorization", authHeader);
             }
         }
+        Response response = null;
         try {
             setupRequestBuilder(builder, req);
-            final Response response = client.newCall(builder.build()).execute();
+             response = client.newCall(builder.build()).execute();
             return new OkHttpResponse(conf, null, response);
         } catch (IOException e) {
             throw new TwitterException(e);
@@ -100,13 +116,33 @@ public class OkHttpClientImpl implements HttpClient, TwidereConstants {
     private OkHttpClient createHttpClient(HttpClientConfiguration conf) {
         final OkHttpClient client = new OkHttpClient();
         final boolean ignoreSSLError = conf.isSSLErrorIgnored();
-        client.setHostnameVerifier(new HostResolvedHostnameVerifier(ignoreSSLError));
-        client.setSslSocketFactory(new HostResolvedSSLSocketFactory(resolver, ignoreSSLError));
-        client.setSocketFactory(new HostResolvedSocketFactory(resolver));
+        final SSLCertificateSocketFactory sslSocketFactory;
+        if (ignoreSSLError) {
+            sslSocketFactory = (SSLCertificateSocketFactory) SSLCertificateSocketFactory.getInsecure(0, null);
+        } else {
+            sslSocketFactory = (SSLCertificateSocketFactory) SSLCertificateSocketFactory.getDefault(0, null);
+        }
+//        sslSocketFactory.setTrustManagers(new TrustManager[]{new TwidereTrustManager(context)});
+//        client.setHostnameVerifier(new HostResolvedHostnameVerifier(context, ignoreSSLError));
+        client.setSslSocketFactory(sslSocketFactory);
+        client.setSocketFactory(SocketFactory.getDefault());
+        client.setConnectTimeout(conf.getHttpConnectionTimeout(), TimeUnit.MILLISECONDS);
+
         if (conf.isProxyConfigured()) {
             client.setProxy(new Proxy(Type.HTTP, InetSocketAddress.createUnresolved(conf.getHttpProxyHost(),
                     conf.getHttpProxyPort())));
         }
+        Internal.instance.setNetwork(client, new Network() {
+            @Override
+            public InetAddress[] resolveInetAddresses(String host) throws UnknownHostException {
+                try {
+                    return resolver.resolve(host);
+                } catch (IOException e) {
+                    if (e instanceof UnknownHostException) throw (UnknownHostException) e;
+                    throw new UnknownHostException("Unable to resolve address " + e.getMessage());
+                }
+            }
+        });
         return client;
     }
 
@@ -116,14 +152,12 @@ public class OkHttpClientImpl implements HttpClient, TwidereConstants {
             return RequestBody.create(APPLICATION_FORM_URLENCODED, HttpParameter.encodeParameters(params));
         }
         final MultipartBuilder builder = new MultipartBuilder();
+        builder.type(MultipartBuilder.FORM);
         for (final HttpParameter param : params) {
             if (param.isFile()) {
                 RequestBody requestBody;
                 if (param.hasFileBody()) {
-                    final ByteArrayOutputStream os = new ByteArrayOutputStream();
-                    Utils.copyStream(param.getFileBody(), os);
-                    requestBody = RequestBody.create(MediaType.parse(param.getContentType()), os.toByteArray());
-                    os.close();
+                    requestBody = new StreamRequestBody(MediaType.parse(param.getContentType()), param.getFileBody(), true);
                 } else {
                     requestBody = RequestBody.create(MediaType.parse(param.getContentType()), param.getFile());
                 }
@@ -133,6 +167,36 @@ public class OkHttpClientImpl implements HttpClient, TwidereConstants {
             }
         }
         return builder.build();
+    }
+
+    static class StreamRequestBody extends RequestBody {
+
+        private final MediaType contentType;
+        private final InputStream stream;
+        private final boolean closeAfterWrite;
+
+        StreamRequestBody(MediaType contentType, InputStream stream, boolean closeAfterWrite) {
+            this.contentType = contentType;
+            this.stream = stream;
+            this.closeAfterWrite = closeAfterWrite;
+        }
+
+        @Override
+        public MediaType contentType() {
+            return contentType;
+        }
+
+        @Override
+        public void writeTo(BufferedSink sink) throws IOException {
+            int len;
+            byte[] buf = new byte[8192];
+            while ((len = stream.read(buf)) != -1) {
+                sink.write(buf, 0, len);
+            }
+            if (closeAfterWrite) {
+                IoUtils.closeSilently(stream);
+            }
+        }
     }
 
     private void setupRequestBuilder(Builder builder, HttpRequest req) throws IOException {
@@ -218,6 +282,11 @@ public class OkHttpClientImpl implements HttpClient, TwidereConstants {
                 maps.put(name, values);
             }
             return maps;
+        }
+
+        @Override
+        public List<String> getResponseHeaders(String name) {
+            return response.headers(name);
         }
     }
 }

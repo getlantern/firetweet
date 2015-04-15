@@ -28,6 +28,7 @@ public interface IThemedActivity {
     public Resources getDefaultResources();
 
     public int getThemeBackgroundAlpha();
+
     public int getCurrentThemeBackgroundAlpha();
 
     public int getThemeColor();
