@@ -691,7 +691,7 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
             return -1;
         }
         final boolean refreshOnStart = mPreferences.getBoolean(KEY_REFRESH_ON_START, false);
-        final long[] refreshedIds = intent.getLongArrayExtra(EXTRA_IDS);
+        final long[] refreshedIds = intent.getLongArrayExtra(EXTRA_REFRESH_IDS);
         if (refreshedIds != null) {
             mTwitterWrapper.refreshAll(refreshedIds);
         } else if (firstCreate && refreshOnStart) {
@@ -974,7 +974,7 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
 
     }
 
-    private static class UpdateUnreadCountTask extends AsyncTask<Object, Void, Map<SupportTabSpec, Integer>> {
+    private static class UpdateUnreadCountTask extends AsyncTask<Object, Object, Map<SupportTabSpec, Integer>> {
         private final Context mContext;
         private final ReadStateManager mReadStateManager;
         private final TabPagerIndicator mIndicator;

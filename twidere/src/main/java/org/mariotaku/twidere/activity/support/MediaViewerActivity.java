@@ -17,9 +17,16 @@
 package org.mariotaku.twidere.activity.support;
 
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
+import android.media.MediaPlayer.OnErrorListener;
+import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.AsyncTask.Status;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -38,6 +45,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLayoutChangeListener;
 import android.view.ViewGroup;
+import android.widget.MediaController;
+import android.widget.ProgressBar;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
@@ -177,16 +186,31 @@ public final class MediaViewerActivity extends ThemedActionBarActivity implement
     }
 
     public static final class VideoPageFragment extends BaseSupportFragment
-            implements VideoLoadingListener {
+            implements VideoLoadingListener, OnPreparedListener, OnErrorListener, OnCompletionListener {
 
         private static final String[] SUPPORTED_VIDEO_TYPES;
 
         static {
-            SUPPORTED_VIDEO_TYPES = new String[]{"video/mp4"};
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                SUPPORTED_VIDEO_TYPES = new String[]{"video/mp4"};
+            } else {
+                SUPPORTED_VIDEO_TYPES = new String[]{"video/webm", "video/mp4"};
+            }
         }
 
-        private TextureVideoView mVideoView;
         private VideoLoader mVideoLoader;
+
+        private TextureVideoView mVideoView;
+        private ProgressBar mVideoViewProgress;
+
+        private boolean mPlayAudio;
+        private VideoPlayProgressRunnable mVideoProgressRunnable;
+
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+//            mVideoViewProgress.removeCallbacks(mVideoProgressRunnable);
+//            mVideoViewProgress.setVisibility(View.GONE);
+        }
 
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -197,17 +221,71 @@ public final class MediaViewerActivity extends ThemedActionBarActivity implement
         public void onActivityCreated(@Nullable Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
             mVideoLoader = TwidereApplication.getInstance(getActivity()).getVideoLoader();
+            mVideoProgressRunnable = new VideoPlayProgressRunnable(mVideoViewProgress.getHandler(),
+                    mVideoViewProgress, mVideoView);
             final String url = getBestVideoUrl(getMedia());
             if (url != null) {
                 mVideoLoader.loadVideo(url, this);
+            }
+
+            mVideoView.setOnPreparedListener(this);
+            mVideoView.setOnErrorListener(this);
+            mVideoView.setOnCompletionListener(this);
+        }
+
+        @Override
+        public boolean onError(MediaPlayer mp, int what, int extra) {
+            mVideoViewProgress.removeCallbacks(mVideoProgressRunnable);
+            mVideoViewProgress.setVisibility(View.GONE);
+            return true;
+        }
+
+
+        private static class VideoPlayProgressRunnable implements Runnable {
+
+            private final Handler mHandler;
+            private final ProgressBar mProgressBar;
+            private final MediaController.MediaPlayerControl mMediaPlayerControl;
+
+            VideoPlayProgressRunnable(Handler handler, ProgressBar progressBar,
+                                      MediaController.MediaPlayerControl mediaPlayerControl) {
+                mHandler = handler;
+                mProgressBar = progressBar;
+                mMediaPlayerControl = mediaPlayerControl;
+                mProgressBar.setMax(1000);
+            }
+
+            @Override
+            public void run() {
+                final int duration = mMediaPlayerControl.getDuration();
+                final int position = mMediaPlayerControl.getCurrentPosition();
+                if (duration <= 0 || position < 0) return;
+                mProgressBar.setProgress(Math.round(1000 * position / (float) duration));
+                mHandler.postDelayed(this, 16);
+            }
+        }
+
+
+        @Override
+        public void onPrepared(MediaPlayer mp) {
+            if (getUserVisibleHint()) {
+                mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                if (mPlayAudio) {
+                    mp.setVolume(1, 1);
+                } else {
+                    mp.setVolume(0, 0);
+                }
+                mp.start();
+                mVideoViewProgress.setVisibility(View.VISIBLE);
+                mVideoViewProgress.post(mVideoProgressRunnable);
             }
         }
 
         private String getBestVideoUrl(ParcelableMedia media) {
             if (media == null || media.video_info == null) return null;
-            for (Variant variant : media.video_info.variants) {
-                if (ArrayUtils.contains(SUPPORTED_VIDEO_TYPES, variant.content_type)) {
-                    return variant.url;
+            for (String supportedType : SUPPORTED_VIDEO_TYPES) {
+                for (Variant variant : media.video_info.variants) {
+                    if (supportedType.equalsIgnoreCase(variant.content_type)) return variant.url;
                 }
             }
             return null;
@@ -217,6 +295,7 @@ public final class MediaViewerActivity extends ThemedActionBarActivity implement
         public void onBaseViewCreated(View view, Bundle savedInstanceState) {
             super.onBaseViewCreated(view, savedInstanceState);
             mVideoView = (TextureVideoView) view.findViewById(R.id.video_view);
+            mVideoViewProgress = (ProgressBar) view.findViewById(R.id.video_view_progress);
         }
 
         @Override
@@ -242,15 +321,14 @@ public final class MediaViewerActivity extends ThemedActionBarActivity implement
         @Override
         public void setUserVisibleHint(boolean isVisibleToUser) {
             super.setUserVisibleHint(isVisibleToUser);
-//            if (mVideoView != null && mVideoView.isPlaying()) {
-//                mVideoView.pause();
-//            }
+            if (!isVisibleToUser && mVideoView != null && mVideoView.isPlaying()) {
+                mVideoView.pause();
+            }
         }
 
         @Override
         public void onVideoLoadingComplete(String uri, VideoLoadingListener listener, File file) {
             mVideoView.setVideoURI(Uri.fromFile(file));
-            mVideoView.start();
         }
 
         @Override

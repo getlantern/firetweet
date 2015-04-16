@@ -510,10 +510,10 @@ public class MessagesConversationFragment extends BaseSupportFragment implements
 
 //    @Override
 //    public void onRefreshFromEnd() {
-//        new TwidereAsyncTask<Void, Void, long[][]>() {
+//        new TwidereAsyncTask<Object, Object, long[][]>() {
 //
 //            @Override
-//            protected long[][] doInBackground(final Void... params) {
+//            protected long[][] doInBackground(final Object... params) {
 //                final long[][] result = new long[2][];
 //                result[0] = getActivatedAccountIds(getActivity());
 //                result[1] = getNewestMessageIdsFromDatabase(getActivity(), DirectMessages.Inbox.CONTENT_URI);
@@ -677,10 +677,10 @@ public class MessagesConversationFragment extends BaseSupportFragment implements
 
 //    private void loadMoreMessages() {
 //        if (isRefreshing()) return;
-//        new TwidereAsyncTask<Void, Void, long[][]>() {
+//        new TwidereAsyncTask<Object, Object, long[][]>() {
 //
 //            @Override
-//            protected long[][] doInBackground(final Void... params) {
+//            protected long[][] doInBackground(final Object... params) {
 //                final long[][] result = new long[3][];
 //                result[0] = getActivatedAccountIds(getActivity());
 //                result[1] = getOldestMessageIdsFromDatabase(getActivity(), DirectMessages.Inbox.CONTENT_URI);
@@ -758,7 +758,7 @@ public class MessagesConversationFragment extends BaseSupportFragment implements
                 final String[] selectionArgs;
                 if (queryEscaped != null) {
                     final SharedPreferences nicknamePrefs = context.getSharedPreferences(USER_NICKNAME_PREFERENCES_NAME, Context.MODE_PRIVATE);
-                    final long[] nicknameIds = Utils.getMatchedNicknameIds(ParseUtils.parseString(query), nicknamePrefs);
+                    final long[] nicknameIds = Utils.getMatchedNicknameIds(query, nicknamePrefs);
                     selection = Expression.or(Expression.likeRaw(new Column(CachedUsers.SCREEN_NAME), "?||'%'", "^"),
                             Expression.likeRaw(new Column(CachedUsers.NAME), "?||'%'", "^"),
                             Expression.in(new Column(CachedUsers.USER_ID), new RawItemArray(nicknameIds)));

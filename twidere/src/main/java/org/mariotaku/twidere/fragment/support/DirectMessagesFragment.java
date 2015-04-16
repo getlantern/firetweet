@@ -159,7 +159,7 @@ public class DirectMessagesFragment extends BaseSupportFragment implements Loade
 
     @Override
     public void onRefresh() {
-        AsyncTaskUtils.executeTask(new AsyncTask<Object, Void, long[][]>() {
+        AsyncTaskUtils.executeTask(new AsyncTask<Object, Object, long[][]>() {
 
             @Override
             protected long[][] doInBackground(final Object... params) {
@@ -425,7 +425,7 @@ public class DirectMessagesFragment extends BaseSupportFragment implements Loade
         }
 
         @Override
-        protected Void doInBackground(final Object... params) {
+        protected Object doInBackground(final Object... params) {
             for (final int pos : read_positions) {
                 final DirectMessageEntry entry = adapter.getEntry(pos);
                 final long id = entry.conversation_id, account_id = entry.account_id;

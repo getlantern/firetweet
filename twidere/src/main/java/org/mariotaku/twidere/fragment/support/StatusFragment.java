@@ -20,7 +20,10 @@
 package org.mariotaku.twidere.fragment.support;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -33,6 +36,7 @@ import android.nfc.NfcEvent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -53,8 +57,8 @@ import android.support.v7.widget.RecyclerView.LayoutParams;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.text.Html;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
 import android.view.ActionMode;
 import android.view.ActionMode.Callback;
@@ -106,6 +110,7 @@ import org.mariotaku.twidere.util.UserColorNameUtils;
 import org.mariotaku.twidere.util.Utils;
 import org.mariotaku.twidere.util.Utils.OnMediaClickListener;
 import org.mariotaku.twidere.view.CardMediaContainer;
+import org.mariotaku.twidere.view.ColorLabelRelativeLayout;
 import org.mariotaku.twidere.view.ForegroundColorView;
 import org.mariotaku.twidere.view.ShapedImageView;
 import org.mariotaku.twidere.view.StatusTextView;
@@ -174,7 +179,9 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
 
         @Override
         public void onLoadFinished(Loader<List<ParcelableStatus>> loader, List<ParcelableStatus> data) {
+            final Pair<Long, Integer> readPosition = saveReadPosition();
             setReplies(data);
+            restoreReadPosition(readPosition);
         }
 
         @Override
@@ -182,6 +189,30 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
 
         }
     };
+
+    private void restoreReadPosition(@Nullable Pair<Long, Integer> position) {
+        if (position == null) return;
+        final int adapterPosition = mStatusAdapter.findPositionById(position.first);
+        if (adapterPosition == RecyclerView.NO_POSITION) return;
+        mLayoutManager.scrollToPositionWithOffset(adapterPosition, position.second);
+    }
+
+    @Nullable
+    private Pair<Long, Integer> saveReadPosition() {
+        final int position = mLayoutManager.findFirstVisibleItemPosition();
+        if (position == RecyclerView.NO_POSITION) return null;
+        long itemId = mStatusAdapter.getItemId(position);
+        final View positionView;
+        if (itemId == StatusAdapter.VIEW_TYPE_CONVERSATION_LOAD_INDICATOR) {
+            // Should be next item
+            positionView = mLayoutManager.findViewByPosition(position + 1);
+            itemId = mStatusAdapter.getItemId(position + 1);
+        } else {
+            positionView = mLayoutManager.findViewByPosition(position);
+        }
+        return new Pair<>(itemId, positionView != null ? positionView.getTop() : -1);
+    }
+
     private PopupMenu mPopupMenu;
     private ParcelableStatus mSelectedStatus;
     private OnMenuItemClickListener mOnStatusMenuItemClickListener = new OnMenuItemClickListener() {
@@ -476,15 +507,9 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
     }
 
     private void setConversation(List<ParcelableStatus> data) {
-        if (mLayoutManager.getChildCount() != 0) {
-            final long itemId = mStatusAdapter.getItemId(mLayoutManager.findFirstVisibleItemPosition());
-            final int top = mLayoutManager.getChildAt(0).getTop();
-            mStatusAdapter.setConversation(data);
-            final int position = mStatusAdapter.findPositionById(itemId);
-            mLayoutManager.scrollToPositionWithOffset(position, top);
-        } else {
-            mStatusAdapter.setConversation(data);
-        }
+        final Pair<Long, Integer> readPosition = saveReadPosition();
+        mStatusAdapter.setConversation(data);
+        restoreReadPosition(readPosition);
     }
 
     private void setReplies(List<ParcelableStatus> data) {
@@ -524,7 +549,7 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
         private final View repliesContainer, retweetsContainer, favoritesContainer;
         private final TextView repliesCountView, retweetsCountView, favoritesCountView;
 
-        private final View profileContainer;
+        private final ColorLabelRelativeLayout profileContainer;
         private final View retweetedByContainer;
         private final View mediaPreviewContainer;
         private final View mediaPreviewLoad;
@@ -563,7 +588,7 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
             mediaPreviewLoad = itemView.findViewById(R.id.media_preview_load);
             mediaPreview = (CardMediaContainer) itemView.findViewById(R.id.media_preview);
             locationView = (TextView) itemView.findViewById(R.id.location_view);
-            profileContainer = itemView.findViewById(R.id.profile_container);
+            profileContainer = (ColorLabelRelativeLayout) itemView.findViewById(R.id.profile_container);
             twitterCard = (TwitterCardContainer) itemView.findViewById(R.id.twitter_card);
 
             quoteTextView = (TextView) itemView.findViewById(R.id.quote_text);
@@ -596,6 +621,11 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
                 retweetedByContainer.setVisibility(View.GONE);
             }
 
+            profileContainer.drawEnd(Utils.getAccountColor(context, status.account_id));
+
+            final int typeIconRes, typeDescriptionRes;
+            final long timestamp;
+            final String source;
             if (status.is_quote) {
                 quotedNameView.setText(getUserNickname(context, status.user_id, status.user_name, true));
                 quotedScreenNameView.setText("@" + status.user_screen_name);
@@ -603,16 +633,29 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
                 nameView.setText(getUserNickname(context, status.quoted_by_user_id, status.quoted_by_user_name, true));
                 screenNameView.setText("@" + status.quoted_by_user_screen_name);
 
-                quoteTextView.setText(Html.fromHtml(status.quote_text_html));
+                final int idx = status.quote_text_unescaped.lastIndexOf(" twitter.com");
+                final Spanned quote_text = Html.fromHtml(status.quote_text_html);
+                quoteTextView.setText(idx > 0 ? quote_text.subSequence(0, idx - 1) : quote_text);
+                final SpannableString originalTweetLink = SpannableString.valueOf("Original tweet");
+                originalTweetLink.setSpan(new URLSpan(LinkCreator.getTwitterStatusLink(status.user_screen_name, status.quote_id).toString()),
+                        0, originalTweetLink.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                quoteTextView.append(originalTweetLink);
                 linkify.applyAllLinks(quoteTextView, status.account_id, getLayoutPosition(),
                         status.is_possibly_sensitive, adapter.getLinkHighlightingStyle());
-                timeSourceView.setMovementMethod(LinkMovementMethod.getInstance());
 
                 loader.displayProfileImage(profileImageView, status.quoted_by_user_profile_image);
 
                 quotedNameContainer.setVisibility(View.VISIBLE);
                 quoteTextView.setVisibility(View.VISIBLE);
                 quoteIndicator.setVisibility(View.VISIBLE);
+
+                profileContainer.drawStart(UserColorNameUtils.getUserColor(context, status.quoted_by_user_id));
+
+                typeIconRes = getUserTypeIconRes(status.quoted_by_user_is_verified, status.quoted_by_user_is_protected);
+                typeDescriptionRes = Utils.getUserTypeDescriptionRes(status.quoted_by_user_is_verified, status.quoted_by_user_is_protected);
+
+                timestamp = status.quote_timestamp;
+                source = status.quote_source;
 
             } else {
                 nameView.setText(getUserNickname(context, status.user_id, status.user_name, true));
@@ -623,24 +666,40 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
                 quotedNameContainer.setVisibility(View.GONE);
                 quoteTextView.setVisibility(View.GONE);
                 quoteIndicator.setVisibility(View.GONE);
+
+                profileContainer.drawStart(UserColorNameUtils.getUserColor(context, status.user_id));
+
+                typeIconRes = getUserTypeIconRes(status.user_is_verified, status.user_is_protected);
+                typeDescriptionRes = Utils.getUserTypeDescriptionRes(status.user_is_verified, status.user_is_protected);
+
+                timestamp = status.timestamp;
+                source = status.source;
             }
+
+            if (typeIconRes != 0 && typeDescriptionRes != 0) {
+                profileTypeView.setImageResource(typeIconRes);
+                profileTypeView.setContentDescription(context.getString(typeDescriptionRes));
+                profileTypeView.setVisibility(View.VISIBLE);
+            } else {
+                profileTypeView.setImageDrawable(null);
+                profileTypeView.setContentDescription(null);
+                profileTypeView.setVisibility(View.GONE);
+            }
+
+            final String timeString = formatToLongTimeString(context, timestamp);
+            if (!isEmpty(timeString) && !isEmpty(source)) {
+                timeSourceView.setText(Html.fromHtml(context.getString(R.string.time_source, timeString, source)));
+            } else if (isEmpty(timeString) && !isEmpty(source)) {
+                timeSourceView.setText(Html.fromHtml(context.getString(R.string.source, source)));
+            } else if (!isEmpty(timeString) && isEmpty(source)) {
+                timeSourceView.setText(timeString);
+            }
+            timeSourceView.setMovementMethod(null);
+
 
             textView.setText(Html.fromHtml(status.text_html));
             linkify.applyAllLinks(textView, status.account_id, getAdapterPosition(), status.is_possibly_sensitive);
             ThemeUtils.applyParagraphSpacing(textView, 1.1f);
-
-            final String timeString = formatToLongTimeString(context, status.timestamp);
-            final String sourceHtml = status.source;
-            if (!isEmpty(timeString) && !isEmpty(sourceHtml)) {
-                timeSourceView.setText(Html.fromHtml(context.getString(R.string.time_source,
-                        timeString, sourceHtml)));
-            } else if (isEmpty(timeString) && !isEmpty(sourceHtml)) {
-                timeSourceView.setText(Html.fromHtml(context.getString(R.string.source,
-                        sourceHtml)));
-            } else if (!isEmpty(timeString) && isEmpty(sourceHtml)) {
-                timeSourceView.setText(timeString);
-            }
-            timeSourceView.setMovementMethod(LinkMovementMethod.getInstance());
 
             if (!TextUtils.isEmpty(status.place_full_name)) {
                 locationView.setVisibility(View.VISIBLE);
@@ -662,30 +721,23 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
             retweetsCountView.setText(getLocalizedNumber(locale, status.retweet_count));
             favoritesCountView.setText(getLocalizedNumber(locale, status.favorite_count));
 
-            final int typeIconRes = getUserTypeIconRes(status.user_is_verified, status.user_is_protected);
-            final int typeDescriptionRes = Utils.getUserTypeDescriptionRes(status.user_is_verified, status.user_is_protected);
-            if (typeIconRes != 0 && typeDescriptionRes != 0) {
-                profileTypeView.setImageResource(typeIconRes);
-                profileTypeView.setContentDescription(context.getString(typeDescriptionRes));
-                profileTypeView.setVisibility(View.VISIBLE);
-            } else {
-                profileTypeView.setImageDrawable(null);
-                profileTypeView.setContentDescription(null);
-                profileTypeView.setVisibility(View.GONE);
-            }
 
             if (status.media == null) {
                 mediaPreviewContainer.setVisibility(View.GONE);
+                mediaPreview.setVisibility(View.GONE);
+                mediaPreviewLoad.setVisibility(View.GONE);
+                mediaPreview.displayMedia();
             } else if (adapter.isDetailMediaExpanded()) {
                 mediaPreviewContainer.setVisibility(View.VISIBLE);
-                mediaPreviewLoad.setVisibility(View.GONE);
                 mediaPreview.setVisibility(View.VISIBLE);
+                mediaPreviewLoad.setVisibility(View.GONE);
                 mediaPreview.displayMedia(status.media, loader, status.account_id,
                         adapter.getFragment(), adapter.getImageLoadingHandler());
             } else {
                 mediaPreviewContainer.setVisibility(View.VISIBLE);
-                mediaPreviewLoad.setVisibility(View.VISIBLE);
                 mediaPreview.setVisibility(View.GONE);
+                mediaPreviewLoad.setVisibility(View.VISIBLE);
+                mediaPreview.displayMedia();
             }
 
             if (TwitterCardUtils.isCardSupported(status.card)) {
@@ -710,14 +762,19 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
 
         @Override
         public void onClick(View v) {
+            final ParcelableStatus status = adapter.getStatus(getAdapterPosition());
+            final StatusFragment fragment = adapter.getFragment();
             switch (v.getId()) {
                 case R.id.media_preview_load: {
-                    adapter.setDetailMediaExpanded(true);
+                    if (adapter.isSensitiveContentEnabled() || !status.is_possibly_sensitive) {
+                        adapter.setDetailMediaExpanded(true);
+                    } else {
+                        final LoadSensitiveImageConfirmDialogFragment f = new LoadSensitiveImageConfirmDialogFragment();
+                        f.show(fragment.getChildFragmentManager(), "load_sensitive_image_confirm");
+                    }
                     break;
                 }
                 case R.id.profile_container: {
-                    final ParcelableStatus status = adapter.getStatus(getPosition());
-                    final Fragment fragment = adapter.getFragment();
                     final FragmentActivity activity = fragment.getActivity();
                     final Bundle activityOption = Utils.makeSceneTransitionOption(activity,
                             new Pair<View, String>(profileImageView, UserFragment.TRANSITION_NAME_PROFILE_IMAGE),
@@ -727,14 +784,11 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
                     break;
                 }
                 case R.id.retweets_container: {
-                    final ParcelableStatus status = adapter.getStatus(getPosition());
-                    final Fragment fragment = adapter.getFragment();
                     final FragmentActivity activity = fragment.getActivity();
                     Utils.openStatusRetweeters(activity, status.account_id, status.id);
                     break;
                 }
                 case R.id.retweeted_by_container: {
-                    final ParcelableStatus status = adapter.getStatus(getPosition());
                     if (status.retweet_id > 0) {
                         Utils.openUserProfile(adapter.getContext(), status.account_id, status.user_id,
                                 status.user_screen_name, null);
@@ -742,7 +796,6 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
                     break;
                 }
                 case R.id.location_view: {
-                    final ParcelableStatus status = adapter.getStatus(getAdapterPosition());
                     final ParcelableLocation location = status.location;
                     if (!ParcelableLocation.isValidLocation(location)) return;
                     Utils.openMap(adapter.getContext(), location.latitude, location.longitude);
@@ -785,6 +838,8 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
             quotedScreenNameView.setTextSize(defaultTextSize * 0.85f);
             locationView.setTextSize(defaultTextSize * 0.85f);
             timeSourceView.setTextSize(defaultTextSize * 0.85f);
+
+            mediaPreview.setStyle(adapter.getMediaPreviewStyle());
 
             textView.setMovementMethod(StatusContentMovementMethod.getInstance());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -848,6 +903,41 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
 
             }
         }
+    }
+
+    public static final class LoadSensitiveImageConfirmDialogFragment extends BaseSupportDialogFragment implements
+            DialogInterface.OnClickListener {
+
+        @Override
+        public void onClick(final DialogInterface dialog, final int which) {
+            switch (which) {
+                case DialogInterface.BUTTON_POSITIVE: {
+                    final Fragment f = getParentFragment();
+                    if (f instanceof StatusFragment) {
+                        final StatusAdapter adapter = ((StatusFragment) f).getAdapter();
+                        adapter.setDetailMediaExpanded(true);
+                    }
+                    break;
+                }
+            }
+
+        }
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(final Bundle savedInstanceState) {
+            final Context wrapped = ThemeUtils.getDialogThemedContext(getActivity());
+            final AlertDialog.Builder builder = new AlertDialog.Builder(wrapped);
+            builder.setTitle(android.R.string.dialog_alert_title);
+            builder.setMessage(R.string.sensitive_content_warning);
+            builder.setPositiveButton(android.R.string.ok, this);
+            builder.setNegativeButton(android.R.string.cancel, null);
+            return builder.create();
+        }
+    }
+
+    private StatusAdapter getAdapter() {
+        return mStatusAdapter;
     }
 
     static class LoadConversationTask extends AsyncTask<ParcelableStatus, ParcelableStatus,
@@ -937,6 +1027,8 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
         private final int mLinkHighligingStyle;
         private final boolean mDisplayMediaPreview;
         private final boolean mDisplayProfileImage;
+        private final boolean mSensitiveContentEnabled;
+        private final boolean mHideCardActions;
 
         private boolean mLoadMoreSupported;
         private boolean mLoadMoreIndicatorVisible;
@@ -967,6 +1059,8 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
             mIsCompact = compact;
             mDisplayProfileImage = preferences.getBoolean(KEY_DISPLAY_PROFILE_IMAGE, true);
             mDisplayMediaPreview = preferences.getBoolean(KEY_MEDIA_PREVIEW, false);
+            mSensitiveContentEnabled = preferences.getBoolean(KEY_DISPLAY_SENSITIVE_CONTENTS, false);
+            mHideCardActions = preferences.getBoolean(KEY_HIDE_CARD_ACTIONS, false);
             if (compact) {
                 mCardLayoutResource = R.layout.card_item_status_compact;
             } else {
@@ -988,7 +1082,7 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
             for (int i = 0, j = getItemCount(); i < j; i++) {
                 if (getItemId(i) == itemId) return i;
             }
-            return -1;
+            return RecyclerView.NO_POSITION;
         }
 
         public StatusFragment getFragment() {
@@ -1050,6 +1144,7 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
         public void setLoadMoreIndicatorVisible(boolean enabled) {
             if (mLoadMoreIndicatorVisible == enabled) return;
             mLoadMoreIndicatorVisible = enabled && mLoadMoreSupported;
+            updateItemDecoration();
             notifyDataSetChanged();
         }
 
@@ -1095,6 +1190,16 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
 
         public boolean isNameFirst() {
             return mNameFirst;
+        }
+
+        @Override
+        public boolean isSensitiveContentEnabled() {
+            return mSensitiveContentEnabled;
+        }
+
+        @Override
+        public boolean isCardActionsHidden() {
+            return mHideCardActions;
         }
 
         @Override
@@ -1251,13 +1356,13 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
         public long getItemId(int position) {
             final int conversationCount = getConversationCount();
             if (position == getItemCount() - 1) {
-                return 4;
+                return VIEW_TYPE_SPACE;
             } else if (position < conversationCount) {
-                return mConversation != null ? mConversation.get(position).id : 2;
+                return mConversation != null ? mConversation.get(position).id : VIEW_TYPE_CONVERSATION_LOAD_INDICATOR;
             } else if (position > conversationCount) {
-                return mReplies != null ? mReplies.get(position - conversationCount - 1).id : 3;
+                return mReplies != null ? mReplies.get(position - conversationCount - 1).id : VIEW_TYPE_REPLIES_LOAD_INDICATOR;
             } else {
-                return mStatus != null ? mStatus.id : 1;
+                return mStatus != null ? mStatus.id : VIEW_TYPE_DETAIL_STATUS;
             }
         }
 
@@ -1340,10 +1445,10 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
         private void updateItemDecoration() {
             final DividerItemDecoration decoration = mFragment.getItemDecoration();
             decoration.setDecorationStart(0);
-            if (mReplies != null) {
-                decoration.setDecorationEndOffset(2);
-            } else {
+            if (isLoadMoreIndicatorVisible()) {
                 decoration.setDecorationEndOffset(3);
+            } else {
+                decoration.setDecorationEndOffset(mReplies != null && mReplies.size() > 0 ? 1 : 2);
             }
             mFragment.mRecyclerView.invalidateItemDecorations();
         }

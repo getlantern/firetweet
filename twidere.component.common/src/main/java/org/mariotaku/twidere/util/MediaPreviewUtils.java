@@ -164,7 +164,7 @@ public class MediaPreviewUtils {
     private static final Pattern[] SUPPORTED_PATTERNS = {PATTERN_TWITTER_IMAGES, PATTERN_INSTAGRAM,
             PATTERN_GOOGLE_IMAGES, PATTERN_GOOGLE_PROXY_IMAGES, PATTERN_SINA_WEIBO_IMAGES, PATTERN_TWITPIC,
             PATTERN_IMGUR, PATTERN_IMGLY, PATTERN_YFROG, PATTERN_LOCKERZ, PATTERN_PLIXI, PATTERN_TWITGOO,
-            PATTERN_MOBYPICTURE, PATTERN_PHOTOZOU,PATTERN_TWITTER_DM_IMAGES};
+            PATTERN_MOBYPICTURE, PATTERN_PHOTOZOU, PATTERN_TWITTER_DM_IMAGES};
 
     private static final String URL_PHOTOZOU_PHOTO_INFO = "https://api.photozou.jp/rest/photo_info.json";
 
@@ -241,14 +241,14 @@ public class MediaPreviewUtils {
         final MediaEntity[] mediaEntities = status.getMediaEntities();
         if (mediaEntities != null) {
             for (final MediaEntity mediaEntity : mediaEntities) {
-                final String expanded = ParseUtils.parseString(mediaEntity.getMediaURLHttps());
+                final String expanded = mediaEntity.getMediaURLHttps();
                 if (getSupportedLink(expanded) != null) return expanded;
             }
         }
         final URLEntity[] urlEntities = status.getURLEntities();
         if (urlEntities != null) {
             for (final URLEntity urlEntity : urlEntities) {
-                final String expanded = ParseUtils.parseString(urlEntity.getExpandedURL());
+                final String expanded = urlEntity.getExpandedURL();
                 if (getSupportedLink(expanded) != null) return expanded;
             }
         }
@@ -322,7 +322,7 @@ public class MediaPreviewUtils {
 
     private static ParcelableMedia getInstagramImage(final String id, final String orig, final boolean fullImage) {
         if (isEmpty(id)) return null;
-        final String preview = String.format("https://instagram.com/p/%s/media/?size=%s", id, fullImage ? "l" : "t");
+        final String preview = String.format("https://instagram.com/p/%s/media/?size=%s", id, fullImage ? "l" : "m");
         return ParcelableMedia.newImage(preview, orig);
     }
 

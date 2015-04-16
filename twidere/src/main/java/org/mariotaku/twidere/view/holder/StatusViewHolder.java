@@ -8,6 +8,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -73,6 +74,8 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
     private final View quotedNameContainer;
     private final IColorLabelView itemContent;
     private final ForegroundColorView quoteIndicator;
+    private final View actionButtons;
+    private final View itemMenu;
 
     private StatusClickListener statusClickListener;
 
@@ -98,6 +101,9 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
 
         quoteIndicator = (ForegroundColorView) itemView.findViewById(R.id.quote_indicator);
 
+        itemMenu = itemView.findViewById(R.id.item_menu);
+        actionButtons = itemView.findViewById(R.id.action_buttons);
+
         replyCountView = (TextView) itemView.findViewById(R.id.reply_count);
         retweetCountView = (TextView) itemView.findViewById(R.id.retweet_count);
         favoriteCountView = (TextView) itemView.findViewById(R.id.favorite_count);
@@ -106,12 +112,21 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
     }
 
     public void displaySampleStatus() {
+        profileImageView.setVisibility(adapter.isProfileImageEnabled() ? View.VISIBLE : View.GONE);
         profileImageView.setImageResource(R.mipmap.ic_launcher);
         nameView.setText(TWIDERE_PREVIEW_NAME);
         screenNameView.setText("@" + TWIDERE_PREVIEW_SCREEN_NAME);
-        textView.setText(toPlainText(TWIDERE_PREVIEW_TEXT_HTML));
+        if (adapter.getLinkHighlightingStyle() == VALUE_LINK_HIGHLIGHT_OPTION_CODE_NONE) {
+            textView.setText(Html.fromHtml(TWIDERE_PREVIEW_TEXT_HTML));
+            adapter.getTwidereLinkify().applyAllLinks(textView, -1, -1, false, adapter.getLinkHighlightingStyle());
+        } else {
+            textView.setText(toPlainText(TWIDERE_PREVIEW_TEXT_HTML));
+        }
+        textView.setMovementMethod(null);
         timeView.setTime(System.currentTimeMillis());
+        mediaPreview.setVisibility(adapter.isMediaPreviewEnabled() ? View.VISIBLE : View.GONE);
         mediaPreview.displayMedia(R.drawable.nyan_stars_background);
+        extraTypeView.setImageResource(R.drawable.ic_action_gallery);
     }
 
     public void displayStatus(final ParcelableStatus status, final boolean displayInReplyTo) {
@@ -165,10 +180,13 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
             nameView.setText(getUserNickname(context, status.quoted_by_user_id, status.quoted_by_user_name, true));
             screenNameView.setText("@" + status.quoted_by_user_screen_name);
 
+            final int idx = status.quote_text_unescaped.lastIndexOf(" twitter.com");
             if (adapter.getLinkHighlightingStyle() == VALUE_LINK_HIGHLIGHT_OPTION_CODE_NONE) {
-                quoteTextView.setText(status.quote_text_unescaped);
+                final String text = status.quote_text_unescaped;
+                quoteTextView.setText(idx > 0 ? text.substring(0, idx - 1) : text);
             } else {
-                quoteTextView.setText(Html.fromHtml(status.quote_text_html));
+                final Spanned text = Html.fromHtml(status.quote_text_html);
+                quoteTextView.setText(idx > 0 ? text.subSequence(0, idx - 1) : text);
                 linkify.applyAllLinks(quoteTextView, status.account_id, getLayoutPosition(),
                         status.is_possibly_sensitive, adapter.getLinkHighlightingStyle());
                 quoteTextView.setMovementMethod(null);
@@ -225,9 +243,14 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
 
         if (adapter.isMediaPreviewEnabled()) {
             mediaPreview.setStyle(adapter.getMediaPreviewStyle());
-            mediaPreview.setVisibility(status.media != null && status.media.length > 0 ? View.VISIBLE : View.GONE);
-            mediaPreview.displayMedia(status.media, loader, status.account_id, this,
-                    adapter.getImageLoadingHandler());
+            final boolean hasMedia = status.media != null && status.media.length > 0;
+            if (hasMedia && (adapter.isSensitiveContentEnabled() || !status.is_possibly_sensitive)) {
+                mediaPreview.setVisibility(hasMedia ? View.VISIBLE : View.GONE);
+                mediaPreview.displayMedia(status.media, loader, status.account_id, this,
+                        adapter.getImageLoadingHandler());
+            } else {
+                mediaPreview.setVisibility(View.GONE);
+            }
         } else {
             mediaPreview.setVisibility(View.GONE);
         }
@@ -275,7 +298,8 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
             favoriteCountView.setText(null);
         }
         if (shouldDisplayExtraType) {
-            displayExtraTypeIcon(status.card_name, status.media, status.location, status.place_full_name);
+            displayExtraTypeIcon(status.card_name, status.media, status.location, status.place_full_name,
+                    status.is_possibly_sensitive);
         } else {
             extraTypeView.setVisibility(View.GONE);
         }
@@ -298,7 +322,6 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
         final long status_id = cursor.getLong(indices.status_id);
         final long retweet_id = cursor.getLong(indices.retweet_id);
         final long my_retweet_id = cursor.getLong(indices.my_retweet_id);
-        final long retweeted_by_id = cursor.getLong(indices.retweeted_by_user_id);
         final long in_reply_to_status_id = cursor.getLong(indices.in_reply_to_status_id);
         final long in_reply_to_user_id = cursor.getLong(indices.in_reply_to_user_id);
 
@@ -307,12 +330,15 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
         final String card_name = cursor.getString(indices.card_name);
         final String place_full_name = cursor.getString(indices.place_full_name);
 
+        final boolean sensitive = cursor.getShort(indices.is_possibly_sensitive) == 1;
+
         final ParcelableMedia[] media = SimpleValueSerializer.fromSerializedString(
                 cursor.getString(indices.media), ParcelableMedia.SIMPLE_CREATOR);
         final ParcelableLocation location = ParcelableLocation.fromString(
                 cursor.getString(indices.location));
 
         if (retweet_id > 0) {
+            final long retweeted_by_id = cursor.getLong(indices.retweeted_by_user_id);
             final String retweeted_by_name = cursor.getString(indices.retweeted_by_user_name);
             final String retweeted_by_screen_name = cursor.getString(indices.retweeted_by_user_screen_name);
             final String retweetedBy = UserColorNameUtils.getDisplayName(context, retweeted_by_id,
@@ -335,15 +361,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
             replyRetweetIcon.setVisibility(View.GONE);
         }
 
-        final int typeIconRes = getUserTypeIconRes(cursor.getShort(indices.is_verified) == 1,
-                cursor.getShort(indices.is_protected) == 1);
-        if (typeIconRes != 0) {
-            profileTypeView.setImageResource(typeIconRes);
-            profileTypeView.setVisibility(View.VISIBLE);
-        } else {
-            profileTypeView.setImageDrawable(null);
-            profileTypeView.setVisibility(View.GONE);
-        }
+        final int typeIconRes;
 
         if (cursor.getShort(indices.is_quote) == 1) {
             quotedNameView.setText(user_name);
@@ -352,10 +370,13 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
             nameView.setText(cursor.getString(indices.quoted_by_user_name));
             screenNameView.setText("@" + cursor.getString(indices.quoted_by_user_screen_name));
 
+            final String quote_text_unescaped = cursor.getString(indices.quote_text_unescaped);
+            final int idx = quote_text_unescaped.lastIndexOf(" twitter.com");
             if (adapter.getLinkHighlightingStyle() == VALUE_LINK_HIGHLIGHT_OPTION_CODE_NONE) {
-                quoteTextView.setText(cursor.getString(indices.quote_text_unescaped));
+                quoteTextView.setText(idx > 0 ? quote_text_unescaped.substring(0, idx - 1) : quote_text_unescaped);
             } else {
-                quoteTextView.setText(Html.fromHtml(cursor.getString(indices.quote_text_html)));
+                final Spanned text = Html.fromHtml(cursor.getString(indices.quote_text_html));
+                quoteTextView.setText(idx > 0 ? text.subSequence(0, idx - 1) : text);
                 linkify.applyAllLinks(quoteTextView, account_id, getLayoutPosition(),
                         cursor.getShort(indices.is_possibly_sensitive) == 1,
                         adapter.getLinkHighlightingStyle());
@@ -380,6 +401,9 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
 
             final int userColor = UserColorNameUtils.getUserColor(context, cursor.getLong(indices.quoted_by_user_id));
             itemContent.drawStart(userColor);
+
+            typeIconRes = getUserTypeIconRes(cursor.getShort(indices.quoted_by_user_is_verified) == 1,
+                    cursor.getShort(indices.quoted_by_user_is_protected) == 1);
         } else {
             nameView.setText(user_name);
             screenNameView.setText("@" + user_screen_name);
@@ -401,8 +425,18 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
             }
             final int userColor = UserColorNameUtils.getUserColor(context, user_id);
             itemContent.drawStart(userColor);
+
+            typeIconRes = getUserTypeIconRes(cursor.getShort(indices.is_verified) == 1,
+                    cursor.getShort(indices.is_protected) == 1);
         }
 
+        if (typeIconRes != 0) {
+            profileTypeView.setImageResource(typeIconRes);
+            profileTypeView.setVisibility(View.VISIBLE);
+        } else {
+            profileTypeView.setImageDrawable(null);
+            profileTypeView.setVisibility(View.GONE);
+        }
 
         if (adapter.shouldShowAccountsColor()) {
             itemContent.drawEnd(Utils.getAccountColor(context, account_id));
@@ -412,10 +446,13 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
 
 
         if (adapter.isMediaPreviewEnabled()) {
-            mediaPreview.setStyle(adapter.getMediaPreviewStyle());
-            mediaPreview.setVisibility(media != null && media.length > 0 ? View.VISIBLE : View.GONE);
-            mediaPreview.displayMedia(media, loader, account_id, this,
-                    adapter.getImageLoadingHandler());
+            final boolean hasMedia = media != null && media.length > 0;
+            if (hasMedia && (adapter.isSensitiveContentEnabled() || !sensitive)) {
+                mediaPreview.setVisibility(hasMedia ? View.VISIBLE : View.GONE);
+                mediaPreview.displayMedia(media, loader, account_id, this, adapter.getImageLoadingHandler());
+            } else {
+                mediaPreview.setVisibility(View.GONE);
+            }
         } else {
             mediaPreview.setVisibility(View.GONE);
         }
@@ -440,6 +477,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
             retweet_count = Math.max(0, cursor.getLong(indices.retweet_count) - 1);
         } else {
             final boolean creatingRetweet = twitter.isCreatingRetweet(account_id, status_id);
+            final long retweeted_by_id = cursor.getLong(indices.retweeted_by_user_id);
             retweetCountView.setActivated(creatingRetweet || Utils.isMyRetweet(account_id,
                     retweeted_by_id, my_retweet_id));
             retweet_count = cursor.getLong(indices.retweet_count) + (creatingRetweet ? 1 : 0);
@@ -462,7 +500,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
         } else {
             favoriteCountView.setText(null);
         }
-        displayExtraTypeIcon(card_name, media, location, place_full_name);
+        displayExtraTypeIcon(card_name, media, location, place_full_name, sensitive);
     }
 
     public CardView getCardView() {
@@ -517,8 +555,8 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
     public void setStatusClickListener(StatusClickListener listener) {
         statusClickListener = listener;
         itemView.findViewById(R.id.item_content).setOnClickListener(this);
-        itemView.findViewById(R.id.item_menu).setOnClickListener(this);
 
+        itemMenu.setOnClickListener(this);
         itemView.setOnClickListener(this);
         profileImageView.setOnClickListener(this);
         replyCountView.setOnClickListener(this);
@@ -544,23 +582,25 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
         setTextSize(adapter.getTextSize());
         mediaPreview.setStyle(adapter.getMediaPreviewStyle());
         profileImageView.setStyle(adapter.getProfileImageStyle());
+        actionButtons.setVisibility(adapter.isCardActionsHidden() ? View.GONE : View.VISIBLE);
+        itemMenu.setVisibility(adapter.isCardActionsHidden() ? View.GONE : View.VISIBLE);
     }
 
-    private void displayExtraTypeIcon(String cardName, ParcelableMedia[] media, ParcelableLocation location, String placeFullName) {
+    private void displayExtraTypeIcon(String cardName, ParcelableMedia[] media, ParcelableLocation location, String placeFullName, boolean sensitive) {
         if (TwitterCardUtils.CARD_NAME_AUDIO.equals(cardName)) {
-            extraTypeView.setImageResource(R.drawable.ic_action_music);
+            extraTypeView.setImageResource(sensitive ? R.drawable.ic_action_warning : R.drawable.ic_action_music);
             extraTypeView.setVisibility(View.VISIBLE);
         } else if (TwitterCardUtils.CARD_NAME_ANIMATED_GIF.equals(cardName)) {
-            extraTypeView.setImageResource(R.drawable.ic_action_movie);
+            extraTypeView.setImageResource(sensitive ? R.drawable.ic_action_warning : R.drawable.ic_action_movie);
             extraTypeView.setVisibility(View.VISIBLE);
         } else if (TwitterCardUtils.CARD_NAME_PLAYER.equals(cardName)) {
-            extraTypeView.setImageResource(R.drawable.ic_action_play_circle);
+            extraTypeView.setImageResource(sensitive ? R.drawable.ic_action_warning : R.drawable.ic_action_play_circle);
             extraTypeView.setVisibility(View.VISIBLE);
         } else if (media != null && media.length > 0) {
             if (hasVideo(media)) {
-                extraTypeView.setImageResource(R.drawable.ic_action_movie);
+                extraTypeView.setImageResource(sensitive ? R.drawable.ic_action_warning : R.drawable.ic_action_movie);
             } else {
-                extraTypeView.setImageResource(R.drawable.ic_action_gallery);
+                extraTypeView.setImageResource(sensitive ? R.drawable.ic_action_warning : R.drawable.ic_action_gallery);
             }
             extraTypeView.setVisibility(View.VISIBLE);
         } else if (ParcelableLocation.isValidLocation(location) || !TextUtils.isEmpty(placeFullName)) {
@@ -582,9 +622,9 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
 
         boolean isProfileImageEnabled();
 
-        void onStatusClick(StatusViewHolder holder, int position);
-
         void onMediaClick(StatusViewHolder holder, ParcelableMedia media, int position);
+
+        void onStatusClick(StatusViewHolder holder, int position);
 
         void onUserProfileClick(StatusViewHolder holder, int position);
     }
@@ -592,31 +632,30 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
     public static final class DummyStatusHolderAdapter implements IStatusesAdapter<Object> {
 
         private final Context context;
+        private final SharedPreferencesWrapper preferences;
         private final MediaLoaderWrapper loader;
         private final ImageLoadingHandler handler;
         private final AsyncTwitterWrapper twitter;
         private final TwidereLinkify linkify;
-        private final int profileImageStyle, mediaPreviewStyle;
-        private final boolean nameFirst;
-        private final boolean displayProfileImage;
+        private int profileImageStyle;
+        private int mediaPreviewStyle;
+        private int textSize;
+        private int linkHighlightStyle;
+        private boolean nameFirst;
+        private boolean displayProfileImage;
+        private boolean sensitiveContentEnabled;
+        private boolean hideCardActions;
         private boolean displayMediaPreview;
 
         public DummyStatusHolderAdapter(Context context) {
             this.context = context;
-
-            final SharedPreferencesWrapper preferences = SharedPreferencesWrapper.getInstance(context,
-                    SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+            preferences = SharedPreferencesWrapper.getInstance(context, SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
             final TwidereApplication app = TwidereApplication.getInstance(context);
             loader = app.getMediaLoaderWrapper();
             handler = new ImageLoadingHandler(R.id.media_preview_progress);
             twitter = app.getTwitterWrapper();
             linkify = new TwidereLinkify(null);
-
-            profileImageStyle = Utils.getProfileImageStyle(preferences.getString(KEY_PROFILE_IMAGE_STYLE, null));
-            mediaPreviewStyle = Utils.getMediaPreviewStyle(preferences.getString(KEY_MEDIA_PREVIEW_STYLE, null));
-            nameFirst = preferences.getBoolean(KEY_NAME_FIRST, true);
-            displayProfileImage = preferences.getBoolean(KEY_DISPLAY_PROFILE_IMAGE, true);
-            displayMediaPreview = preferences.getBoolean(KEY_MEDIA_PREVIEW, false);
+            updateOptions();
         }
 
         @Override
@@ -656,7 +695,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
 
         @Override
         public float getTextSize() {
-            return 0;
+            return textSize;
         }
 
         @Override
@@ -667,46 +706,6 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
         @Override
         public boolean isLoadMoreSupported() {
             return false;
-        }
-
-        @Override
-        public boolean isProfileImageEnabled() {
-            return displayProfileImage;
-        }
-
-        @Override
-        public void onItemActionClick(ViewHolder holder, int id, int position) {
-
-        }
-
-        @Override
-        public void onItemMenuClick(ViewHolder holder, View menuView, int position) {
-
-        }
-
-        @Override
-        public void onStatusClick(StatusViewHolder holder, int position) {
-
-        }
-
-        @Override
-        public void onMediaClick(StatusViewHolder holder, ParcelableMedia media, int position) {
-
-        }
-
-        @Override
-        public void onUserProfileClick(StatusViewHolder holder, int position) {
-
-        }
-
-        @Override
-        public boolean isGapItem(int position) {
-            return false;
-        }
-
-        @Override
-        public void onGapClick(ViewHolder holder, int position) {
-
         }
 
         @Override
@@ -746,7 +745,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
 
         @Override
         public int getLinkHighlightingStyle() {
-            return 0;
+            return linkHighlightStyle;
         }
 
         @Override
@@ -755,8 +754,23 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
         }
 
         @Override
+        public boolean isSensitiveContentEnabled() {
+            return sensitiveContentEnabled;
+        }
+
+        @Override
+        public boolean isCardActionsHidden() {
+            return hideCardActions;
+        }
+
+        @Override
         public void setData(Object o) {
 
+        }
+
+        @Override
+        public boolean shouldShowAccountsColor() {
+            return false;
         }
 
         public void setMediaPreviewEnabled(boolean enabled) {
@@ -764,8 +778,55 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
         }
 
         @Override
-        public boolean shouldShowAccountsColor() {
+        public boolean isGapItem(int position) {
             return false;
+        }
+
+        @Override
+        public void onGapClick(ViewHolder holder, int position) {
+
+        }
+
+        @Override
+        public boolean isProfileImageEnabled() {
+            return displayProfileImage;
+        }
+
+        @Override
+        public void onStatusClick(StatusViewHolder holder, int position) {
+
+        }
+
+        @Override
+        public void onMediaClick(StatusViewHolder holder, ParcelableMedia media, int position) {
+
+        }
+
+        @Override
+        public void onUserProfileClick(StatusViewHolder holder, int position) {
+
+        }
+
+        @Override
+        public void onItemActionClick(ViewHolder holder, int id, int position) {
+
+        }
+
+        @Override
+        public void onItemMenuClick(ViewHolder holder, View menuView, int position) {
+
+        }
+
+        public void updateOptions() {
+            profileImageStyle = Utils.getProfileImageStyle(preferences.getString(KEY_PROFILE_IMAGE_STYLE, null));
+            mediaPreviewStyle = Utils.getMediaPreviewStyle(preferences.getString(KEY_MEDIA_PREVIEW_STYLE, null));
+            textSize = preferences.getInt(KEY_TEXT_SIZE, context.getResources().getInteger(R.integer.default_text_size));
+            nameFirst = preferences.getBoolean(KEY_NAME_FIRST, true);
+            displayProfileImage = preferences.getBoolean(KEY_DISPLAY_PROFILE_IMAGE, true);
+            displayMediaPreview = preferences.getBoolean(KEY_MEDIA_PREVIEW, false);
+            sensitiveContentEnabled = preferences.getBoolean(KEY_DISPLAY_SENSITIVE_CONTENTS, false);
+            hideCardActions = preferences.getBoolean(KEY_HIDE_CARD_ACTIONS, false);
+            linkHighlightStyle = Utils.getLinkHighlightingStyleInt(preferences.getString(KEY_LINK_HIGHLIGHT_OPTION, null));
         }
     }
 }

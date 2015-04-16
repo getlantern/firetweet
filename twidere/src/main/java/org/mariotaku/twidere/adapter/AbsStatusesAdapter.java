@@ -38,6 +38,7 @@ import org.mariotaku.twidere.view.holder.StatusViewHolder;
  */
 public abstract class AbsStatusesAdapter<D> extends Adapter<ViewHolder> implements Constants,
         IStatusesAdapter<D> {
+
     public static final int ITEM_VIEW_TYPE_LOAD_INDICATOR = 0;
     public static final int ITEM_VIEW_TYPE_GAP = 1;
     public static final int ITEM_VIEW_TYPE_STATUS = 2;
@@ -47,6 +48,10 @@ public abstract class AbsStatusesAdapter<D> extends Adapter<ViewHolder> implemen
     private final MediaLoaderWrapper mImageLoader;
     private final ImageLoadingHandler mLoadingHandler;
     private final AsyncTwitterWrapper mTwitterWrapper;
+    private final TwidereLinkify mLinkify;
+
+    private StatusAdapterListener mStatusAdapterListener;
+
     private final int mCardBackgroundColor;
     private final int mTextSize;
     @ShapeStyle
@@ -60,12 +65,11 @@ public abstract class AbsStatusesAdapter<D> extends Adapter<ViewHolder> implemen
     private final boolean mNameFirst;
     private final boolean mDisplayMediaPreview;
     private final boolean mDisplayProfileImage;
-    private final TwidereLinkify mLinkify;
+    private final boolean mSensitiveContentEnabled;
+    private final boolean mHideCardActions;
 
     private boolean mLoadMoreSupported;
     private boolean mLoadMoreIndicatorVisible;
-
-    private StatusAdapterListener mStatusAdapterListener;
     private boolean mShowInReplyTo;
     private boolean mShowAccountsColor;
 
@@ -87,6 +91,8 @@ public abstract class AbsStatusesAdapter<D> extends Adapter<ViewHolder> implemen
         mNameFirst = preferences.getBoolean(KEY_NAME_FIRST, true);
         mDisplayProfileImage = preferences.getBoolean(KEY_DISPLAY_PROFILE_IMAGE, true);
         mDisplayMediaPreview = preferences.getBoolean(KEY_MEDIA_PREVIEW, false);
+        mSensitiveContentEnabled = preferences.getBoolean(KEY_DISPLAY_SENSITIVE_CONTENTS, false);
+        mHideCardActions = preferences.getBoolean(KEY_HIDE_CARD_ACTIONS, false);
         mLinkify = new TwidereLinkify(new StatusAdapterLinkClickHandler<>(this));
         setShowInReplyTo(true);
     }
@@ -179,6 +185,16 @@ public abstract class AbsStatusesAdapter<D> extends Adapter<ViewHolder> implemen
     @Override
     public boolean isNameFirst() {
         return mNameFirst;
+    }
+
+    @Override
+    public boolean isSensitiveContentEnabled() {
+        return mSensitiveContentEnabled;
+    }
+
+    @Override
+    public boolean isCardActionsHidden() {
+        return mHideCardActions;
     }
 
     @Override

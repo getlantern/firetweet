@@ -516,7 +516,7 @@ public class SettingsWizardActivity extends Activity implements Constants {
         }
     }
 
-    static abstract class AbsInitialSettingsTask extends AsyncTask<Object, Void, Boolean> {
+    static abstract class AbsInitialSettingsTask extends AsyncTask<Object, Object, Boolean> {
 
         private static final String FRAGMENT_TAG = "initial_settings_dialog";
 

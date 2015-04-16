@@ -74,7 +74,7 @@ public class UploadTask extends AsyncTask<Object, Object, Object> {
     }
 
     @Override
-    protected Void doInBackground(final Void... params) {
+    protected Object doInBackground(final Object... params) {
 
         final SharedPreferences prefs = context.getSharedPreferences("ucd_data_profiling", Context.MODE_PRIVATE);
 
