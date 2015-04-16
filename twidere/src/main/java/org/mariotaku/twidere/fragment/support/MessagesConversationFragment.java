@@ -786,7 +786,7 @@ public class MessagesConversationFragment extends BaseSupportFragment implements
         }
     }
 
-    private static class SetReadStateTask extends AsyncTask<Void, Void, Cursor> {
+    private static class SetReadStateTask extends AsyncTask<Object, Object, Cursor> {
         private final Context mContext;
         private final ReadStateManager mReadStateManager;
         private final ParcelableAccount mAccount;
@@ -811,7 +811,7 @@ public class MessagesConversationFragment extends BaseSupportFragment implements
         }
 
         @Override
-        protected Cursor doInBackground(Void... params) {
+        protected Cursor doInBackground(Object... params) {
             final ContentResolver resolver = mContext.getContentResolver();
             final String[] projection = {ConversationEntries.MESSAGE_ID};
             final String selection = Expression.and(

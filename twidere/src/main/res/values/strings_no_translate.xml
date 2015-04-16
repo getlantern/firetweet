@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name" translatable="false">Twidere</string>
+    <string name="app_name" translatable="false">FireTweet</string>
     <string name="theme_twidere">@string/app_name</string>
     <string name="nyan_sakamoto" translatable="false">Nyan Sakamoto!</string>
     <string name="kuma_union" translatable="false">熊孩子联盟</string>
     <string name="developer_name" translatable="false">Mariotaku Lee</string>
-    <string name="project_name" translatable="false">Twidere Project</string>
+    <string name="project_name" translatable="false">Lantern</string>
     <string name="font_family_regular" translatable="false">Regular</string>
     <string name="font_family_condensed" translatable="false">Condensed</string>
     <string name="font_family_light" translatable="false">Light</string>

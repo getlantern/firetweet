@@ -69,6 +69,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.os.Handler;
+import java.lang.Runnable;
+
 import static org.mariotaku.twidere.util.CompareUtils.classEquals;
 
 public class SettingsWizardActivity extends Activity implements Constants {
@@ -86,6 +89,8 @@ public class SettingsWizardActivity extends Activity implements Constants {
     private TabsAdapter mAdapter;
 
     private AbsInitialSettingsTask mTask;
+    private AbsInitialSettingsTask mTabTask;
+
 
     public void applyInitialSettings() {
         if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING) return;
@@ -94,9 +99,9 @@ public class SettingsWizardActivity extends Activity implements Constants {
     }
 
     public void applyInitialTabSettings() {
-        if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING) return;
-        mTask = new InitialTabSettingsTask(this);
-        AsyncTaskUtils.executeTask(mTask);
+        if (mTabTask != null && mTabTask.getStatus() == AsyncTask.Status.RUNNING) return;
+        mTabTask = new InitialTabSettingsTask(this);
+        AsyncTaskUtils.executeTask(mTabTask);
     }
 
     public void exitWizard() {
@@ -159,12 +164,19 @@ public class SettingsWizardActivity extends Activity implements Constants {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings_wizard);
+        /*setContentView(R.layout.activity_settings_wizard);*/
         mAdapter = new TabsAdapter(this, getFragmentManager(), null);
-        mViewPager.setAdapter(mAdapter);
-        mViewPager.setEnabled(false);
-        mIndicator.setViewPager(mViewPager);
-        initPages();
+        /*mViewPager.setAdapter(mAdapter);
+        mViewPager.setEnabled(false);*/
+        /*mIndicator.setViewPager(mViewPager);
+        initPages();*/
+        applyInitialSettings();
+        Handler handler = new Handler(); 
+        handler.postDelayed(new Runnable() { 
+            public void run() { 
+                exitWizard();
+            } 
+        }, 1000); 
     }
 
     private void initPages() {
@@ -504,7 +516,7 @@ public class SettingsWizardActivity extends Activity implements Constants {
         }
     }
 
-    static abstract class AbsInitialSettingsTask extends AsyncTask<Void, Void, Boolean> {
+    static abstract class AbsInitialSettingsTask extends AsyncTask<Object, Void, Boolean> {
 
         private static final String FRAGMENT_TAG = "initial_settings_dialog";
 
@@ -518,7 +530,7 @@ public class SettingsWizardActivity extends Activity implements Constants {
         }
 
         @Override
-        protected Boolean doInBackground(final Void... params) {
+        protected Boolean doInBackground(final Object... params) {
             final ContentResolver resolver = mActivity.getContentResolver();
             final List<SupportTabSpec> tabs = CustomTabUtils.getHomeTabs(mActivity);
             if (wasConfigured(tabs)) return true;

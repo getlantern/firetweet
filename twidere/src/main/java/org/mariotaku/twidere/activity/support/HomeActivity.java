@@ -378,9 +378,9 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
         updateSlidingMenuTouchMode();
 
         if (savedInstanceState == null) {
-            if (refreshOnStart) {
+            //if (refreshOnStart) {
                 mTwitterWrapper.refreshAll();
-            }
+            //}
             if (intent.getBooleanExtra(EXTRA_OPEN_ACCOUNTS_DRAWER, false)) {
                 openAccountsDrawer();
             }
@@ -809,7 +809,8 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
         mPagerAdapter.clear();
         mPagerAdapter.addTabs(CustomTabUtils.getHomeTabs(this));
         final boolean hasNoTab = mPagerAdapter.getCount() == 0;
-        mEmptyTabHint.setVisibility(hasNoTab ? View.VISIBLE : View.GONE);
+        //mEmptyTabHint.setVisibility(hasNoTab ? View.VISIBL : View.GONE);
+        mEmptyTabHint.setVisibility(View.GONE);
         mViewPager.setVisibility(hasNoTab ? View.GONE : View.VISIBLE);
     }
 

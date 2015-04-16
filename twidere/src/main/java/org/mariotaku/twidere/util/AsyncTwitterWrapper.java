@@ -517,7 +517,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
         return mAsyncTaskManager.add(task, true);
     }
 
-    static class GetSavedSearchesTask extends ManagedAsyncTask<Long, Void, SingleResponse<Void>> {
+    static class GetSavedSearchesTask extends ManagedAsyncTask<Long, Object, SingleResponse<Object>> {
 
         private final Context mContext;
 
@@ -527,7 +527,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
         }
 
         @Override
-        protected SingleResponse<Void> doInBackground(Long... params) {
+        protected SingleResponse<Object> doInBackground(Long... params) {
             final ContentResolver cr = mContext.getContentResolver();
             for (long accountId : params) {
                 final Twitter twitter = Utils.getTwitterInstance(mContext, accountId, true);
@@ -595,7 +595,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
 
     }
 
-    public static class UpdateProfileImageTask extends ManagedAsyncTask<Void, Void, SingleResponse<ParcelableUser>> {
+    public static class UpdateProfileImageTask extends ManagedAsyncTask<Object, Object, SingleResponse<ParcelableUser>> {
 
         private final long mAccountId;
         private final Uri mImageUri;
@@ -612,7 +612,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
         }
 
         @Override
-        protected SingleResponse<ParcelableUser> doInBackground(final Void... params) {
+        protected SingleResponse<ParcelableUser> doInBackground(final Object... params) {
             try {
                 final Twitter twitter = getTwitterInstance(mContext, mAccountId, true);
                 TwitterWrapper.updateProfileImage(mContext, twitter, mImageUri, mDeleteImage);
@@ -644,7 +644,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
 
     }
 
-    public static class UpdateProfileTask extends ManagedAsyncTask<Void, Void, SingleResponse<ParcelableUser>> {
+    public static class UpdateProfileTask extends ManagedAsyncTask<Object, Object, SingleResponse<ParcelableUser>> {
 
         private final long account_id;
         private final String name, url, location, description;
@@ -662,7 +662,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
         }
 
         @Override
-        protected SingleResponse<ParcelableUser> doInBackground(final Void... params) {
+        protected SingleResponse<ParcelableUser> doInBackground(final Object... params) {
             return updateProfile(context, account_id, name, url, location, description);
         }
 
@@ -681,7 +681,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
 
     }
 
-    class AcceptFriendshipTask extends ManagedAsyncTask<Void, Void, SingleResponse<User>> {
+    class AcceptFriendshipTask extends ManagedAsyncTask<Object, Object, SingleResponse<User>> {
 
         private final long mAccountId;
         private final long mUserId;
@@ -701,7 +701,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
         }
 
         @Override
-        protected SingleResponse<User> doInBackground(final Void... params) {
+        protected SingleResponse<User> doInBackground(final Object... params) {
 
             final Twitter twitter = getTwitterInstance(mContext, mAccountId, false);
             if (twitter == null) return SingleResponse.getInstance();

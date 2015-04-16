@@ -205,10 +205,10 @@ public abstract class CursorStatusesFragment extends AbsStatusesFragment<Cursor>
 
     @Override
     public boolean triggerRefresh() {
-        AsyncTaskUtils.executeTask(new AsyncTask<Void, Void, long[][]>() {
+        AsyncTaskUtils.executeTask(new AsyncTask<Object, Void, long[][]>() {
 
             @Override
-            protected long[][] doInBackground(final Void... params) {
+            protected long[][] doInBackground(final Object... params) {
                 final long[][] result = new long[3][];
                 result[0] = getAccountIds();
                 result[2] = getNewestStatusIds(result[0]);

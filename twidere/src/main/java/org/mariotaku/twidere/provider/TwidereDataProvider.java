@@ -1302,7 +1302,7 @@ public final class TwidereDataProvider extends ContentProvider implements Consta
     }
 
     @SuppressWarnings("unused")
-    private static class GetWritableDatabaseTask extends AsyncTask<Void, Void, SQLiteDatabase> {
+    private static class GetWritableDatabaseTask extends AsyncTask<Object, Object, SQLiteDatabase> {
         private final Context mContext;
         private final SQLiteOpenHelper mHelper;
         private final SQLiteDatabaseWrapper mWrapper;
@@ -1315,7 +1315,7 @@ public final class TwidereDataProvider extends ContentProvider implements Consta
         }
 
         @Override
-        protected SQLiteDatabase doInBackground(final Void... params) {
+        protected SQLiteDatabase doInBackground(final Object... params) {
             return mHelper.getWritableDatabase();
         }
 
