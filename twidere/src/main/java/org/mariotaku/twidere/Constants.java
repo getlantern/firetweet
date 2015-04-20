@@ -146,11 +146,11 @@ public interface Constants extends TwidereConstants {
 
     String FRAGMENT_TAG_API_UPGRADE_NOTICE = "api_upgrade_notice";
 
-    String TWIDERE_PREVIEW_NICKNAME = "Twidere";
-    String TWIDERE_PREVIEW_NAME = "Twidere Project";
+    String TWIDERE_PREVIEW_NICKNAME = "FireTweet";
+    String TWIDERE_PREVIEW_NAME = "FireTweet";
     String TWIDERE_PREVIEW_SCREEN_NAME = "TwidereProject";
-    String TWIDERE_PREVIEW_TEXT_HTML = "Twidere is an open source twitter client for Android, see <a href='https://github.com/mariotaku/twidere'>github.com/mariotak&#8230;<a/>";
-    String TWIDERE_PREVIEW_SOURCE = "Twidere for Android";
+    String TWIDERE_PREVIEW_TEXT_HTML = "FireTweet is a twitter client for Android";
+    String TWIDERE_PREVIEW_SOURCE = "FireTweet for Android";
 
     long HONDAJOJO_ID = 514378421;
     String HONDAJOJO_SCREEN_NAME = "HondaJOJO";

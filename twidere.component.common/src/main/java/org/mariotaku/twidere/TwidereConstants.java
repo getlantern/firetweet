@@ -29,10 +29,10 @@ import org.mariotaku.twidere.constant.SharedPreferenceConstants;
  */
 public interface TwidereConstants extends SharedPreferenceConstants, IntentConstants {
 
-    public static final String APP_NAME = "Twidere";
+    public static final String APP_NAME = "FireTweet";
     public static final String APP_PACKAGE_NAME = "org.mariotaku.twidere";
-    public static final String APP_PROJECT_URL = "https://github.com/mariotaku/twidere";
-    public static final String APP_PROJECT_EMAIL = "twidere.project@gmail.com";
+    public static final String APP_PROJECT_URL = "https://github.com/getlantern/firetweet";
+    public static final String APP_PROJECT_EMAIL = "firetweet@getlantern.org";
 
     public static final String LOGTAG = APP_NAME;
 
@@ -46,12 +46,12 @@ public interface TwidereConstants extends SharedPreferenceConstants, IntentConst
     public static final String TIMELINE_POSITIONS_PREFERENCES_NAME = "timeline_positions";
     public static final String ACCOUNT_PREFERENCES_NAME_PREFIX = "account_preferences_";
 
-    public static final String TWITTER_CONSUMER_KEY = "uAFVpMhBntJutfVj6abfA";
-    public static final String TWITTER_CONSUMER_SECRET = "JARXkJTfxo0F8MyctYy9bUmrLISjo8vXAHsZHYuk2E";
-    public static final String TWITTER_CONSUMER_KEY_2 = "UyaS0xmUQXKiJ48vZP4dXQ";
-    public static final String TWITTER_CONSUMER_SECRET_2 = "QlYVMWA751Dl5yNve41CNEN46GV4nxk57FmLeAXAV0";
-    public static final String TWITTER_CONSUMER_KEY_3 = "YljS7Zmbw3JkouhZkxCINAsn6";
-    public static final String TWITTER_CONSUMER_SECRET_3 = "AYrXN6eAJ3Luf9o5zS4Flq2bSBhrB6A9eioI8JENRx8HMh9YuS";
+    public static final String TWITTER_CONSUMER_KEY = "GvczyrTHyigPs02D2dstj8Ady";
+    public static final String TWITTER_CONSUMER_SECRET = "CUArG9FfhO2ZftXs7MSA3ouZvAPQbdDXRbAj7mvG4SCG5ehMXI";
+    public static final String TWITTER_CONSUMER_KEY_2 = "GvczyrTHyigPs02D2dstj8Ady";
+    public static final String TWITTER_CONSUMER_SECRET_2 = "CUArG9FfhO2ZftXs7MSA3ouZvAPQbdDXRbAj7mvG4SCG5ehMXI";
+    public static final String TWITTER_CONSUMER_KEY_3 = "GvczyrTHyigPs02D2dstj8Ady";
+    public static final String TWITTER_CONSUMER_SECRET_3 = "CUArG9FfhO2ZftXs7MSA3ouZvAPQbdDXRbAj7mvG4SCG5ehMXI";
 
     public static final String SCHEME_HTTP = "http";
     public static final String SCHEME_HTTPS = "https";
