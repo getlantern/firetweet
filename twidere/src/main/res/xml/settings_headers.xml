@@ -26,11 +26,6 @@
             android:name="resid"
             android:value="@xml/preferences_cards"/>
     </header>-->
-    <header android:title="@string/function"/>
-    <header
-        android:fragment="org.mariotaku.twidere.fragment.CustomTabsFragment"
-        android:icon="@drawable/ic_action_tab"
-        android:title="@string/tabs"/>
     <!--<header
         android:fragment="org.mariotaku.twidere.fragment.ExtensionsListFragment"
         android:icon="@drawable/ic_action_extension"
