@@ -69,6 +69,7 @@ import com.squareup.otto.Subscribe;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.mariotaku.twidere.R;
+import org.mariotaku.twidere.TwidereConstants;
 import org.mariotaku.twidere.activity.SettingsActivity;
 import org.mariotaku.twidere.activity.SettingsWizardActivity;
 import org.mariotaku.twidere.adapter.support.SupportTabsAdapter;
@@ -283,13 +284,19 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
         return null;
     }
 
+
+    public static String getApplicationName(Context context) {
+        int stringId = context.getApplicationInfo().labelRes;
+        return context.getString(stringId);
+    }
+
     private void startLantern() {
         if (!lanternStarted) {
             // Initializing application context.
             try {
                 // init loads libgojni.so and starts the runtime
                 Go.init(getApplicationContext());
-                Flashlight.RunClientProxy("127.0.0.1:9192");
+                Flashlight.RunClientProxy("127.0.0.1:9192", TwidereConstants.APP_NAME);
                 // specify that all of our HTTP traffic should be routed through
                 // our local proxy
                 System.setProperty("http.proxyHost", "127.0.0.1");

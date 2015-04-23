@@ -19,9 +19,5 @@
         android:id="@id/delete"
         android:icon="@drawable/ic_action_delete"
         android:title="@string/delete"/>
-    <item
-        android:id="@id/open_with_account"
-        android:icon="@drawable/ic_action_accounts"
-        android:title="@string/open_with_account"/>
 
 </menu>

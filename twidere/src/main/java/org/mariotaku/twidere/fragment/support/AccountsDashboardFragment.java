@@ -589,7 +589,6 @@ public class AccountsDashboardFragment extends BaseSupportListFragment implement
 
         public AppMenuAdapter(final Context context) {
             super(context);
-            add(new OptionItem(R.string.accounts, R.drawable.ic_action_accounts, MENU_ACCOUNTS));
             add(new OptionItem(R.string.drafts, R.drawable.ic_action_draft, MENU_DRAFTS));
             add(new OptionItem(R.string.filters, R.drawable.ic_action_speaker_muted, MENU_FILTERS));
             add(new OptionItem(R.string.settings, R.drawable.ic_action_settings, MENU_SETTINGS));

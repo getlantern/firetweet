@@ -17,14 +17,6 @@
         android:icon="@drawable/ic_action_add_to_list"
         android:title="@string/add_to_list"/>
     <item
-        android:id="@id/set_color"
-        android:icon="@drawable/ic_action_color_palette"
-        android:title="@string/set_color"/>
-    <item
-        android:id="@id/set_nickname"
-        android:icon="@drawable/ic_action_edit"
-        android:title="@string/set_nickname"/>
-    <item
         android:id="@id/add_to_filter"
         android:icon="@drawable/ic_action_speaker_muted"
         android:title="@string/add_to_filter"/>
@@ -52,9 +44,4 @@
         android:id="@id/report_spam"
         android:icon="@drawable/ic_action_warning"
         android:title="@string/report_for_spam"/>
-    <item
-        android:id="@id/open_with_account"
-        android:icon="@drawable/ic_action_accounts"
-        android:title="@string/open_with_account"/>
-
 </menu>
