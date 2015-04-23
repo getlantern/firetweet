@@ -3602,19 +3602,19 @@ public final class Utils implements Constants, TwitterConstants {
         menu.removeGroup(MENU_GROUP_STATUS_EXTENSION);
         addIntentToMenuForExtension(context, menu, MENU_GROUP_STATUS_EXTENSION, INTENT_ACTION_EXTENSION_OPEN_STATUS,
                 EXTRA_STATUS, EXTRA_STATUS_JSON, status);
-        final MenuItem shareItem = menu.findItem(R.id.share);
-        final ActionProvider shareProvider = MenuItemCompat.getActionProvider(shareItem);
+        //final MenuItem shareItem = menu.findItem(R.id.share);
+        //final ActionProvider shareProvider = MenuItemCompat.getActionProvider(shareItem);
+        /*
         if (shareProvider instanceof SupportStatusShareProvider) {
             ((SupportStatusShareProvider) shareProvider).setStatus(status);
         } else if (shareProvider instanceof ShareActionProvider) {
             final Intent shareIntent = createStatusShareIntent(context, status);
             ((ShareActionProvider) shareProvider).setShareIntent(shareIntent);
-        } else if (shareItem.hasSubMenu()) {
             final Menu shareSubMenu = shareItem.getSubMenu();
             final Intent shareIntent = createStatusShareIntent(context, status);
             shareSubMenu.removeGroup(MENU_GROUP_STATUS_SHARE);
             addIntentToMenu(context, shareSubMenu, shareIntent, MENU_GROUP_STATUS_SHARE);
-        }
+        } */
 
     }
 
