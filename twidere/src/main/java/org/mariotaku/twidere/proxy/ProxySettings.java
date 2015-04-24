@@ -313,25 +313,6 @@ public class ProxySettings {
         return false;
     }
 
-    /*private static boolean setICSProxy(String host, int port) throws ClassNotFoundException,
-            NoSuchMethodException, IllegalArgumentException, InstantiationException,
-            IllegalAccessException, InvocationTargetException {
-        Class webViewCoreClass = Class.forName("android.webkit.WebViewCore");
-        Class proxyPropertiesClass = Class.forName("android.net.ProxyProperties");
-        if (webViewCoreClass != null && proxyPropertiesClass != null) {
-            Method m = webViewCoreClass.getDeclaredMethod("sendStaticMessage", Integer.TYPE,
-                    Object.class);
-            Constructor c = proxyPropertiesClass.getConstructor(String.class, Integer.TYPE,
-                    String.class);
-            m.setAccessible(true);
-            c.setAccessible(true);
-            Object properties = c.newInstance(host, port, null);
-            m.invoke(null, PROXY_CHANGED, properties);
-            return true;
-        }
-        return false;
-    }*/
-
     private static void setSystemProperties(String host, int port) {
 
         System.setProperty("http.proxyHost", host);
