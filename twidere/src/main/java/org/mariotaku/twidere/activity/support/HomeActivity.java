@@ -83,6 +83,7 @@ import org.mariotaku.twidere.fragment.support.AccountsDashboardFragment;
 import org.mariotaku.twidere.fragment.support.DirectMessagesFragment;
 import org.mariotaku.twidere.fragment.support.TrendsSuggectionsFragment;
 import org.mariotaku.twidere.graphic.EmptyDrawable;
+import org.mariotaku.twidere.model.Lantern;
 import org.mariotaku.twidere.model.ParcelableAccount;
 import org.mariotaku.twidere.model.SupportTabSpec;
 import org.mariotaku.twidere.provider.TwidereDataStore.Accounts;
@@ -329,8 +330,6 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
             return;
         }
 
-        startLantern();
-
         mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         mTwitterWrapper = getTwitterWrapper();
         mReadStateManager = TwidereApplication.getInstance(this).getReadStateManager();
@@ -344,6 +343,9 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
             signInIntent.setClass(this, SignInActivity.class);
             startActivity(signInIntent);
             finish();
+
+
+
             return;
         } else {
             notifyAccountsChanged();

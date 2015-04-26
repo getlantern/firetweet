@@ -44,6 +44,7 @@ import android.widget.Toast;
 import org.mariotaku.twidere.R;
 import org.mariotaku.twidere.app.TwidereApplication;
 import org.mariotaku.twidere.provider.TwidereDataStore.Accounts;
+import org.mariotaku.twidere.proxy.ProxySettings;
 import org.mariotaku.twidere.util.AsyncTaskUtils;
 import org.mariotaku.twidere.util.OAuthPasswordAuthenticator;
 import org.mariotaku.twidere.util.ParseUtils;
@@ -66,12 +67,17 @@ import twitter4j.conf.ConfigurationBuilder;
 import static android.text.TextUtils.isEmpty;
 import static org.mariotaku.twidere.util.Utils.getNonEmptyString;
 
+import android.util.Log;
+
 @SuppressLint("SetJavaScriptEnabled")
 public class BrowserSignInActivity extends BaseSupportDialogActivity implements TwitterConstants {
 
     private static final String INJECT_CONTENT = "javascript:window.injector.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');";
 
     private SharedPreferences mPreferences;
+
+    private static final String PROXY_HOST = "127.0.0.1";
+    private static final int PROXY_PORT = 9192;
 
     private WebView mWebView;
     private View mProgressContainer;
@@ -112,6 +118,11 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
         super.onCreate(savedInstanceState);
         mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         setContentView(R.layout.activity_browser_sign_in);
+
+
+        ProxySettings.setProxy(this, mWebView, PROXY_HOST, PROXY_PORT);
+        Log.d("TwitterBrowserSignIn", "Enabled proxy settings");
+
         mWebView.setWebViewClient(new AuthorizationWebViewClient(this));
         mWebView.setVerticalScrollBarEnabled(false);
         mWebView.addJavascriptInterface(new InjectorJavaScriptInterface(this), "injector");
@@ -260,14 +271,17 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
             }
             cb.setGZIPEnabled(enable_gzip_compressing);
             cb.setIgnoreSSLError(ignore_ssl_error);
-            if (enable_proxy) {
-                final String proxy_host = mPreferences.getString(KEY_PROXY_HOST, null);
-                final int proxy_port = ParseUtils.parseInt(mPreferences.getString(KEY_PROXY_PORT, "-1"));
-                if (!isEmpty(proxy_host) && proxy_port > 0) {
+            //if (enable_proxy) {
+                //final String proxy_host = mPreferences.getString(KEY_PROXY_HOST, null);
+                //final int proxy_port = ParseUtils.parseInt(mPreferences.getString(KEY_PROXY_PORT, "-1"));
+                final String proxy_host = "127.0.0.1";
+                final int proxy_port = 9192;
+                //if (!isEmpty(proxy_host) && proxy_port > 0) {
                     cb.setHttpProxyHost(proxy_host);
                     cb.setHttpProxyPort(proxy_port);
-                }
-            }
+                    Log.d("TwitterBrowserSignIn", "Enabled proxy configuration");
+                //}
+            //}
             try {
                 final Twitter twitter = new TwitterFactory(cb.build()).getInstance();
                 return twitter.getOAuthRequestToken(OAUTH_CALLBACK_OOB);

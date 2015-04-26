@@ -89,7 +89,6 @@
                     android:text="@string/sign_in"/>
 
             </LinearLayout>
-
             <Button
                 android:id="@+id/sign_in_method_introduction"
                 style="?android:borderlessButtonStyle"

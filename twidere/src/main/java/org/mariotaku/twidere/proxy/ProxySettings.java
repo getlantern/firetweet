@@ -98,7 +98,7 @@ public class ProxySettings {
      * @return true if Proxy was successfully set
      */
     public static boolean setProxy(Context ctx, WebView webview,
-                                   String host, int port, String applicationClassName) {
+                                   String host, int port) {
         boolean ret = false;
         //setSystemProperties(host, port);
 
@@ -120,7 +120,7 @@ public class ProxySettings {
             }
             // 4.4 (KK)
             else {
-                return setProxyKK(webview, host, port, applicationClassName);
+                return setProxyKK(webview, host, port);
             }
 
         } catch (Exception e) {
@@ -230,13 +230,13 @@ public class ProxySettings {
     }
 
     // from https://stackoverflow.com/questions/19979578/android-webview-set-proxy-programatically-kitkat
-    private static boolean setProxyKK(WebView webView, String host, int port, String applicationClassName) {
+    private static boolean setProxyKK(WebView webView, String host, int port) {
         Log.d(LOG_TAG, "Setting proxy with >= 4.4 API.");
 
         Context appContext = webView.getContext().getApplicationContext();
 
         try {
-            Class applictionCls = Class.forName(applicationClassName);
+            Class applictionCls = Class.forName("android.app.Application");
             Field loadedApkField = applictionCls.getField("mLoadedApk");
             loadedApkField.setAccessible(true);
             Object loadedApk = loadedApkField.get(appContext);
@@ -252,7 +252,13 @@ public class ProxySettings {
                         Intent intent = new Intent(Proxy.PROXY_CHANGE_ACTION);
 
                         /*********** optional, may be need in future *************/
-                        final String CLASS_NAME = "android.net.ProxyProperties";
+                        String CLASS_NAME = "android.net.ProxyProperties";
+                        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+                            CLASS_NAME = "android.net.ProxyProperties";
+                        } else {
+                            CLASS_NAME = "android.net.ProxyInfo";
+                        }
+
                         Class cls = Class.forName(CLASS_NAME);
                         Constructor constructor = cls.getConstructor(String.class, Integer.TYPE, String.class);
                         constructor.setAccessible(true);

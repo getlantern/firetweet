@@ -174,8 +174,16 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
     public void onClick(final View v) {
         switch (v.getId()) {
             case R.id.sign_up: {
-                final Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(TWITTER_SIGNUP_URL));
-                startActivity(intent);
+                final Context context = this;
+
+                final Intent intent = new Intent(this, BrowserSignInActivity.class);
+                intent.putExtra(Accounts.CONSUMER_KEY, mConsumerKey);
+                intent.putExtra(Accounts.CONSUMER_SECRET, mConsumerSecret);
+                startActivityForResult(intent, REQUEST_BROWSER_SIGN_IN);
+
+                //final Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse("http://whatismyipaddress.com"));
+                //final Intent intent = new Intent(context, SignUpActivity.class);
+                //startActivity(intent);
                 break;
             }
             case R.id.sign_in: {
