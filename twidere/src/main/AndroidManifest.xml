@@ -93,6 +93,17 @@
         <meta-data
             android:name="override_tinted_status_bar_defaults"
             android:value="true"/>
+        <activity
+            android:name=".activity.SplashScreen"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+ 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".activity.MainActivity"
@@ -102,9 +113,9 @@
             android:theme="@style/Theme.Launcher"
             android:windowSoftInputMode="adjustNothing">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <!--<action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER"/>-->
                 <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -192,7 +203,19 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+        <WebView
+            android:id="@+id/signup_webview"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></WebView>
         <activity
+            android:name=".activity.support.SignUpActivity"
+            android:label="@string/sign_up"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+         <activity
             android:name=".activity.support.SignInActivity"
             android:label="@string/sign_in"
             android:windowSoftInputMode="adjustResize">
@@ -202,6 +225,7 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+   
         <activity
             android:name=".activity.support.BrowserSignInActivity"
             android:label="@string/browser_sign_in"
