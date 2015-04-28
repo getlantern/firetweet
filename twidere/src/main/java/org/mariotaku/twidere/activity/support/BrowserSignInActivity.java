@@ -130,7 +130,11 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
         mWebSettings.setLoadsImagesAutomatically(true);
         mWebSettings.setJavaScriptEnabled(true);
         mWebSettings.setBlockNetworkImage(false);
+
         mWebSettings.setSaveFormData(true);
+        mWebSettings.setDomStorageEnabled(true);
+        mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+
         getRequestToken();
     }
 
@@ -208,7 +212,12 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
         @Override
         public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
             final Uri uri = Uri.parse(url);
-            if (url.startsWith(OAUTH_CALLBACK_URL)) {
+            if (uri.toString().toLowerCase().contains("mobile.twitter.com/welcome/interests")) {
+                view.setVisibility(View.GONE);
+                mActivity.finish();
+                return true;
+            }
+            else if (url.startsWith(OAUTH_CALLBACK_URL)) {
                 final String oauth_verifier = uri.getQueryParameter(EXTRA_OAUTH_VERIFIER);
                 final RequestToken request_token = mActivity.mRequestToken;
                 if (oauth_verifier != null && request_token != null) {
