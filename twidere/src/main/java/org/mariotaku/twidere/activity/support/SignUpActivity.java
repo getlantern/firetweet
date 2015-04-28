@@ -33,7 +33,7 @@ public class SignUpActivity extends BaseActionBarActivity {
         WebView webView = (WebView) findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
         
-        ProxySettings.setProxy(context, webView, PROXY_HOST, PROXY_PORT, APP_NAME);
+        ProxySettings.setProxy(context, webView, PROXY_HOST, PROXY_PORT);
 
         webView.loadUrl(TWITTER_SIGNUP_URL);
 
