@@ -80,6 +80,7 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import org.mariotaku.querybuilder.Expression;
+import org.mariotaku.twidere.Constants;
 import org.mariotaku.twidere.R;
 import org.mariotaku.twidere.activity.iface.IThemedActivity;
 import org.mariotaku.twidere.activity.support.AccountSelectorActivity;
@@ -347,6 +348,7 @@ public class UserFragment extends BaseSupportFragment implements OnClickListener
             if (getActivity() == null) return;
             if (data.hasData()) {
                 final ParcelableUser user = data.getData();
+
                 mCardContent.setVisibility(View.VISIBLE);
                 mErrorRetryContainer.setVisibility(View.GONE);
                 mProgressContainer.setVisibility(View.GONE);
@@ -467,6 +469,8 @@ public class UserFragment extends BaseSupportFragment implements OnClickListener
             mProfileTypeView.setImageDrawable(null);
             mProfileTypeView.setVisibility(View.GONE);
         }
+
+
         mScreenNameView.setText("@" + user.screen_name);
         mDescriptionContainer.setVisibility(isEmpty(user.description_html) ? View.GONE : View.VISIBLE);
         mDescriptionView.setText(user.description_html != null ? Html.fromHtml(user.description_html) : user.description_plain);

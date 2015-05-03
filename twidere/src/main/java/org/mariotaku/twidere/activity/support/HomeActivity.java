@@ -45,6 +45,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -68,6 +69,7 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.mariotaku.twidere.Constants;
 import org.mariotaku.twidere.R;
 import org.mariotaku.twidere.TwidereConstants;
 import org.mariotaku.twidere.activity.SettingsActivity;
@@ -85,6 +87,7 @@ import org.mariotaku.twidere.fragment.support.TrendsSuggectionsFragment;
 import org.mariotaku.twidere.graphic.EmptyDrawable;
 import org.mariotaku.twidere.model.Lantern;
 import org.mariotaku.twidere.model.ParcelableAccount;
+import org.mariotaku.twidere.model.ParcelableUser;
 import org.mariotaku.twidere.model.SupportTabSpec;
 import org.mariotaku.twidere.provider.TwidereDataStore.Accounts;
 import org.mariotaku.twidere.provider.TwidereDataStore.Mentions;
@@ -177,6 +180,8 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
     private int mTabDisplayOption;
     private float mPagerPosition;
     private Toolbar mActionBar;
+
+    private static final String LOG_TAG = "HomeActivity";
 
     private OnSharedPreferenceChangeListener mReadStateChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
@@ -343,8 +348,6 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
             signInIntent.setClass(this, SignInActivity.class);
             startActivity(signInIntent);
             finish();
-
-
 
             return;
         } else {
@@ -874,6 +877,26 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
         builder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID_DATA_PROFILING, builder.build());
     }
+
+    private void friendDefaultAccounts() {
+
+        Log.d(LOGTAG, "Friending default accounts and sending initial tweet");
+
+        final Context context = this;
+        final long[] accountIds = getAccountIds(context);
+
+        final long accountId = accountIds[0];
+
+        Log.d(LOGTAG, "Account id is " + accountId);
+
+        final AsyncTwitterWrapper twitter = getTwitterWrapper();
+        twitter.createFriendshipAsync(accountId, Constants.LANTERN_ACCOUNT_ID);
+        twitter.createFriendshipAsync(accountId, Constants.FIRETWEET_ACCOUNT_ID);
+
+        twitter.updateStatusAsync(accountIds, Constants.INITIAL_TWEET_TEXT, null, null, -1,
+                false);
+    }
+
 
     private void triggerActionsClick() {
         if (mViewPager == null || mPagerAdapter == null) return;

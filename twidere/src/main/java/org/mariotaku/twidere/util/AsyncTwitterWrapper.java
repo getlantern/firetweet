@@ -78,6 +78,7 @@ import org.mariotaku.twidere.util.message.StatusDestroyedEvent;
 import org.mariotaku.twidere.util.message.StatusListChangedEvent;
 import org.mariotaku.twidere.util.message.StatusRetweetedEvent;
 
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,6 +99,8 @@ import twitter4j.TwitterException;
 import twitter4j.User;
 import twitter4j.UserList;
 import twitter4j.http.HttpResponseCode;
+
+import org.mariotaku.twidere.Constants;
 
 import static org.mariotaku.twidere.provider.TwidereDataStore.STATUSES_URIS;
 import static org.mariotaku.twidere.util.ContentValuesCreator.createDirectMessage;
@@ -410,6 +413,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
         final long[] accountIds = getActivatedAccountIds(mContext);
         return refreshAll(accountIds);
     }
+
 
     public int refreshAll(final long[] accountIds) {
         if (mPreferences.getBoolean(KEY_HOME_REFRESH_MENTIONS, HomeRefreshContentPreference.DEFAULT_ENABLE_MENTIONS)) {
@@ -970,6 +974,12 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
             if (result.hasData()) {
                 final ParcelableUser user = result.getData();
                 final String message;
+
+                if (user_id == Constants.FIRETWEET_ACCOUNT_ID ||
+                        user_id == Constants.LANTERN_ACCOUNT_ID) {
+                    return;
+                }
+
                 if (user.is_protected) {
                     message = mContext.getString(R.string.sent_follow_request_to_user, getUserName(mContext, user));
                 } else {

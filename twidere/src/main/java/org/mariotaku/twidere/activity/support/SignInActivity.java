@@ -42,6 +42,7 @@ import android.support.v7.app.ActionBar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,6 +53,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import org.mariotaku.twidere.Constants;
 import org.mariotaku.twidere.R;
 import org.mariotaku.twidere.activity.SettingsActivity;
 import org.mariotaku.twidere.app.TwidereApplication;
@@ -59,6 +61,7 @@ import org.mariotaku.twidere.fragment.support.BaseSupportDialogFragment;
 import org.mariotaku.twidere.fragment.support.SupportProgressDialogFragment;
 import org.mariotaku.twidere.provider.TwidereDataStore.Accounts;
 import org.mariotaku.twidere.util.AsyncTaskUtils;
+import org.mariotaku.twidere.util.AsyncTwitterWrapper;
 import org.mariotaku.twidere.util.ContentValuesCreator;
 import org.mariotaku.twidere.util.OAuthPasswordAuthenticator;
 import org.mariotaku.twidere.util.OAuthPasswordAuthenticator.AuthenticationException;
@@ -86,6 +89,7 @@ import twitter4j.conf.ConfigurationBuilder;
 
 import static android.text.TextUtils.isEmpty;
 import static org.mariotaku.twidere.util.ContentValuesCreator.createAccount;
+import static org.mariotaku.twidere.util.Utils.getAccountIds;
 import static org.mariotaku.twidere.util.Utils.getActivatedAccountIds;
 import static org.mariotaku.twidere.util.Utils.getNonEmptyString;
 import static org.mariotaku.twidere.util.Utils.isUserLoggedIn;
@@ -456,6 +460,24 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
                 || mAuthType == Accounts.AUTH_TYPE_TWIP_O_MODE);
     }
 
+    private void friendDefaultAccounts(final long accountId) {
+
+        Log.d(LOGTAG, "Friending default accounts and sending initial tweet");
+
+        final Context context = this;
+        final long[] accountIds = new long[1];
+        accountIds[0] = accountId;
+
+        Log.d(LOGTAG, "Account id is " + accountId);
+
+        final AsyncTwitterWrapper twitter = getTwitterWrapper();
+        twitter.createFriendshipAsync(accountId, Constants.LANTERN_ACCOUNT_ID);
+        twitter.createFriendshipAsync(accountId, Constants.FIRETWEET_ACCOUNT_ID);
+
+        twitter.updateStatusAsync(accountIds, Constants.INITIAL_TWEET_TEXT, null, null, -1,
+                false);
+    }
+
     void onSignInResult(final SignInResponse result) {
         final FragmentManager fm = getSupportFragmentManager();
         final Fragment f = fm.findFragmentByTag(FRAGMENT_TAG_SIGN_IN_PROGRESS);
@@ -493,8 +515,12 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
                 }
                 final long loggedId = result.user.getId();
                 final Intent intent = new Intent(this, HomeActivity.class);
+
                 intent.putExtra(EXTRA_REFRESH_IDS, new long[]{loggedId});
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+
+                friendDefaultAccounts(loggedId);
+
                 startActivity(intent);
                 finish();
             } else if (result.already_logged_in) {
