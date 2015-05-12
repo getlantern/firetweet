@@ -34,7 +34,7 @@
     -->
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"
-        android:targetPackage="org.mariotaku.twidere"
-        android:label="Tests for org.mariotaku.twidere"/>
+        android:targetPackage="org.getlantern.firetweet"
+        android:label="Tests for org.getlantern.firetweet"/>
 
 </manifest>

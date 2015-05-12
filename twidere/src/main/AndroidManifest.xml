@@ -32,6 +32,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -189,7 +190,7 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.support.HomeActivity"/>
+                android:value="org.mariotaku.twidere.activity.support.HomeActivity"/>
         </activity>
         <activity
             android:name=".activity.support.QuickSearchBarActivity"
@@ -251,7 +252,7 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.support.HomeActivity"/>
+                android:value="org.mariotaku.twidere.activity.support.HomeActivity"/>
         </activity>
         <activity
             android:name=".activity.FiltersActivity"
@@ -264,7 +265,7 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.support.HomeActivity"/>
+                android:value="org.mariotaku.twidere.activity.support.HomeActivity"/>
         </activity>
         <activity
             android:name=".activity.support.APIEditorActivity"
@@ -304,7 +305,7 @@
             android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.support.HomeActivity"/>
+                android:value="org.mariotaku.twidere.activity.support.HomeActivity"/>
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -402,7 +403,7 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.support.HomeActivity"/>
+                android:value="org.mariotaku.twidere.activity.support.HomeActivity"/>
         </activity>
         <activity
             android:name=".activity.support.MediaViewerActivity"
@@ -712,6 +713,9 @@
 
         <!-- Begin third Party components -->
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="284fdb6578c78a774887f65e1a34b9024732a29c" />
     </application>
 
 </manifest>

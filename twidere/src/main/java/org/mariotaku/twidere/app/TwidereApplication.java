@@ -33,6 +33,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 
+import com.crashlytics.android.Crashlytics;
 import com.nostra13.universalimageloader.cache.disc.DiskCache;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -42,6 +43,7 @@ import com.nostra13.universalimageloader.core.download.ImageDownloader;
 import com.nostra13.universalimageloader.utils.L;
 import com.squareup.otto.Bus;
 
+import io.fabric.sdk.android.Fabric;
 import org.mariotaku.twidere.Constants;
 import org.mariotaku.twidere.activity.AssistLauncherActivity;
 import org.mariotaku.twidere.activity.MainActivity;
@@ -204,6 +206,8 @@ public class TwidereApplication extends MultiDexApplication implements Constants
             StrictModeUtils.detectAllVmPolicy();
         }
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
+
         mHandler = new Handler();
         mMessageBus = new Bus();
         mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);

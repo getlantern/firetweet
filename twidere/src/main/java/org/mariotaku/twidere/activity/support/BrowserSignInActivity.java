@@ -212,6 +212,11 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
         @Override
         public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
             final Uri uri = Uri.parse(url);
+
+
+
+            Log.d("TwitterBrowserSignIn", "Uri is " + uri.toString());
+
             if (uri.toString().toLowerCase().contains("mobile.twitter.com/welcome/interests")) {
                 view.setVisibility(View.GONE);
                 mActivity.finish();
@@ -311,7 +316,8 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
                 }
                 return;
             }
-            mActivity.loadUrl(data.getAuthorizationURL());
+            mActivity.loadUrl("https://mobile.twitter.com/signup?oauth_token=" + data.getToken() + "&context=oauth");
+
         }
 
         @Override

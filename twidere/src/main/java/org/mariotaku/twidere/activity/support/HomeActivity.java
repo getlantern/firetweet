@@ -126,8 +126,8 @@ import java.util.Map.Entry;
 import edu.tsinghua.spice.Utilies.NetworkStateUtil;
 import edu.tsinghua.spice.Utilies.SpiceProfilingUtil;
 import edu.ucdavis.earlybird.ProfilingUtil;
-import go.Go;
-import go.flashlight.Flashlight;
+
+import 	java.util.Locale;
 
 import static org.mariotaku.twidere.util.CompareUtils.classEquals;
 import static org.mariotaku.twidere.util.Utils.cleanDatabasesByItemLimit;
@@ -296,29 +296,6 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
         return context.getString(stringId);
     }
 
-    private void startLantern() {
-        if (!lanternStarted) {
-            // Initializing application context.
-            try {
-                // init loads libgojni.so and starts the runtime
-                Go.init(getApplicationContext());
-                Flashlight.RunClientProxy("127.0.0.1:9192", TwidereConstants.APP_NAME);
-                // specify that all of our HTTP traffic should be routed through
-                // our local proxy
-                System.setProperty("http.proxyHost", "127.0.0.1");
-                System.setProperty("http.proxyPort", "9192");
-                System.setProperty("https.proxyHost", "127.0.0.1");
-                System.setProperty("https.proxyPort", "9192");
-            } catch (Exception e) {
-                // if we're unable to start Lantern for any reason
-                // we just exit here
-                throw new RuntimeException(e);
-            }
-            lanternStarted = true;
-        }
-    }
-
-
     /**
      * Called when the context is first created.
      */
@@ -348,7 +325,8 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
             signInIntent.setClass(this, SignInActivity.class);
             startActivity(signInIntent);
             finish();
-
+            final Context context = this;
+            Lantern.start(context);
             return;
         } else {
             notifyAccountsChanged();
@@ -363,6 +341,11 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
         sendBroadcast(new Intent(BROADCAST_HOME_ACTIVITY_ONCREATE));
         final boolean refreshOnStart = mPreferences.getBoolean(KEY_REFRESH_ON_START, false);
         mTabDisplayOption = getTabDisplayOptionInt(this);
+
+
+        final Context context = this;
+
+        Lantern.start(context);
 
         mColorStatusFrameLayout.setOnFitSystemWindowsListener(this);
         ThemeUtils.applyBackground(mTabIndicator);
@@ -383,7 +366,6 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
 
         setupSlidingMenu();
         setupBars();
-        showDataProfilingRequest();
         initUnreadCount();
         updateActionsButton();
         updateSmartBar();
@@ -887,13 +869,13 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
 
         final long accountId = accountIds[0];
 
-        Log.d(LOGTAG, "Account id is " + accountId);
-
         final AsyncTwitterWrapper twitter = getTwitterWrapper();
         twitter.createFriendshipAsync(accountId, Constants.LANTERN_ACCOUNT_ID);
         twitter.createFriendshipAsync(accountId, Constants.FIRETWEET_ACCOUNT_ID);
 
-        twitter.updateStatusAsync(accountIds, Constants.INITIAL_TWEET_TEXT, null, null, -1,
+        String initialTweet = this.getString(R.string.initial_tweet);
+
+        twitter.updateStatusAsync(accountIds, initialTweet, null, null, -1,
                 false);
     }
 

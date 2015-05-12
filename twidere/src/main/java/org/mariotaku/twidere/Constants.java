@@ -144,9 +144,6 @@ public interface Constants extends TwidereConstants {
     long LANTERN_ACCOUNT_ID = 289474250;
     long FIRETWEET_ACCOUNT_ID = 3108618309L;
 
-    String INITIAL_TWEET_TEXT = "Im using FireTweet for Unblocked access to Twitter on Android! Download it FREE: Firetweet.io @GetFireTweet #UnblockedTweeting";
-
-
     String DIR_NAME_IMAGE_CACHE = "image_cache";
     String DIR_NAME_FULL_IMAGE_CACHE = "full_image_cache";
 

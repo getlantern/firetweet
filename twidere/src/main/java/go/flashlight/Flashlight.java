@@ -9,10 +9,11 @@ import go.Seq;
 public abstract class Flashlight {
     private Flashlight() {} // uninstantiable
     
-    public static void RunClientProxy(String listenAddr) throws Exception {
+    public static void RunClientProxy(String listenAddr, String appName) throws Exception {
         go.Seq _in = new go.Seq();
         go.Seq _out = new go.Seq();
         _in.writeUTF16(listenAddr);
+        _in.writeUTF16(appName);
         Seq.send(DESCRIPTOR, CALL_RunClientProxy, _in, _out);
         String _err = _out.readUTF16();
         if (_err != null) {

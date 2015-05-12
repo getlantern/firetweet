@@ -26,6 +26,8 @@
     <item name="set_color" type="id"/>
     <item name="open_in_browser" type="id"/>
     <item name="add_account" type="id"/>
+    <item name="sign_in_twitter" type="id"/>
+    <item name="initial_tweet" type="id"/>
     <item name="quote" type="id"/>
     <item name="drafts" type="id"/>
     <item name="delete_all" type="id"/>

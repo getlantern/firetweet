@@ -8,6 +8,8 @@ import go.flashlight.Flashlight;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import 	android.os.StrictMode;
+
 /**
  * Created by todd on 4/25/15.
  */
@@ -17,10 +19,17 @@ public class Lantern {
 
 
     public static void start(Context context) {
+
+        StrictMode.ThreadPolicy old = StrictMode.getThreadPolicy();
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder(old)
+                .permitDiskWrites()
+                .build());
+
         if (!lanternStarted) {
             // Initializing application context.
             try {
                 Go.init(context);
+
                 // init loads libgojni.so and starts the runtime
                 Flashlight.RunClientProxy("127.0.0.1:9192", TwidereConstants.APP_NAME);
                 System.setProperty("http.proxyHost", "127.0.0.1");
@@ -31,11 +40,10 @@ public class Lantern {
                 // our local proxy
 
             } catch (Exception e) {
-                // if we're unable to start Lantern for any reason
-                // we just exit here
                 throw new RuntimeException(e);
             }
             lanternStarted = true;
+            StrictMode.setThreadPolicy(old);
         }
     }
 }

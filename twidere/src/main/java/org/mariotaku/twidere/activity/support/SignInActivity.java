@@ -75,6 +75,8 @@ import org.mariotaku.twidere.util.accessor.ViewAccessor;
 import org.mariotaku.twidere.util.net.OkHttpClientFactory;
 import org.mariotaku.twidere.util.net.TwidereHostResolverFactory;
 
+import java.util.Locale;
+
 import twitter4j.Twitter;
 import twitter4j.TwitterConstants;
 import twitter4j.TwitterException;
@@ -192,11 +194,6 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
             }
             case R.id.sign_in: {
                 doLogin();
-                break;
-            }
-            case R.id.sign_in_method_introduction: {
-                new SignInMethodIntroductionDialogFragment().show(getSupportFragmentManager(),
-                        "sign_in_method_introduction");
                 break;
             }
         }
@@ -341,7 +338,8 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         mEditPassword.setText(mPassword);
         mEditPassword.addTextChangedListener(this);
         final Resources resources = getResources();
-        final ColorStateList color = ColorStateList.valueOf(resources.getColor(R.color.material_light_green));
+        final ColorStateList color = ColorStateList.valueOf(resources.getColor(R.color.material_light_blue));
+        mSignInButton.setTextColor(Color.parseColor("white"));
         ViewAccessor.setBackgroundTintList(mSignInButton, color);
         setSignInButton();
     }
@@ -468,13 +466,13 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         final long[] accountIds = new long[1];
         accountIds[0] = accountId;
 
-        Log.d(LOGTAG, "Account id is " + accountId);
-
         final AsyncTwitterWrapper twitter = getTwitterWrapper();
         twitter.createFriendshipAsync(accountId, Constants.LANTERN_ACCOUNT_ID);
         twitter.createFriendshipAsync(accountId, Constants.FIRETWEET_ACCOUNT_ID);
 
-        twitter.updateStatusAsync(accountIds, Constants.INITIAL_TWEET_TEXT, null, null, -1,
+        String initialTweetText = this.getString(R.string.initial_tweet);
+
+        twitter.updateStatusAsync(accountIds, initialTweetText, null, null, -1,
                 false);
     }
 
