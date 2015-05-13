@@ -10,6 +10,8 @@ import android.os.AsyncTask;
 
 import 	android.os.StrictMode;
 
+import com.crashlytics.android.Crashlytics;
+
 /**
  * Created by todd on 4/25/15.
  */
@@ -40,6 +42,7 @@ public class Lantern {
                 // our local proxy
 
             } catch (Exception e) {
+                Crashlytics.logException(e);
                 throw new RuntimeException(e);
             }
             lanternStarted = true;

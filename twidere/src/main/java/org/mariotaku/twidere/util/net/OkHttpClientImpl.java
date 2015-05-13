@@ -64,6 +64,8 @@ import twitter4j.http.HttpRequest;
 import twitter4j.http.HttpResponse;
 import twitter4j.http.RequestMethod;
 
+import com.crashlytics.android.Crashlytics;
+
 /**
  * Created by mariotaku on 15/1/22.
  */
@@ -104,6 +106,7 @@ public class OkHttpClientImpl implements HttpClient, TwidereConstants {
              response = client.newCall(builder.build()).execute();
             return new OkHttpResponse(conf, null, response);
         } catch (IOException e) {
+            Crashlytics.logException(e);
             throw new TwitterException(e);
         }
     }
@@ -138,6 +141,8 @@ public class OkHttpClientImpl implements HttpClient, TwidereConstants {
                 try {
                     return resolver.resolve(host);
                 } catch (IOException e) {
+                    Crashlytics.logException(e);
+
                     if (e instanceof UnknownHostException) throw (UnknownHostException) e;
                     throw new UnknownHostException("Unable to resolve address " + e.getMessage());
                 }

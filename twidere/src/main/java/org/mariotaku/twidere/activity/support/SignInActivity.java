@@ -89,6 +89,8 @@ import twitter4j.auth.TwipOModeAuthorization;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
+import com.crashlytics.android.Crashlytics;
+
 import static android.text.TextUtils.isEmpty;
 import static org.mariotaku.twidere.util.ContentValuesCreator.createAccount;
 import static org.mariotaku.twidere.util.Utils.getAccountIds;
@@ -623,6 +625,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
                 return new SignInResponse(conf, access_token, user, Accounts.AUTH_TYPE_OAUTH, color,
                         api_url_format, same_oauth_signing_url, no_version_suffix);
             } catch (final TwitterException e) {
+                Crashlytics.logException(e);
                 return new SignInResponse(false, false, e);
             }
         }
@@ -683,9 +686,11 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
                 }
                 return authOAuth();
             } catch (final TwitterException e) {
+                Crashlytics.logException(e);
                 e.printStackTrace();
                 return new SignInResponse(false, false, e);
             } catch (final AuthenticationException e) {
+                Crashlytics.logException(e);
                 e.printStackTrace();
                 return new SignInResponse(false, false, e);
             }

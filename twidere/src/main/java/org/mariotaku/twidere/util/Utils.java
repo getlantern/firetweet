@@ -267,6 +267,8 @@ import twitter4j.http.HostAddressResolverFactory;
 import twitter4j.http.HttpClientWrapper;
 import twitter4j.http.HttpResponse;
 
+import com.crashlytics.android.Crashlytics;
+
 import static android.text.TextUtils.isEmpty;
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
 import static org.mariotaku.twidere.provider.TwidereDataStore.CACHE_URIS;
@@ -683,6 +685,7 @@ public final class Utils implements Constants, TwitterConstants {
         try {
             c.close();
         } catch (final IOException e) {
+            Crashlytics.logException(e);
             return false;
         }
         return true;
@@ -1260,6 +1263,9 @@ public final class Utils implements Constants, TwitterConstants {
         if (context == null) return Color.TRANSPARENT;
         final Integer cached = sAccountColors.get(account_id);
         if (cached != null) return cached;
+        if (cached == null) {
+            return Color.TRANSPARENT;
+        }
         final Cursor cur = ContentResolverUtils.query(context.getContentResolver(), Accounts.CONTENT_URI,
                 new String[]{Accounts.COLOR}, Accounts.ACCOUNT_ID + " = " + account_id, null, null);
         if (cur == null) return Color.TRANSPARENT;
@@ -1636,6 +1642,7 @@ public final class Utils implements Constants, TwitterConstants {
             // Workaround for https://github.com/mariotaku/twidere/issues/138
             extCacheDir = context.getExternalCacheDir();
         } catch (final Exception e) {
+            Crashlytics.logException(e);
             return new File(context.getCacheDir(), cacheDirName);
         }
         if (extCacheDir != null && extCacheDir.isDirectory()) {
@@ -2165,6 +2172,9 @@ public final class Utils implements Constants, TwitterConstants {
         try {
             resp = client.get(url, signUrl, auth, additionalHeaders);
         } catch (final TwitterException te) {
+
+            Crashlytics.logException(te);
+
             if (isRedirected(te.getStatusCode())) {
                 resp = te.getHttpResponse();
             } else
@@ -2178,6 +2188,7 @@ public final class Utils implements Constants, TwitterConstants {
             try {
                 resp = client.get(request_url, request_url, additionalHeaders);
             } catch (final TwitterException te) {
+                Crashlytics.logException(te);
                 if (isRedirected(te.getStatusCode())) {
                     resp = te.getHttpResponse();
                 } else
@@ -2731,6 +2742,7 @@ public final class Utils implements Constants, TwitterConstants {
         try {
             info = context.getPackageManager().getApplicationInfo(context.getPackageName(), 0);
         } catch (final NameNotFoundException e) {
+            Crashlytics.logException(e);
             return false;
         }
         return (info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
@@ -3396,6 +3408,7 @@ public final class Utils implements Constants, TwitterConstants {
             adapter.setNdefPushMessageCallback(callback, activity);
             return true;
         } catch (SecurityException e) {
+            Crashlytics.logException(e);
             Log.w(LOGTAG, e);
         }
         return false;
@@ -3653,6 +3666,7 @@ public final class Utils implements Constants, TwitterConstants {
             cb.setHttpUserAgent(APP_NAME + " " + APP_PROJECT_URL + " / " + version_name
                     + (gzipCompressing ? " (gzip)" : ""));
         } catch (final PackageManager.NameNotFoundException e) {
+            Crashlytics.logException(e);
             throw new AssertionError(e);
         }
     }
@@ -4068,6 +4082,7 @@ public final class Utils implements Constants, TwitterConstants {
                     try {
                         context.startActivity(item.getIntent());
                     } catch (final ActivityNotFoundException e) {
+                        Crashlytics.logException(e);
                         Log.w(LOGTAG, e);
                         return false;
                     }
