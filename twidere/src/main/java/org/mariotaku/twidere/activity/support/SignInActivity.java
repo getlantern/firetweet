@@ -519,7 +519,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
                 intent.putExtra(EXTRA_REFRESH_IDS, new long[]{loggedId});
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 
-                //friendDefaultAccounts(loggedId);
+                friendDefaultAccounts(loggedId);
 
                 startActivity(intent);
                 finish();
