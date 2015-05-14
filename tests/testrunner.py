@@ -21,12 +21,13 @@ device = None
 def snapshot(name):
     result = device.takeSnapshot()
     result.writeToFile(SCREENSHOTS + '/' + name + '.png', 'png')
-    print image_diff(SCREENSHOTS + '/' + name + '.png', SUCCESS_SCREENSHOTS + '/' + name + '.png')
-    return True
+    return image_diff(SCREENSHOTS + '/' + name + '.png', SUCCESS_SCREENSHOTS + '/' + name + '.png')
 
 def image_diff(imageA, imageB):
     # See http://rosettacode.org/wiki/Percentage_difference_between_images
     i1 = MonkeyRunner.loadImageFromFile(imageA)
+    if not os.path.isfile(imageB):
+        return True
     i2 = MonkeyRunner.loadImageFromFile(imageB)
     return i1.sameAs(i2, 0.9)
 
