@@ -519,7 +519,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
                 intent.putExtra(EXTRA_REFRESH_IDS, new long[]{loggedId});
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 
-                friendDefaultAccounts(loggedId);
+                //friendDefaultAccounts(loggedId);
 
                 startActivity(intent);
                 finish();
@@ -620,7 +620,6 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
                 final long userId = access_token.getUserId();
                 if (userId <= 0) return new SignInResponse(false, false, null);
                 final User user = twitter.verifyCredentials();
-                if (isUserLoggedIn(context, userId)) return new SignInResponse(true, false, null);
                 final int color = analyseUserProfileColor(user);
                 return new SignInResponse(conf, access_token, user, Accounts.AUTH_TYPE_OAUTH, color,
                         api_url_format, same_oauth_signing_url, no_version_suffix);
@@ -701,7 +700,6 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
             final User user = twitter.verifyCredentials();
             final long user_id = user.getId();
             if (user_id <= 0) return new SignInResponse(false, false, null);
-            if (isUserLoggedIn(context, user_id)) return new SignInResponse(true, false, null);
             final int color = analyseUserProfileColor(user);
             return new SignInResponse(conf, username, password, user, color, api_url_format,
                     no_version_suffix);
@@ -714,7 +712,6 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
             final long user_id = access_token.getUserId();
             if (user_id <= 0) return new SignInResponse(false, false, null);
             final User user = twitter.verifyCredentials();
-            if (isUserLoggedIn(context, user_id)) return new SignInResponse(true, false, null);
             final int color = analyseUserProfileColor(user);
             return new SignInResponse(conf, access_token, user, Accounts.AUTH_TYPE_OAUTH, color,
                     api_url_format, same_oauth_signing_url, no_version_suffix);
@@ -725,7 +722,6 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
             final User user = twitter.verifyCredentials();
             final long user_id = user.getId();
             if (user_id <= 0) return new SignInResponse(false, false, null);
-            if (isUserLoggedIn(context, user_id)) return new SignInResponse(true, false, null);
             final int color = analyseUserProfileColor(user);
             return new SignInResponse(conf, user, color, api_url_format, no_version_suffix);
         }
@@ -736,7 +732,6 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
             final User user = twitter.verifyCredentials();
             final long user_id = user.getId();
             if (user_id <= 0) return new SignInResponse(false, false, null);
-            if (isUserLoggedIn(context, user_id)) return new SignInResponse(true, false, null);
             final int color = analyseUserProfileColor(user);
             return new SignInResponse(conf, accessToken, user, Accounts.AUTH_TYPE_XAUTH, color,
                     api_url_format, same_oauth_signing_url, no_version_suffix);

@@ -84,6 +84,7 @@ import org.mariotaku.twidere.activity.iface.IThemedActivity;
 import org.mariotaku.twidere.activity.support.AccountsManagerActivity;
 import org.mariotaku.twidere.activity.support.ComposeActivity;
 import org.mariotaku.twidere.activity.support.DraftsActivity;
+import org.mariotaku.twidere.activity.support.SignInActivity;
 import org.mariotaku.twidere.activity.support.HomeActivity;
 import org.mariotaku.twidere.activity.support.QuickSearchBarActivity;
 import org.mariotaku.twidere.activity.support.UserProfileEditorActivity;
@@ -100,6 +101,10 @@ import org.mariotaku.twidere.util.UserColorNameUtils;
 import org.mariotaku.twidere.util.Utils;
 import org.mariotaku.twidere.util.content.SupportFragmentReloadCursorObserver;
 import org.mariotaku.twidere.view.ShapedImageView;
+
+import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
+import org.mariotaku.twidere.model.Lantern;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -290,12 +295,33 @@ public class AccountsDashboardFragment extends BaseSupportListFragment implement
                     startActivity(intent);
                     break;
                 }
-                case MENU_FILTERS: {
+                case MENU_SIGNOUT: {
+
+
+                    // destroy Twitter instance and delete oauth access token
+                    final Twitter mTwitter = new TwitterFactory().getInstance();
+                    mTwitter.setOAuthConsumer(Accounts.CONSUMER_KEY, Accounts.CONSUMER_SECRET);
+                    mTwitter.setOAuthAccessToken(null);
+                    mTwitter.shutdown();
+
+                    // remove existing account
+                    mAccountsAdapter.setAccounts(null);
+                    HomeActivity.ha.finish();
+
+                    // display sign in activity
+                    final Intent signInIntent = new Intent(INTENT_ACTION_TWITTER_LOGIN);
+                    signInIntent.setClass(getActivity(), SignInActivity.class);
+                    startActivity(signInIntent);
+                    getActivity().finish();
+
+                    break;
+                }
+                /*case MENU_FILTERS: {
                     final Intent intent = new Intent(getActivity(), FiltersActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent);
                     break;
-                }
+                }*/
                 case MENU_SETTINGS: {
                     final Intent intent = new Intent(getActivity(), SettingsActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -590,8 +616,9 @@ public class AccountsDashboardFragment extends BaseSupportListFragment implement
         public AppMenuAdapter(final Context context) {
             super(context);
             add(new OptionItem(R.string.drafts, R.drawable.ic_action_draft, MENU_DRAFTS));
-            add(new OptionItem(R.string.filters, R.drawable.ic_action_speaker_muted, MENU_FILTERS));
+            //add(new OptionItem(R.string.filters, R.drawable.ic_action_speaker_muted, MENU_FILTERS));
             add(new OptionItem(R.string.settings, R.drawable.ic_action_settings, MENU_SETTINGS));
+            add(new OptionItem(R.string.sign_out, R.drawable.ic_action_speaker_muted, MENU_SIGNOUT));
         }
 
     }

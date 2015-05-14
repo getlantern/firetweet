@@ -49,4 +49,15 @@ public class Lantern {
             StrictMode.setThreadPolicy(old);
         }
     }
+
+    public static void stop() {
+        if (lanternStarted) {
+            try {
+                Flashlight.StopClientProxy();
+                lanternStarted = false;
+            } catch (Exception e) {
+                Crashlytics.logException(e);
+            }
+        }
+    }
 }

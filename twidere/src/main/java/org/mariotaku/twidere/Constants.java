@@ -95,6 +95,7 @@ public interface Constants extends TwidereConstants {
     int MENU_STATUSES = R.id.statuses;
     int MENU_FAVORITES = R.id.favorites;
     int MENU_LISTS = R.id.lists;
+    int MENU_SIGNOUT = R.id.sign_out;
     int MENU_LIST_MEMBERSHIPS = R.id.list_memberships;
     int MENU_CENTER = R.id.center;
     int MENU_FILTERS = R.id.filters;
