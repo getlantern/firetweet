@@ -127,7 +127,7 @@ import edu.tsinghua.spice.Utilies.NetworkStateUtil;
 import edu.tsinghua.spice.Utilies.SpiceProfilingUtil;
 import edu.ucdavis.earlybird.ProfilingUtil;
 
-import 	java.util.Locale;
+import android.app.Activity;
 
 import static org.mariotaku.twidere.util.CompareUtils.classEquals;
 import static org.mariotaku.twidere.util.Utils.cleanDatabasesByItemLimit;
@@ -180,6 +180,8 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
     private int mTabDisplayOption;
     private float mPagerPosition;
     private Toolbar mActionBar;
+
+    public static Activity ha;
 
     private static final String LOG_TAG = "HomeActivity";
 
@@ -312,6 +314,8 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
             return;
         }
 
+        ha = this;
+
         mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         mTwitterWrapper = getTwitterWrapper();
         mReadStateManager = TwidereApplication.getInstance(this).getReadStateManager();
@@ -325,8 +329,10 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
             signInIntent.setClass(this, SignInActivity.class);
             startActivity(signInIntent);
             finish();
+
             final Context context = this;
             Lantern.start(context);
+
             return;
         } else {
             notifyAccountsChanged();

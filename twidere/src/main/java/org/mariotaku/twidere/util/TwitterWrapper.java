@@ -47,6 +47,8 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.User;
 
+import com.crashlytics.android.Crashlytics;
+
 import static org.mariotaku.twidere.util.Utils.getTwitterInstance;
 
 public class TwitterWrapper implements Constants {
@@ -73,6 +75,7 @@ public class TwitterWrapper implements Constants {
             twitter.removeProfileBannerImage();
             return new SingleResponse<>(true, null);
         } catch (final TwitterException e) {
+            Crashlytics.logException(e);
             return new SingleResponse<>(false, e);
         }
     }
@@ -156,6 +159,8 @@ public class TwitterWrapper implements Constants {
         try {
             return showUser(twitter, id, screenName);
         } catch (final TwitterException e) {
+            Crashlytics.logException(e);
+
             if (e.getCause() instanceof IOException)
                 throw e;
         }
@@ -170,6 +175,7 @@ public class TwitterWrapper implements Constants {
                 final User user = twitter.updateProfile(name, url, location, description);
                 return new SingleResponse<>(new ParcelableUser(user, account_id), null);
             } catch (final TwitterException e) {
+                Crashlytics.logException(e);
                 return new SingleResponse<>(null, e);
             }
         }

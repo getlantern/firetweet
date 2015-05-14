@@ -206,12 +206,13 @@ public class TwidereApplication extends MultiDexApplication implements Constants
             StrictModeUtils.detectAllVmPolicy();
         }
         super.onCreate();
+
         Fabric.with(this, new Crashlytics());
 
         mHandler = new Handler();
         mMessageBus = new Bus();
-        mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
-        mPreferences.registerOnSharedPreferenceChangeListener(this);
+        //mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
+        //mPreferences.registerOnSharedPreferenceChangeListener(this);
         initializeAsyncTask();
         initAccountColor(this);
         initUserColor(this);
@@ -235,8 +236,6 @@ public class TwidereApplication extends MultiDexApplication implements Constants
                     PackageManager.DONT_KILL_APP);
         }
 
-        migrateUsageStatisticsPreferences();
-        startUsageStatisticsServiceIfNeeded(this);
         startRefreshServiceIfNeeded(this);
     }
 
@@ -272,10 +271,10 @@ public class TwidereApplication extends MultiDexApplication implements Constants
             reloadConnectivitySettings();
         } else if (KEY_USAGE_STATISTICS.equals(key)) {
             stopService(new Intent(this, UCDService.class));
-            startUsageStatisticsServiceIfNeeded(this);
+            //startUsageStatisticsServiceIfNeeded(this);
             //spice
-            stopService(new Intent(this, SpiceService.class));
-            startUsageStatisticsServiceIfNeeded(this);
+            //stopService(new Intent(this, SpiceService.class));
+            //startUsageStatisticsServiceIfNeeded(this);
             //end
         } else if (KEY_CONSUMER_KEY.equals(key) || KEY_CONSUMER_SECRET.equals(key) || KEY_API_URL_FORMAT.equals(key)
                 || KEY_AUTH_TYPE.equals(key) || KEY_SAME_OAUTH_SIGNING_URL.equals(key) || KEY_THUMBOR_ENABLED.equals(key)

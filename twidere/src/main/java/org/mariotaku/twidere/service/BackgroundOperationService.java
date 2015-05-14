@@ -94,6 +94,8 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.UserMentionEntity;
 
+import com.crashlytics.android.Crashlytics;
+
 import static android.text.TextUtils.isEmpty;
 import static org.mariotaku.twidere.util.ContentValuesCreator.createMessageDraft;
 import static org.mariotaku.twidere.util.Utils.getImagePathFromUri;
@@ -421,8 +423,10 @@ public class BackgroundOperationService extends IntentService implements Constan
 
             return SingleResponse.getInstance(directMessage);
         } catch (final IOException e) {
+            Crashlytics.logException(e);
             return SingleResponse.getInstance(e);
         } catch (final TwitterException e) {
+            Crashlytics.logException(e);
             return SingleResponse.getInstance(e);
         }
     }
@@ -468,6 +472,7 @@ public class BackgroundOperationService extends IntentService implements Constan
                     uploadResult = mUploader.upload(statusUpdate,
                             UploaderMediaItem.getFromStatusUpdate(this, statusUpdate));
                 } catch (final Exception e) {
+                    Crashlytics.logException(e);
                     throw new UploadException(this);
                 }
                 if (mUseUploader && hasMedia && uploadResult == null)
@@ -490,6 +495,7 @@ public class BackgroundOperationService extends IntentService implements Constan
                     try {
                         shortenedResult = mShortener.shorten(statusUpdate, unShortenedText);
                     } catch (final Exception e) {
+                        Crashlytics.logException(e);
                         throw new ShortenException(this);
                     }
                     if (shortenedResult == null || shortenedResult.shortened == null)
@@ -536,8 +542,10 @@ public class BackgroundOperationService extends IntentService implements Constan
                             mediaIds[i] = uploadResp.getId();
                         }
                     } catch (final FileNotFoundException e) {
+                        Crashlytics.logException(e);
                         Log.w(LOGTAG, e);
                     } catch (final TwitterException e) {
+                        Crashlytics.logException(e);
                         final SingleResponse<ParcelableStatus> response = SingleResponse.getInstance(e);
                         results.add(response);
                         continue;
@@ -574,11 +582,13 @@ public class BackgroundOperationService extends IntentService implements Constan
                 } catch (final TwitterException e) {
                     final SingleResponse<ParcelableStatus> response = SingleResponse.getInstance(e);
                     results.add(response);
+                    Crashlytics.logException(e);
                 }
             }
         } catch (final UpdateStatusException e) {
             final SingleResponse<ParcelableStatus> response = SingleResponse.getInstance(e);
             results.add(response);
+            Crashlytics.logException(e);
         }
         if (mentionedHondaJOJO) {
             triggerEasterEgg(notReplyToOther, hasEasterEggTriggerText, hasEasterEggRestoreText);

@@ -75,6 +75,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
+import com.crashlytics.android.Crashlytics;
+
 public class ThemeUtils implements Constants {
 
     private static final int[] ANIM_OPEN_STYLE_ATTRS = {android.R.attr.activityOpenEnterAnimation,
@@ -130,6 +132,7 @@ public class ThemeUtils implements Constants {
             mutated.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
             view.invalidate();
         } catch (final Exception e) {
+            Crashlytics.logException(e);
             e.printStackTrace();
         }
     }
@@ -159,6 +162,7 @@ public class ThemeUtils implements Constants {
             if (view == null) return;
             ViewAccessor.setBackground(view, getActionBarBackground(activity, themeRes, accentColor, outlineEnabled));
         } catch (Exception e) {
+            Crashlytics.logException(e);
             e.printStackTrace();
         }
     }
@@ -369,6 +373,7 @@ public class ThemeUtils implements Constants {
         try {
             view = newViewInstance(name, context, attrs);
         } catch (final Exception e) {
+            Crashlytics.logException(e);
             // In this case we want to let the base class take a crack
             // at it.
         }
@@ -376,6 +381,7 @@ public class ThemeUtils implements Constants {
             try {
                 view = newViewInstance(prefix + name, context, attrs);
             } catch (final Exception e) {
+                Crashlytics.logException(e);
                 // In this case we want to let the base class take a crack
                 // at it.
             }

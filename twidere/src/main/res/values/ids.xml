@@ -58,6 +58,7 @@
     <item name="statuses" type="id"/>
     <item name="favorites" type="id"/>
     <item name="lists" type="id"/>
+    <item name="sign_out" type="id"/>
     <item name="center" type="id"/>
     <item name="filters" type="id"/>
     <item name="set_nickname" type="id"/>

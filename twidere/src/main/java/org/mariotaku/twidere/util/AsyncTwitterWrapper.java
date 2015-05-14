@@ -102,6 +102,8 @@ import twitter4j.http.HttpResponseCode;
 
 import org.mariotaku.twidere.Constants;
 
+import com.crashlytics.android.Crashlytics;
+
 import static org.mariotaku.twidere.provider.TwidereDataStore.STATUSES_URIS;
 import static org.mariotaku.twidere.util.ContentValuesCreator.createDirectMessage;
 import static org.mariotaku.twidere.util.ContentValuesCreator.createStatus;
@@ -549,6 +551,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                     cr.delete(SavedSearches.CONTENT_URI, where.getSQL(), null);
                     ContentResolverUtils.bulkInsert(cr, SavedSearches.CONTENT_URI, values);
                 } catch (TwitterException e) {
+                    Crashlytics.logException(e);
                     Log.w(LOGTAG, e);
                 }
             }
@@ -593,11 +596,13 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                 try {
                     Thread.sleep(5000L);
                 } catch (InterruptedException e) {
+                    Crashlytics.logException(e);
                     Log.w(LOGTAG, e);
                 }
                 final User user = TwitterWrapper.tryShowUser(twitter, mAccountId, null);
                 return SingleResponse.getInstance(new ParcelableUser(user, mAccountId));
             } catch (TwitterException | FileNotFoundException e) {
+                Crashlytics.logException(e);
                 return SingleResponse.getInstance(e);
             }
         }
@@ -632,11 +637,13 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                 try {
                     Thread.sleep(5000L);
                 } catch (InterruptedException e) {
+                    Crashlytics.logException(e);
                     Log.w(LOGTAG, e);
                 }
                 final User user = TwitterWrapper.tryShowUser(twitter, mAccountId, null);
                 return SingleResponse.getInstance(new ParcelableUser(user, mAccountId));
             } catch (TwitterException | FileNotFoundException e) {
+                Crashlytics.logException(e);
                 return SingleResponse.getInstance(e);
             }
         }
@@ -720,6 +727,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                 final User user = twitter.acceptFriendship(mUserId);
                 return SingleResponse.getInstance(user, null);
             } catch (final TwitterException e) {
+                Crashlytics.logException(e);
                 return SingleResponse.getInstance(null, e);
             }
         }
@@ -769,6 +777,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                         accountId);
                 return SingleResponse.getInstance(list, null);
             } catch (final TwitterException e) {
+                Crashlytics.logException(e);
                 return SingleResponse.getInstance(null, e);
             }
         }
@@ -859,6 +868,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
 //                mResolver.delete(CachedUsers.CONTENT_URI, where.getSQL(), null);
                 return SingleResponse.getInstance(new ParcelableUser(user, account_id), null);
             } catch (final TwitterException e) {
+                Crashlytics.logException(e);
                 return SingleResponse.getInstance(null, e);
             }
         }
@@ -908,6 +918,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                 }
                 return SingleResponse.getInstance(new ParcelableStatus(status, account_id, false));
             } catch (final TwitterException e) {
+                Crashlytics.logException(e);
                 Log.w(LOGTAG, e);
                 return SingleResponse.getInstance(e);
             }
@@ -965,6 +976,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                 Utils.setLastSeen(mContext, user.getId(), System.currentTimeMillis());
                 return SingleResponse.getInstance(new ParcelableUser(user, mAccountId), null);
             } catch (final TwitterException e) {
+                Crashlytics.logException(e);
                 return SingleResponse.getInstance(null, e);
             }
         }
@@ -1029,6 +1041,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                         }
                         blocked_users.add(user.getId());
                     } catch (final TwitterException e) {
+                        Crashlytics.logException(e);
                         deleteCaches(blocked_users);
                         return new ListResponse<>(null, e, null);
                     }
@@ -1077,6 +1090,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
 
                 return SingleResponse.getInstance(new ParcelableUser(user, mAccountId), null);
             } catch (final TwitterException e) {
+                Crashlytics.logException(e);
                 return SingleResponse.getInstance(null, e);
             }
         }
@@ -1115,6 +1129,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
             try {
                 return SingleResponse.getInstance(twitter.createSavedSearch(mQuery));
             } catch (final TwitterException e) {
+                Crashlytics.logException(e);
                 return SingleResponse.getInstance(e);
             }
         }
@@ -1153,6 +1168,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                         accountId);
                 return SingleResponse.getInstance(list);
             } catch (final TwitterException e) {
+                Crashlytics.logException(e);
                 return SingleResponse.getInstance(e);
             }
         }
@@ -1197,6 +1213,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                 final UserList list = twitter.createUserList(list_name, is_public, description);
                 return SingleResponse.getInstance(list, null);
             } catch (final TwitterException e) {
+                Crashlytics.logException(e);
                 return SingleResponse.getInstance(null, e);
             }
         }
@@ -1244,6 +1261,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                         userIds), mAccountId);
                 return SingleResponse.getInstance(list, null);
             } catch (final TwitterException e) {
+                Crashlytics.logException(e);
                 return SingleResponse.getInstance(null, e);
             }
         }
@@ -1303,6 +1321,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                 final User user = twitter.denyFriendship(mUserId);
                 return SingleResponse.getInstance(user, null);
             } catch (final TwitterException e) {
+                Crashlytics.logException(e);
                 return SingleResponse.getInstance(null, e);
             }
         }
@@ -1345,6 +1364,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                 Utils.setLastSeen(mContext, user.getId(), -1);
                 return SingleResponse.getInstance(new ParcelableUser(user, mAccountId), null);
             } catch (final TwitterException e) {
+                Crashlytics.logException(e);
                 return SingleResponse.getInstance(null, e);
             }
 
@@ -1398,6 +1418,8 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                 deleteMessages(message_id);
                 return SingleResponse.getInstance(message, null);
             } catch (final TwitterException e) {
+                Crashlytics.logException(e);
+
                 if (isMessageNotFound(e)) {
                     deleteMessages(message_id);
                 }
@@ -1449,6 +1471,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                     }
                     return SingleResponse.getInstance(new ParcelableStatus(status, account_id, false));
                 } catch (final TwitterException e) {
+                    Crashlytics.logException(e);
                     return SingleResponse.getInstance(e);
                 }
             }
@@ -1512,6 +1535,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                     mResolver.delete(Statuses.CONTENT_URI, where.getSQL(), null);
                     return SingleResponse.getInstance(new ParcelableUser(user, mAccountId), null);
                 } catch (final TwitterException e) {
+                    Crashlytics.logException(e);
                     return SingleResponse.getInstance(null, e);
                 }
             }
@@ -1554,6 +1578,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                 Utils.setLastSeen(mContext, user.getId(), -1);
                 return SingleResponse.getInstance(new ParcelableUser(user, mAccountId), null);
             } catch (final TwitterException e) {
+                Crashlytics.logException(e);
                 return SingleResponse.getInstance(null, e);
             }
 
@@ -1593,6 +1618,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
             try {
                 return SingleResponse.getInstance(twitter.destroySavedSearch(mSearchId));
             } catch (final TwitterException e) {
+                Crashlytics.logException(e);
                 return SingleResponse.getInstance(e);
             }
         }
@@ -1631,6 +1657,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
             try {
                 status = new ParcelableStatus(twitter.destroyStatus(status_id), account_id, false);
             } catch (final TwitterException e) {
+                Crashlytics.logException(e);
                 exception = e;
             }
             if (status != null || exception.getErrorCode() == HttpResponseCode.NOT_FOUND) {
@@ -1739,6 +1766,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                         return SingleResponse.getInstance(list);
                     }
                 } catch (final TwitterException e) {
+                    Crashlytics.logException(e);
                     return SingleResponse.getInstance(e);
                 }
             }
@@ -1810,6 +1838,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                             truncated));
                     storeMessages(accountId, messages, isOutgoing(), true);
                 } catch (final TwitterException e) {
+                    Crashlytics.logException(e);
                     if (Utils.isDebugBuild()) {
                         Log.w(LOGTAG, e);
                     }
@@ -2161,6 +2190,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                     storeStatus(accountId, statuses, maxId, truncated, true);
                     publishProgress(new StatusListResponse(accountId, statuses));
                 } catch (final TwitterException e) {
+                    Crashlytics.logException(e);
                     Log.w(LOGTAG, e);
                     result.add(new StatusListResponse(accountId, e));
                 }

@@ -57,6 +57,8 @@ import android.util.Log;
 
 import com.squareup.otto.Bus;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.mariotaku.querybuilder.Columns.Column;
 import org.mariotaku.querybuilder.Expression;
@@ -202,6 +204,7 @@ public final class TwidereDataProvider extends ContentProvider implements Consta
             onNewItemsInserted(uri, tableId, valuesArray, newIds);
             return result;
         } catch (final SQLException e) {
+            Crashlytics.logException(e);
             throw new IllegalStateException(e);
         }
     }
@@ -243,6 +246,7 @@ public final class TwidereDataProvider extends ContentProvider implements Consta
             }
             return result;
         } catch (final SQLException e) {
+            Crashlytics.logException(e);
             throw new IllegalStateException(e);
         }
     }
@@ -310,6 +314,7 @@ public final class TwidereDataProvider extends ContentProvider implements Consta
             onNewItemsInserted(uri, tableId, values, rowId);
             return Uri.withAppendedPath(uri, String.valueOf(rowId));
         } catch (final SQLException e) {
+            Crashlytics.logException(e);
             throw new IllegalStateException(e);
         }
     }
@@ -492,6 +497,7 @@ public final class TwidereDataProvider extends ContentProvider implements Consta
             setNotificationUri(c, getNotificationUri(tableId, uri));
             return c;
         } catch (final SQLException e) {
+            Crashlytics.logException(e);
             throw new IllegalStateException(e);
         }
     }
@@ -517,6 +523,7 @@ public final class TwidereDataProvider extends ContentProvider implements Consta
             }
             return result;
         } catch (final SQLException e) {
+            Crashlytics.logException(e);
             throw new IllegalStateException(e);
         }
     }
@@ -669,6 +676,7 @@ public final class TwidereDataProvider extends ContentProvider implements Consta
                 c.addRow(new String[]{host, address.getHostAddress()});
             }
         } catch (final IOException ignore) {
+            Crashlytics.logException(ignore);
             if (Utils.isDebugBuild()) {
                 Log.w(LOGTAG, ignore);
             }
