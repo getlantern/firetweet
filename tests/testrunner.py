@@ -36,7 +36,8 @@ class TestFiretweet(unittest.TestCase):
         assert(os.path.exists(SCREENSHOTS))
     def test_002_connect(self):
         global device
-        device = MonkeyRunner.waitForConnection()
+        device = MonkeyRunner.waitForConnection(10, ".*")
+        assert(device is not None)
     def test_003_remove_app(self):
         global device
         device.shell('am force-stop ' + PACKAGE)
@@ -52,50 +53,67 @@ class TestFiretweet(unittest.TestCase):
         assert(snapshot('test_launch_app'))
     def test_006_write_username(self):
         global device
-        device.type(TWITTER_USERNAME)
+        try:
+            device.type(TWITTER_USERNAME)
+        except Exception:
+            fail("Could not type username.")
         MonkeyRunner.sleep(5)
         assert(snapshot('test_write_username'))
     def test_007_write_invalid_password(self):
         global device
-        # Focusing the password input.
-        device.press('KEYCODE_DPAD_DOWN', MonkeyDevice.DOWN_AND_UP)
-        device.press('KEYCODE_DPAD_CENTER', MonkeyDevice.DOWN_AND_UP)
-        device.type(TWITTER_PASSWORD + 'invalid')
-        MonkeyRunner.sleep(5)
+        try:
+            # Focusing the password input.
+            device.press('KEYCODE_DPAD_DOWN', MonkeyDevice.DOWN_AND_UP)
+            device.press('KEYCODE_DPAD_CENTER', MonkeyDevice.DOWN_AND_UP)
+            # Typing password.
+            device.type(TWITTER_PASSWORD + 'invalid')
+            MonkeyRunner.sleep(5)
+        except Exception:
+            fail("Could not type password.")
         assert(snapshot('test_write_invalid_password'))
     def test_008_invalid_login(self):
         global device
-        # Focusing the login button.
-        device.press ('KEYCODE_DPAD_DOWN', MonkeyDevice.DOWN_AND_UP)
-        device.press ('KEYCODE_DPAD_RIGHT', MonkeyDevice.DOWN_AND_UP)
-        device.press ('KEYCODE_DPAD_CENTER', MonkeyDevice.DOWN_AND_UP)
+        try:
+            # Focusing the login button.
+            device.press ('KEYCODE_DPAD_DOWN', MonkeyDevice.DOWN_AND_UP)
+            device.press ('KEYCODE_DPAD_RIGHT', MonkeyDevice.DOWN_AND_UP)
+            device.press ('KEYCODE_DPAD_CENTER', MonkeyDevice.DOWN_AND_UP)
+        except Exception:
+            fail("Could not touch login button.")
         MonkeyRunner.sleep(5)
         assert(snapshot('test_invalid_login_1'))
         MonkeyRunner.sleep(40)
         assert(snapshot('test_invalid_login_2'))
     def test_009_fix_password(self):
         global device
-        device.press ('KEYCODE_DPAD_LEFT', MonkeyDevice.DOWN_AND_UP)
-        device.press ('KEYCODE_DPAD_UP', MonkeyDevice.DOWN_AND_UP)
-        device.press ('KEYCODE_DPAD_CENTER', MonkeyDevice.DOWN_AND_UP)
+        try:
+            device.press ('KEYCODE_DPAD_LEFT', MonkeyDevice.DOWN_AND_UP)
+            device.press ('KEYCODE_DPAD_UP', MonkeyDevice.DOWN_AND_UP)
+            device.press ('KEYCODE_DPAD_CENTER', MonkeyDevice.DOWN_AND_UP)
 
-        device.press('KEYCODE_SHIFT_LEFT', MonkeyDevice.DOWN)
+            device.press('KEYCODE_SHIFT_LEFT', MonkeyDevice.DOWN)
 
-        for i in range(20):
-            device.press('KEYCODE_DPAD_LEFT', MonkeyDevice.DOWN_AND_UP)
-            MonkeyRunner.sleep(1)
+            for i in range(20):
+                device.press('KEYCODE_DPAD_LEFT', MonkeyDevice.DOWN_AND_UP)
+                MonkeyRunner.sleep(1)
 
-        device.press('KEYCODE_SHIFT_LEFT', MonkeyDevice.UP)
-        device.press('KEYCODE_DEL', MonkeyDevice.DOWN_AND_UP)
+            device.press('KEYCODE_SHIFT_LEFT', MonkeyDevice.UP)
+            device.press('KEYCODE_DEL', MonkeyDevice.DOWN_AND_UP)
 
-        device.type(TWITTER_PASSWORD)
+            device.type(TWITTER_PASSWORD)
+        except Exception:
+            fail("Could not retype password.")
+
         MonkeyRunner.sleep(5)
         assert(snapshot('test_fix_password'))
     def test_010_valid_login(self):
         global device
-        device.press ('KEYCODE_DPAD_DOWN', MonkeyDevice.DOWN_AND_UP)
-        device.press ('KEYCODE_DPAD_RIGHT', MonkeyDevice.DOWN_AND_UP)
-        device.press ('KEYCODE_DPAD_CENTER', MonkeyDevice.DOWN_AND_UP)
+        try:
+            device.press ('KEYCODE_DPAD_DOWN', MonkeyDevice.DOWN_AND_UP)
+            device.press ('KEYCODE_DPAD_RIGHT', MonkeyDevice.DOWN_AND_UP)
+            device.press ('KEYCODE_DPAD_CENTER', MonkeyDevice.DOWN_AND_UP)
+        except Exception:
+            fail("Could not touch login button.")
 
         MonkeyRunner.sleep(60)
         assert(snapshot('test_valid_login'))
