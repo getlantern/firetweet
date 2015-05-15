@@ -41,6 +41,15 @@ class TestFiretweet(unittest.TestCase):
         global device
         device = MonkeyRunner.waitForConnection(120, ".*")
         assert(device is not None)
+        try:
+            # Lock device
+            device.press("POWER", MonkeyDevice.DOWN_AND_UP)
+            MonkeyRunner.sleep(10)
+            # Unlock device
+            device.wake()
+            device.drag((540, 1900), (540, 960), 1.0, 120)
+        except Exception:
+            fail("Could not unlock screen.")
     def test_003_remove_app(self):
         global device
         device.shell('killall com.android.commands.monkey')
