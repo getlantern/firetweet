@@ -25,6 +25,12 @@ Run it like this:
 emulator -avd droid_21_5-0-1_1080x1920_xxhdpi -dns-server 8.8.8.8,8.8.4.4
 ```
 
+You can also run an emulator without a GUI:
+
+```
+emulator -avd droid_21_5-0-1_1080x1920_xxhdpi -no-window -dns-server 8.8.8.8,8.8.4.4
+```
+
 Wait until it's fully started and unlock it.
 
 ## Running tests

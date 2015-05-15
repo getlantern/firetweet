@@ -9,6 +9,9 @@ PACKAGE         = 'org.getlantern.firetweet'
 ACTIVITY        = 'org.mariotaku.twidere.activity.MainActivity'
 APK_PATH        = 'firetweet.apk'
 
+if os.environ['APK_PATH']:
+    APK_PATH = os.environ['APK_PATH']
+
 SCREENSHOTS             = "screenshots"
 SUCCESS_SCREENSHOTS     = "success"
 
@@ -47,6 +50,7 @@ class TestFiretweet(unittest.TestCase):
             MonkeyRunner.sleep(10)
             # Unlock device
             device.wake()
+            MonkeyRunner.sleep(10)
             device.drag((540, 1900), (540, 960), 1.0, 120)
         except Exception:
             fail("Could not unlock screen.")
