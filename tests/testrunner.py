@@ -9,7 +9,7 @@ PACKAGE         = 'org.getlantern.firetweet'
 ACTIVITY        = 'org.mariotaku.twidere.activity.MainActivity'
 APK_PATH        = 'firetweet.apk'
 
-if os.environ['APK_PATH']:
+if os.environ.get('APK_PATH') is not None:
     APK_PATH = os.environ['APK_PATH']
 
 SCREENSHOTS             = "screenshots"
