@@ -1,4 +1,4 @@
-include ':twidere'
+include ':firetweet'
 include ':twidere.component.twitter4j'
 include ':twidere.component.twitter4j.streaming'
 include ':twidere.component.common'
