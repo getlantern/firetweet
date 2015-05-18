@@ -24,7 +24,7 @@ android:
 
 script:
   - ./gradlew build
-  - cd ./tests && APK_PATH=../twidere/build/outputs/apk/twidere-google-release-unsigned.apk monkeyrunner testrunner.py
+  - cd ./tests && APK_PATH=../firetweet/build/outputs/apk/firetweet-google-release-unsigned.apk monkeyrunner testrunner.py
 
 before_script:
   - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
