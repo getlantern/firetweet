@@ -26,6 +26,24 @@
         android:layout_gravity="center"
         android:background="#23CBFF">
 
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="30dp"
+            android:background="@android:color/transparent"
+            android:lines="2"
+            android:id="@+id/text2"
+            android:clickable="true"
+            android:textStyle="bold"
+            android:textColor="@color/accent_white"
+            android:text="Welcome to FireTweet"
+            android:autoLink="all"
+            android:fontFamily="Arial"
+            android:typeface="serif"
+            android:textSize="30sp" />
+
         <RelativeLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
@@ -91,6 +109,7 @@
                     android:layout_weight="1"
                     android:minHeight="48dp"
                     android:onClick="onClick"
+                    android:background="#434343"
                     android:text="@string/register"/>
 
                 <android.support.v7.internal.widget.TintButton
@@ -101,6 +120,7 @@
                     android:layout_weight="1"
                     android:minHeight="48dp"
                     android:onClick="onClick"
+                    android:background="#E7E7E7"
                     android:text="@string/sign_in"/>
 
             </LinearLayout>
