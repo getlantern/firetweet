@@ -23,13 +23,28 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:background="#23CBFF">
 
         <RelativeLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center">
+
+            <Button
+                android:id="@+id/sign_in_method_introduction"
+                style="?android:borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sign_in_sign_up"
+                android:layout_margin="8dp"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:minHeight="36dp"
+                android:onClick="onClick"
+                android:text="@string/sign_in_twitter"
+                android:textAppearance="?android:textAppearanceSmall"/>
 
             <LinearLayout
                 android:id="@+id/username_password"
@@ -89,19 +104,6 @@
                     android:text="@string/sign_in"/>
 
             </LinearLayout>
-            <Button
-                android:id="@+id/sign_in_method_introduction"
-                style="?android:borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/sign_in_sign_up"
-                android:layout_margin="8dp"
-                android:clickable="true"
-                android:gravity="center_vertical"
-                android:minHeight="36dp"
-                android:onClick="onClick"
-                android:text="@string/sign_in_twitter"
-                android:textAppearance="?android:textAppearanceSmall"/>
         </RelativeLayout>
     </ScrollView>
 
