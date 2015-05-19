@@ -109,6 +109,7 @@
                     android:layout_weight="1"
                     android:minHeight="48dp"
                     android:onClick="onClick"
+                    android:textColor="@color/accent_white"
                     android:background="#434343"
                     android:text="@string/register"/>
 
@@ -120,6 +121,7 @@
                     android:layout_weight="1"
                     android:minHeight="48dp"
                     android:onClick="onClick"
+                    android:textColor="#000000"
                     android:background="#E7E7E7"
                     android:text="@string/sign_in"/>
 
