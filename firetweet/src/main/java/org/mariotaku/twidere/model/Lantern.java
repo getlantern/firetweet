@@ -19,7 +19,6 @@ public class Lantern {
 
     private static boolean lanternStarted = false;
 
-
     public static void start(Context context) {
 
         StrictMode.ThreadPolicy old = StrictMode.getThreadPolicy();
