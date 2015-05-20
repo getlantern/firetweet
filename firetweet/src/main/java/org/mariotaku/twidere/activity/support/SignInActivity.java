@@ -90,6 +90,7 @@ import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
 import com.crashlytics.android.Crashlytics;
+import 	android.graphics.Typeface;
 
 import static android.text.TextUtils.isEmpty;
 import static org.mariotaku.twidere.util.ContentValuesCreator.createAccount;
@@ -330,6 +331,8 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
             mAPIChangeTimestamp = savedInstanceState.getLong(EXTRA_API_LAST_CHANGE);
         }
 
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/ProximaNova-Semibold.ttf");
+
         mUsernamePasswordContainer
                 .setVisibility(mAuthType == Accounts.AUTH_TYPE_TWIP_O_MODE ? View.GONE : View.VISIBLE);
         mSigninSignupContainer.setOrientation(mAuthType == Accounts.AUTH_TYPE_TWIP_O_MODE ? LinearLayout.VERTICAL
@@ -341,8 +344,17 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         mEditPassword.addTextChangedListener(this);
         final Resources resources = getResources();
         final ColorStateList color = ColorStateList.valueOf(resources.getColor(R.color.material_light_blue));
-        mSignInButton.setTextColor(Color.parseColor("white"));
-        ViewAccessor.setBackgroundTintList(mSignInButton, color);
+
+        mSignInButton.setTextColor(Color.parseColor("black"));
+        mSignInButton.setBackgroundColor(Color.parseColor("#E7E7E7"));
+        mSignInButton.setBackgroundResource(R.drawable.sign_in_btn);
+        mSignInButton.setTypeface(font);
+        mSignUpButton.setTypeface(font);
+
+        Button signIn = (Button) findViewById(R.id.sign_in_method_introduction);
+        signIn.setTypeface(font);
+        //ViewAccessor.setBackgroundTintList(mSignInButton, color);
+
         setSignInButton();
     }
 
@@ -482,7 +494,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         final FragmentManager fm = getSupportFragmentManager();
         final Fragment f = fm.findFragmentByTag(FRAGMENT_TAG_SIGN_IN_PROGRESS);
         if (f instanceof DialogFragment) {
-            ((DialogFragment) f).dismiss();
+            ((DialogFragment) f).dismissAllowingStateLoss();
         }
         if (result != null) {
             if (result.succeed) {
