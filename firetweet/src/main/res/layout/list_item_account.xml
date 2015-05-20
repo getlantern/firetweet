@@ -15,7 +15,7 @@
      limitations under the License.
 -->
 
-<org.mariotaku.twidere.view.ColorLabelRelativeLayout
+<org.getlantern.firetweet.view.ColorLabelRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -36,7 +36,7 @@
         android:layout_weight="0"
         android:background="@drawable/list_drag_handle"/>
 
-    <org.mariotaku.twidere.view.ShapedImageView
+    <org.getlantern.firetweet.view.ShapedImageView
         android:id="@android:id/icon"
         style="?profileImageStyle"
         android:layout_width="@dimen/icon_size_list_item"
@@ -73,7 +73,7 @@
             android:textColor="?android:textColorSecondary"/>
     </LinearLayout>
 
-    <org.mariotaku.twidere.view.ActivatedCheckBox
+    <org.getlantern.firetweet.view.ActivatedCheckBox
         android:id="@android:id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -82,4 +82,4 @@
         android:clickable="false"
         android:focusable="false"/>
 
-</org.mariotaku.twidere.view.ColorLabelRelativeLayout>
+</org.getlantern.firetweet.view.ColorLabelRelativeLayout>

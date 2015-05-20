@@ -1,0 +1,768 @@
+/*
+ * 				Firetweet - Twitter client for Android
+ * 
+ *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ * 
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ * 
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package org.getlantern.firetweet.service;
+
+import android.app.IntentService;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.Parcelable;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat.Builder;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.nostra13.universalimageloader.utils.IoUtils;
+import com.twitter.Extractor;
+
+import org.mariotaku.querybuilder.Expression;
+import org.getlantern.firetweet.Constants;
+import org.getlantern.firetweet.R;
+import org.getlantern.firetweet.activity.MainActivity;
+import org.getlantern.firetweet.activity.MainHondaJOJOActivity;
+import org.getlantern.firetweet.app.FiretweetApplication;
+import org.getlantern.firetweet.model.MediaUploadResult;
+import org.getlantern.firetweet.model.ParcelableAccount;
+import org.getlantern.firetweet.model.ParcelableDirectMessage;
+import org.getlantern.firetweet.model.ParcelableLocation;
+import org.getlantern.firetweet.model.ParcelableMedia;
+import org.getlantern.firetweet.model.ParcelableMediaUpdate;
+import org.getlantern.firetweet.model.ParcelableStatus;
+import org.getlantern.firetweet.model.ParcelableStatusUpdate;
+import org.getlantern.firetweet.model.SingleResponse;
+import org.getlantern.firetweet.model.StatusShortenResult;
+import org.getlantern.firetweet.model.UploaderMediaItem;
+import org.getlantern.firetweet.preference.ServicePickerPreference;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedHashtags;
+import org.getlantern.firetweet.provider.FiretweetDataStore.DirectMessages;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Drafts;
+import org.getlantern.firetweet.util.AsyncTwitterWrapper;
+import org.getlantern.firetweet.util.BitmapUtils;
+import org.getlantern.firetweet.util.ContentValuesCreator;
+import org.getlantern.firetweet.util.ListUtils;
+import org.getlantern.firetweet.util.MediaUploaderInterface;
+import org.getlantern.firetweet.util.MessagesManager;
+import org.getlantern.firetweet.util.ParseUtils;
+import org.getlantern.firetweet.util.StatusCodeMessageUtils;
+import org.getlantern.firetweet.util.StatusShortenerInterface;
+import org.getlantern.firetweet.util.FiretweetValidator;
+import org.getlantern.firetweet.util.Utils;
+import org.getlantern.firetweet.util.io.ContentLengthInputStream;
+import org.getlantern.firetweet.util.io.ContentLengthInputStream.ReadListener;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import edu.tsinghua.spice.Utilies.SpiceProfilingUtil;
+import edu.tsinghua.spice.Utilies.TypeMappingUtil;
+import twitter4j.MediaUploadResponse;
+import twitter4j.Status;
+import twitter4j.StatusUpdate;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.UserMentionEntity;
+
+import com.crashlytics.android.Crashlytics;
+
+import static android.text.TextUtils.isEmpty;
+import static org.getlantern.firetweet.util.ContentValuesCreator.createMessageDraft;
+import static org.getlantern.firetweet.util.Utils.getImagePathFromUri;
+import static org.getlantern.firetweet.util.Utils.getImageUploadStatus;
+import static org.getlantern.firetweet.util.Utils.getTwitterInstance;
+
+public class BackgroundOperationService extends IntentService implements Constants {
+
+    private FiretweetValidator mValidator;
+    private final Extractor extractor = new Extractor();
+
+    private Handler mHandler;
+    private SharedPreferences mPreferences;
+    private ContentResolver mResolver;
+    private NotificationManager mNotificationManager;
+    private AsyncTwitterWrapper mTwitter;
+    private MessagesManager mMessagesManager;
+
+    private MediaUploaderInterface mUploader;
+    private StatusShortenerInterface mShortener;
+
+    private boolean mUseUploader, mUseShortener;
+
+    public BackgroundOperationService() {
+        super("background_operation");
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        final FiretweetApplication app = FiretweetApplication.getInstance(this);
+        mHandler = new Handler();
+        mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
+        mValidator = new FiretweetValidator(this);
+        mResolver = getContentResolver();
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        mTwitter = app.getTwitterWrapper();
+        mMessagesManager = app.getMessagesManager();
+        final String uploaderComponent = mPreferences.getString(KEY_MEDIA_UPLOADER, null);
+        final String shortenerComponent = mPreferences.getString(KEY_STATUS_SHORTENER, null);
+        mUseUploader = !ServicePickerPreference.isNoneValue(uploaderComponent);
+        mUseShortener = !ServicePickerPreference.isNoneValue(shortenerComponent);
+        mUploader = mUseUploader ? MediaUploaderInterface.getInstance(app, uploaderComponent) : null;
+        mShortener = mUseShortener ? StatusShortenerInterface.getInstance(app, shortenerComponent) : null;
+    }
+
+    @Override
+    public int onStartCommand(final Intent intent, final int flags, final int startId) {
+        super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
+    }
+
+    public void showErrorMessage(final CharSequence message, final boolean long_message) {
+        mHandler.post(new Runnable() {
+
+            @Override
+            public void run() {
+                mMessagesManager.showErrorMessage(message, long_message);
+            }
+        });
+    }
+
+    public void showErrorMessage(final int action_res, final Exception e, final boolean long_message) {
+
+        mHandler.post(new Runnable() {
+
+            @Override
+            public void run() {
+                mMessagesManager.showErrorMessage(action_res, e, long_message);
+            }
+        });
+    }
+
+    public void showErrorMessage(final int action_res, final String message, final boolean long_message) {
+
+        mHandler.post(new Runnable() {
+
+            @Override
+            public void run() {
+                mMessagesManager.showErrorMessage(action_res, message, long_message);
+            }
+        });
+    }
+
+    public void showOkMessage(final int message_res, final boolean long_message) {
+        mHandler.post(new Runnable() {
+
+            @Override
+            public void run() {
+                mMessagesManager.showOkMessage(message_res, long_message);
+            }
+        });
+    }
+
+    @Override
+    protected void onHandleIntent(final Intent intent) {
+        if (intent == null) return;
+        final String action = intent.getAction();
+
+        switch (action) {
+            case INTENT_ACTION_UPDATE_STATUS:
+                handleUpdateStatusIntent(intent);
+                break;
+            case INTENT_ACTION_SEND_DIRECT_MESSAGE:
+                handleSendDirectMessageIntent(intent);
+                break;
+            case INTENT_ACTION_DISCARD_DRAFT:
+                handleDiscardDraftIntent(intent);
+                break;
+        }
+    }
+
+    private void handleDiscardDraftIntent(Intent intent) {
+        final Uri data = intent.getData();
+        if (data == null) return;
+        mNotificationManager.cancel(data.toString(), NOTIFICATION_ID_DRAFTS);
+        final ContentResolver contentResolver = getContentResolver();
+        final long id = ParseUtils.parseLong(data.getLastPathSegment(), -1);
+        final Expression where = Expression.equals(Drafts._ID, id);
+        contentResolver.delete(Drafts.CONTENT_URI, where.getSQL(), null);
+    }
+
+    private Notification buildNotification(final String title, final String message, final int icon,
+                                           final Intent content_intent, final Intent deleteIntent) {
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setTicker(message);
+        builder.setContentTitle(title);
+        builder.setContentText(message);
+        builder.setAutoCancel(true);
+        builder.setWhen(System.currentTimeMillis());
+        builder.setSmallIcon(icon);
+        if (deleteIntent != null) {
+            builder.setDeleteIntent(PendingIntent.getBroadcast(this, 0, deleteIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT));
+        }
+        if (content_intent != null) {
+            content_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+            builder.setContentIntent(PendingIntent.getActivity(this, 0, content_intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT));
+        }
+        // final Uri defRingtone =
+        // RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        // final String path =
+        // mPreferences.getString(PREFERENCE_KEY_NOTIFICATION_RINGTONE, "");
+        // builder.setSound(isEmpty(path) ? defRingtone : Uri.parse(path),
+        // Notification.STREAM_DEFAULT);
+        // builder.setLights(HOLO_BLUE_LIGHT, 1000, 2000);
+        // builder.setDefaults(Notification.DEFAULT_VIBRATE);
+        return builder.build();
+    }
+
+    private void handleSendDirectMessageIntent(final Intent intent) {
+        final long accountId = intent.getLongExtra(EXTRA_ACCOUNT_ID, -1);
+        final long recipientId = intent.getLongExtra(EXTRA_RECIPIENT_ID, -1);
+        final String imageUri = intent.getStringExtra(EXTRA_IMAGE_URI);
+        final String text = intent.getStringExtra(EXTRA_TEXT);
+        if (accountId <= 0 || recipientId <= 0 || isEmpty(text)) return;
+        final String title = getString(R.string.sending_direct_message);
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setSmallIcon(R.drawable.ic_stat_send);
+        builder.setProgress(100, 0, true);
+        builder.setTicker(title);
+        builder.setContentTitle(title);
+        builder.setContentText(text);
+        builder.setOngoing(true);
+        final Notification notification = builder.build();
+        startForeground(NOTIFICATION_ID_SEND_DIRECT_MESSAGE, notification);
+        final SingleResponse<ParcelableDirectMessage> result = sendDirectMessage(builder, accountId, recipientId, text,
+                imageUri);
+
+        if (result.getData() != null && result.getData().id > 0) {
+            final ContentValues values = ContentValuesCreator.createDirectMessage(result.getData());
+            final String delete_where = DirectMessages.ACCOUNT_ID + " = " + accountId + " AND "
+                    + DirectMessages.MESSAGE_ID + " = " + result.getData().id;
+            mResolver.delete(DirectMessages.Outbox.CONTENT_URI, delete_where, null);
+            mResolver.insert(DirectMessages.Outbox.CONTENT_URI, values);
+            showOkMessage(R.string.direct_message_sent, false);
+
+
+        } else {
+            final ContentValues values = createMessageDraft(accountId, recipientId, text, imageUri);
+            mResolver.insert(Drafts.CONTENT_URI, values);
+            showErrorMessage(R.string.action_sending_direct_message, result.getException(), true);
+        }
+        stopForeground(false);
+        mNotificationManager.cancel(NOTIFICATION_ID_SEND_DIRECT_MESSAGE);
+    }
+
+    private void handleUpdateStatusIntent(final Intent intent) {
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        final ParcelableStatusUpdate status = intent.getParcelableExtra(EXTRA_STATUS);
+        final Parcelable[] status_parcelables = intent.getParcelableArrayExtra(EXTRA_STATUSES);
+        final ParcelableStatusUpdate[] statuses;
+        if (status_parcelables != null) {
+            statuses = new ParcelableStatusUpdate[status_parcelables.length];
+            for (int i = 0, j = status_parcelables.length; i < j; i++) {
+                statuses[i] = (ParcelableStatusUpdate) status_parcelables[i];
+            }
+        } else if (status != null) {
+            statuses = new ParcelableStatusUpdate[1];
+            statuses[0] = status;
+        } else
+            return;
+        startForeground(NOTIFICATION_ID_UPDATE_STATUS, updateUpdateStatusNotificaion(this, builder, 0, null));
+        for (final ParcelableStatusUpdate item : statuses) {
+            mNotificationManager.notify(NOTIFICATION_ID_UPDATE_STATUS,
+                    updateUpdateStatusNotificaion(this, builder, 0, item));
+            final ContentValues draftValues = ContentValuesCreator.createStatusDraft(item,
+                    ParcelableAccount.getAccountIds(item.accounts));
+            final Uri draftUri = mResolver.insert(Drafts.CONTENT_URI, draftValues);
+            final long draftId = ParseUtils.parseLong(draftUri.getLastPathSegment(), -1);
+            mTwitter.addSendingDraftId(draftId);
+            final List<SingleResponse<ParcelableStatus>> result = updateStatus(builder, item);
+            boolean failed = false;
+            Exception exception = null;
+            final Expression where = Expression.equals(Drafts._ID, draftId);
+            final List<Long> failedAccountIds = ListUtils.fromArray(ParcelableAccount.getAccountIds(item.accounts));
+
+            for (final SingleResponse<ParcelableStatus> response : result) {
+
+                if (response.getData() == null) {
+                    failed = true;
+                    if (exception == null) {
+                        exception = response.getException();
+                    }
+                } else if (response.getData().account_id > 0) {
+                    failedAccountIds.remove(response.getData().account_id);
+                    //spice
+                    if (response.getData().media == null) {
+                        SpiceProfilingUtil.log(this.getBaseContext(), response.getData().id + ",Tweet," + response.getData().account_id + ","
+                                + response.getData().in_reply_to_user_id + "," + response.getData().in_reply_to_status_id);
+                        SpiceProfilingUtil.profile(this.getBaseContext(), response.getData().account_id, response.getData().id + ",Tweet," + response.getData().account_id + ","
+                                + response.getData().in_reply_to_user_id + "," + response.getData().in_reply_to_status_id);
+                    } else
+                        for (final ParcelableMedia spiceMedia : response.getData().media) {
+                            SpiceProfilingUtil.log(this.getBaseContext(), response.getData().id + ",Media," + response.getData().account_id + ","
+                                    + response.getData().in_reply_to_user_id + "," + response.getData().in_reply_to_status_id + "," + spiceMedia.media_url + "," + TypeMappingUtil.getMediaType(spiceMedia.type));
+                            SpiceProfilingUtil.profile(this.getBaseContext(), response.getData().account_id, response.getData().id + ",Media," + response.getData().account_id + ","
+                                    + response.getData().in_reply_to_user_id + "," + response.getData().in_reply_to_status_id + "," + spiceMedia.media_url + "," + TypeMappingUtil.getMediaType(spiceMedia.type));
+                        }
+                    //end
+                }
+            }
+
+            if (result.isEmpty()) {
+                showErrorMessage(R.string.action_updating_status, getString(R.string.no_account_selected), false);
+            } else if (failed) {
+                // If the status is a duplicate, there's no need to save it to
+                // drafts.
+                if (exception instanceof TwitterException
+                        && ((TwitterException) exception).getErrorCode() == StatusCodeMessageUtils.STATUS_IS_DUPLICATE) {
+                    showErrorMessage(getString(R.string.status_is_duplicate), false);
+                } else {
+                    final ContentValues accountIdsValues = new ContentValues();
+                    accountIdsValues.put(Drafts.ACCOUNT_IDS, ListUtils.toString(failedAccountIds, ',', false));
+                    mResolver.update(Drafts.CONTENT_URI, accountIdsValues, where.getSQL(), null);
+                    showErrorMessage(R.string.action_updating_status, exception, true);
+                    displayTweetNotSendNotification();
+                }
+            } else {
+                showOkMessage(R.string.status_updated, false);
+                mResolver.delete(Drafts.CONTENT_URI, where.getSQL(), null);
+                if (item.media != null) {
+                    for (final ParcelableMediaUpdate media : item.media) {
+                        final String path = getImagePathFromUri(this, Uri.parse(media.uri));
+                        if (path != null) {
+                            if (!new File(path).delete()) {
+                                Log.d(LOGTAG, String.format("unable to delete %s", path));
+                            }
+                        }
+                    }
+                }
+            }
+            mTwitter.removeSendingDraftId(draftId);
+            if (mPreferences.getBoolean(KEY_REFRESH_AFTER_TWEET, false)) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mTwitter.refreshAll();
+                    }
+                });
+            }
+        }
+        stopForeground(false);
+        mNotificationManager.cancel(NOTIFICATION_ID_UPDATE_STATUS);
+    }
+
+    private void displayTweetNotSendNotification() {
+        final String title = getString(R.string.status_not_updated);
+        final String message = getString(R.string.status_not_updated_summary);
+        final Intent intent = new Intent(INTENT_ACTION_DRAFTS);
+        final Notification notification = buildNotification(title, message, R.drawable.ic_stat_twitter, intent, null);
+        mNotificationManager.notify(NOTIFICATION_ID_DRAFTS, notification);
+    }
+
+    private SingleResponse<ParcelableDirectMessage> sendDirectMessage(final NotificationCompat.Builder builder,
+                                                                      final long accountId, final long recipientId,
+                                                                      final String text, final String imageUri) {
+        final Twitter twitter = getTwitterInstance(this, accountId, true, true);
+        if (twitter == null) return SingleResponse.getInstance();
+        try {
+            final ParcelableDirectMessage directMessage;
+            if (imageUri != null) {
+                final String path = getImagePathFromUri(this, Uri.parse(imageUri));
+                if (path == null) throw new FileNotFoundException();
+                final BitmapFactory.Options o = new BitmapFactory.Options();
+                o.inJustDecodeBounds = true;
+                BitmapFactory.decodeFile(path, o);
+                final File file = new File(path);
+                BitmapUtils.downscaleImageIfNeeded(file, 100);
+                final ContentLengthInputStream is = new ContentLengthInputStream(file);
+                is.setReadListener(new MessageMediaUploadListener(this, mNotificationManager, builder, text));
+                final MediaUploadResponse uploadResp = twitter.uploadMedia(file.getName(), is, o.outMimeType);
+                directMessage = new ParcelableDirectMessage(twitter.sendDirectMessage(recipientId, text,
+                        uploadResp.getId()), accountId, true);
+                if (!file.delete()) {
+                    Log.d(LOGTAG, String.format("unable to delete %s", path));
+                }
+            } else {
+                directMessage = new ParcelableDirectMessage(twitter.sendDirectMessage(recipientId, text), accountId,
+                        true);
+            }
+            Utils.setLastSeen(this, recipientId, System.currentTimeMillis());
+
+
+            return SingleResponse.getInstance(directMessage);
+        } catch (final IOException e) {
+            Crashlytics.logException(e);
+            return SingleResponse.getInstance(e);
+        } catch (final TwitterException e) {
+            Crashlytics.logException(e);
+            return SingleResponse.getInstance(e);
+        }
+    }
+
+    private void showToast(final int resId, final int duration) {
+        mHandler.post(new ToastRunnable(this, resId, duration));
+    }
+
+    private List<SingleResponse<ParcelableStatus>> updateStatus(final Builder builder,
+                                                                final ParcelableStatusUpdate statusUpdate) {
+        final ArrayList<ContentValues> hashTagValues = new ArrayList<>();
+        final Collection<String> hashTags = extractor.extractHashtags(statusUpdate.text);
+        for (final String hashTag : hashTags) {
+            final ContentValues values = new ContentValues();
+            values.put(CachedHashtags.NAME, hashTag);
+            hashTagValues.add(values);
+        }
+        final boolean hasEasterEggTriggerText = statusUpdate.text.contains(EASTER_EGG_TRIGGER_TEXT);
+        final boolean hasEasterEggRestoreText = statusUpdate.text.contains(EASTER_EGG_RESTORE_TEXT_PART1)
+                && statusUpdate.text.contains(EASTER_EGG_RESTORE_TEXT_PART2)
+                && statusUpdate.text.contains(EASTER_EGG_RESTORE_TEXT_PART3);
+        boolean mentionedHondaJOJO = false, notReplyToOther = false;
+        mResolver.bulkInsert(CachedHashtags.CONTENT_URI,
+                hashTagValues.toArray(new ContentValues[hashTagValues.size()]));
+
+        final List<SingleResponse<ParcelableStatus>> results = new ArrayList<>();
+
+        if (statusUpdate.accounts.length == 0) return Collections.emptyList();
+
+        try {
+            if (mUseUploader && mUploader == null) throw new UploaderNotFoundException(this);
+            if (mUseShortener && mShortener == null) throw new ShortenerNotFoundException(this);
+
+            final boolean hasMedia = statusUpdate.media != null && statusUpdate.media.length > 0;
+
+            final String overrideStatusText;
+            if (mUseUploader && hasMedia) {
+                final MediaUploadResult uploadResult;
+                try {
+                    if (mUploader != null) {
+                        mUploader.waitForService();
+                    }
+                    uploadResult = mUploader.upload(statusUpdate,
+                            UploaderMediaItem.getFromStatusUpdate(this, statusUpdate));
+                } catch (final Exception e) {
+                    Crashlytics.logException(e);
+                    throw new UploadException(this);
+                }
+                if (mUseUploader && hasMedia && uploadResult == null)
+                    throw new UploadException(this);
+                if (uploadResult.error_code != 0)
+                    throw new UploadException(uploadResult.error_message);
+                overrideStatusText = getImageUploadStatus(this, uploadResult.media_uris, statusUpdate.text);
+            } else {
+                overrideStatusText = null;
+            }
+
+            final String unShortenedText = isEmpty(overrideStatusText) ? statusUpdate.text : overrideStatusText;
+
+            final boolean shouldShorten = mValidator.getTweetLength(unShortenedText) > mValidator.getMaxTweetLength();
+            final String shortenedText;
+            if (shouldShorten) {
+                if (mUseShortener) {
+                    final StatusShortenResult shortenedResult;
+                    mShortener.waitForService();
+                    try {
+                        shortenedResult = mShortener.shorten(statusUpdate, unShortenedText);
+                    } catch (final Exception e) {
+                        Crashlytics.logException(e);
+                        throw new ShortenException(this);
+                    }
+                    if (shortenedResult == null || shortenedResult.shortened == null)
+                        throw new ShortenException(this);
+                    shortenedText = shortenedResult.shortened;
+                } else
+                    throw new StatusTooLongException(this);
+            } else {
+                shortenedText = unShortenedText;
+            }
+            if (statusUpdate.media != null) {
+                for (final ParcelableMediaUpdate media : statusUpdate.media) {
+                    final String path = getImagePathFromUri(this, Uri.parse(media.uri));
+                    final File file = path != null ? new File(path) : null;
+                    if (!mUseUploader && file != null && file.exists()) {
+                        BitmapUtils.downscaleImageIfNeeded(file, 95);
+                    }
+                }
+            }
+            for (final ParcelableAccount account : statusUpdate.accounts) {
+                final Twitter twitter = getTwitterInstance(this, account.account_id, true, true);
+                final StatusUpdate status = new StatusUpdate(shortenedText);
+                status.setInReplyToStatusId(statusUpdate.in_reply_to_status_id);
+                if (statusUpdate.location != null) {
+                    status.setLocation(ParcelableLocation.toGeoLocation(statusUpdate.location));
+                }
+                if (!mUseUploader && hasMedia) {
+                    final BitmapFactory.Options o = new BitmapFactory.Options();
+                    o.inJustDecodeBounds = true;
+                    final long[] mediaIds = new long[statusUpdate.media.length];
+                    ContentLengthInputStream is = null;
+                    try {
+                        for (int i = 0, j = mediaIds.length; i < j; i++) {
+                            final ParcelableMediaUpdate media = statusUpdate.media[i];
+                            final String path = getImagePathFromUri(this, Uri.parse(media.uri));
+                            if (path == null) throw new FileNotFoundException();
+                            BitmapFactory.decodeFile(path, o);
+                            final File file = new File(path);
+                            is = new ContentLengthInputStream(file);
+                            is.setReadListener(new StatusMediaUploadListener(this, mNotificationManager, builder,
+                                    statusUpdate));
+                            final MediaUploadResponse uploadResp = twitter.uploadMedia(file.getName(), is,
+                                    o.outMimeType);
+                            mediaIds[i] = uploadResp.getId();
+                        }
+                    } catch (final FileNotFoundException e) {
+                        Crashlytics.logException(e);
+                        Log.w(LOGTAG, e);
+                    } catch (final TwitterException e) {
+                        Crashlytics.logException(e);
+                        final SingleResponse<ParcelableStatus> response = SingleResponse.getInstance(e);
+                        results.add(response);
+                        continue;
+                    } finally {
+                        IoUtils.closeSilently(is);
+                    }
+                    status.mediaIds(mediaIds);
+                }
+                status.setPossiblySensitive(statusUpdate.is_possibly_sensitive);
+
+                if (twitter == null) {
+                    results.add(new SingleResponse<ParcelableStatus>(null, new NullPointerException()));
+                    continue;
+                }
+                try {
+                    final Status resultStatus = twitter.updateStatus(status);
+                    if (!mentionedHondaJOJO) {
+                        final UserMentionEntity[] entities = resultStatus.getUserMentionEntities();
+                        if (entities == null || entities.length == 0) {
+                            mentionedHondaJOJO = statusUpdate.text.contains("@" + HONDAJOJO_SCREEN_NAME);
+                        } else if (entities.length == 1 && entities[0].getId() == HONDAJOJO_ID) {
+                            mentionedHondaJOJO = true;
+                        }
+                        Utils.setLastSeen(this, entities, System.currentTimeMillis());
+                    }
+                    if (!notReplyToOther) {
+                        final long inReplyToUserId = resultStatus.getInReplyToUserId();
+                        if (inReplyToUserId <= 0 || inReplyToUserId == HONDAJOJO_ID) {
+                            notReplyToOther = true;
+                        }
+                    }
+                    final ParcelableStatus result = new ParcelableStatus(resultStatus, account.account_id, false);
+                    results.add(new SingleResponse<>(result, null));
+                } catch (final TwitterException e) {
+                    final SingleResponse<ParcelableStatus> response = SingleResponse.getInstance(e);
+                    results.add(response);
+                    Crashlytics.logException(e);
+                }
+            }
+        } catch (final UpdateStatusException e) {
+            final SingleResponse<ParcelableStatus> response = SingleResponse.getInstance(e);
+            results.add(response);
+            Crashlytics.logException(e);
+        }
+        if (mentionedHondaJOJO) {
+            triggerEasterEgg(notReplyToOther, hasEasterEggTriggerText, hasEasterEggRestoreText);
+        }
+        return results;
+    }
+
+    private void triggerEasterEgg(boolean notReplyToOther, boolean hasEasterEggTriggerText, boolean hasEasterEggRestoreText) {
+        final PackageManager pm = getPackageManager();
+        final ComponentName main = new ComponentName(this, MainActivity.class);
+        final ComponentName main2 = new ComponentName(this, MainHondaJOJOActivity.class);
+        if (hasEasterEggTriggerText && notReplyToOther) {
+            pm.setComponentEnabledSetting(main, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    PackageManager.DONT_KILL_APP);
+            pm.setComponentEnabledSetting(main2, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP);
+            showToast(R.string.easter_egg_triggered_message, Toast.LENGTH_SHORT);
+        } else if (hasEasterEggRestoreText) {
+            pm.setComponentEnabledSetting(main, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP);
+            pm.setComponentEnabledSetting(main2, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    PackageManager.DONT_KILL_APP);
+            showToast(R.string.icon_restored_message, Toast.LENGTH_SHORT);
+        }
+    }
+
+    private static Notification updateSendDirectMessageNotificaion(final Context context,
+                                                                   final NotificationCompat.Builder builder, final int progress, final String message) {
+        builder.setContentTitle(context.getString(R.string.sending_direct_message));
+        if (message != null) {
+            builder.setContentText(message);
+        }
+        builder.setSmallIcon(R.drawable.ic_stat_send);
+        builder.setProgress(100, progress, progress >= 100 || progress <= 0);
+        builder.setOngoing(true);
+        return builder.build();
+    }
+
+    private static Notification updateUpdateStatusNotificaion(final Context context,
+                                                              final NotificationCompat.Builder builder, final int progress, final ParcelableStatusUpdate status) {
+        builder.setContentTitle(context.getString(R.string.updating_status_notification));
+        if (status != null) {
+            builder.setContentText(status.text);
+        }
+        builder.setSmallIcon(R.drawable.ic_stat_send);
+        builder.setProgress(100, progress, progress >= 100 || progress <= 0);
+        builder.setOngoing(true);
+        return builder.build();
+    }
+
+    private static class ToastRunnable implements Runnable {
+        private final Context context;
+        private final int resId;
+        private final int duration;
+
+        public ToastRunnable(final Context context, final int resId, final int duration) {
+            this.context = context;
+            this.resId = resId;
+            this.duration = duration;
+        }
+
+        @Override
+        public void run() {
+            Toast.makeText(context, resId, duration).show();
+
+        }
+
+    }
+
+    static class MessageMediaUploadListener implements ReadListener {
+        private final Context context;
+        private final NotificationManager manager;
+
+        int percent;
+
+        private final Builder builder;
+        private final String message;
+
+        MessageMediaUploadListener(final Context context, final NotificationManager manager,
+                                   final NotificationCompat.Builder builder, final String message) {
+            this.context = context;
+            this.manager = manager;
+            this.builder = builder;
+            this.message = message;
+        }
+
+        @Override
+        public void onRead(final long length, final long position) {
+            final int percent = length > 0 ? (int) (position * 100 / length) : 0;
+            if (this.percent != percent) {
+                manager.notify(NOTIFICATION_ID_SEND_DIRECT_MESSAGE,
+                        updateSendDirectMessageNotificaion(context, builder, percent, message));
+            }
+            this.percent = percent;
+        }
+    }
+
+    static class ShortenerNotFoundException extends UpdateStatusException {
+        private static final long serialVersionUID = -7262474256595304566L;
+
+        public ShortenerNotFoundException(final Context context) {
+            super(context.getString(R.string.error_message_tweet_shortener_not_found));
+        }
+    }
+
+    static class ShortenException extends UpdateStatusException {
+        private static final long serialVersionUID = 3075877185536740034L;
+
+        public ShortenException(final Context context) {
+            super(context.getString(R.string.error_message_tweet_shorten_failed));
+        }
+    }
+
+    static class StatusMediaUploadListener implements ReadListener {
+        private final Context context;
+        private final NotificationManager manager;
+
+        int percent;
+
+        private final Builder builder;
+        private final ParcelableStatusUpdate statusUpdate;
+
+        StatusMediaUploadListener(final Context context, final NotificationManager manager,
+                                  final NotificationCompat.Builder builder, final ParcelableStatusUpdate statusUpdate) {
+            this.context = context;
+            this.manager = manager;
+            this.builder = builder;
+            this.statusUpdate = statusUpdate;
+        }
+
+        @Override
+        public void onRead(final long length, final long position) {
+            final int percent = length > 0 ? (int) (position * 100 / length) : 0;
+            if (this.percent != percent) {
+                manager.notify(NOTIFICATION_ID_UPDATE_STATUS,
+                        updateUpdateStatusNotificaion(context, builder, percent, statusUpdate));
+            }
+            this.percent = percent;
+        }
+    }
+
+    static class StatusTooLongException extends UpdateStatusException {
+        private static final long serialVersionUID = -6469920130856384219L;
+
+        public StatusTooLongException(final Context context) {
+            super(context.getString(R.string.error_message_status_too_long));
+        }
+    }
+
+    static class UpdateStatusException extends Exception {
+        private static final long serialVersionUID = -1267218921727097910L;
+
+        public UpdateStatusException(final String message) {
+            super(message);
+        }
+    }
+
+    static class UploaderNotFoundException extends UpdateStatusException {
+        private static final long serialVersionUID = 1041685850011544106L;
+
+        public UploaderNotFoundException(final Context context) {
+            super(context.getString(R.string.error_message_image_uploader_not_found));
+        }
+    }
+
+    static class UploadException extends UpdateStatusException {
+        private static final long serialVersionUID = 8596614696393917525L;
+
+        public UploadException(final Context context) {
+            super(context.getString(R.string.error_message_image_upload_failed));
+        }
+
+        public UploadException(final String message) {
+            super(message);
+        }
+    }
+}

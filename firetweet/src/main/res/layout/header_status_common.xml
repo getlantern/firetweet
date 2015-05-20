@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Twidere - Twitter client for Android
+  ~ Firetweet - Twitter client for Android
   ~
   ~  Copyright (C) 2012-2015 Mariotaku Lee <mariotaku.lee@gmail.com>
   ~
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/padding_profile_image_detail_page"/>
 
-        <org.mariotaku.twidere.view.themed.ThemedTextView
+        <org.getlantern.firetweet.view.themed.ThemedTextView
             android:id="@+id/retweeted_by"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             tools:text="Retweeted by Mariotaku"/>
     </LinearLayout>
 
-    <org.mariotaku.twidere.view.ColorLabelRelativeLayout
+    <org.getlantern.firetweet.view.ColorLabelRelativeLayout
         android:id="@+id/profile_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
         android:padding="@dimen/element_spacing_small"
         app:ignorePadding="true">
 
-        <org.mariotaku.twidere.view.ShapedImageView
+        <org.getlantern.firetweet.view.ShapedImageView
             android:id="@+id/profile_image"
             style="?profileImageStyle"
             android:layout_width="@dimen/icon_size_card_details"
@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <org.mariotaku.twidere.view.themed.ThemedTextView
+                <org.getlantern.firetweet.view.themed.ThemedTextView
                     android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
                     android:textColor="?android:textColorPrimary"
                     tools:text="Name"/>
 
-                <org.mariotaku.twidere.view.themed.ThemedTextView
+                <org.getlantern.firetweet.view.themed.ThemedTextView
                     android:id="@+id/screen_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -125,14 +125,14 @@
                     tools:text="\@username"/>
             </LinearLayout>
 
-            <org.mariotaku.twidere.view.themed.ThemedTextView
+            <org.getlantern.firetweet.view.themed.ThemedTextView
                 android:id="@+id/time_source"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/element_spacing_small"
                 android:gravity="center_vertical"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                tools:text="Jan 1 2015 0:00, via Twidere"/>
+                tools:text="Jan 1 2015 0:00, via Firetweet"/>
 
         </LinearLayout>
 
@@ -160,10 +160,10 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"/>
         </FrameLayout>
-    </org.mariotaku.twidere.view.ColorLabelRelativeLayout>
+    </org.getlantern.firetweet.view.ColorLabelRelativeLayout>
 
 
-    <org.mariotaku.twidere.view.StatusTextView
+    <org.getlantern.firetweet.view.StatusTextView
         android:id="@+id/quote_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -181,7 +181,7 @@
         tools:visibility="visible"/>
 
 
-    <org.mariotaku.twidere.view.ForegroundColorView
+    <org.getlantern.firetweet.view.ForegroundColorView
         android:id="@+id/quote_indicator"
         android:layout_width="@dimen/element_spacing_small"
         android:layout_height="wrap_content"
@@ -206,7 +206,7 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <org.mariotaku.twidere.view.themed.ThemedTextView
+        <org.getlantern.firetweet.view.themed.ThemedTextView
             android:id="@+id/quoted_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -215,7 +215,7 @@
             android:textColor="?android:textColorPrimary"
             tools:text="Name"/>
 
-        <org.mariotaku.twidere.view.themed.ThemedTextView
+        <org.getlantern.firetweet.view.themed.ThemedTextView
             android:id="@+id/quoted_screen_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -234,7 +234,7 @@
         android:layout_toRightOf="@+id/quote_indicator"
         tools:visibility="visible">
 
-        <org.mariotaku.twidere.view.CardMediaContainer
+        <org.getlantern.firetweet.view.CardMediaContainer
             android:id="@+id/media_preview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -245,7 +245,7 @@
 
             <include layout="@layout/layout_card_media_preview"/>
 
-        </org.mariotaku.twidere.view.CardMediaContainer>
+        </org.getlantern.firetweet.view.CardMediaContainer>
 
         <LinearLayout
             android:id="@+id/media_preview_load"
@@ -258,7 +258,7 @@
             android:visibility="gone"
             tools:visibility="visible">
 
-            <org.mariotaku.twidere.view.ActionIconThemedTextView
+            <org.getlantern.firetweet.view.ActionIconThemedTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -271,7 +271,7 @@
 
     </FrameLayout>
 
-    <org.mariotaku.twidere.view.StatusTextView
+    <org.getlantern.firetweet.view.StatusTextView
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -284,7 +284,7 @@
         android:textIsSelectable="true"
         tools:text="@string/sample_status_text"/>
 
-    <org.mariotaku.twidere.view.TwitterCardContainer
+    <org.getlantern.firetweet.view.TwitterCardContainer
         android:id="@+id/twitter_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -292,7 +292,7 @@
         android:layout_toRightOf="@+id/quote_indicator"
         android:visibility="gone"/>
 
-    <org.mariotaku.twidere.view.themed.ThemedTextView
+    <org.getlantern.firetweet.view.themed.ThemedTextView
         android:id="@+id/location_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -330,7 +330,7 @@
             android:orientation="horizontal"
             android:padding="@dimen/element_spacing_normal">
 
-            <org.mariotaku.twidere.view.themed.ThemedTextView
+            <org.getlantern.firetweet.view.themed.ThemedTextView
                 android:id="@+id/replies_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -340,7 +340,7 @@
                 android:textColor="?android:textColorPrimary"
                 tools:text="255"/>
 
-            <org.mariotaku.twidere.view.themed.ThemedTextView
+            <org.getlantern.firetweet.view.themed.ThemedTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
@@ -360,7 +360,7 @@
             android:orientation="horizontal"
             android:padding="@dimen/element_spacing_normal">
 
-            <org.mariotaku.twidere.view.themed.ThemedTextView
+            <org.getlantern.firetweet.view.themed.ThemedTextView
                 android:id="@+id/retweets_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -370,7 +370,7 @@
                 android:textColor="?android:textColorPrimary"
                 tools:text="255"/>
 
-            <org.mariotaku.twidere.view.themed.ThemedTextView
+            <org.getlantern.firetweet.view.themed.ThemedTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
@@ -390,7 +390,7 @@
             android:orientation="horizontal"
             android:padding="@dimen/element_spacing_normal">
 
-            <org.mariotaku.twidere.view.themed.ThemedTextView
+            <org.getlantern.firetweet.view.themed.ThemedTextView
                 android:id="@+id/favorites_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -400,7 +400,7 @@
                 android:textColor="?android:textColorPrimary"
                 tools:text="255"/>
 
-            <org.mariotaku.twidere.view.themed.ThemedTextView
+            <org.getlantern.firetweet.view.themed.ThemedTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
@@ -411,7 +411,7 @@
 
     </LinearLayout>
 
-    <org.mariotaku.twidere.view.TwidereActionMenuView
+    <org.getlantern.firetweet.view.FiretweetActionMenuView
         android:id="@+id/menu_bar"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"

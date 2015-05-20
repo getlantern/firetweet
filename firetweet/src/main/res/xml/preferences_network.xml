@@ -7,18 +7,18 @@
         android:key="category_connectivity"
         android:title="@string/connectivity">
 
-        <org.mariotaku.twidere.preference.AutoFixCheckBoxPreference
+        <org.getlantern.firetweet.preference.AutoFixCheckBoxPreference
             android:defaultValue="true"
             android:key="fast_image_loading"
             android:summary="@string/fast_image_loading_summary"
             android:title="@string/fast_image_loading"/>
-        <org.mariotaku.twidere.preference.AutoFixCheckBoxPreference
+        <org.getlantern.firetweet.preference.AutoFixCheckBoxPreference
             android:defaultValue="false"
             android:key="tcp_dns_query"
             android:summary="@string/tcp_dns_query_summary"
             android:title="@string/tcp_dns_query"/>
 
-        <org.mariotaku.twidere.preference.SummaryEditTextPreference
+        <org.getlantern.firetweet.preference.SummaryEditTextPreference
             android:defaultValue="8.8.8.8"
             android:dialogTitle="@string/dns_server"
             android:inputType="textVisiblePassword"
@@ -28,7 +28,7 @@
             android:title="@string/dns_server"/>
 
         <Preference
-            android:fragment="org.mariotaku.twidere.fragment.HostMappingsListFragment"
+            android:fragment="org.getlantern.firetweet.fragment.HostMappingsListFragment"
             android:key="custom_host_mapping"
             android:summary="@string/custom_host_mapping_summary"
             android:title="@string/custom_host_mapping"/>
@@ -36,20 +36,20 @@
     <PreferenceCategory
         android:key="category_proxy"
         android:title="@string/proxy">
-        <org.mariotaku.twidere.preference.AutoFixCheckBoxPreference
+        <org.getlantern.firetweet.preference.AutoFixCheckBoxPreference
             android:defaultValue="false"
             android:disableDependentsState="false"
             android:key="enable_proxy"
             android:summary="@string/http_proxy_summary"
             android:title="@string/http_proxy"/>
 
-        <org.mariotaku.twidere.preference.SummaryEditTextPreference
+        <org.getlantern.firetweet.preference.SummaryEditTextPreference
             android:dependency="enable_proxy"
             android:key="proxy_host"
             android:singleLine="true"
             android:summary="%s"
             android:title="@string/proxy_host"/>
-        <org.mariotaku.twidere.preference.SummaryEditTextPreference
+        <org.getlantern.firetweet.preference.SummaryEditTextPreference
             android:dependency="enable_proxy"
             android:inputType="number"
             android:key="proxy_port"
@@ -61,7 +61,7 @@
         android:key="category_api"
         android:title="@string/api">
 
-        <org.mariotaku.twidere.preference.DefaultAPIPreference
+        <org.getlantern.firetweet.preference.DefaultAPIPreference
             android:summary="@string/default_api_settings_summary"
             android:title="@string/default_api_settings"/>
 
@@ -76,13 +76,13 @@
             android:key="thumbor_enabled"
             android:title="@string/thumbor_integration"/>
 
-        <org.mariotaku.twidere.preference.AutoFixEditTextPreference
+        <org.getlantern.firetweet.preference.AutoFixEditTextPreference
             android:dependency="thumbor_enabled"
             android:inputType="textUri"
             android:key="thumbor_address"
             android:title="@string/server_address"/>
 
-        <org.mariotaku.twidere.preference.AutoFixEditTextPreference
+        <org.getlantern.firetweet.preference.AutoFixEditTextPreference
             android:dependency="thumbor_enabled"
             android:inputType="textVisiblePassword"
             android:key="thumbor_security_key"

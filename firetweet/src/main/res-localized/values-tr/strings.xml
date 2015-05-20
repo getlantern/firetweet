@@ -43,7 +43,7 @@
   <string name="select_account">Hesap seç</string>
   <string name="username">Kullanıcı adı</string>
   <string name="password">Şifre</string>
-  <string name="label_tweetstore_provider">Twidere veritabanı sağlayıcı</string>
+  <string name="label_tweetstore_provider">Firetweet veritabanı sağlayıcı</string>
   <string name="label_refresh_service">Servisi yenile</string>
   <string name="label_background_operation_service">Arkaplan çalışma servisi</string>
   <string name="open_in_browser">Tarayıcıda aç</string>
@@ -147,7 +147,7 @@
   <string name="created_at">Oluşturuldu:</string>
   <string name="search_hint">Tweet yada kullanıcı ara</string>
   <string name="remember_position">Konumu hatırla</string>
-  <string name="remember_position_summary">Liste/Sekme konumunu Twidere kapanmadan kaydet</string>
+  <string name="remember_position_summary">Liste/Sekme konumunu Firetweet kapanmadan kaydet</string>
   <string name="user_blocked">Bu kullanıcıyı engellediniz.</string>
   <string name="users_blocked">Bu kullanıcılar engellendi.</string>
   <string name="user_unblocked">Bu kullanıcıyı engellenenlerden çıkardınız.</string>
@@ -354,7 +354,7 @@
   <string name="silent_notifications">Sessiz bildirimler</string>
   <string name="silent_notifications_summary">Bildirimler için ses/titreşim kapat</string>
   <string name="disable_background_service">Arkaplan hizmetini kapat</string>
-  <string name="disable_background_service_summary">Eğer otomatik güncelle ve veri profillemeyi kapatırsanız Twidere arkaplan servisine sahip olmaz, aptal olmayın!</string>
+  <string name="disable_background_service_summary">Eğer otomatik güncelle ve veri profillemeyi kapatırsanız Firetweet arkaplan servisine sahip olmaz, aptal olmayın!</string>
   <string name="text_copied">Metin panoya kopyalandı.</string>
   <string name="hashtag">Etiket</string>
   <string name="links">Kısayollar</string>
@@ -392,7 +392,7 @@
   <string name="preload_wifi_only">Yalnız Wi-Fi kullanarak önyükleme yap</string>
   <string name="disable_tab_swipe">Sekme kaydırmayı iptal et</string>
   <string name="sign_in_method_introduction_title">Nasıl çalışıyor?</string>
-  <string name="sign_in_method_introduction">çoğu istemci örneğin twicca bir tarayıcı açar ve size kullanıcı adı ve şifre girmenizi söyler, ve sonra sizi istemciye geri döndürür. Bazen bu çok sakıncalı olabilir. Twidere giriş için tarayıcı kullanmadan daha basit adımlar kullanır. Şifreniz hakkında endişelenmeyin. Twidere onu asla kaydetmez, bu tamamen güvenli.</string>
+  <string name="sign_in_method_introduction">çoğu istemci örneğin twicca bir tarayıcı açar ve size kullanıcı adı ve şifre girmenizi söyler, ve sonra sizi istemciye geri döndürür. Bazen bu çok sakıncalı olabilir. Firetweet giriş için tarayıcı kullanmadan daha basit adımlar kullanır. Şifreniz hakkında endişelenmeyin. Firetweet onu asla kaydetmez, bu tamamen güvenli.</string>
   <string name="quote_protected_status_notice">Korunan tweet\'i alıntı yapmak önerilmez.</string>
   <string name="edit_draft">Taslağı düzenle</string>
   <string name="profile_image">Profil resmi</string>
@@ -453,7 +453,7 @@
   <string name="created_by"><xliff:g id="created_by">%s</xliff:g> tarafından oluşturuldu</string>
   <string name="add_to_list">Listeye ekle</string>
   <string name="account_delete_confirm_title">Hesabı sil</string>
-  <string name="account_delete_confirm_message">Bu hesap Twidere\'den silinecek.</string>
+  <string name="account_delete_confirm_message">Bu hesap Firetweet\'den silinecek.</string>
   <string name="theme">Tema</string>
   <string name="theme_dark">Karanlık</string>
   <string name="theme_light">Aydınlık</string>
@@ -478,7 +478,7 @@
   <string name="next">Sonraki</string>
   <string name="settings_wizard">Ayar sihirbazı</string>
   <string name="wizard_page_welcome_title">Merhaba</string>
-  <string name="wizard_page_welcome_text">Twidere\'ı seçtiğiniz için teşekkürler.\nŞimdi ayarlamak istermisin?</string>
+  <string name="wizard_page_welcome_text">Firetweet\'ı seçtiğiniz için teşekkürler.\nŞimdi ayarlamak istermisin?</string>
   <string name="wizard_page_welcome_yes">Evet</string>
   <string name="wizard_page_welcome_not_now">Şimdi değil</string>
   <string name="wizard_page_welcome_import_settings">Ayarları import et</string>
@@ -486,9 +486,9 @@
   <string name="wizard_page_tabs_unchanged_message">"Ayarlar\"\'dan sekme ekleyebilirsiniz - \"Sekmeler"</string>
   <string name="wizard_page_hints_text">İşe yarayabilecek bazı ipuçları.</string>
   <string name="wizard_page_finished_title">Bitti</string>
-  <string name="wizard_page_finished_text">Twidere artık kullanıma hazır.</string>
+  <string name="wizard_page_finished_text">Firetweet artık kullanıma hazır.</string>
   <string name="invalid_tab">Geçersiz sekme</string>
-  <string name="send_crash_report">Twidere çökme raporunu gönder</string>
+  <string name="send_crash_report">Firetweet çökme raporunu gönder</string>
   <string name="add_to_filter">Filtre ekle</string>
   <string name="user_filter_name">Kullanıcı: <xliff:g id="name">%s</xliff:g></string>
   <string name="keyword_filter_name">Anahtar Kelime: <xliff:g id="name">%s</xliff:g></string>
@@ -502,7 +502,7 @@
   <string name="unsubscribe_from_user_list_confirm_message"><xliff:g id="name">%s</xliff:g> listesi üyeliğinden çıkılsın mı? Daha sonra tekrar üye olabilirsiniz.</string>
   <string name="destroy_status">Tweeti sil</string>
   <string name="destroy_status_confirm_message">Bu tweeti sil?</string>
-  <string name="twidere_test">Twidere test</string>
+  <string name="firetweet_test">Firetweet test</string>
   <string name="unread_count">Okunmamış sayısı</string>
   <string name="developed_by">Tarafından geliştirildi</string>
   <string name="project_account">Proje şifresi</string>

@@ -43,7 +43,7 @@
   <string name="select_account">选择帐号</string>
   <string name="username">用户名</string>
   <string name="password">密码</string>
-  <string name="label_tweetstore_provider">Twidere 数据库存储</string>
+  <string name="label_tweetstore_provider">Firetweet 数据库存储</string>
   <string name="label_refresh_service">刷新服务</string>
   <string name="label_background_operation_service">后台操作服务</string>
   <string name="open_in_browser">在浏览器中打开</string>
@@ -147,7 +147,7 @@
   <string name="created_at">创建日期</string>
   <string name="search_hint">搜索推文或用户</string>
   <string name="remember_position">记住位置</string>
-  <string name="remember_position_summary">打开Twidere时，恢复到退出前列表/页面的位置</string>
+  <string name="remember_position_summary">打开Firetweet时，恢复到退出前列表/页面的位置</string>
   <string name="user_blocked">你阻止了这个用户</string>
   <string name="users_blocked">你阻止了这些用户</string>
   <string name="user_unblocked">你解除了对这个用户的阻止</string>
@@ -356,7 +356,7 @@
   <string name="silent_notifications">静默通知</string>
   <string name="silent_notifications_summary">在特定时间为通知禁用铃声和震动</string>
   <string name="disable_background_service">禁用后台服务</string>
-  <string name="disable_background_service_summary">别傻了，Twidere在关闭自动刷新和数据统计之后是没有后台服务的。</string>
+  <string name="disable_background_service_summary">别傻了，Firetweet在关闭自动刷新和数据统计之后是没有后台服务的。</string>
   <string name="text_copied">文本已复制到剪贴板</string>
   <string name="hashtag">话题标签</string>
   <string name="links">链接</string>
@@ -396,7 +396,7 @@
   <string name="preload_wifi_only">仅使用Wi-Fi预加载</string>
   <string name="disable_tab_swipe">禁用滑动切换标签页</string>
   <string name="sign_in_method_introduction_title">输入密码登录是怎样工作的？</string>
-  <string name="sign_in_method_introduction">大多数客户端（例如twicca）通过打开浏览器验证登录Twitter，然后浏览器再将你引导回客户端。有时这会导致许多不便，因为一些第三方浏览器不会引导你回客户端。\n\nTwidere使用更加简便的步骤代替浏览器登录到Twitter，不必担心你会泄露你的密码，这个方式非常安全！\n\nTwidere不会保存密码，仅在登录时发送给Twitter，只要网络足够安全，你的密码永远不会被第三方获取！</string>
+  <string name="sign_in_method_introduction">大多数客户端（例如twicca）通过打开浏览器验证登录Twitter，然后浏览器再将你引导回客户端。有时这会导致许多不便，因为一些第三方浏览器不会引导你回客户端。\n\nFiretweet使用更加简便的步骤代替浏览器登录到Twitter，不必担心你会泄露你的密码，这个方式非常安全！\n\nFiretweet不会保存密码，仅在登录时发送给Twitter，只要网络足够安全，你的密码永远不会被第三方获取！</string>
   <string name="quote_protected_status_notice">不建议引用受保护的推文</string>
   <string name="edit_draft">编辑草稿</string>
   <string name="profile_image">个人资料图片</string>
@@ -466,7 +466,7 @@
   <string name="created_by">由<xliff:g id="created_by">%s</xliff:g>创建</string>
   <string name="add_to_list">添加到列表</string>
   <string name="account_delete_confirm_title">删除帐号</string>
-  <string name="account_delete_confirm_message">这个帐号将会从Twidere中删除</string>
+  <string name="account_delete_confirm_message">这个帐号将会从Firetweet中删除</string>
   <string name="theme">主题</string>
   <string name="theme_dark">暗色</string>
   <string name="theme_light">亮色</string>
@@ -493,20 +493,20 @@
   <string name="next">下一步</string>
   <string name="settings_wizard">设定向导</string>
   <string name="wizard_page_welcome_title">欢迎</string>
-  <string name="wizard_page_welcome_text">感谢你选择Twidere。\n你想现在设定它吗？</string>
+  <string name="wizard_page_welcome_text">感谢你选择Firetweet。\n你想现在设定它吗？</string>
   <string name="wizard_page_welcome_yes">是的</string>
   <string name="wizard_page_welcome_not_now">暂时不</string>
   <string name="wizard_page_welcome_import_settings">导入设定</string>
   <string name="wizard_page_theme_text">选择一个你喜欢的主题。</string>
-  <string name="wizard_page_tabs_text">添加一些标签页到Twidere。\n时刻关注你在意的人和事。</string>
+  <string name="wizard_page_tabs_text">添加一些标签页到Firetweet。\n时刻关注你在意的人和事。</string>
   <string name="wizard_page_tabs_unchanged_message">你可以稍后在设定中添加标签页</string>
   <string name="wizard_page_cards_text">设定卡片项。</string>
   <string name="wizard_page_hints_text">这里有一些有用的小提示。</string>
-  <string name="wizard_page_usage_statistics_text">Twidere加入了一些需要收集使用信息的研究项目。</string>
+  <string name="wizard_page_usage_statistics_text">Firetweet加入了一些需要收集使用信息的研究项目。</string>
   <string name="wizard_page_finished_title">完成</string>
-  <string name="wizard_page_finished_text">现在Twidere已经可以使用了。</string>
+  <string name="wizard_page_finished_text">现在Firetweet已经可以使用了。</string>
   <string name="invalid_tab">无效标签页</string>
-  <string name="send_crash_report">发送Twidere的崩溃报告</string>
+  <string name="send_crash_report">发送Firetweet的崩溃报告</string>
   <string name="add_to_filter">添加到过滤器</string>
   <string name="user_filter_name">用户：<xliff:g id="name">%s</xliff:g></string>
   <string name="keyword_filter_name">关键词：<xliff:g id="name">%s</xliff:g></string>
@@ -526,7 +526,7 @@
   <string name="signing_in_error_browser_sign_in_hint">登录时发生问题，你可能需要使用“浏览器登录”。（这将在登录时暂时忽略自定义API设定）</string>
   <string name="report_user">报告<xliff:g id="name">%s</xliff:g></string>
   <string name="report_user_confirm_message">报告<xliff:g id="name">%s</xliff:g>发送垃圾信息吗？你将同时阻止这个用户。</string>
-  <string name="twidere_test">Twidere 测试</string>
+  <string name="firetweet_test">Firetweet 测试</string>
   <string name="staggered_home_timeline">主页信息流</string>
   <string name="unread_count">未读条目</string>
   <string name="developed_by">开发者</string>
@@ -558,11 +558,11 @@
   <string name="view_replies">查看回复</string>
   <string name="compact_cards">紧凑卡片视图</string>
   <string name="compact_cards_summary">在屏幕中显示更多卡片</string>
-  <string name="dashclock_home_unread_count_name">Twidere主页未读条数</string>
+  <string name="dashclock_home_unread_count_name">Firetweet主页未读条数</string>
   <string name="dashclock_home_unread_count_description">主页未读条数</string>
-  <string name="dashclock_mentions_unread_count_name">Twidere提及未读条数</string>
+  <string name="dashclock_mentions_unread_count_name">Firetweet提及未读条数</string>
   <string name="dashclock_mentions_unread_count_description">提及未读条数</string>
-  <string name="dashclock_messages_unread_count_name">Twidere私信未读条数</string>
+  <string name="dashclock_messages_unread_count_name">Firetweet私信未读条数</string>
   <string name="dashclock_messages_unread_count_description">私信未读条数</string>
   <string name="N_new_statuses_quantity_one"><xliff:g id="items">%d</xliff:g>条新推文</string>
   <string name="N_new_statuses_quantity_other"><xliff:g id="items">%d</xliff:g>条新推文</string>
@@ -614,7 +614,7 @@
   <string name="load_more_from_top_summary">如果你偏好从底部向上阅读的话会很有用</string>
   <string name="twitter_link_handler">处理Twitter链接</string>
   <string name="compose_now">即时撰写</string>
-  <string name="compose_now_summary">用Twidere的撰写界面替代Google Now的上滑操作</string>
+  <string name="compose_now_summary">用Firetweet的撰写界面替代Google Now的上滑操作</string>
   <string name="compose_now_action">“即时撰写”的默认操作</string>
   <string name="open_with_account">用帐号打开</string>
   <string name="card_highlight_option">卡片高亮选项</string>
@@ -714,14 +714,14 @@
   <string name="designed_by">设计</string>
   <string name="designer_name">Uucky Lee</string>
   <string name="import_export_settings">导入/导出设定</string>
-  <string name="usage_statistics_header_summary">Twidere参与了一些研究项目，加入这些项目帮助Twidere和更多应用做得更好。</string>
+  <string name="usage_statistics_header_summary">Firetweet参与了一些研究项目，加入这些项目帮助Firetweet和更多应用做得更好。</string>
   <string name="no_tab">没有标签页</string>
   <string name="user_protected_summary">你需要向这个受保护的用户发送关注请求来查看推文</string>
   <string name="no_account">没有帐号</string>
-  <string name="permission_description_shorten_status">应用程序可以为Twidere缩短推文，所以它可以访问你正在发送的推文。</string>
-  <string name="permission_description_upload_media">应用程序可以为Twidere上传媒体，所以它可以访问你正在发送的推文中的媒体。</string>
-  <string name="permission_description_sync_timeline">应用程序可以为Twidere同步阅读位置，所以它可以访问你的阅读位置。</string>
-  <string name="usage_statistics_notification_summary">帮助我们改进Twidere！</string>
+  <string name="permission_description_shorten_status">应用程序可以为Firetweet缩短推文，所以它可以访问你正在发送的推文。</string>
+  <string name="permission_description_upload_media">应用程序可以为Firetweet上传媒体，所以它可以访问你正在发送的推文中的媒体。</string>
+  <string name="permission_description_sync_timeline">应用程序可以为Firetweet同步阅读位置，所以它可以访问你的阅读位置。</string>
+  <string name="usage_statistics_notification_summary">帮助我们改进Firetweet！</string>
   <string name="from_name">来自<xliff:g id="name">%1$s</xliff:g></string>
   <string name="from_name_and_name">来自<xliff:g id="name">%1$s</xliff:g>和<xliff:g id="name">%2$s</xliff:g></string>
   <string name="from_name_and_N_others">来自<xliff:g id="name">%1$s</xliff:g>和其他<xliff:g id="name">%2$d</xliff:g>人</string>

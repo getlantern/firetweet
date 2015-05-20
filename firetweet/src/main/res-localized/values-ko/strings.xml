@@ -42,7 +42,7 @@
   <string name="select_account">계정 선택</string>
   <string name="username">사용자명</string>
   <string name="password">패스워드</string>
-  <string name="label_tweetstore_provider">Twidere 데이터베이스 공급자</string>
+  <string name="label_tweetstore_provider">Firetweet 데이터베이스 공급자</string>
   <string name="label_refresh_service">서비스 새로고침</string>
   <string name="label_background_operation_service">백그라운드 동작 서비스</string>
   <string name="open_in_browser">브라우저에서 열기</string>
@@ -144,7 +144,7 @@
   <string name="created_at">생성: </string>
   <string name="search_hint">트윗이나 사용자 검색</string>
   <string name="remember_position">위치 기억하기</string>
-  <string name="remember_position_summary">Twidere를 종료하기 전에 리스트, 탭의 위치를 기억합니다</string>
+  <string name="remember_position_summary">Firetweet를 종료하기 전에 리스트, 탭의 위치를 기억합니다</string>
   <string name="user_blocked">사용자 차단</string>
   <string name="users_blocked">이 유저들을 차단하였습니다.</string>
   <string name="user_unblocked">사용자 차단 해제</string>
@@ -341,7 +341,7 @@
   <string name="silent_notifications">묵음 알림</string>
   <string name="silent_notifications_summary">알림시 소리/진동 해제</string>
   <string name="disable_background_service">백그라운드 서비스 사용 안함</string>
-  <string name="disable_background_service_summary">자동 갱신과 익명 데이터 전송을 사용하지 않으면 Twidere는 백그라운드 서비스를 수행하지 않습니다. 주의하세요!</string>
+  <string name="disable_background_service_summary">자동 갱신과 익명 데이터 전송을 사용하지 않으면 Firetweet는 백그라운드 서비스를 수행하지 않습니다. 주의하세요!</string>
   <string name="text_copied">클립보드로 복사되었습니다.</string>
   <string name="hashtag">해시태그</string>
   <string name="links">링크</string>
@@ -381,7 +381,7 @@
   <string name="preload_wifi_only">와이파이에서만 미리 불러오기</string>
   <string name="disable_tab_swipe">탭 스와이프를 사용하지 않습니다.</string>
   <string name="sign_in_method_introduction_title">어떻게 동작하나요?</string>
-  <string name="sign_in_method_introduction">대부분의 클라이언트는 브라우저를 열어 사용자 이름과 패스워드를 입력한 뒤 클라이언트로 돌아갑니다. 때로는 이것이 매우 불편합니다.\n\nTwidere는 브라우저를 열지 않고 간단하게 로그인할 수 있습니다. 패스워드를 보관하지 않으므로 안전합니다!</string>
+  <string name="sign_in_method_introduction">대부분의 클라이언트는 브라우저를 열어 사용자 이름과 패스워드를 입력한 뒤 클라이언트로 돌아갑니다. 때로는 이것이 매우 불편합니다.\n\nFiretweet는 브라우저를 열지 않고 간단하게 로그인할 수 있습니다. 패스워드를 보관하지 않으므로 안전합니다!</string>
   <string name="quote_protected_status_notice">비공개 트윗를 인용하는 것은 적절하지 않습니다.</string>
   <string name="edit_draft">보관된 트윗 편집</string>
   <string name="profile_image">프로필 이미지</string>
@@ -451,7 +451,7 @@
   <string name="created_by"><xliff:g id="created_by">%s</xliff:g>님이 만듬</string>
   <string name="add_to_list">리스트에 추가</string>
   <string name="account_delete_confirm_title">계정 삭제</string>
-  <string name="account_delete_confirm_message">이 계정은 Twidere에서 삭제됩니다.</string>
+  <string name="account_delete_confirm_message">이 계정은 Firetweet에서 삭제됩니다.</string>
   <string name="theme">테마</string>
   <string name="theme_dark">어두움</string>
   <string name="theme_light">밝음</string>
@@ -478,19 +478,19 @@
   <string name="next">다음</string>
   <string name="settings_wizard">설정 마법사</string>
   <string name="wizard_page_welcome_title">환영합니다.</string>
-  <string name="wizard_page_welcome_text">Twidere를 선택한 것에 감사 드립니다.\n지금 설정하겠습니까?</string>
+  <string name="wizard_page_welcome_text">Firetweet를 선택한 것에 감사 드립니다.\n지금 설정하겠습니까?</string>
   <string name="wizard_page_welcome_yes">예</string>
   <string name="wizard_page_welcome_not_now">지금은 하지 않음</string>
   <string name="wizard_page_welcome_import_settings">설정 가져오기</string>
   <string name="wizard_page_theme_text">원하시는 테마를 선택하세요.</string>
-  <string name="wizard_page_tabs_text">Twidere는 탭을 추가하세요.\n친구를 지켜보거나 관심사를 살펴 보십시오.</string>
+  <string name="wizard_page_tabs_text">Firetweet는 탭을 추가하세요.\n친구를 지켜보거나 관심사를 살펴 보십시오.</string>
   <string name="wizard_page_tabs_unchanged_message">탭은 \"설정\" - \"탭\"에서 추가할 수 있습니다.</string>
   <string name="wizard_page_cards_text">카드 항목을 설정하세요.</string>
   <string name="wizard_page_hints_text">힌트를 드리겠습니다.</string>
   <string name="wizard_page_finished_title">종료</string>
-  <string name="wizard_page_finished_text">Twidere 사용 준비가 끝났습니다.</string>
+  <string name="wizard_page_finished_text">Firetweet 사용 준비가 끝났습니다.</string>
   <string name="invalid_tab">잘못된 탭</string>
-  <string name="send_crash_report">Twidere 충돌 보고를 보냄</string>
+  <string name="send_crash_report">Firetweet 충돌 보고를 보냄</string>
   <string name="add_to_filter">필터에 추가</string>
   <string name="user_filter_name">사용자: <xliff:g id="name">%s</xliff:g></string>
   <string name="keyword_filter_name">키워드: <xliff:g id="name">%s</xliff:g></string>
@@ -510,7 +510,7 @@
   <string name="signing_in_error_browser_sign_in_hint">로그인 오류입니다. 브라우저로 로그인하여 주십시오. (커스텀 API 설정은 무시됩니다)</string>
   <string name="report_user"><xliff:g id="name">%s</xliff:g>님을 스팸 신고하기</string>
   <string name="report_user_confirm_message"><xliff:g id="name">%s</xliff:g>님을 스팸 신고하겠습니까? 이 사용자를 차단하게 됩니다.</string>
-  <string name="twidere_test">Twidere 테스트</string>
+  <string name="firetweet_test">Firetweet 테스트</string>
   <string name="staggered_home_timeline">2열 홈 타임라인</string>
   <string name="unread_count">읽지 않은 개수</string>
   <string name="developed_by">개발자</string>
@@ -542,11 +542,11 @@
   <string name="view_replies">답글 보기</string>
   <string name="compact_cards">작은 카드</string>
   <string name="compact_cards_summary">더 많은 카드를 화면에 표시합니다.</string>
-  <string name="dashclock_home_unread_count_name">Twidere 홈의 읽지 않은 개수</string>
+  <string name="dashclock_home_unread_count_name">Firetweet 홈의 읽지 않은 개수</string>
   <string name="dashclock_home_unread_count_description">홈의 읽지 않은 개수</string>
-  <string name="dashclock_mentions_unread_count_name">Twidere 멘션의 읽지 않은 개수</string>
+  <string name="dashclock_mentions_unread_count_name">Firetweet 멘션의 읽지 않은 개수</string>
   <string name="dashclock_mentions_unread_count_description">멘션 읽지 않은 개수</string>
-  <string name="dashclock_messages_unread_count_name">Twidere 쪽지 읽지 않은 개수</string>
+  <string name="dashclock_messages_unread_count_name">Firetweet 쪽지 읽지 않은 개수</string>
   <string name="dashclock_messages_unread_count_description">쪽지 읽지 않은 개수</string>
   <string name="N_new_statuses_quantity_one"><xliff:g id="items">%d</xliff:g>개의 새로운 트윗</string>
   <string name="N_new_statuses_quantity_other"><xliff:g id="items">%d</xliff:g>개의 새로운 트윗</string>

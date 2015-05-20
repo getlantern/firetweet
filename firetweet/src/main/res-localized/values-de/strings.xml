@@ -43,7 +43,7 @@
   <string name="select_account">Account auswählen</string>
   <string name="username">Benutzername</string>
   <string name="password">Passwort</string>
-  <string name="label_tweetstore_provider">Twidere Datenbank Anbieter</string>
+  <string name="label_tweetstore_provider">Firetweet Datenbank Anbieter</string>
   <string name="label_refresh_service">Dienst aktualisieren</string>
   <string name="label_background_operation_service">Hintergrunddienste</string>
   <string name="open_in_browser">Im Browser öffnen</string>
@@ -393,7 +393,7 @@
   <string name="preload_wifi_only">Vorausladen nur mit WLAN</string>
   <string name="disable_tab_swipe">Deaktiviere wischen für Reiter</string>
   <string name="sign_in_method_introduction_title">Wie funktioniert es?</string>
-  <string name="sign_in_method_introduction">Die meisten Anwendungen öffnen einen externen Browser, um dort nach dem Benutzernamen und Passwort zu fragen. Dies kann manchmal sehr umständlich sein.\n\nTwidere öffnet keinen externen Browser, sondern verwendet einfachere Methoden, um sich anzumelden. Twidere wird niemals Passwörter speichern und ist daher völlig sicher!</string>
+  <string name="sign_in_method_introduction">Die meisten Anwendungen öffnen einen externen Browser, um dort nach dem Benutzernamen und Passwort zu fragen. Dies kann manchmal sehr umständlich sein.\n\nFiretweet öffnet keinen externen Browser, sondern verwendet einfachere Methoden, um sich anzumelden. Firetweet wird niemals Passwörter speichern und ist daher völlig sicher!</string>
   <string name="quote_protected_status_notice">Es ist nicht empfohlen einen geschützten Tweet zu zitieren.</string>
   <string name="edit_draft">Bearbeite Entwurf</string>
   <string name="profile_image">Profilbild</string>
@@ -463,7 +463,7 @@
   <string name="created_by">Erstellt von <xliff:g id="created_by">%s</xliff:g></string>
   <string name="add_to_list">Zur Liste hinzufügen</string>
   <string name="account_delete_confirm_title">Account löschen</string>
-  <string name="account_delete_confirm_message">Dieser Account wird von Twidere gelöscht.</string>
+  <string name="account_delete_confirm_message">Dieser Account wird von Firetweet gelöscht.</string>
   <string name="theme">Theme</string>
   <string name="theme_dark">Dunkel</string>
   <string name="theme_light">Hell</string>
@@ -490,7 +490,7 @@
   <string name="next">Weiter</string>
   <string name="settings_wizard">Einstellungsdialog</string>
   <string name="wizard_page_welcome_title">Willkomen</string>
-  <string name="wizard_page_welcome_text">Danke, dass du dich für Twidere entschieden hast.\nMöchtest du die Anwendung jetzt konfigurieren?</string>
+  <string name="wizard_page_welcome_text">Danke, dass du dich für Firetweet entschieden hast.\nMöchtest du die Anwendung jetzt konfigurieren?</string>
   <string name="wizard_page_welcome_yes">Ja</string>
   <string name="wizard_page_welcome_not_now">Nicht jetzt</string>
   <string name="wizard_page_welcome_import_settings">Einstellungen importieren</string>
@@ -499,9 +499,9 @@
   <string name="wizard_page_tabs_unchanged_message">Neue Tabs in \"Einstellungen\" - \"Reiter\"</string>
   <string name="wizard_page_cards_text">Tweet-Karten konfigurieren.</string>
   <string name="wizard_page_hints_text">Hier sind ein paar nützliche Hinweise.</string>
-  <string name="wizard_page_usage_statistics_text">Twidere hat an einem Forschungsprojekt teilgenommen, das ein paar Nutzungsstatistiken benötigt.</string>
+  <string name="wizard_page_usage_statistics_text">Firetweet hat an einem Forschungsprojekt teilgenommen, das ein paar Nutzungsstatistiken benötigt.</string>
   <string name="wizard_page_finished_title">Fertig</string>
-  <string name="wizard_page_finished_text">Twidere ist jetzt bereit.</string>
+  <string name="wizard_page_finished_text">Firetweet ist jetzt bereit.</string>
   <string name="invalid_tab">Ungültiger Tab</string>
   <string name="send_crash_report">Absturzbericht senden</string>
   <string name="add_to_filter">Zum Filter hinzufügen</string>
@@ -523,11 +523,11 @@
   <string name="signing_in_error_browser_sign_in_hint">Fehler bei der Anmeldung, bitte melde Dich im Browser an.</string>
   <string name="report_user"><xliff:g id="name">%s</xliff:g> melden</string>
   <string name="report_user_confirm_message"><xliff:g id="name">%s</xliff:g> als Spam melden? Dieser Benutzer wird gleichzeitig geblockt.</string>
-  <string name="twidere_test">Twidere test</string>
+  <string name="firetweet_test">Firetweet test</string>
   <string name="staggered_home_timeline">Gestaffelte Timeline</string>
   <string name="unread_count">Anzahl ungelesene</string>
   <string name="developed_by">Entwickelt von</string>
-  <string name="project_account">Twitter-Account von Twidere</string>
+  <string name="project_account">Twitter-Account von Firetweet</string>
   <string name="translators">Übersetzer</string>
   <string name="translate">Übersetzen</string>
   <string name="sponsored_by">Gesponsort von</string>
@@ -704,7 +704,7 @@
   <string name="unknown_location">Unbekannte Position</string>
   <string name="designed_by">Designed von</string>
   <string name="import_export_settings">Einstellungen importieren/exportieren</string>
-  <string name="usage_statistics_header_summary">Twidere hat an einem Forschungsprojekt teilgenommen, an diesem Projekt mitzumachen wird Twidere und andere Anwendungen verbessern.</string>
+  <string name="usage_statistics_header_summary">Firetweet hat an einem Forschungsprojekt teilgenommen, an diesem Projekt mitzumachen wird Firetweet und andere Anwendungen verbessern.</string>
   <string name="no_tab">Kein Tab</string>
   <string name="user_protected_summary">Du musst eine Follow-Anfrage an diesen geschützten Nutzer schicken um Tweets zu sehen</string>
   <string name="pebble_notifications_summary">Notifications an Pebble senden</string>

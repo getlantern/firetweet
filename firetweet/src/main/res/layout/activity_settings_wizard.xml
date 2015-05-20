@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Twidere - Twitter client for Android
+  ~ Firetweet - Twitter client for Android
   ~
   ~  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
   ~
@@ -23,12 +23,12 @@
        xmlns:tools="http://schemas.android.com/tools"
        tools:context=".activity.SettingsWizardActivity">
 
-    <org.mariotaku.twidere.view.ExtendedViewPager
+    <org.getlantern.firetweet.view.ExtendedViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <org.mariotaku.twidere.view.LinePageIndicator
+    <org.getlantern.firetweet.view.LinePageIndicator
         android:id="@+id/indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

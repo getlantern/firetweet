@@ -18,7 +18,7 @@ package org.mariotaku.dynamicgridview;
 
 import android.content.Context;
 
-import org.mariotaku.twidere.adapter.ArrayAdapter;
+import org.getlantern.firetweet.adapter.ArrayAdapter;
 
 import java.util.Collection;
 import java.util.Comparator;

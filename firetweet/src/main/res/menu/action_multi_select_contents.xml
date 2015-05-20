@@ -4,7 +4,7 @@
 
     <item
         android:id="@id/select_account"
-        android:actionProviderClass="org.mariotaku.twidere.menu.AccountActionProvider"
+        android:actionProviderClass="org.getlantern.firetweet.menu.AccountActionProvider"
         android:icon="@drawable/ic_action_user"
         app:showAsAction="always"
         android:title="@string/select_account"/>

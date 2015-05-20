@@ -43,7 +43,7 @@
   <string name="select_account">Pilih akun</string>
   <string name="username">Nama pengguna</string>
   <string name="password">Kata Sandi</string>
-  <string name="label_tweetstore_provider">Penyedia database Twidere</string>
+  <string name="label_tweetstore_provider">Penyedia database Firetweet</string>
   <string name="label_refresh_service">Segarkan layanan</string>
   <string name="label_background_operation_service">Latar Belakang layanan operasi</string>
   <string name="open_in_browser">Buka di Browser</string>
@@ -147,7 +147,7 @@
   <string name="created_at">Dibuat pada</string>
   <string name="search_hint">Pencarian tweets atau pengguna</string>
   <string name="remember_position">Ingat posisi</string>
-  <string name="remember_position_summary">Ingat posisi daftar/tab sebelum menutup Twidere</string>
+  <string name="remember_position_summary">Ingat posisi daftar/tab sebelum menutup Firetweet</string>
   <string name="user_blocked">Unlock pengguna ini.</string>
   <string name="users_blocked">Blokir pengguna ini.</string>
   <string name="user_unblocked">Unblock pengguna ini.</string>
@@ -345,7 +345,7 @@
   <string name="silent_notifications">Notifikasi diam</string>
   <string name="silent_notifications_summary">Matikan nada dering/getar untuk notifikasi</string>
   <string name="disable_background_service">Matikan layanan background</string>
-  <string name="disable_background_service_summary">Twidere tak memiliki layanan latar belakang jika anda mematikan pembaruan otomatis (auto refresh) dan pemrofilan data (data profiling), jangan bercanda!</string>
+  <string name="disable_background_service_summary">Firetweet tak memiliki layanan latar belakang jika anda mematikan pembaruan otomatis (auto refresh) dan pemrofilan data (data profiling), jangan bercanda!</string>
   <string name="text_copied">Teks telah dikopi ke clipboard.</string>
   <string name="hashtag">tanda pagar</string>
   <string name="links">Tautan</string>
@@ -385,7 +385,7 @@
   <string name="preload_wifi_only">Preload menggunakan Wi-Fi saja</string>
   <string name="disable_tab_swipe">Nonaktifkan tab menggesek</string>
   <string name="sign_in_method_introduction_title">Bagaimana cara kerjanya?</string>
-  <string name="sign_in_method_introduction">Umumnya aplikasi pihak ke-3 seperti twicca perlu membuka peramban untuk memasukkan nama pengguna dan sandi, kemudian akan kembali ke aplikasi tersebut. Terkadang hal ini sangat menggangu. \n\nTwidere menggunakan langkah-langkah yang lebih sederhana untuk masuk ke twitter tanpa perlu membuka peramban. Tidak perlu khawatir dengan sandi anda, Twidere tidak akan pernah menyimpannya, ini benar-benar aman!</string>
+  <string name="sign_in_method_introduction">Umumnya aplikasi pihak ke-3 seperti twicca perlu membuka peramban untuk memasukkan nama pengguna dan sandi, kemudian akan kembali ke aplikasi tersebut. Terkadang hal ini sangat menggangu. \n\nFiretweet menggunakan langkah-langkah yang lebih sederhana untuk masuk ke twitter tanpa perlu membuka peramban. Tidak perlu khawatir dengan sandi anda, Firetweet tidak akan pernah menyimpannya, ini benar-benar aman!</string>
   <string name="quote_protected_status_notice">Tidak direkomendasikan untuk mengutip twit terproteksi.</string>
   <string name="edit_draft">Ubah draf</string>
   <string name="profile_image">Gambar Profil</string>
@@ -455,7 +455,7 @@
   <string name="created_by">Dibuat oleh <xliff:g id="created_by">%s</xliff:g></string>
   <string name="add_to_list">Masukkan ke daftar</string>
   <string name="account_delete_confirm_title">Hapus akun</string>
-  <string name="account_delete_confirm_message">Akun ini telah dihapus dari Twidere.</string>
+  <string name="account_delete_confirm_message">Akun ini telah dihapus dari Firetweet.</string>
   <string name="theme">Tema</string>
   <string name="theme_dark">Gelap</string>
   <string name="theme_light">Terang</string>
@@ -482,19 +482,19 @@
   <string name="next">Lanjut</string>
   <string name="settings_wizard">Pengaturan</string>
   <string name="wizard_page_welcome_title">Selamat datang</string>
-  <string name="wizard_page_welcome_text">Terima kasih telah memilih Twidere.\nAnda mau konfigurasi sekarang?</string>
+  <string name="wizard_page_welcome_text">Terima kasih telah memilih Firetweet.\nAnda mau konfigurasi sekarang?</string>
   <string name="wizard_page_welcome_yes">Ya</string>
   <string name="wizard_page_welcome_not_now">Tidak untuk saat ini</string>
   <string name="wizard_page_welcome_import_settings">Impor pengaturan</string>
   <string name="wizard_page_theme_text">Pilih tema yang Anda suka.</string>
-  <string name="wizard_page_tabs_text">Tambah beberapa tab ke Twidere.\nTetap terhubung dengan orang atau sesuatu yang kamu perhatikan.</string>
+  <string name="wizard_page_tabs_text">Tambah beberapa tab ke Firetweet.\nTetap terhubung dengan orang atau sesuatu yang kamu perhatikan.</string>
   <string name="wizard_page_tabs_unchanged_message">Anda dapat menambah tab di \"Pengaturan\" - \"Tab\"</string>
   <string name="wizard_page_cards_text">Konfigurasi item kartu.</string>
   <string name="wizard_page_hints_text">Disini ada berbagai petunjuk berguna.</string>
   <string name="wizard_page_finished_title">Selesai</string>
-  <string name="wizard_page_finished_text">Twidere sudah dapat digunakan.</string>
+  <string name="wizard_page_finished_text">Firetweet sudah dapat digunakan.</string>
   <string name="invalid_tab">Salah tab</string>
-  <string name="send_crash_report">Kirip laporan kerusakan ke Twidere</string>
+  <string name="send_crash_report">Kirip laporan kerusakan ke Firetweet</string>
   <string name="add_to_filter">Tambahkan ke penyaringan</string>
   <string name="user_filter_name">Pengguna: <xliff:g id="name">%s</xliff:g></string>
   <string name="keyword_filter_name">Kata kunci: <xliff:g id="name">%s</xliff:g></string>
@@ -514,7 +514,7 @@
   <string name="signing_in_error_browser_sign_in_hint">Kesalahan saat masuk, Anda mungkin perlu menggunakan browser untuk masuk. (Ini akan mengabaikan pengaturan kustom API selama masuk)</string>
   <string name="report_user">Laporkan <xliff:g id="name">%s</xliff:g></string>
   <string name="report_user_confirm_message">Laporkan <xliff:g id="name">%s</xliff:g> karena spam? Kamu juga bisa blokir pengguna ini.</string>
-  <string name="twidere_test">Uji Twidere</string>
+  <string name="firetweet_test">Uji Firetweet</string>
   <string name="staggered_home_timeline">Staggered Home Timeline</string>
   <string name="unread_count">Belum terbaca</string>
   <string name="developed_by">Dikelola oleh</string>
@@ -546,11 +546,11 @@
   <string name="view_replies">Lihat balasan</string>
   <string name="compact_cards">Kartu compact</string>
   <string name="compact_cards_summary">Tampilkan kartu lebih banyak</string>
-  <string name="dashclock_home_unread_count_name">Beranda Twidere belum terbaca</string>
+  <string name="dashclock_home_unread_count_name">Beranda Firetweet belum terbaca</string>
   <string name="dashclock_home_unread_count_description">Belum terbaca pada beranda</string>
-  <string name="dashclock_mentions_unread_count_name">Sebutan Twidere belum terbaca</string>
+  <string name="dashclock_mentions_unread_count_name">Sebutan Firetweet belum terbaca</string>
   <string name="dashclock_mentions_unread_count_description">Mentions belum terbaca</string>
-  <string name="dashclock_messages_unread_count_name">Pesan Twidere belum terbaca</string>
+  <string name="dashclock_messages_unread_count_name">Pesan Firetweet belum terbaca</string>
   <string name="dashclock_messages_unread_count_description">Pesan belum terbaca</string>
   <string name="N_new_statuses_quantity_one"><xliff:g id="items">%d</xliff:g> tweet baru</string>
   <string name="N_new_statuses_quantity_other"><xliff:g id="items">%d</xliff:g> tweets baru</string>

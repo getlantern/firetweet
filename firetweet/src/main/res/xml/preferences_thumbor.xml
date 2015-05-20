@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Twidere - Twitter client for Android
+  ~ Firetweet - Twitter client for Android
   ~
   ~  Copyright (C) 2012-2015 Mariotaku Lee <mariotaku.lee@gmail.com>
   ~
@@ -22,11 +22,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/thumbor_integration">
 
-    <org.mariotaku.twidere.preference.AutoFixEditTextPreference
+    <org.getlantern.firetweet.preference.AutoFixEditTextPreference
         android:inputType="textUri"
         android:key="thumbor_address"
         android:title="@string/server_address"/>
-    <org.mariotaku.twidere.preference.AutoFixEditTextPreference
+    <org.getlantern.firetweet.preference.AutoFixEditTextPreference
         android:inputType="textVisiblePassword"
         android:key="thumbor_security_key"
         android:title="@string/security_key"/>

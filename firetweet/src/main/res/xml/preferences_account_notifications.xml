@@ -4,15 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/notifications">
 
-    <org.mariotaku.twidere.preference.NotificationContentPreference
+    <org.getlantern.firetweet.preference.NotificationContentPreference
         android:key="content_to_notify"
         android:title="@string/content_to_notify"/>
 
-    <org.mariotaku.twidere.preference.RingtonePreference
+    <org.getlantern.firetweet.preference.RingtonePreference
         android:key="notification_ringtone"
         android:title="@string/notification_ringtone"/>
 
-    <org.mariotaku.twidere.preference.ColorPickerPreference
+    <org.getlantern.firetweet.preference.ColorPickerPreference
         android:defaultValue="@color/branding_color"
         android:key="notification_light_color"
         android:title="@string/notification_light_color"/>
@@ -20,21 +20,21 @@
     <PreferenceCategory
         android:key="cat_notifications_type"
         android:title="@string/notifications_type">
-        <org.mariotaku.twidere.preference.NotificationTypePreference
+        <org.getlantern.firetweet.preference.NotificationTypePreference
             android:key="notification_type_home"
             android:title="@string/home"
             app:dependencyKey="home_timeline_notification"
             app:dependencyValueDefault="false"
             app:dependencyValues="@array/dependency_values_true"
             app:notificationType="none"/>
-        <org.mariotaku.twidere.preference.NotificationTypePreference
+        <org.getlantern.firetweet.preference.NotificationTypePreference
             android:key="notification_type_mentions"
             android:title="@string/mentions"
             app:dependencyKey="mentions_notification"
             app:dependencyValueDefault="false"
             app:dependencyValues="@array/dependency_values_true"
             app:notificationType="vibration|light"/>
-        <org.mariotaku.twidere.preference.NotificationTypePreference
+        <org.getlantern.firetweet.preference.NotificationTypePreference
             android:key="notification_type_direct_messages"
             android:title="@string/direct_messages"
             app:dependencyKey="direct_messages_notification"
@@ -45,7 +45,7 @@
     <PreferenceCategory
         android:key="cat_other_settings"
         android:title="@string/other_settings">
-        <org.mariotaku.twidere.preference.AutoFixCheckBoxPreference
+        <org.getlantern.firetweet.preference.AutoFixCheckBoxPreference
             android:defaultValue="false"
             android:key="notification_following_only"
             android:summary="@string/following_only_summary"

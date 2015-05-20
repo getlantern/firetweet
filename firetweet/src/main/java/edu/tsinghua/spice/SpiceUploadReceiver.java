@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
-import org.mariotaku.twidere.util.Utils;
+import org.getlantern.firetweet.util.Utils;
 
 import edu.tsinghua.spice.Task.SpiceAsyUploadTask;
 import edu.tsinghua.spice.Utilies.SpiceProfilingUtil;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Twidere - Twitter client for Android
+  ~ Firetweet - Twitter client for Android
   ~
   ~  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
   ~
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <org.mariotaku.twidere.view.MediaSizeImageView
+            <org.getlantern.firetweet.view.MediaSizeImageView
                 android:id="@+id/media_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -54,13 +54,13 @@
                 android:layout_margin="@dimen/element_spacing_small"/>
         </FrameLayout>
 
-        <org.mariotaku.twidere.view.ColorLabelRelativeLayout
+        <org.getlantern.firetweet.view.ColorLabelRelativeLayout
             android:id="@+id/media_info_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/element_spacing_small">
 
-            <org.mariotaku.twidere.view.SquareShapedImageView
+            <org.getlantern.firetweet.view.SquareShapedImageView
                 android:id="@+id/media_profile_image"
                 style="?profileImageStyle"
                 android:layout_width="@dimen/element_size_small"
@@ -74,7 +74,7 @@
                 android:layout_marginLeft="@dimen/element_spacing_small"
                 android:layout_toRightOf="@+id/media_profile_image"
                 android:ellipsize="end"/>
-        </org.mariotaku.twidere.view.ColorLabelRelativeLayout>
+        </org.getlantern.firetweet.view.ColorLabelRelativeLayout>
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

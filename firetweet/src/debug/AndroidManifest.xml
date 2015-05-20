@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Twidere - Twitter client for Android
+  ~ Firetweet - Twitter client for Android
   ~
   ~  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
   ~
@@ -32,7 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="org.mariotaku.twidere.HIDDEN_SETTINGS_ENTRY"/>
+                <action android:name="org.getlantern.firetweet.HIDDEN_SETTINGS_ENTRY"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>

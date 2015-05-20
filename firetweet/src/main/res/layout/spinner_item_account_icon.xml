@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Twidere - Twitter client for Android
+  ~ Firetweet - Twitter client for Android
   ~
   ~  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
   ~
@@ -18,7 +18,7 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<org.mariotaku.twidere.view.SquareFrameLayout
+<org.getlantern.firetweet.view.SquareFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
@@ -26,7 +26,7 @@
     android:padding="@dimen/element_spacing_small"
     tools:layout_height="?android:actionBarSize">
 
-    <org.mariotaku.twidere.view.SquareShapedImageView
+    <org.getlantern.firetweet.view.SquareShapedImageView
         android:id="@android:id/icon"
         style="?profileImageStyle"
         android:layout_width="match_parent"
@@ -35,4 +35,4 @@
         android:contentDescription="@string/profile_image"
         android:scaleType="centerCrop"/>
 
-</org.mariotaku.twidere.view.SquareFrameLayout>
+</org.getlantern.firetweet.view.SquareFrameLayout>

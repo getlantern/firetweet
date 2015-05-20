@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="org.mariotaku.twidere"
+<manifest package="org.getlantern.firetweet"
           xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
           android:installLocation="auto">
@@ -37,34 +37,34 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.NFC"/>
-    <uses-permission android:name="org.mariotaku.twidere.permission.SHORTEN_STATUS"/>
-    <uses-permission android:name="org.mariotaku.twidere.permission.UPLOAD_MEDIA"/>
-    <uses-permission android:name="org.mariotaku.twidere.permission.SYNC_TIMELINE"/>
+    <uses-permission android:name="org.getlantern.firetweet.permission.SHORTEN_STATUS"/>
+    <uses-permission android:name="org.getlantern.firetweet.permission.UPLOAD_MEDIA"/>
+    <uses-permission android:name="org.getlantern.firetweet.permission.SYNC_TIMELINE"/>
 
     <permission-group
-        android:name="org.mariotaku.twidere.permission.PERMISSION_GROUP"
+        android:name="org.getlantern.firetweet.permission.PERMISSION_GROUP"
         android:label="@string/app_name"/>
 
     <permission
-        android:name="org.mariotaku.twidere.permission.SHORTEN_STATUS"
+        android:name="org.getlantern.firetweet.permission.SHORTEN_STATUS"
         android:description="@string/permission_description_shorten_status"
         android:label="@string/permission_label_shorten_status"
-        android:permissionGroup="org.mariotaku.twidere.permission.PERMISSION_GROUP"/>
+        android:permissionGroup="org.getlantern.firetweet.permission.PERMISSION_GROUP"/>
     <permission
-        android:name="org.mariotaku.twidere.permission.UPLOAD_MEDIA"
+        android:name="org.getlantern.firetweet.permission.UPLOAD_MEDIA"
         android:description="@string/permission_description_upload_media"
         android:label="@string/permission_label_upload_media"
-        android:permissionGroup="org.mariotaku.twidere.permission.PERMISSION_GROUP"/>
+        android:permissionGroup="org.getlantern.firetweet.permission.PERMISSION_GROUP"/>
     <permission
-        android:name="org.mariotaku.twidere.permission.SYNC_TIMELINE"
+        android:name="org.getlantern.firetweet.permission.SYNC_TIMELINE"
         android:description="@string/permission_description_sync_timeline"
         android:label="@string/permission_label_sync_timeline"
-        android:permissionGroup="org.mariotaku.twidere.permission.PERMISSION_GROUP"/>
+        android:permissionGroup="org.getlantern.firetweet.permission.PERMISSION_GROUP"/>
 
     <application
-        android:name=".app.TwidereApplication"
+        android:name=".app.FiretweetApplication"
         android:allowBackup="true"
-        android:backupAgent=".backup.TwidereBackupAgentHelper"
+        android:backupAgent=".backup.FiretweetBackupAgentHelper"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -143,7 +143,7 @@
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
-                <action android:name="org.mariotaku.twidere.HOME"/>
+                <action android:name="org.getlantern.firetweet.HOME"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -169,12 +169,12 @@
             android:windowSoftInputMode="adjustResize">
             <intent-filter android:label="@string/compose">
                 <action android:name="android.intent.action.MAIN"/>
-                <action android:name="org.mariotaku.twidere.COMPOSE"/>
-                <action android:name="org.mariotaku.twidere.REPLY"/>
-                <action android:name="org.mariotaku.twidere.QUOTE"/>
-                <action android:name="org.mariotaku.twidere.EDIT_DRAFT"/>
-                <action android:name="org.mariotaku.twidere.MENTION"/>
-                <action android:name="org.mariotaku.twidere.REPLY_MULTIPLE"/>
+                <action android:name="org.getlantern.firetweet.COMPOSE"/>
+                <action android:name="org.getlantern.firetweet.REPLY"/>
+                <action android:name="org.getlantern.firetweet.QUOTE"/>
+                <action android:name="org.getlantern.firetweet.EDIT_DRAFT"/>
+                <action android:name="org.getlantern.firetweet.MENTION"/>
+                <action android:name="org.getlantern.firetweet.REPLY_MULTIPLE"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -190,7 +190,7 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.mariotaku.twidere.activity.support.HomeActivity"/>
+                android:value="org.getlantern.firetweet.activity.support.HomeActivity"/>
         </activity>
         <activity
             android:name=".activity.support.QuickSearchBarActivity"
@@ -199,7 +199,7 @@
             android:theme="@style/Theme.Blank.Dialog"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
-                <action android:name="org.mariotaku.twidere.GLOBAL_SEARCH"/>
+                <action android:name="org.getlantern.firetweet.GLOBAL_SEARCH"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -221,7 +221,7 @@
             android:label="@string/sign_in"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
-                <action android:name="org.mariotaku.twidere.TWITTER_LOGIN"/>
+                <action android:name="org.getlantern.firetweet.TWITTER_LOGIN"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -233,7 +233,7 @@
             android:theme="@style/Theme.Blank.Dialog"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
-                <action android:name="org.mariotaku.twidere.TWITTER_BROWSER_LOGIN"/>
+                <action android:name="org.getlantern.firetweet.TWITTER_BROWSER_LOGIN"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -245,27 +245,27 @@
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MANAGE_NETWORK_USAGE"/>
-                <action android:name="org.mariotaku.twidere.SETTINGS"/>
+                <action android:name="org.getlantern.firetweet.SETTINGS"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.mariotaku.twidere.activity.support.HomeActivity"/>
+                android:value="org.getlantern.firetweet.activity.support.HomeActivity"/>
         </activity>
         <activity
             android:name=".activity.FiltersActivity"
             android:label="@string/filters">
             <intent-filter>
-                <action android:name="org.mariotaku.twidere.FILTERS"/>
+                <action android:name="org.getlantern.firetweet.FILTERS"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.mariotaku.twidere.activity.support.HomeActivity"/>
+                android:value="org.getlantern.firetweet.activity.support.HomeActivity"/>
         </activity>
         <activity
             android:name=".activity.support.APIEditorActivity"
@@ -277,7 +277,7 @@
             android:label="@string/select_account"
             android:theme="@style/Theme.Blank.Dialog">
             <intent-filter>
-                <action android:name="org.mariotaku.twidere.SELECT_ACCOUNT"/>
+                <action android:name="org.getlantern.firetweet.SELECT_ACCOUNT"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -287,7 +287,7 @@
             android:exported="false"
             android:label="@string/browser">
             <intent-filter>
-                <action android:name="org.mariotaku.twidere.VIEW_WEBPAGE"/>
+                <action android:name="org.getlantern.firetweet.VIEW_WEBPAGE"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
 
@@ -299,13 +299,13 @@
         <activity
             android:name=".activity.support.ColorPickerDialogActivity"
             android:label="@string/set_color"
-            android:theme="@style/Theme.Twidere.Light.NoDisplay"/>
+            android:theme="@style/Theme.Firetweet.Light.NoDisplay"/>
         <activity
             android:name=".activity.support.LinkHandlerActivity"
             android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.mariotaku.twidere.activity.support.HomeActivity"/>
+                android:value="org.getlantern.firetweet.activity.support.HomeActivity"/>
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -396,14 +396,14 @@
             android:label="@string/drafts"
             android:launchMode="singleTop">
             <intent-filter>
-                <action android:name="org.mariotaku.twidere.DRAFTS"/>
+                <action android:name="org.getlantern.firetweet.DRAFTS"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.mariotaku.twidere.activity.support.HomeActivity"/>
+                android:value="org.getlantern.firetweet.activity.support.HomeActivity"/>
         </activity>
         <activity
             android:name=".activity.support.MediaViewerActivity"
@@ -411,9 +411,9 @@
             android:hardwareAccelerated="true"
             android:label="@string/media"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.Twidere.Viewer">
+            android:theme="@style/Theme.Firetweet.Viewer">
             <intent-filter>
-                <action android:name="org.mariotaku.twidere.VIEW_MEDIA"/>
+                <action android:name="org.getlantern.firetweet.VIEW_MEDIA"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
@@ -427,11 +427,11 @@
             android:name=".activity.support.FileSelectorActivity"
             android:exported="false"
             android:label="@string/pick_file"
-            android:theme="@style/Theme.Twidere.Light.NoDisplay"
+            android:theme="@style/Theme.Firetweet.Light.NoDisplay"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
-                <action android:name="org.mariotaku.twidere.PICK_FILE"/>
-                <action android:name="org.mariotaku.twidere.PICK_DIRECTORY"/>
+                <action android:name="org.getlantern.firetweet.PICK_FILE"/>
+                <action android:name="org.getlantern.firetweet.PICK_DIRECTORY"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -439,12 +439,12 @@
         <activity
             android:name=".activity.support.ImagePickerActivity"
             android:exported="false"
-            android:theme="@style/Theme.Twidere.Light.NoDisplay"
+            android:theme="@style/Theme.Firetweet.Light.NoDisplay"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-                <action android:name="org.mariotaku.twidere.PICK_IMAGE"/>
-                <action android:name="org.mariotaku.twidere.TAKE_PHOTO"/>
+                <action android:name="org.getlantern.firetweet.PICK_IMAGE"/>
+                <action android:name="org.getlantern.firetweet.TAKE_PHOTO"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -455,7 +455,7 @@
             android:label="@string/edit_profile"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
-                <action android:name="org.mariotaku.twidere.EDIT_USER_PROFILE"/>
+                <action android:name="org.getlantern.firetweet.EDIT_USER_PROFILE"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -471,8 +471,8 @@
             android:theme="@style/Theme.Blank.Dialog"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
-                <action android:name="org.mariotaku.twidere.ADD_TAB"/>
-                <action android:name="org.mariotaku.twidere.EDIT_TAB"/>
+                <action android:name="org.getlantern.firetweet.ADD_TAB"/>
+                <action android:name="org.getlantern.firetweet.EDIT_TAB"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -480,7 +480,7 @@
         <activity
             android:name=".activity.CreateComposeShortcutActivity"
             android:label="@string/compose"
-            android:theme="@style/Theme.Twidere.Dark.NoDisplay">
+            android:theme="@style/Theme.Firetweet.Dark.NoDisplay">
             <intent-filter>
                 <action android:name="android.intent.action.CREATE_SHORTCUT"/>
 
@@ -492,7 +492,7 @@
             android:label="@string/permissions_request"
             android:theme="@style/Theme.Blank.Dialog">
             <intent-filter>
-                <action android:name="org.mariotaku.twidere.REQUEST_PERMISSIONS"/>
+                <action android:name="org.getlantern.firetweet.REQUEST_PERMISSIONS"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -501,7 +501,7 @@
             android:name=".activity.CameraCropActivity"
             android:exported="false">
             <intent-filter>
-                <action android:name="org.mariotaku.twidere.CAMERA_CROP"/>
+                <action android:name="org.getlantern.firetweet.CAMERA_CROP"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -511,8 +511,8 @@
             android:label="@string/select_user_list"
             android:theme="@style/Theme.Blank.Dialog">
             <intent-filter>
-                <action android:name="org.mariotaku.twidere.SELECT_USER"/>
-                <action android:name="org.mariotaku.twidere.SELECT_USER_LIST"/>
+                <action android:name="org.getlantern.firetweet.SELECT_USER"/>
+                <action android:name="org.getlantern.firetweet.SELECT_USER_LIST"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -520,7 +520,7 @@
         <activity
             android:name=".activity.SettingsWizardActivity"
             android:label="@string/settings_wizard"
-            android:theme="@style/Theme.Twidere.Wizard"/>
+            android:theme="@style/Theme.Firetweet.Wizard"/>
         <activity
             android:name=".activity.support.DataExportActivity"
             android:label="@string/export_settings"
@@ -533,7 +533,7 @@
             android:name=".activity.support.ActivityPickerActivity"
             android:theme="@style/Theme.Blank.Dialog">
             <intent-filter>
-                <action android:name="org.mariotaku.twidere.PICK_ACTIVITY"/>
+                <action android:name="org.getlantern.firetweet.PICK_ACTIVITY"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -541,7 +541,7 @@
         <activity
             android:name=".activity.TwitterLinkHandlerActivity"
             android:excludeFromRecents="true"
-            android:taskAffinity=":twidere_twitter_link_handler"
+            android:taskAffinity=":firetweet_twitter_link_handler"
             android:theme="@style/Theme.Launcher">
             <intent-filter>
                 <data
@@ -573,7 +573,7 @@
         <activity
             android:name=".activity.AssistLauncherActivity"
             android:excludeFromRecents="true"
-            android:taskAffinity=":twidere_assist_launcher"
+            android:taskAffinity=":firetweet_assist_launcher"
             android:theme="@style/Theme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.ASSIST"/>
@@ -583,12 +583,12 @@
 
             <meta-data
                 android:name="com.android.systemui.action_assist_icon"
-                android:resource="@drawable/ic_assist_twidere"/>
+                android:resource="@drawable/ic_assist_firetweet"/>
         </activity>
         <activity
             android:name=".activity.TestActivity"
             android:enabled="false"
-            android:label="Twidere test"
+            android:label="Firetweet test"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -642,20 +642,20 @@
         </service>
 
         <provider
-            android:name=".provider.TwidereDataProvider"
+            android:name=".provider.FiretweetDataProvider"
             android:authorities="twidere"
             android:exported="true"
             android:grantUriPermissions="true"
             android:label="@string/label_tweetstore_provider"
             tools:ignore="ExportedContentProvider"/>
         <provider
-            android:name=".provider.TwidereCommandProvider"
+            android:name=".provider.FiretweetCommandProvider"
             android:authorities="twidere.command"
             android:exported="true"
             tools:ignore="ExportedContentProvider"/>
         <provider
             android:name=".provider.RecentSearchProvider"
-            android:authorities="org.mariotaku.twidere.provider.SearchRecentSuggestions"
+            android:authorities="org.getlantern.firetweet.provider.SearchRecentSuggestions"
             tools:ignore="ExportedContentProvider"/>
 
         <receiver android:name=".receiver.ConnectivityStateReceiver">
@@ -667,12 +667,12 @@
             android:name=".receiver.NotificationReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="org.mariotaku.twidere.NOTIFICATION_DELETED"/>
+                <action android:name="org.getlantern.firetweet.NOTIFICATION_DELETED"/>
             </intent-filter>
         </receiver>
         <receiver
             android:name=".receiver.SecretCodeBroadcastReceiver"
-            android:label="@string/twidere_test">
+            android:label="@string/firetweet_test">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SECRET_CODE"/>
 

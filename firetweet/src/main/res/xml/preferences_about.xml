@@ -4,7 +4,7 @@
     <PreferenceCategory
         android:key="cat_about"
         android:title="@string/about">
-        <org.mariotaku.twidere.preference.AppVersionPreference/>
+        <org.getlantern.firetweet.preference.AppVersionPreference/>
 
         <Preference
             android:summary="@string/project_name"
@@ -67,7 +67,7 @@
                 android:data="twidere://user?user_id=450691326&amp;finish_only=true"/>
         </Preference>
         <Preference
-            android:summary="Designed 3D Twidere icon"
+            android:summary="Designed 3D Firetweet icon"
             android:title="Linkzero">
             <intent
                 android:action="android.intent.action.VIEW"

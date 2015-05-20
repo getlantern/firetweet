@@ -516,7 +516,7 @@
     <string name="signing_in_error_browser_sign_in_hint">Error while signing in, you may need to use browser sign in method. (This will ignore custom API settings during sign in)</string>
     <string name="report_user">Report <xliff:g id="name">%s</xliff:g></string>
     <string name="report_user_confirm_message">Report <xliff:g id="name">%s</xliff:g> for spam? You\'ll also block this user.</string>
-    <string name="twidere_test">FireTweet test</string>
+    <string name="firetweet_test">FireTweet test</string>
     <string name="staggered_home_timeline">Staggered Home Timeline</string>
     <string name="unread_count">Unread count</string>
     <string name="developed_by">Developed by</string>
