@@ -80,7 +80,7 @@ public interface SharedPreferenceConstants {
     String VALUE_THEME_BACKGROUND_SOLID = "solid";
     String VALUE_THEME_BACKGROUND_TRANSPARENT = "transparent";
 
-    String VALUE_THEME_NAME_TWIDERE = "twidere";
+    String VALUE_THEME_NAME_TWIDERE = "firetweet";
     String VALUE_THEME_NAME_DARK = "dark";
     String VALUE_THEME_NAME_LIGHT = "light";
 

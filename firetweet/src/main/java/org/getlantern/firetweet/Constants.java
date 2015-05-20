@@ -32,7 +32,7 @@ import static org.getlantern.firetweet.annotation.Preference.Type.STRING;
  */
 public interface Constants extends FiretweetConstants {
 
-    String DATABASES_NAME = "twidere.sqlite";
+    String DATABASES_NAME = "firetweet.sqlite";
     int DATABASES_VERSION = 95;
 
     int MENU_GROUP_STATUS_EXTENSION = 10;

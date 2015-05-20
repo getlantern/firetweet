@@ -56,7 +56,7 @@ public interface FiretweetConstants extends SharedPreferenceConstants, IntentCon
     public static final String SCHEME_HTTP = "http";
     public static final String SCHEME_HTTPS = "https";
     public static final String SCHEME_CONTENT = "content";
-    public static final String SCHEME_TWIDERE = "twidere";
+    public static final String SCHEME_TWIDERE = "firetweet";
 
     public static final String PROTOCOL_HTTP = SCHEME_HTTP + "://";
     public static final String PROTOCOL_HTTPS = SCHEME_HTTPS + "://";

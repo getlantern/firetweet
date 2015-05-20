@@ -1639,7 +1639,7 @@ public final class Utils implements Constants, TwitterConstants {
         if (context == null) throw new NullPointerException();
         final File extCacheDir;
         try {
-            // Workaround for https://github.com/mariotaku/twidere/issues/138
+            // Workaround for https://github.com/mariotaku/firetweet/issues/138
             extCacheDir = context.getExternalCacheDir();
         } catch (final Exception e) {
             Crashlytics.logException(e);

@@ -32,7 +32,7 @@ import org.getlantern.firetweet.util.FiretweetArrayUtils;
 
 public class FiretweetCommands {
 
-	public static final String AUTHORITY = "twidere.command";
+	public static final String AUTHORITY = "firetweet.command";
 
 	public static final Uri BASE_CONTENT_URI = new Uri.Builder().scheme(ContentResolver.SCHEME_CONTENT)
 			.authority(AUTHORITY).build();

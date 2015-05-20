@@ -117,7 +117,7 @@ public class CustomTabUtils implements Constants {
         CUSTOM_TABS_ICON_NAME_MAP.put("staggered", R.drawable.ic_action_view_quilt);
         CUSTOM_TABS_ICON_NAME_MAP.put("star", R.drawable.ic_action_star);
         CUSTOM_TABS_ICON_NAME_MAP.put("trends", R.drawable.ic_action_trends);
-        CUSTOM_TABS_ICON_NAME_MAP.put("twidere", R.drawable.ic_action_firetweet);
+        CUSTOM_TABS_ICON_NAME_MAP.put("firetweet", R.drawable.ic_action_firetweet);
         CUSTOM_TABS_ICON_NAME_MAP.put("twitter", R.drawable.ic_action_twitter);
         CUSTOM_TABS_ICON_NAME_MAP.put("user", R.drawable.ic_action_user);
     }

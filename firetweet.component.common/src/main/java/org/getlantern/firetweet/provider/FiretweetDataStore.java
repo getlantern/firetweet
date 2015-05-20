@@ -26,7 +26,7 @@ import android.provider.BaseColumns;
 @SuppressWarnings("unused")
 public interface FiretweetDataStore {
 
-    String AUTHORITY = "twidere";
+    String AUTHORITY = "firetweet";
 
     String TYPE_PRIMARY_KEY = "INTEGER PRIMARY KEY AUTOINCREMENT";
     String TYPE_INT = "INTEGER";

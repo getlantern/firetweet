@@ -315,79 +315,79 @@
 
                 <data
                     android:host="user"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="users"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="user_timeline"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="user_media_timeline"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="user_favorites"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="user_followers"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="user_friends"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="user_blocks"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="status"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="status_retweeters"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="status_favoriters"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="status_replies"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="statuses"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="direct_messages_conversation"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="user_list"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="user_lists"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="user_list_timeline"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="user_list_members"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="user_list_subscribers"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="user_list_memberships"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="saved_searches"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="user_mentions"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="incoming_friendships"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="search"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
                 <data
                     android:host="mutes_users"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
             </intent-filter>
         </activity>
         <activity
@@ -643,14 +643,14 @@
 
         <provider
             android:name=".provider.FiretweetDataProvider"
-            android:authorities="twidere"
+            android:authorities="firetweet"
             android:exported="true"
             android:grantUriPermissions="true"
             android:label="@string/label_tweetstore_provider"
             tools:ignore="ExportedContentProvider"/>
         <provider
             android:name=".provider.FiretweetCommandProvider"
-            android:authorities="twidere.command"
+            android:authorities="firetweet.command"
             android:exported="true"
             tools:ignore="ExportedContentProvider"/>
         <provider
