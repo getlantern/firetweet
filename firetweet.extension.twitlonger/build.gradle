@@ -38,6 +38,6 @@ android {
 }
 
 dependencies {
-    compile project(':twidere.library.extension')
+    compile project(':firetweet.library.extension')
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }

@@ -43,7 +43,7 @@ android {
 
 dependencies {
     compile 'com.squareup.okhttp:okhttp:2.3.0'
-    compile project(':twidere.library.extension')
+    compile project(':firetweet.library.extension')
     compile project(':firetweet.component.twitter4j.streaming')
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }

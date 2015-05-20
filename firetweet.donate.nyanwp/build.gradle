@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-    wearApp project(':twidere.donate.nyanwp.wear')
+    wearApp project(':firetweet.donate.nyanwp.wear')
     compile project(':firetweet.component.nyan')
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
