@@ -108,8 +108,8 @@ dependencies {
     fdroidCompile 'org.osmdroid:osmdroid-android:4.3'
     fdroidCompile 'org.slf4j:slf4j-simple:1.7.12'
     debugCompile 'im.dino:dbinspector:3.1.0@aar'
-    compile project(':twidere.component.common')
-    compile project(':twidere.component.nyan')
+    compile project(':firetweet.component.common')
+    compile project(':firetweet.component.nyan')
     compile fileTree(dir: 'libs/main', include: ['*.jar'])
 //    googleCompile fileTree(dir: 'libs/google', include: ['*.jar'])
     compile('com.crashlytics.sdk.android:crashlytics:2.2.4@aar') {

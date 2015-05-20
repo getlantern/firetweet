@@ -9,7 +9,7 @@
         android:key="category_storage"
         android:title="@string/storage">
 
-        <org.mariotaku.twidere.preference.SeekBarDialogPreference
+        <org.getlantern.firetweet.preference.SeekBarDialogPreference
             android:defaultValue="100"
             android:key="database_item_limit"
             android:summary="@string/database_item_limit_summary"
@@ -18,16 +18,16 @@
             app:min="50"
             app:step="10"/>
 
-        <org.mariotaku.twidere.preference.ClearSearchHistoryPreference
+        <org.getlantern.firetweet.preference.ClearSearchHistoryPreference
             android:key="clear_search_history"
             android:title="@string/clear_search_history"/>
 
-        <org.mariotaku.twidere.preference.ClearCachePreference
+        <org.getlantern.firetweet.preference.ClearCachePreference
             android:key="clear_cache"
             android:summary="@string/clear_cache_summary"
             android:title="@string/clear_cache"/>
 
-        <org.mariotaku.twidere.preference.ClearDatabasesPreference
+        <org.getlantern.firetweet.preference.ClearDatabasesPreference
             android:key="clear_databases"
             android:summary="@string/clear_databases_summary"
             android:title="@string/clear_databases"/>

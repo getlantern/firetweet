@@ -83,7 +83,7 @@
             android:paddingLeft="@dimen/element_spacing_normal"
             android:paddingRight="@dimen/element_spacing_normal">
 
-            <org.mariotaku.twidere.view.ActionIconView
+            <org.getlantern.firetweet.view.ActionIconView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:color="?android:textColorSecondary"

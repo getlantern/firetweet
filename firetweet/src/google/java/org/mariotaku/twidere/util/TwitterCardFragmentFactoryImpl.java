@@ -17,11 +17,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.mariotaku.twidere.util;
+package org.getlantern.firetweet.util;
 
 import android.support.v4.app.Fragment;
 
-import org.mariotaku.twidere.model.ParcelableStatus.ParcelableCardEntity;
+import org.getlantern.firetweet.model.ParcelableStatus.ParcelableCardEntity;
 
 /**
  * Created by mariotaku on 15/1/1.

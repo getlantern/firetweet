@@ -19,7 +19,7 @@
   -->
 
 
-<org.mariotaku.twidere.view.ColorLabelLinearLayout
+<org.getlantern.firetweet.view.ColorLabelLinearLayout
     android:id="@+id/user_list_details"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -44,14 +44,14 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <org.mariotaku.twidere.view.themed.ThemedTextView
+            <org.getlantern.firetweet.view.themed.ThemedTextView
                 android:id="@+id/list_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-            <org.mariotaku.twidere.view.themed.ThemedTextView
+            <org.getlantern.firetweet.view.themed.ThemedTextView
                 android:id="@+id/created_by"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                 android:textColor="?android:attr/textColorSecondary"/>
         </LinearLayout>
 
-        <org.mariotaku.twidere.view.ShapedImageView
+        <org.getlantern.firetweet.view.ShapedImageView
             android:id="@+id/profile_image"
             style="?profileImageStyle"
             android:layout_width="@dimen/icon_size_card_details"
@@ -76,7 +76,7 @@
         android:layout_height="0.2dp"
         android:background="?android:dividerVertical"/>
 
-    <org.mariotaku.twidere.view.themed.ThemedTextView
+    <org.getlantern.firetweet.view.themed.ThemedTextView
         android:id="@+id/description"
         tools:text="@string/sample_status_text"
         android:layout_width="match_parent"
@@ -84,4 +84,4 @@
         android:padding="@dimen/element_spacing_normal"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="?android:attr/textColorSecondary"/>
-</org.mariotaku.twidere.view.ColorLabelLinearLayout>
+</org.getlantern.firetweet.view.ColorLabelLinearLayout>

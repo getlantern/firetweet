@@ -63,7 +63,7 @@
                             android:orientation="horizontal"
                             android:padding="@dimen/element_spacing_normal">
 
-                            <org.mariotaku.twidere.view.ForegroundImageView
+                            <org.getlantern.firetweet.view.ForegroundImageView
                                 android:id="@+id/profile_image"
                                 android:layout_width="@dimen/element_size_mlarge"
                                 android:layout_height="@dimen/element_size_mlarge"
@@ -94,7 +94,7 @@
                                     android:orientation="horizontal"
                                     android:splitMotionEvents="false">
 
-                                    <org.mariotaku.twidere.view.ActionIconThemedTextView
+                                    <org.getlantern.firetweet.view.ActionIconThemedTextView
                                         android:id="@+id/profile_image_camera"
                                         style="?android:borderlessButtonStyle"
                                         android:layout_width="0dp"
@@ -107,7 +107,7 @@
                                         android:paddingTop="0dp"
                                         android:text="@string/photo"/>
 
-                                    <org.mariotaku.twidere.view.ActionIconThemedTextView
+                                    <org.getlantern.firetweet.view.ActionIconThemedTextView
                                         android:id="@+id/profile_image_gallery"
                                         style="?android:borderlessButtonStyle"
                                         android:layout_width="0dp"
@@ -132,7 +132,7 @@
                             android:orientation="horizontal"
                             android:padding="@dimen/element_spacing_normal">
 
-                            <org.mariotaku.twidere.view.ForegroundImageView
+                            <org.getlantern.firetweet.view.ForegroundImageView
                                 android:id="@+id/profile_banner"
                                 android:layout_width="@dimen/element_size_mlarge"
                                 android:layout_height="@dimen/element_size_mlarge"
@@ -163,7 +163,7 @@
                                     android:orientation="horizontal"
                                     android:splitMotionEvents="false">
 
-                                    <org.mariotaku.twidere.view.ActionIconThemedTextView
+                                    <org.getlantern.firetweet.view.ActionIconThemedTextView
                                         android:id="@+id/profile_banner_gallery"
                                         style="?android:borderlessButtonStyle"
                                         android:layout_width="0dp"
@@ -176,7 +176,7 @@
                                         android:paddingTop="0dp"
                                         android:text="@string/gallery"/>
 
-                                    <org.mariotaku.twidere.view.ActionIconThemedTextView
+                                    <org.getlantern.firetweet.view.ActionIconThemedTextView
                                         android:id="@+id/profile_banner_remove"
                                         style="?android:borderlessButtonStyle"
                                         android:layout_width="0dp"
@@ -322,7 +322,7 @@
                             android:orientation="horizontal"
                             android:padding="@dimen/element_spacing_normal">
 
-                            <org.mariotaku.twidere.view.ForegroundColorView
+                            <org.getlantern.firetweet.view.ForegroundColorView
                                 android:id="@+id/link_color"
                                 android:layout_width="@dimen/element_size_normal"
                                 android:layout_height="@dimen/element_size_normal"
@@ -350,7 +350,7 @@
                             android:orientation="horizontal"
                             android:padding="@dimen/element_spacing_normal">
 
-                            <org.mariotaku.twidere.view.ForegroundColorView
+                            <org.getlantern.firetweet.view.ForegroundColorView
                                 android:id="@+id/background_color"
                                 android:layout_width="@dimen/element_size_normal"
                                 android:layout_height="@dimen/element_size_normal"
@@ -389,14 +389,14 @@
     </FrameLayout>
 
 
-    <!--<org.mariotaku.twidere.view.ActionBarThemedContainer-->
+    <!--<org.getlantern.firetweet.view.ActionBarThemedContainer-->
     <!--android:id="@+id/done_bar_container"-->
     <!--style="?actionBarStyle"-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="?actionBarSize"-->
     <!--android:layout="@layout/actionbar_custom_view_done_cancel"/>-->
 
-    <org.mariotaku.twidere.view.TwidereToolbar
+    <org.getlantern.firetweet.view.TwidereToolbar
         android:id="@+id/done_bar"
         style="?actionBarStyle"
         android:layout_width="match_parent"
@@ -417,7 +417,7 @@
             <include layout="@layout/include_done_button"/>
         </LinearLayout>
 
-    </org.mariotaku.twidere.view.TwidereToolbar>
+    </org.getlantern.firetweet.view.TwidereToolbar>
 
     <View
         android:id="@+id/actionbar_overlay"

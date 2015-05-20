@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
 
-import org.mariotaku.twidere.util.Utils;
+import org.getlantern.firetweet.util.Utils;
 
 public class UploadReceiver extends BroadcastReceiver {
 

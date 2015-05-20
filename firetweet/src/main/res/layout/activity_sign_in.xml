@@ -44,7 +44,7 @@
             android:clickable="true"
             android:textStyle="bold"
             android:textColor="@color/accent_white"
-            android:text="Welcome to FireTweet"
+            android:text="@string/welcome_to_firetweet"
             android:autoLink="all"
             android:fontFamily="Arial"
             android:typeface="serif"

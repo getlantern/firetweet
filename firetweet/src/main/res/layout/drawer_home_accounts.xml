@@ -18,7 +18,7 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<org.mariotaku.twidere.view.LeftDrawerFrameLayout
+<org.getlantern.firetweet.view.LeftDrawerFrameLayout
     android:id="@+id/left_drawer_container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -29,9 +29,9 @@
 
     <fragment
         android:id="@+id/left_drawer"
-        class="org.mariotaku.twidere.fragment.support.AccountsDashboardFragment"
+        class="org.getlantern.firetweet.fragment.support.AccountsDashboardFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_accounts_dashboard"/>
 
-</org.mariotaku.twidere.view.LeftDrawerFrameLayout>
+</org.getlantern.firetweet.view.LeftDrawerFrameLayout>

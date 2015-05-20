@@ -52,7 +52,7 @@
             android:paddingRight="@dimen/element_spacing_large"
             android:paddingTop="@dimen/element_spacing_normal">
 
-            <org.mariotaku.twidere.view.ShapedImageView
+            <org.getlantern.firetweet.view.ShapedImageView
                 android:id="@+id/profile_image"
                 style="?profileImageStyle"
                 android:layout_width="@dimen/icon_size_profile_image_dashboard_current"
@@ -88,7 +88,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <org.mariotaku.twidere.view.themed.ThemedTextView
+                    <org.getlantern.firetweet.view.themed.ThemedTextView
                         android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
                         android:textStyle="bold"
                         tools:text="Name"/>
 
-                    <org.mariotaku.twidere.view.themed.ThemedTextView
+                    <org.getlantern.firetweet.view.themed.ThemedTextView
                         android:id="@+id/screen_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/element_size_normal">
 
-                    <org.mariotaku.twidere.view.TwidereActionMenuView
+                    <org.getlantern.firetweet.view.TwidereActionMenuView
                         android:id="@+id/toggle_menu"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>

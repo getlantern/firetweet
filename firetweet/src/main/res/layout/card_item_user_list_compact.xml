@@ -18,7 +18,7 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<org.mariotaku.twidere.view.ColorLabelFrameLayout
+<org.getlantern.firetweet.view.ColorLabelFrameLayout
     android:id="@+id/content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -38,7 +38,7 @@
         android:paddingRight="@dimen/item_menu_card_padding_compact"
         android:paddingTop="@dimen/element_spacing_normal">
 
-        <org.mariotaku.twidere.view.ShapedImageView
+        <org.getlantern.firetweet.view.ShapedImageView
             android:id="@+id/profile_image"
             style="?profileImageStyle"
             android:layout_width="@dimen/icon_size_card_list_item"
@@ -65,7 +65,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <org.mariotaku.twidere.view.HandleSpanClickTextView
+                <org.getlantern.firetweet.view.HandleSpanClickTextView
                     android:id="@+id/name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                     android:textColor="?android:attr/textColorPrimary"
                     android:textStyle="bold"/>
 
-                <org.mariotaku.twidere.view.HandleSpanClickTextView
+                <org.getlantern.firetweet.view.HandleSpanClickTextView
                     android:id="@+id/created_by"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
             </LinearLayout>
         </FrameLayout>
 
-        <org.mariotaku.twidere.view.themed.ThemedTextView
+        <org.getlantern.firetweet.view.themed.ThemedTextView
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
             android:orientation="horizontal"
             android:paddingTop="@dimen/element_spacing_small">
 
-            <org.mariotaku.twidere.view.themed.ThemedTextView
+            <org.getlantern.firetweet.view.themed.ThemedTextView
                 android:id="@+id/members_count"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
                 android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceSmall"/>
 
-            <org.mariotaku.twidere.view.themed.ThemedTextView
+            <org.getlantern.firetweet.view.themed.ThemedTextView
                 android:id="@+id/subscribers_count"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -127,4 +127,4 @@
         </LinearLayout>
     </RelativeLayout>
 
-</org.mariotaku.twidere.view.ColorLabelFrameLayout>
+</org.getlantern.firetweet.view.ColorLabelFrameLayout>

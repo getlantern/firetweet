@@ -17,7 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.mariotaku.twidere.fragment.support;
+package org.getlantern.firetweet.fragment.support;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -26,8 +26,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.maps.android.clustering.ClusterManager;
 
-import org.mariotaku.twidere.model.ClusterStatus;
-import org.mariotaku.twidere.util.StatusClusterRenderer;
+import org.getlantern.firetweet.model.ClusterStatus;
+import org.getlantern.firetweet.util.StatusClusterRenderer;
 
 /**
  * Created by mariotaku on 15/1/13.

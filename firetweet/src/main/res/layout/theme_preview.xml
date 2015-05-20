@@ -23,7 +23,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <org.mariotaku.twidere.view.ExtendedRelativeLayout
+    <org.getlantern.firetweet.view.ExtendedRelativeLayout
         android:id="@+id/theme_preview_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,6 +34,6 @@
         android:layout_marginTop="4dp">
 
         <include layout="@layout/theme_preview_content"/>
-    </org.mariotaku.twidere.view.ExtendedRelativeLayout>
+    </org.getlantern.firetweet.view.ExtendedRelativeLayout>
 
 </FrameLayout>

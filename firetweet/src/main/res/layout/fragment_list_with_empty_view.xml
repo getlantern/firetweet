@@ -58,7 +58,7 @@
             android:orientation="vertical"
             tools:visibility="visible">
 
-            <org.mariotaku.twidere.view.ActionIconView
+            <org.getlantern.firetweet.view.ActionIconView
                 android:layout_width="wrap_content"
                 android:id="@+id/empty_icon"
                 android:layout_height="wrap_content"

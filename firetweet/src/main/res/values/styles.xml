@@ -90,6 +90,7 @@
         <item name="android:singleLine">true</item>
     </style>
 
+
     <style name="Widget.TabPageIndicator.TabItem.TextView.Dark">
         <item name="android:textColor">#fff3f3f3</item>
     </style>

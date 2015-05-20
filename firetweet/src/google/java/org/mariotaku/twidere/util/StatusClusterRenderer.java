@@ -17,7 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.mariotaku.twidere.util;
+package org.getlantern.firetweet.util;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -58,7 +58,7 @@ import com.google.maps.android.projection.SphericalMercatorProjection;
 import com.google.maps.android.ui.IconGenerator;
 import com.google.maps.android.ui.SquareTextView;
 
-import org.mariotaku.twidere.model.ClusterStatus;
+import org.getlantern.firetweet.model.ClusterStatus;
 
 import java.util.ArrayList;
 import java.util.Collections;

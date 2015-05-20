@@ -6,29 +6,29 @@
 
     <Preference android:layout="@layout/header_hidden_settings"/>
 
-    <org.mariotaku.twidere.preference.AutoFixCheckBoxPreference
+    <org.getlantern.firetweet.preference.AutoFixCheckBoxPreference
         android:defaultValue="false"
         android:key="force_using_private_apis"
         android:title="@string/force_using_private_apis"/>
-    <org.mariotaku.twidere.preference.SeekBarDialogPreference
+    <org.getlantern.firetweet.preference.SeekBarDialogPreference
         android:defaultValue="10"
         android:key="connection_timeout"
         android:title="@string/connection_timeout"
         app:max="30"
         app:min="5"
         app:progressTextSuffix="s"/>
-    <org.mariotaku.twidere.preference.AutoFixCheckBoxPreference
+    <org.getlantern.firetweet.preference.AutoFixCheckBoxPreference
         android:defaultValue="false"
         android:key="ignore_ssl_error"
         android:summary="@string/ignore_ssl_error_summary"
         android:title="@string/ignore_ssl_error"/>
-    <org.mariotaku.twidere.preference.AutoFixCheckBoxPreference
+    <org.getlantern.firetweet.preference.AutoFixCheckBoxPreference
         android:defaultValue="true"
         android:key="gzip_compressing"
         android:summary="@string/gzip_compressing_summary"
         android:title="@string/gzip_compressing"/>
 
-    <org.mariotaku.twidere.preference.AutoFixEditTextPreference
+    <org.getlantern.firetweet.preference.AutoFixEditTextPreference
         android:defaultValue="140"
         android:inputType="number"
         android:key="status_text_limit"
@@ -36,8 +36,8 @@
 
     <Preference android:title="@string/settings_wizard">
         <intent
-            android:targetClass="org.mariotaku.twidere.activity.SettingsWizardActivity"
-            android:targetPackage="org.mariotaku.twidere"/>
+            android:targetClass="org.getlantern.firetweet.activity.SettingsWizardActivity"
+            android:targetPackage="org.getlantern.firetweet"/>
     </Preference>
 
 </PreferenceScreen>

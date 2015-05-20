@@ -7,8 +7,8 @@ import android.content.SharedPreferences;
 import android.os.BatteryManager;
 import android.util.Log;
 
-import org.mariotaku.twidere.Constants;
-import org.mariotaku.twidere.util.Utils;
+import org.getlantern.firetweet.Constants;
+import org.getlantern.firetweet.util.Utils;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;

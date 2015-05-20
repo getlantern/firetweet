@@ -17,7 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.mariotaku.twidere.fragment.support;
+package org.getlantern.firetweet.fragment.support;
 
 import android.os.Bundle;
 
@@ -28,8 +28,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.mariotaku.twidere.Constants;
-import org.mariotaku.twidere.fragment.iface.IMapFragment;
+import org.getlantern.firetweet.Constants;
+import org.getlantern.firetweet.fragment.iface.IMapFragment;
 
 public class GoogleMapFragment extends SupportMapFragment implements Constants, IMapFragment {
 

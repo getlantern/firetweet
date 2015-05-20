@@ -19,8 +19,8 @@
 
 package edu.tsinghua.spice.Utilies;
 
-import org.mariotaku.twidere.model.ParcelableMedia;
-import org.mariotaku.twidere.util.TwidereLinkify;
+import org.getlantern.firetweet.model.ParcelableMedia;
+import org.getlantern.firetweet.util.TwidereLinkify;
 
 /**
  * Created by Denny C. Ng on 2/26/15.

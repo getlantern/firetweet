@@ -21,7 +21,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <org.mariotaku.twidere.view.HomeSlidingMenu
+    <org.getlantern.firetweet.view.HomeSlidingMenu
         android:id="@+id/home_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

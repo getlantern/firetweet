@@ -22,7 +22,7 @@
 
     <Preference android:layout="@layout/header_usage_statistics"/>
 
-    <org.mariotaku.twidere.preference.AutoFixCheckBoxPreference
+    <org.getlantern.firetweet.preference.AutoFixCheckBoxPreference
         android:order="11"
         android:defaultValue="false"
         android:title="@string/usage_statistics"

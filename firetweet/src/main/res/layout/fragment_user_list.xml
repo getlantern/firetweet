@@ -25,7 +25,7 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true">
 
-    <org.mariotaku.twidere.view.HeaderDrawerLayout
+    <org.getlantern.firetweet.view.HeaderDrawerLayout
         android:id="@+id/details_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

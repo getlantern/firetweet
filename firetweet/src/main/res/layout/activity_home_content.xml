@@ -18,14 +18,14 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<org.mariotaku.twidere.view.MainFrameLayout
+<org.getlantern.firetweet.view.MainFrameLayout
     android:id="@+id/home_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <org.mariotaku.twidere.view.ExtendedViewPager
+    <org.getlantern.firetweet.view.ExtendedViewPager
         android:id="@+id/main_pager"
         android:focusable="true"
         android:focusableInTouchMode="false"
@@ -40,7 +40,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <org.mariotaku.twidere.view.TwidereToolbar
+        <org.getlantern.firetweet.view.TwidereToolbar
             android:id="@+id/actionbar"
             style="?actionBarStyle"
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
             app:contentInsetEnd="0dp"
             app:contentInsetStart="0dp">
 
-            <org.mariotaku.twidere.view.TabPagerIndicator
+            <org.getlantern.firetweet.view.TabPagerIndicator
                 android:id="@+id/main_tabs"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -56,7 +56,7 @@
                 app:tabExpandEnabled="true"
                 app:tabHorizontalPadding="@dimen/element_spacing_normal"/>
 
-        </org.mariotaku.twidere.view.TwidereToolbar>
+        </org.getlantern.firetweet.view.TwidereToolbar>
 
         <View
             android:id="@+id/actionbar_overlay"
@@ -67,4 +67,4 @@
     </LinearLayout>
 
     <include layout="@layout/layout_home_actions_button"/>
-</org.mariotaku.twidere.view.MainFrameLayout>
+</org.getlantern.firetweet.view.MainFrameLayout>

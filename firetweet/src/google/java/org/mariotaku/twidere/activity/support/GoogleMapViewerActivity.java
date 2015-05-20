@@ -17,7 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.mariotaku.twidere.activity.support;
+package org.getlantern.firetweet.activity.support;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,13 +30,13 @@ import android.view.MenuItem;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
-import org.mariotaku.twidere.Constants;
-import org.mariotaku.twidere.R;
-import org.mariotaku.twidere.fragment.iface.IMapFragment;
-import org.mariotaku.twidere.fragment.support.GoogleMapFragment;
-import org.mariotaku.twidere.fragment.support.WebMapFragment;
-import org.mariotaku.twidere.util.ParseUtils;
-import org.mariotaku.twidere.util.ThemeUtils;
+import org.getlantern.firetweet.Constants;
+import org.getlantern.firetweet.R;
+import org.getlantern.firetweet.fragment.iface.IMapFragment;
+import org.getlantern.firetweet.fragment.support.GoogleMapFragment;
+import org.getlantern.firetweet.fragment.support.WebMapFragment;
+import org.getlantern.firetweet.util.ParseUtils;
+import org.getlantern.firetweet.util.ThemeUtils;
 
 public class GoogleMapViewerActivity extends BaseActionBarActivity implements Constants {
 

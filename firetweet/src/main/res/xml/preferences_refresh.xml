@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/refresh">
 
-    <org.mariotaku.twidere.preference.AutoRefreshAccountsListPreference
+    <org.getlantern.firetweet.preference.AutoRefreshAccountsListPreference
         android:key="cat_auto_refresh"
         android:title="@string/auto_refresh"
         app:switchDefault="true"
@@ -13,7 +13,7 @@
     <PreferenceCategory
         android:key="cat_general"
         android:title="@string/general">
-        <org.mariotaku.twidere.preference.AutoInvalidateListPreference
+        <org.getlantern.firetweet.preference.AutoInvalidateListPreference
             android:defaultValue="15"
             android:entries="@array/entries_refresh_interval"
             android:entryValues="@array/values_refresh_interval"
@@ -21,21 +21,21 @@
             android:summary="%s"
             android:title="@string/refresh_interval"/>
 
-        <org.mariotaku.twidere.preference.AutoFixCheckBoxPreference
+        <org.getlantern.firetweet.preference.AutoFixCheckBoxPreference
             android:defaultValue="true"
             android:key="stop_auto_refresh_when_battery_low"
             android:title="@string/stop_auto_refresh_when_battery_low"/>
 
-        <org.mariotaku.twidere.preference.HomeRefreshContentPreference
+        <org.getlantern.firetweet.preference.HomeRefreshContentPreference
             android:key="home_refresh"
             android:title="@string/home_refresh"/>
 
-        <org.mariotaku.twidere.preference.AutoFixCheckBoxPreference
+        <org.getlantern.firetweet.preference.AutoFixCheckBoxPreference
             android:defaultValue="false"
             android:key="refresh_on_start"
             android:summary="@string/refresh_on_start_summary"
             android:title="@string/refresh_on_start"/>
-        <org.mariotaku.twidere.preference.AutoFixCheckBoxPreference
+        <org.getlantern.firetweet.preference.AutoFixCheckBoxPreference
             android:defaultValue="false"
             android:key="refresh_after_tweet"
             android:summary="@string/refresh_after_status_updated_summary"

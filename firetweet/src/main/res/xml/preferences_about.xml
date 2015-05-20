@@ -4,7 +4,7 @@
     <PreferenceCategory
         android:key="cat_about"
         android:title="@string/about">
-        <org.mariotaku.twidere.preference.AppVersionPreference/>
+        <org.getlantern.firetweet.preference.AppVersionPreference/>
 
         <Preference
             android:summary="@string/project_name"

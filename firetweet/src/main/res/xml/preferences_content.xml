@@ -8,7 +8,7 @@
     <PreferenceCategory
         android:key="category_multimedia_contents"
         android:title="@string/multimedia_contents">
-        <org.mariotaku.twidere.preference.MediaUploaderPreference
+        <org.getlantern.firetweet.preference.MediaUploaderPreference
             android:defaultValue=""
             android:key="media_uploader"
             android:summary="%s"
@@ -22,7 +22,7 @@
             android:summary="@string/image_upload_format_summary"
             android:title="@string/image_upload_format"/>
 
-        <org.mariotaku.twidere.preference.ImagePreloadPreference
+        <org.getlantern.firetweet.preference.ImagePreloadPreference
             android:key="image_preload_options"
             android:title="@string/image_preload_options"/>
 
@@ -34,7 +34,7 @@
     <PreferenceCategory
         android:key="category_content"
         android:title="@string/content">
-        <org.mariotaku.twidere.preference.StatusShortenerPreference
+        <org.getlantern.firetweet.preference.StatusShortenerPreference
             android:defaultValue=""
             android:key="status_shortener"
             android:summary="%s"
@@ -67,7 +67,7 @@
             android:summary="@string/load_more_automatically_summary"
             android:title="@string/load_more_automatically"/>
 
-        <org.mariotaku.twidere.preference.SeekBarDialogPreference
+        <org.getlantern.firetweet.preference.SeekBarDialogPreference
             android:defaultValue="20"
             android:key="load_item_limit"
             android:summary="@string/load_item_limit_summary"
@@ -76,7 +76,7 @@
             app:min="10"
             app:step="5"/>
 
-        <org.mariotaku.twidere.preference.TimelineSyncPreference
+        <org.getlantern.firetweet.preference.TimelineSyncPreference
             android:defaultValue=""
             android:key="timeline_sync_service"
             android:summary="%s"
@@ -96,12 +96,12 @@
             android:key="sort_timeline_by_id"
             android:title="@string/sort_timeline_by_id"/>
 
-        <org.mariotaku.twidere.preference.TrendsLocationPreference
+        <org.getlantern.firetweet.preference.TrendsLocationPreference
             android:key="trends_location"
             android:summary="@string/trends_location_summary"
             android:title="@string/trends_location"/>
 
-        <org.mariotaku.twidere.preference.TranslationDestinationPreference
+        <org.getlantern.firetweet.preference.TranslationDestinationPreference
             android:key="translation_destination"
             android:title="@string/translation_destination"/>
     </PreferenceCategory>

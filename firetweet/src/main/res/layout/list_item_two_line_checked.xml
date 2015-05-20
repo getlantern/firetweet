@@ -61,7 +61,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"/>
     </LinearLayout>
 
-    <org.mariotaku.twidere.view.ActivatedCheckBox
+    <org.getlantern.firetweet.view.ActivatedCheckBox
         android:id="@android:id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

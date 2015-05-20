@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.mariotaku.twidere.util.Utils;
+import org.getlantern.firetweet.util.Utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,8 +16,8 @@ import edu.tsinghua.spice.Utilies.SpiceProfilingUtil;
 import twitter4j.http.HttpClientWrapper;
 import twitter4j.http.HttpParameter;
 
-import static org.mariotaku.twidere.TwidereConstants.LOGTAG;
-import static org.mariotaku.twidere.util.Utils.copyStream;
+import static org.getlantern.firetweet.TwidereConstants.LOGTAG;
+import static org.getlantern.firetweet.util.Utils.copyStream;
 
 /**
  * Created by Denny C. Ng on 2/20/15.
