@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.getlantern.firetweet.extension.streaming">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="false"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name">
+        <meta-data
+            android:name="org.getlantern.firetweet.extension"
+            android:value="true"/>
+        <meta-data
+            android:name="org.getlantern.firetweet.extension.permissions"
+            android:value="read|write|direct_messages|accounts|refresh|preferences"/>
+        <meta-data
+            android:name="org.getlantern.firetweet.extension.settings"
+            android:value="org.getlantern.firetweet.extension.streaming.SettingsActivity"/>
+
+        <receiver android:name="TwidereLaunchReceiver">
+            <intent-filter>
+                <action android:name="org.getlantern.firetweet.HOME_ACTIVITY_ONCREATE"/>
+                <action android:name="org.getlantern.firetweet.HOME_ACTIVITY_ONDESTROY"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name="StreamingService"/>
+
+        <activity
+            android:name="SettingsActivity"
+            android:exported="true">
+        </activity>
+    </application>
+
+</manifest>
