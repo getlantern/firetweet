@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:paddingLeft="30dp"
+            android:paddingTop="30dp"
             android:background="@android:color/transparent"
             android:lines="2"
             android:id="@+id/text2"
@@ -49,8 +50,6 @@
             android:typeface="serif"
             android:textSize="30sp" />
 
-
-
             <Button
                 android:id="@+id/sign_in_method_introduction"
                 style="?android:borderlessButtonStyle"
@@ -59,10 +58,14 @@
                 android:layout_below="@+id/sign_in_sign_up"
                 android:layout_margin="8dp"
                 android:clickable="true"
+                android:paddingLeft="30dp"
                 android:gravity="center_vertical"
+                android:drawableLeft="@drawable/twitter_logo_white"
                 android:minHeight="36dp"
                 android:onClick="onClick"
                 android:text="@string/sign_in_twitter"
+                android:textSize="18sp"
+                android:textColor="#000000"
                 android:textAppearance="?android:textAppearanceSmall"/>
 
         <RelativeLayout
@@ -86,6 +89,7 @@
                     android:hint="@string/username"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
+                    android:textColor="#000000"
                     android:background="@color/accent_white"
                     android:typeface="normal"/>
 
@@ -98,6 +102,7 @@
                     android:hint="@string/password"
                     android:inputType="textPassword"
                     android:singleLine="true"
+                    android:textColor="#000000"
                     android:background="@color/accent_white"
                     android:typeface="normal"/>
             </LinearLayout>
@@ -118,6 +123,7 @@
                     android:layout_weight="1"
                     android:minHeight="48dp"
                     android:onClick="onClick"
+                    android:textSize="20sp"
                     android:textColor="@color/accent_white"
                     android:background="@drawable/register_btn"
                     android:text="@string/register"/>
@@ -130,6 +136,8 @@
                     android:layout_weight="1"
                     android:minHeight="48dp"
                     android:onClick="onClick"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="20sp"
                     android:textColor="#000000"
                     android:background="@drawable/sign_in_btn"
                     android:text="@string/sign_in"/>
