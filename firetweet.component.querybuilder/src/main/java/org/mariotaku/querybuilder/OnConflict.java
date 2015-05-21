@@ -1,4 +1,4 @@
-package org.mariotaku.querybuilder;
+package org.getlantern.querybuilder;
 
 /**
  * Created by mariotaku on 14-8-7.

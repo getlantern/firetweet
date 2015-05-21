@@ -1,4 +1,4 @@
-package org.mariotaku.querybuilder;
+package org.getlantern.querybuilder;
 
 import java.util.Locale;
 

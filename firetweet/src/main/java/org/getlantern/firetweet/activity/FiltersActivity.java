@@ -48,7 +48,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 
-import org.mariotaku.querybuilder.Expression;
+import org.getlantern.querybuilder.Expression;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.support.BaseActionBarActivity;
 import org.getlantern.firetweet.activity.support.UserListSelectorActivity;

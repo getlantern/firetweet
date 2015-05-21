@@ -17,4 +17,4 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<manifest package="org.mariotaku.querybuilder"/>
+<manifest package="org.getlantern.querybuilder"/>

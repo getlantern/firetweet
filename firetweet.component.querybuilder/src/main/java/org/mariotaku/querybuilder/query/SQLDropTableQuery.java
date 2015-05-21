@@ -1,4 +1,4 @@
-package org.mariotaku.querybuilder.query;
+package org.getlantern.querybuilder.query;
 
 public class SQLDropTableQuery extends SQLDropQuery {
 

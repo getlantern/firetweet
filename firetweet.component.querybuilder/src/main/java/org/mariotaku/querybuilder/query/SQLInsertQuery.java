@@ -1,8 +1,8 @@
-package org.mariotaku.querybuilder.query;
+package org.getlantern.querybuilder.query;
 
-import org.mariotaku.querybuilder.OnConflict;
-import org.mariotaku.querybuilder.SQLQuery;
-import org.mariotaku.querybuilder.Utils;
+import org.getlantern.querybuilder.OnConflict;
+import org.getlantern.querybuilder.SQLQuery;
+import org.getlantern.querybuilder.Utils;
 
 public class SQLInsertQuery implements SQLQuery {
 

@@ -32,9 +32,9 @@ import android.support.v4.content.Loader;
 
 import com.squareup.otto.Subscribe;
 
-import org.mariotaku.querybuilder.Columns.Column;
-import org.mariotaku.querybuilder.Expression;
-import org.mariotaku.querybuilder.RawItemArray;
+import org.getlantern.querybuilder.Columns.Column;
+import org.getlantern.querybuilder.Expression;
+import org.getlantern.querybuilder.RawItemArray;
 import org.getlantern.firetweet.adapter.CursorStatusesAdapter;
 import org.getlantern.firetweet.loader.support.ExtendedCursorLoader;
 import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;

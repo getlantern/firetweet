@@ -25,20 +25,20 @@
  * For more information, please refer to <http://unlicense.org/>
  */
 
-package org.mariotaku.querybuilder;
+package org.getlantern.querybuilder;
 
-import org.mariotaku.querybuilder.query.SQLAlterTableQuery;
-import org.mariotaku.querybuilder.query.SQLCreateIndexQuery;
-import org.mariotaku.querybuilder.query.SQLCreateTableQuery;
-import org.mariotaku.querybuilder.query.SQLCreateTriggerQuery;
-import org.mariotaku.querybuilder.query.SQLCreateViewQuery;
-import org.mariotaku.querybuilder.query.SQLDeleteQuery;
-import org.mariotaku.querybuilder.query.SQLDropTableQuery;
-import org.mariotaku.querybuilder.query.SQLDropTriggerQuery;
-import org.mariotaku.querybuilder.query.SQLDropViewQuery;
-import org.mariotaku.querybuilder.query.SQLInsertQuery;
-import org.mariotaku.querybuilder.query.SQLSelectQuery;
-import org.mariotaku.querybuilder.query.SQLUpdateQuery;
+import org.getlantern.querybuilder.query.SQLAlterTableQuery;
+import org.getlantern.querybuilder.query.SQLCreateIndexQuery;
+import org.getlantern.querybuilder.query.SQLCreateTableQuery;
+import org.getlantern.querybuilder.query.SQLCreateTriggerQuery;
+import org.getlantern.querybuilder.query.SQLCreateViewQuery;
+import org.getlantern.querybuilder.query.SQLDeleteQuery;
+import org.getlantern.querybuilder.query.SQLDropTableQuery;
+import org.getlantern.querybuilder.query.SQLDropTriggerQuery;
+import org.getlantern.querybuilder.query.SQLDropViewQuery;
+import org.getlantern.querybuilder.query.SQLInsertQuery;
+import org.getlantern.querybuilder.query.SQLSelectQuery;
+import org.getlantern.querybuilder.query.SQLUpdateQuery;
 
 public class SQLQueryBuilder {
 

@@ -25,15 +25,15 @@
  * For more information, please refer to <http://unlicense.org/>
  */
 
-package org.mariotaku.querybuilder.query;
+package org.getlantern.querybuilder.query;
 
-import org.mariotaku.querybuilder.Expression;
-import org.mariotaku.querybuilder.Join;
-import org.mariotaku.querybuilder.OrderBy;
-import org.mariotaku.querybuilder.SQLLang;
-import org.mariotaku.querybuilder.SQLQuery;
-import org.mariotaku.querybuilder.SQLQueryException;
-import org.mariotaku.querybuilder.Selectable;
+import org.getlantern.querybuilder.Expression;
+import org.getlantern.querybuilder.Join;
+import org.getlantern.querybuilder.OrderBy;
+import org.getlantern.querybuilder.SQLLang;
+import org.getlantern.querybuilder.SQLQuery;
+import org.getlantern.querybuilder.SQLQueryException;
+import org.getlantern.querybuilder.Selectable;
 
 import java.util.ArrayList;
 import java.util.List;

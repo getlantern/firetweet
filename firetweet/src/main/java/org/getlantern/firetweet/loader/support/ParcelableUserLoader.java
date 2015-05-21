@@ -26,7 +26,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 
-import org.mariotaku.querybuilder.Expression;
+import org.getlantern.querybuilder.Expression;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.model.ParcelableUser;
 import org.getlantern.firetweet.model.ParcelableUser.CachedIndices;

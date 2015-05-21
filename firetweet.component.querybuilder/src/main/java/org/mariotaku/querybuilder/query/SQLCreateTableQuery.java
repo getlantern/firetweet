@@ -1,9 +1,9 @@
-package org.mariotaku.querybuilder.query;
+package org.getlantern.querybuilder.query;
 
-import org.mariotaku.querybuilder.Constraint;
-import org.mariotaku.querybuilder.NewColumn;
-import org.mariotaku.querybuilder.SQLQuery;
-import org.mariotaku.querybuilder.Utils;
+import org.getlantern.querybuilder.Constraint;
+import org.getlantern.querybuilder.NewColumn;
+import org.getlantern.querybuilder.SQLQuery;
+import org.getlantern.querybuilder.Utils;
 
 public class SQLCreateTableQuery implements SQLQuery {
 

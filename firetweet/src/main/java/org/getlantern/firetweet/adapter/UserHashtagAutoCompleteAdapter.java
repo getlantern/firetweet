@@ -34,10 +34,10 @@ import android.widget.FilterQueryProvider;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.mariotaku.querybuilder.Columns.Column;
-import org.mariotaku.querybuilder.Expression;
-import org.mariotaku.querybuilder.OrderBy;
-import org.mariotaku.querybuilder.RawItemArray;
+import org.getlantern.querybuilder.Columns.Column;
+import org.getlantern.querybuilder.Expression;
+import org.getlantern.querybuilder.OrderBy;
+import org.getlantern.querybuilder.RawItemArray;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.app.FiretweetApplication;

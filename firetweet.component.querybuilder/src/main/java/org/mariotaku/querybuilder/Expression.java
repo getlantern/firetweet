@@ -25,9 +25,9 @@
  * For more information, please refer to <http://unlicense.org/>
  */
 
-package org.mariotaku.querybuilder;
+package org.getlantern.querybuilder;
 
-import org.mariotaku.querybuilder.Columns.Column;
+import org.getlantern.querybuilder.Columns.Column;
 
 import java.util.Locale;
 

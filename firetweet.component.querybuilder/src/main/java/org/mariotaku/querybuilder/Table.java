@@ -25,7 +25,7 @@
  * For more information, please refer to <http://unlicense.org/>
  */
 
-package org.mariotaku.querybuilder;
+package org.getlantern.querybuilder;
 
 public class Table implements Selectable {
 

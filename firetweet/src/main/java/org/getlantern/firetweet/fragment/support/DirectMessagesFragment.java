@@ -49,9 +49,9 @@ import android.view.ViewGroup;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
-import org.mariotaku.querybuilder.Columns.Column;
-import org.mariotaku.querybuilder.Expression;
-import org.mariotaku.querybuilder.RawItemArray;
+import org.getlantern.querybuilder.Columns.Column;
+import org.getlantern.querybuilder.Expression;
+import org.getlantern.querybuilder.RawItemArray;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.iface.IControlBarActivity;
 import org.getlantern.firetweet.activity.iface.IControlBarActivity.ControlBarOffsetListener;

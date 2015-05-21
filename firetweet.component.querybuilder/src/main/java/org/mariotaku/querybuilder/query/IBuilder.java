@@ -1,6 +1,6 @@
-package org.mariotaku.querybuilder.query;
+package org.getlantern.querybuilder.query;
 
-import org.mariotaku.querybuilder.SQLLang;
+import org.getlantern.querybuilder.SQLLang;
 
 public interface IBuilder<T extends SQLLang> {
 

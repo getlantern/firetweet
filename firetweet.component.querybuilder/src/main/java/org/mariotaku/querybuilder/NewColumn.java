@@ -1,4 +1,4 @@
-package org.mariotaku.querybuilder;
+package org.getlantern.querybuilder;
 
 public class NewColumn implements SQLLang {
 

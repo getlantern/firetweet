@@ -1,11 +1,11 @@
-package org.mariotaku.querybuilder.query;
+package org.getlantern.querybuilder.query;
 
-import org.mariotaku.querybuilder.Expression;
-import org.mariotaku.querybuilder.OnConflict;
-import org.mariotaku.querybuilder.SQLQuery;
-import org.mariotaku.querybuilder.SetValue;
-import org.mariotaku.querybuilder.Table;
-import org.mariotaku.querybuilder.Utils;
+import org.getlantern.querybuilder.Expression;
+import org.getlantern.querybuilder.OnConflict;
+import org.getlantern.querybuilder.SQLQuery;
+import org.getlantern.querybuilder.SetValue;
+import org.getlantern.querybuilder.Table;
+import org.getlantern.querybuilder.Utils;
 
 import java.util.Locale;
 

@@ -34,7 +34,7 @@
         android:layout_weight="1"
         android:animateLayoutChanges="true">
 
-        <org.mariotaku.dynamicgridview.DynamicGridView
+        <org.getlantern.dynamicgridview.DynamicGridView
             android:id="@+id/media_thumbnail_preview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

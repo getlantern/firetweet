@@ -23,12 +23,12 @@ import com.commonsware.cwac.merge.MergeAdapter;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState;
 
-import org.mariotaku.querybuilder.Columns;
-import org.mariotaku.querybuilder.Expression;
-import org.mariotaku.querybuilder.OrderBy;
-import org.mariotaku.querybuilder.SQLQueryBuilder;
-import org.mariotaku.querybuilder.Table;
-import org.mariotaku.querybuilder.query.SQLSelectQuery;
+import org.getlantern.querybuilder.Columns;
+import org.getlantern.querybuilder.Expression;
+import org.getlantern.querybuilder.OrderBy;
+import org.getlantern.querybuilder.SQLQueryBuilder;
+import org.getlantern.querybuilder.Table;
+import org.getlantern.querybuilder.query.SQLSelectQuery;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.fragment.support.TrendsSuggectionsFragment.TrendsAdapter;
 import org.getlantern.firetweet.provider.FiretweetDataStore.CachedTrends;

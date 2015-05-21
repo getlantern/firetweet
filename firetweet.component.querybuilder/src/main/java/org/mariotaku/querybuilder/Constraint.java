@@ -17,7 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.mariotaku.querybuilder;
+package org.getlantern.querybuilder;
 
 /**
  * Created by mariotaku on 15/3/30.

@@ -36,10 +36,10 @@ import android.util.Log;
 import com.squareup.otto.Bus;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.mariotaku.querybuilder.Columns.Column;
-import org.mariotaku.querybuilder.Expression;
-import org.mariotaku.querybuilder.RawItemArray;
-import org.mariotaku.querybuilder.SQLFunctions;
+import org.getlantern.querybuilder.Columns.Column;
+import org.getlantern.querybuilder.Expression;
+import org.getlantern.querybuilder.RawItemArray;
+import org.getlantern.querybuilder.SQLFunctions;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.model.ListResponse;

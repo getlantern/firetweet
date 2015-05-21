@@ -1,7 +1,7 @@
-package org.mariotaku.querybuilder.query;
+package org.getlantern.querybuilder.query;
 
-import org.mariotaku.querybuilder.NewColumn;
-import org.mariotaku.querybuilder.SQLQuery;
+import org.getlantern.querybuilder.NewColumn;
+import org.getlantern.querybuilder.SQLQuery;
 
 public class SQLAlterTableQuery implements SQLQuery {
 

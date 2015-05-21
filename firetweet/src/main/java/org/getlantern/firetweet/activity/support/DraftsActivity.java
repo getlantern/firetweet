@@ -52,9 +52,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import org.mariotaku.querybuilder.Columns.Column;
-import org.mariotaku.querybuilder.Expression;
-import org.mariotaku.querybuilder.RawItemArray;
+import org.getlantern.querybuilder.Columns.Column;
+import org.getlantern.querybuilder.Expression;
+import org.getlantern.querybuilder.RawItemArray;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.DraftsAdapter;
 import org.getlantern.firetweet.fragment.support.BaseSupportDialogFragment;

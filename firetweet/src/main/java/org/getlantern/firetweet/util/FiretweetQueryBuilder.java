@@ -19,17 +19,17 @@
 
 package org.getlantern.firetweet.util;
 
-import org.mariotaku.querybuilder.Columns;
-import org.mariotaku.querybuilder.Columns.Column;
-import org.mariotaku.querybuilder.Expression;
-import org.mariotaku.querybuilder.Join;
-import org.mariotaku.querybuilder.Join.Operation;
-import org.mariotaku.querybuilder.OrderBy;
-import org.mariotaku.querybuilder.SQLQueryBuilder;
-import org.mariotaku.querybuilder.Selectable;
-import org.mariotaku.querybuilder.Table;
-import org.mariotaku.querybuilder.Tables;
-import org.mariotaku.querybuilder.query.SQLSelectQuery;
+import org.getlantern.querybuilder.Columns;
+import org.getlantern.querybuilder.Columns.Column;
+import org.getlantern.querybuilder.Expression;
+import org.getlantern.querybuilder.Join;
+import org.getlantern.querybuilder.Join.Operation;
+import org.getlantern.querybuilder.OrderBy;
+import org.getlantern.querybuilder.SQLQueryBuilder;
+import org.getlantern.querybuilder.Selectable;
+import org.getlantern.querybuilder.Table;
+import org.getlantern.querybuilder.Tables;
+import org.getlantern.querybuilder.query.SQLSelectQuery;
 import org.getlantern.firetweet.provider.FiretweetDataStore.CachedRelationships;
 import org.getlantern.firetweet.provider.FiretweetDataStore.CachedUsers;
 import org.getlantern.firetweet.provider.FiretweetDataStore.DirectMessages;

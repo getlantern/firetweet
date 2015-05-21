@@ -87,7 +87,7 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.utils.IoUtils;
 import com.twitter.Extractor;
 
-import org.mariotaku.dynamicgridview.DraggableArrayAdapter;
+import org.getlantern.dynamicgridview.DraggableArrayAdapter;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.support.BaseSupportDialogFragment;

@@ -24,14 +24,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.mariotaku.querybuilder.Columns;
-import org.mariotaku.querybuilder.Columns.Column;
-import org.mariotaku.querybuilder.Expression;
-import org.mariotaku.querybuilder.NewColumn;
-import org.mariotaku.querybuilder.OnConflict;
-import org.mariotaku.querybuilder.Tables;
-import org.mariotaku.querybuilder.query.SQLInsertQuery;
-import org.mariotaku.querybuilder.query.SQLSelectQuery;
+import org.getlantern.querybuilder.Columns;
+import org.getlantern.querybuilder.Columns.Column;
+import org.getlantern.querybuilder.Expression;
+import org.getlantern.querybuilder.NewColumn;
+import org.getlantern.querybuilder.OnConflict;
+import org.getlantern.querybuilder.Tables;
+import org.getlantern.querybuilder.query.SQLInsertQuery;
+import org.getlantern.querybuilder.query.SQLSelectQuery;
 import org.getlantern.firetweet.util.FiretweetArrayUtils;
 
 import java.util.ArrayList;

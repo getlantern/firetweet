@@ -79,7 +79,7 @@ import android.widget.TextView;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
-import org.mariotaku.querybuilder.Expression;
+import org.getlantern.querybuilder.Expression;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.iface.IThemedActivity;

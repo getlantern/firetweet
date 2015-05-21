@@ -35,7 +35,7 @@ import android.widget.TextView;
 import com.mobeta.android.dslv.DragSortListView;
 import com.mobeta.android.dslv.DragSortListView.DropListener;
 
-import org.mariotaku.querybuilder.Expression;
+import org.getlantern.querybuilder.Expression;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.support.ColorPickerDialogActivity;
 import org.getlantern.firetweet.activity.support.SignInActivity;

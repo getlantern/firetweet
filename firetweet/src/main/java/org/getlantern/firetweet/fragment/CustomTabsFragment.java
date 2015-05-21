@@ -55,9 +55,9 @@ import com.mobeta.android.dslv.DragSortListView;
 import com.mobeta.android.dslv.DragSortListView.DropListener;
 import com.mobeta.android.dslv.SimpleDragSortCursorAdapter;
 
-import org.mariotaku.querybuilder.Columns.Column;
-import org.mariotaku.querybuilder.Expression;
-import org.mariotaku.querybuilder.RawItemArray;
+import org.getlantern.querybuilder.Columns.Column;
+import org.getlantern.querybuilder.Expression;
+import org.getlantern.querybuilder.RawItemArray;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.SettingsActivity;
 import org.getlantern.firetweet.activity.support.CustomTabEditorActivity;

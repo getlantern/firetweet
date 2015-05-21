@@ -1,6 +1,6 @@
-package org.mariotaku.querybuilder.query;
+package org.getlantern.querybuilder.query;
 
-import org.mariotaku.querybuilder.SQLQuery;
+import org.getlantern.querybuilder.SQLQuery;
 
 public class SQLDropQuery implements SQLQuery {
 

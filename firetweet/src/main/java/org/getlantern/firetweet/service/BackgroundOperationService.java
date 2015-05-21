@@ -42,7 +42,7 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.utils.IoUtils;
 import com.twitter.Extractor;
 
-import org.mariotaku.querybuilder.Expression;
+import org.getlantern.querybuilder.Expression;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.MainActivity;

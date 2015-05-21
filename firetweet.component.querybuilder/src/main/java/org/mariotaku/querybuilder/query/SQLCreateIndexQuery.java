@@ -17,12 +17,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.mariotaku.querybuilder.query;
+package org.getlantern.querybuilder.query;
 
-import org.mariotaku.querybuilder.Columns;
-import org.mariotaku.querybuilder.Expression;
-import org.mariotaku.querybuilder.SQLQuery;
-import org.mariotaku.querybuilder.Table;
+import org.getlantern.querybuilder.Columns;
+import org.getlantern.querybuilder.Expression;
+import org.getlantern.querybuilder.SQLQuery;
+import org.getlantern.querybuilder.Table;
 
 public class SQLCreateIndexQuery implements SQLQuery {
 
