@@ -57,7 +57,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.support.SupportFixedFragmentStatePagerAdapter;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.support.BaseSupportFragment;
 import org.getlantern.firetweet.fragment.support.ViewStatusDialogFragment;
 import org.getlantern.firetweet.loader.support.TileImageLoader;
@@ -220,7 +220,7 @@ public final class MediaViewerActivity extends ThemedActionBarActivity implement
         @Override
         public void onActivityCreated(@Nullable Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
-            mVideoLoader = FireTweetApplication.getInstance(getActivity()).getVideoLoader();
+            mVideoLoader = FiretweetApplication.getInstance(getActivity()).getVideoLoader();
             mVideoProgressRunnable = new VideoPlayProgressRunnable(mVideoViewProgress.getHandler(),
                     mVideoViewProgress, mVideoView);
             final String url = getBestVideoUrl(getMedia());

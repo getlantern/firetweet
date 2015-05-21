@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Twidere - Twitter client for Android
+  ~ Firetweet - Twitter client for Android
   ~
   ~  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
   ~
@@ -40,7 +40,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <org.getlantern.firetweet.view.TwidereToolbar
+        <org.getlantern.firetweet.view.FiretweetToolbar
             android:id="@+id/actionbar"
             style="?actionBarStyle"
             android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                 app:tabExpandEnabled="true"
                 app:tabHorizontalPadding="@dimen/element_spacing_normal"/>
 
-        </org.getlantern.firetweet.view.TwidereToolbar>
+        </org.getlantern.firetweet.view.FiretweetToolbar>
 
         <View
             android:id="@+id/actionbar_overlay"

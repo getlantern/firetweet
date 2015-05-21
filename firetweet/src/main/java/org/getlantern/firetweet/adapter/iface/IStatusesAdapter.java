@@ -1,7 +1,7 @@
 package org.getlantern.firetweet.adapter.iface;
 
 import org.getlantern.firetweet.model.ParcelableStatus;
-import org.getlantern.firetweet.util.TwidereLinkify;
+import org.getlantern.firetweet.util.FiretweetLinkify;
 import org.getlantern.firetweet.view.holder.StatusViewHolder.StatusClickListener;
 
 /**
@@ -15,7 +15,7 @@ public interface IStatusesAdapter<Data> extends IContentCardAdapter, StatusClick
 
     long getStatusId(int position);
 
-    TwidereLinkify getTwidereLinkify();
+    FiretweetLinkify getFiretweetLinkify();
 
     boolean isMediaPreviewEnabled();
 

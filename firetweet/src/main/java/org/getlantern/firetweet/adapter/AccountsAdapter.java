@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -31,10 +31,10 @@ import com.mobeta.android.dslv.SimpleDragSortCursorAdapter;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.iface.IBaseAdapter;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.model.ParcelableAccount.Indices;
-import org.getlantern.firetweet.provider.TwidereDataStore.Accounts;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.view.holder.AccountViewHolder;
 
@@ -51,7 +51,7 @@ public class AccountsAdapter extends SimpleDragSortCursorAdapter implements Cons
     public AccountsAdapter(final Context context) {
         super(context, R.layout.list_item_account, null, new String[]{Accounts.NAME},
                 new int[]{android.R.id.text1}, 0);
-        final FireTweetApplication application = FireTweetApplication.getInstance(context);
+        final FiretweetApplication application = FiretweetApplication.getInstance(context);
         mImageLoader = application.getMediaLoaderWrapper();
         mPreferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
     }

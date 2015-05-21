@@ -19,7 +19,7 @@
             android:name="org.getlantern.firetweet.extension.settings"
             android:value="org.getlantern.firetweet.extension.streaming.SettingsActivity"/>
 
-        <receiver android:name="TwidereLaunchReceiver">
+        <receiver android:name="FiretweetLaunchReceiver">
             <intent-filter>
                 <action android:name="org.getlantern.firetweet.HOME_ACTIVITY_ONCREATE"/>
                 <action android:name="org.getlantern.firetweet.HOME_ACTIVITY_ONDESTROY"/>

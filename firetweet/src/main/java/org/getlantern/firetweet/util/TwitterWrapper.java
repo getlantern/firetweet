@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -29,8 +29,8 @@ import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.model.ListResponse;
 import org.getlantern.firetweet.model.ParcelableUser;
 import org.getlantern.firetweet.model.SingleResponse;
-import org.getlantern.firetweet.provider.TwidereDataStore.Notifications;
-import org.getlantern.firetweet.provider.TwidereDataStore.UnreadCounts;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Notifications;
+import org.getlantern.firetweet.provider.FiretweetDataStore.UnreadCounts;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -88,7 +88,7 @@ public class TwitterWrapper implements Constants {
         final Uri.Builder builder = UnreadCounts.CONTENT_URI.buildUpon();
         builder.appendPath(String.valueOf(position));
         builder.appendPath(String.valueOf(account_id));
-        builder.appendPath(TwidereArrayUtils.toString(status_ids, ',', false));
+        builder.appendPath(FiretweetArrayUtils.toString(status_ids, ',', false));
         result += context.getContentResolver().delete(builder.build(), null, null);
         return result;
     }

@@ -3,7 +3,7 @@ package org.getlantern.firetweet.extension.twitlonger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.getlantern.firetweet.Twidere;
+import org.getlantern.firetweet.Firetweet;
 import org.getlantern.firetweet.extension.twitlonger.TwitLonger.TwitLongerException;
 import org.getlantern.firetweet.extension.twitlonger.TwitLonger.TwitLongerResponse;
 import org.getlantern.firetweet.model.ParcelableStatus;
@@ -72,11 +72,11 @@ public class TwitLongerReaderActivity extends Activity implements Constants, OnC
 		mPreview = (TextView) findViewById(R.id.text);
 		mActionButton = (ImageButton) findViewById(R.id.action);
 		mProgress = (ProgressBar) findViewById(R.id.progress);
-		mResult = savedInstanceState != null ? savedInstanceState.getString(Twidere.EXTRA_TEXT) : null;
-		mUser = savedInstanceState != null ? savedInstanceState.getString(Twidere.EXTRA_USER) : null;
+		mResult = savedInstanceState != null ? savedInstanceState.getString(Firetweet.EXTRA_TEXT) : null;
+		mUser = savedInstanceState != null ? savedInstanceState.getString(Firetweet.EXTRA_USER) : null;
 		if (mResult == null || mUser == null) {
-			if (Twidere.INTENT_ACTION_EXTENSION_OPEN_STATUS.equals(action)) {
-				mStatus = Twidere.getStatusFromIntent(getIntent());
+			if (Firetweet.INTENT_ACTION_EXTENSION_OPEN_STATUS.equals(action)) {
+				mStatus = Firetweet.getStatusFromIntent(getIntent());
 				if (mStatus == null || mStatus.text_html == null) {
 					finish();
 					return;
@@ -107,8 +107,8 @@ public class TwitLongerReaderActivity extends Activity implements Constants, OnC
 
 	@Override
 	protected void onSaveInstanceState(final Bundle outState) {
-		outState.putString(Twidere.EXTRA_TEXT, mResult);
-		outState.putString(Twidere.EXTRA_USER, mUser);
+		outState.putString(Firetweet.EXTRA_TEXT, mResult);
+		outState.putString(Firetweet.EXTRA_USER, mUser);
 		super.onSaveInstanceState(outState);
 	}
 

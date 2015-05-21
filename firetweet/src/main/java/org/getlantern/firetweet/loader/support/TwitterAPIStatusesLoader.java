@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -26,8 +26,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import org.getlantern.jsonserializer.JSONFileIO;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweetserializer.JSONFileIO;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.model.ParcelableStatus;
 
 import java.io.File;
@@ -63,7 +63,7 @@ public abstract class TwitterAPIStatusesLoader extends ParcelableStatusesLoader 
         mAccountId = accountId;
         mMaxId = maxId;
         mSinceId = sinceId;
-        mDatabase = FireTweetApplication.getInstance(context).getSQLiteDatabase();
+        mDatabase = FiretweetApplication.getInstance(context).getSQLiteDatabase();
         mSavedStatusesFileArgs = savedStatusesArgs;
     }
 

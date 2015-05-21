@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -26,14 +26,14 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.util.AttributeSet;
 
 import org.getlantern.firetweet.Constants;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedStatuses;
-import org.getlantern.firetweet.provider.TwidereDataStore.Notifications;
-import org.getlantern.firetweet.provider.TwidereDataStore.SavedSearches;
-import org.getlantern.firetweet.provider.TwidereDataStore.UnreadCounts;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedStatuses;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Notifications;
+import org.getlantern.firetweet.provider.FiretweetDataStore.SavedSearches;
+import org.getlantern.firetweet.provider.FiretweetDataStore.UnreadCounts;
 
-import static org.getlantern.firetweet.provider.TwidereDataStore.CACHE_URIS;
-import static org.getlantern.firetweet.provider.TwidereDataStore.DIRECT_MESSAGES_URIS;
-import static org.getlantern.firetweet.provider.TwidereDataStore.STATUSES_URIS;
+import static org.getlantern.firetweet.provider.FiretweetDataStore.CACHE_URIS;
+import static org.getlantern.firetweet.provider.FiretweetDataStore.DIRECT_MESSAGES_URIS;
+import static org.getlantern.firetweet.provider.FiretweetDataStore.STATUSES_URIS;
 
 public class ClearDatabasesPreference extends AsyncTaskPreference implements Constants, OnPreferenceClickListener {
 

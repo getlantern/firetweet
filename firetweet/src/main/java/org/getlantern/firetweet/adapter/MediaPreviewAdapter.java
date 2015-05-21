@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -27,7 +27,7 @@ import android.widget.ImageView;
 
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.util.ImageLoadingHandler;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 
@@ -43,7 +43,7 @@ public class MediaPreviewAdapter extends ArrayAdapter<String> implements Constan
 
 	public MediaPreviewAdapter(final Context context) {
 		super(context, R.layout.gallery_item_image_preview);
-		mImageLoader = ((FireTweetApplication) context.getApplicationContext()).getMediaLoaderWrapper();
+		mImageLoader = ((FiretweetApplication) context.getApplicationContext()).getMediaLoaderWrapper();
 		mPreferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
 		mImageLoadingHandler = new ImageLoadingHandler();
 	}

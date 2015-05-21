@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -32,7 +32,7 @@ import android.widget.ImageView.ScaleType;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.iface.IDirectMessagesAdapter;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.model.ParcelableDirectMessage;
 import org.getlantern.firetweet.model.ParcelableDirectMessage.CursorIndices;
 import org.getlantern.firetweet.util.DirectMessageOnLinkClickHandler;
@@ -40,7 +40,7 @@ import org.getlantern.firetweet.util.ImageLoadingHandler;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.MultiSelectManager;
 import org.getlantern.firetweet.util.ThemeUtils;
-import org.getlantern.firetweet.util.TwidereLinkify;
+import org.getlantern.firetweet.util.FiretweetLinkify;
 import org.getlantern.firetweet.util.Utils;
 import org.getlantern.firetweet.view.holder.MessageConversationViewHolder;
 
@@ -65,13 +65,13 @@ public class MessageConversationAdapter extends Adapter<ViewHolder>
 
     private Cursor mCursor;
     private CursorIndices mIndices;
-    private TwidereLinkify mLinkify;
+    private FiretweetLinkify mLinkify;
 
     public MessageConversationAdapter(final Context context) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
-        final FireTweetApplication app = FireTweetApplication.getInstance(context);
-        mLinkify = new TwidereLinkify(new DirectMessageOnLinkClickHandler(context, null));
+        final FiretweetApplication app = FiretweetApplication.getInstance(context);
+        mLinkify = new FiretweetLinkify(new DirectMessageOnLinkClickHandler(context, null));
         mMultiSelectManager = app.getMultiSelectManager();
         mImageLoader = app.getMediaLoaderWrapper();
         mImageLoadingHandler = new ImageLoadingHandler(R.id.media_preview_progress);
@@ -88,7 +88,7 @@ public class MessageConversationAdapter extends Adapter<ViewHolder>
         return mImageLoader;
     }
 
-    public TwidereLinkify getLinkify() {
+    public FiretweetLinkify getLinkify() {
         return mLinkify;
     }
 

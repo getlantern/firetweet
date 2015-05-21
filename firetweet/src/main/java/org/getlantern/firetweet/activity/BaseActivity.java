@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -23,7 +23,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import org.getlantern.firetweet.Constants;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.support.BasePullToRefreshListFragment;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
 import org.getlantern.firetweet.util.MessagesManager;
@@ -35,7 +35,7 @@ public class BaseActivity extends BaseThemedActivity implements Constants {
 	private boolean mInstanceStateSaved, mIsVisible, mIsOnTop;
 
 	public MessagesManager getMessagesManager() {
-		return getFireTweetApplication() != null ? getTwidereApplication().getMessagesManager() : null;
+		return getFiretweetApplication() != null ? getFiretweetApplication().getMessagesManager() : null;
 	}
 
     @Override
@@ -48,12 +48,12 @@ public class BaseActivity extends BaseThemedActivity implements Constants {
 		return ThemeUtils.getThemeResource(this);
 	}
 
-	public FireTweetApplication getFireTweetApplication() {
-		return (FireTweetApplication) getApplication();
+	public FiretweetApplication getFiretweetApplication() {
+		return (FiretweetApplication) getApplication();
 	}
 
 	public AsyncTwitterWrapper getTwitterWrapper() {
-		return getFireTweetApplication() != null ? getTwidereApplication().getTwitterWrapper() : null;
+		return getFiretweetApplication() != null ? getFiretweetApplication().getTwitterWrapper() : null;
 	}
 
 	public boolean isOnTop() {

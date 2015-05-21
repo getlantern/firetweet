@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -26,13 +26,13 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 
-import org.getlantern.querybuilder.Expression;
+import org.mariotaku.querybuilder.Expression;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.model.ParcelableUser;
 import org.getlantern.firetweet.model.ParcelableUser.CachedIndices;
 import org.getlantern.firetweet.model.SingleResponse;
-import org.getlantern.firetweet.provider.TwidereDataStore.Accounts;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedUsers;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedUsers;
 import org.getlantern.firetweet.util.TwitterWrapper;
 
 import twitter4j.Twitter;

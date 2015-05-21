@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -49,9 +49,9 @@ import android.view.ViewGroup;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
-import org.getlantern.querybuilder.Columns.Column;
-import org.getlantern.querybuilder.Expression;
-import org.getlantern.querybuilder.RawItemArray;
+import org.mariotaku.querybuilder.Columns.Column;
+import org.mariotaku.querybuilder.Expression;
+import org.mariotaku.querybuilder.RawItemArray;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.iface.IControlBarActivity;
 import org.getlantern.firetweet.activity.iface.IControlBarActivity.ControlBarOffsetListener;
@@ -60,12 +60,12 @@ import org.getlantern.firetweet.adapter.MessageEntriesAdapter;
 import org.getlantern.firetweet.adapter.MessageEntriesAdapter.DirectMessageEntry;
 import org.getlantern.firetweet.adapter.MessageEntriesAdapter.MessageEntriesAdapterListener;
 import org.getlantern.firetweet.adapter.decorator.DividerItemDecoration;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.iface.RefreshScrollTopInterface;
-import org.getlantern.firetweet.provider.TwidereDataStore.Accounts;
-import org.getlantern.firetweet.provider.TwidereDataStore.DirectMessages;
-import org.getlantern.firetweet.provider.TwidereDataStore.DirectMessages.Inbox;
-import org.getlantern.firetweet.provider.TwidereDataStore.Statuses;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;
+import org.getlantern.firetweet.provider.FiretweetDataStore.DirectMessages;
+import org.getlantern.firetweet.provider.FiretweetDataStore.DirectMessages.Inbox;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Statuses;
 import org.getlantern.firetweet.util.AsyncTaskUtils;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
 import org.getlantern.firetweet.util.ContentListScrollListener;
@@ -75,6 +75,7 @@ import org.getlantern.firetweet.util.ThemeUtils;
 import org.getlantern.firetweet.util.Utils;
 import org.getlantern.firetweet.util.content.SupportFragmentReloadCursorObserver;
 import org.getlantern.firetweet.util.message.GetMessagesTaskEvent;
+import org.getlantern.firetweet.util.message.TaskStateChangedEvent;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -265,7 +266,7 @@ public class DirectMessagesFragment extends BaseSupportFragment implements Loade
         super.onStart();
         final ContentResolver resolver = getContentResolver();
         resolver.registerContentObserver(Accounts.CONTENT_URI, true, mReloadContentObserver);
-        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FiretweetApplication.getInstance(getActivity()).getMessageBus();
         bus.register(this);
         mAdapter.updateReadState();
         updateRefreshState();
@@ -283,7 +284,7 @@ public class DirectMessagesFragment extends BaseSupportFragment implements Loade
 
     @Override
     public void onStop() {
-        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FiretweetApplication.getInstance(getActivity()).getMessageBus();
         bus.unregister(this);
         final ContentResolver resolver = getContentResolver();
         resolver.unregisterContentObserver(mReloadContentObserver);

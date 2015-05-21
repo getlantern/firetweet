@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -26,10 +26,10 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import org.getlantern.jsonserializer.JSONParcel;
-import org.getlantern.jsonserializer.JSONParcelable;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedUsers;
-import org.getlantern.firetweet.provider.TwidereDataStore.DirectMessages.ConversationEntries;
+import org.getlantern.firetweetserializer.JSONParcel;
+import org.getlantern.firetweetserializer.JSONParcelable;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedUsers;
+import org.getlantern.firetweet.provider.FiretweetDataStore.DirectMessages.ConversationEntries;
 import org.getlantern.firetweet.util.HtmlEscapeHelper;
 import org.getlantern.firetweet.util.ParseUtils;
 import org.getlantern.firetweet.util.TwitterContentUtils;
@@ -37,7 +37,7 @@ import org.getlantern.firetweet.util.TwitterContentUtils;
 import twitter4j.URLEntity;
 import twitter4j.User;
 
-public class ParcelableUser implements TwidereParcelable, Comparable<ParcelableUser> {
+public class ParcelableUser implements FiretweetParcelable, Comparable<ParcelableUser> {
 
     public static final Parcelable.Creator<ParcelableUser> CREATOR = new Parcelable.Creator<ParcelableUser>() {
         @Override

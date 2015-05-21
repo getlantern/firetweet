@@ -1,5 +1,5 @@
 /*
- * Twidere - Twitter client for Android
+ * Firetweet - Twitter client for Android
  *
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  *
@@ -28,7 +28,7 @@ import com.squareup.otto.Subscribe;
 
 import org.getlantern.firetweet.adapter.ParcelableStatusesAdapter;
 import org.getlantern.firetweet.adapter.iface.IStatusesAdapter;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.model.ParcelableStatus;
 import org.getlantern.firetweet.util.message.FavoriteCreatedEvent;
 import org.getlantern.firetweet.util.message.FavoriteDestroyedEvent;
@@ -80,13 +80,13 @@ public abstract class ParcelableStatusesFragment extends AbsStatusesFragment<Lis
     @Override
     public void onStart() {
         super.onStart();
-        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FiretweetApplication.getInstance(getActivity()).getMessageBus();
         bus.register(this);
     }
 
     @Override
     public void onStop() {
-        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FiretweetApplication.getInstance(getActivity()).getMessageBus();
         bus.unregister(this);
         super.onStop();
     }

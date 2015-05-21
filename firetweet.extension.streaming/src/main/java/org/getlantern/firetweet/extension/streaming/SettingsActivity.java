@@ -1,6 +1,6 @@
 package org.getlantern.firetweet.extension.streaming;
 
-import org.getlantern.firetweet.Twidere;
+import org.getlantern.firetweet.Firetweet;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -46,14 +46,14 @@ public class SettingsActivity extends PreferenceActivity implements Constants, O
 		super.onCreate(savedInstanceState);
 		final boolean granted;
 		try {
-			granted = Twidere.isPermissionGranted(this);
+			granted = Firetweet.isPermissionGranted(this);
 		} catch (final SecurityException e) {
 			// TODO show error
 			finish();
 			return;
 		}
 		if (!granted) {
-			final Intent intent = new Intent(Twidere.INTENT_ACTION_REQUEST_PERMISSIONS);
+			final Intent intent = new Intent(Firetweet.INTENT_ACTION_REQUEST_PERMISSIONS);
 			intent.setPackage("org.getlantern.firetweet");
 			try {
 				startActivityForResult(intent, REQUEST_REQUEST_PERMISSIONS);

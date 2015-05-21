@@ -1,5 +1,5 @@
 /*
- * Twidere - Twitter client for Android
+ * Firetweet - Twitter client for Android
  *
  *  Copyright (C) 2012-2015 Mariotaku Lee <mariotaku.lee@gmail.com>
  *
@@ -21,7 +21,7 @@ package org.getlantern.firetweet.model;
 
 import android.support.annotation.NonNull;
 
-import org.getlantern.firetweet.util.TwidereArrayUtils;
+import org.getlantern.firetweet.util.FiretweetArrayUtils;
 
 /**
  * Created by mariotaku on 15/3/25.
@@ -80,7 +80,7 @@ public class StringLongPair {
 
     public static String toString(StringLongPair[] pairs) {
         if (pairs==null)return null;
-        return TwidereArrayUtils.toString(pairs, ';', false);
+        return FiretweetArrayUtils.toString(pairs, ';', false);
     }
 
     public static StringLongPair[] valuesOf(String s) throws NumberFormatException {

@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -27,7 +27,7 @@ import android.view.MenuItem;
 
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.activity.iface.IControlBarActivity;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.iface.IBaseFragment.SystemWindowsInsetsCallback;
 import org.getlantern.firetweet.fragment.iface.IBasePullToRefreshFragment;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
@@ -47,7 +47,7 @@ public class BaseActionBarActivity extends ThemedActionBarActivity implements Co
     private ArrayList<ControlBarOffsetListener> mControlBarOffsetListeners = new ArrayList<>();
 
     public MessagesManager getMessagesManager() {
-        return getFireTweetApplication() != null ? getTwidereApplication().getMessagesManager() : null;
+        return getFiretweetApplication() != null ? getFiretweetApplication().getMessagesManager() : null;
     }
 
     @Override
@@ -60,12 +60,12 @@ public class BaseActionBarActivity extends ThemedActionBarActivity implements Co
         return ThemeUtils.getThemeResource(this);
     }
 
-    public FireTweetApplication getFireTweetApplication() {
-        return (FireTweetApplication) getApplication();
+    public FiretweetApplication getFiretweetApplication() {
+        return (FiretweetApplication) getApplication();
     }
 
     public AsyncTwitterWrapper getTwitterWrapper() {
-        return getFireTweetApplication() != null ? getTwidereApplication().getTwitterWrapper() : null;
+        return getFiretweetApplication() != null ? getFiretweetApplication().getTwitterWrapper() : null;
     }
 
     public boolean isOnTop() {

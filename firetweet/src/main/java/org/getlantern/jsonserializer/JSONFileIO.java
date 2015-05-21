@@ -1,11 +1,11 @@
-package org.getlantern.jsonserializer;
+package org.getlantern.firetweetserializer;
 
 import android.content.Context;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.getlantern.firetweet.util.TwidereArrayUtils;
+import org.getlantern.firetweet.util.FiretweetArrayUtils;
 import org.getlantern.firetweet.util.Utils;
 
 import java.io.BufferedReader;
@@ -66,7 +66,7 @@ public class JSONFileIO extends JSONSerializer {
 		if (!cache_dir.exists()) {
 			cache_dir.mkdirs();
 		}
-		final String filename = Utils.encodeQueryParams(TwidereArrayUtils.toString(args, '.', false));
+		final String filename = Utils.encodeQueryParams(FiretweetArrayUtils.toString(args, '.', false));
 		final File cache_file = new File(cache_dir, filename + ".json");
 		return cache_file;
 	}

@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -25,7 +25,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Color;
 import android.support.v4.util.LongSparseArray;
 
-import org.getlantern.firetweet.TwidereConstants;
+import org.getlantern.firetweet.FiretweetConstants;
 import org.getlantern.firetweet.model.ParcelableStatus;
 import org.getlantern.firetweet.model.ParcelableUser;
 
@@ -33,7 +33,7 @@ import java.util.Map;
 
 import static android.text.TextUtils.isEmpty;
 
-public class UserColorNameUtils implements TwidereConstants {
+public class UserColorNameUtils implements FiretweetConstants {
 
     private static LongSparseArray<Integer> sUserColors = new LongSparseArray<>();
     private static LongSparseArray<String> sUserNicknames = new LongSparseArray<>();

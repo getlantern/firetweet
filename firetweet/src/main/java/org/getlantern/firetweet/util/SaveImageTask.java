@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -102,7 +102,7 @@ public class SaveImageTask extends AsyncTask<Object, Object, File> implements Co
             if (extension == null) return null;
             final String nameToSave = name.contains(".") ? name : name + "." + extension;
             final File pubDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-            final File saveDir = new File(pubDir, "Twidere");
+            final File saveDir = new File(pubDir, "Firetweet");
             if (!saveDir.isDirectory() && !saveDir.mkdirs()) return null;
             final File saveFile = new File(saveDir, nameToSave);
             FileUtils.copyFile(image_file, saveFile);

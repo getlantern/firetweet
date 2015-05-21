@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -26,7 +26,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import org.getlantern.firetweet.util.ThemeUtils;
-import org.getlantern.firetweet.util.TwidereValidator;
+import org.getlantern.firetweet.util.FiretweetValidator;
 
 import java.util.Locale;
 
@@ -36,7 +36,7 @@ public class StatusTextCountView extends TextView {
 
     private final int mTextColor;
     private final Locale mLocale;
-    private final TwidereValidator mValidator;
+    private final FiretweetValidator mValidator;
 
     public StatusTextCountView(final Context context) {
         this(context, null);
@@ -48,7 +48,7 @@ public class StatusTextCountView extends TextView {
 
     public StatusTextCountView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
-        mValidator = new TwidereValidator(context);
+        mValidator = new FiretweetValidator(context);
         if (isInEditMode()) {
             mTextColor = 0;
             mLocale = Locale.getDefault();

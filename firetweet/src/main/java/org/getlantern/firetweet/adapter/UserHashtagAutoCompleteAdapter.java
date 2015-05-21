@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -34,16 +34,16 @@ import android.widget.FilterQueryProvider;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.getlantern.querybuilder.Columns.Column;
-import org.getlantern.querybuilder.Expression;
-import org.getlantern.querybuilder.OrderBy;
-import org.getlantern.querybuilder.RawItemArray;
+import org.mariotaku.querybuilder.Columns.Column;
+import org.mariotaku.querybuilder.Expression;
+import org.mariotaku.querybuilder.OrderBy;
+import org.mariotaku.querybuilder.RawItemArray;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
-import org.getlantern.firetweet.app.FireTweetApplication;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedHashtags;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedUsers;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedValues;
+import org.getlantern.firetweet.app.FiretweetApplication;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedHashtags;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedUsers;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedValues;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.ParseUtils;
 import org.getlantern.firetweet.util.SharedPreferencesWrapper;
@@ -85,7 +85,7 @@ public class UserHashtagAutoCompleteAdapter extends SimpleCursorAdapter implemen
         mPreferences = SharedPreferencesWrapper.getInstance(context, SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         mUserNicknamePreferences = context.getSharedPreferences(USER_NICKNAME_PREFERENCES_NAME, Context.MODE_PRIVATE);
         mResolver = context.getContentResolver();
-        final FireTweetApplication app = FireTweetApplication.getInstance(context);
+        final FiretweetApplication app = FiretweetApplication.getInstance(context);
         mProfileImageLoader = app.getMediaLoaderWrapper();
         mDatabase = app.getSQLiteDatabase();
         mDisplayProfileImage = mPreferences.getBoolean(KEY_DISPLAY_PROFILE_IMAGE, true);

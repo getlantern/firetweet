@@ -1,5 +1,5 @@
 /*
- * Twidere - Twitter client for Android
+ * Firetweet - Twitter client for Android
  *
  *  Copyright (C) 2012-2015 Mariotaku Lee <mariotaku.lee@gmail.com>
  *
@@ -40,7 +40,7 @@ public class LinkCreator implements Constants {
         return builder.build();
     }
 
-    public static Uri getTwidereStatusLink(long accountId, long statusId) {
+    public static Uri getFiretweetStatusLink(long accountId, long statusId) {
         final Uri.Builder builder = new Uri.Builder();
         builder.scheme(SCHEME_TWIDERE);
         builder.authority(AUTHORITY_STATUS);
@@ -51,7 +51,7 @@ public class LinkCreator implements Constants {
         return builder.build();
     }
 
-    public static Uri getTwidereUserLink(long accountId, long userId, String screenName) {
+    public static Uri getFiretweetUserLink(long accountId, long userId, String screenName) {
         final Uri.Builder builder = new Uri.Builder();
         builder.scheme(SCHEME_TWIDERE);
         builder.authority(AUTHORITY_USER);

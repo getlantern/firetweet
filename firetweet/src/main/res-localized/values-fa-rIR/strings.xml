@@ -137,7 +137,7 @@
   <string name="wizard_page_finished_title">تمام شده</string>
   <string name="destroy_status">توییت را حذف کن</string>
   <string name="destroy_status_confirm_message">ایا این توییت را حذف کنم؟</string>
-  <string name="twidere_test">تست فایرتوییت</string>
+  <string name="firetweet_test">تست فایرتوییت</string>
   <string name="developed_by">پردازش شده توسط</string>
   <string name="project_account">حساب پروژه</string>
   <string name="translators">مترجم ها</string>

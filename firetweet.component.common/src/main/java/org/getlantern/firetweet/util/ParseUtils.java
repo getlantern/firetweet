@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -25,7 +25,7 @@ import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.getlantern.firetweet.TwidereConstants;
+import org.getlantern.firetweet.FiretweetConstants;
 import org.getlantern.firetweet.constant.IntentConstants;
 
 import java.net.MalformedURLException;
@@ -58,7 +58,7 @@ public final class ParseUtils {
                 } else if (value instanceof String) {
                     json.put(key, args.getString(key));
                 } else {
-                    Log.w(TwidereConstants.LOGTAG, "Unknown type " + value.getClass().getSimpleName() + " in arguments key " + key);
+                    Log.w(FiretweetConstants.LOGTAG, "Unknown type " + value.getClass().getSimpleName() + " in arguments key " + key);
                 }
             } catch (final JSONException e) {
                 e.printStackTrace();
@@ -94,7 +94,7 @@ public final class ParseUtils {
                 } else if (value instanceof String) {
                     bundle.putString(key, json.optString(key));
                 } else {
-                    Log.w(TwidereConstants.LOGTAG, "Unknown type " + value.getClass().getSimpleName() + " in arguments key " + key);
+                    Log.w(FiretweetConstants.LOGTAG, "Unknown type " + value.getClass().getSimpleName() + " in arguments key " + key);
                 }
             }
         } catch (final JSONException e) {

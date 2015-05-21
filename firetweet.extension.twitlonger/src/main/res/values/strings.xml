@@ -2,7 +2,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
 	<string name="description">TwitLonger extension by Mariotaku</string>
-	<string name="app_name">Twidere TwitLonger Extension</string>
+	<string name="app_name">Firetweet TwitLonger Extension</string>
 	<string name="extension_post_name">Post TwitLonger tweet</string>
 	<string name="extension_reader_name">Read TwitLonger tweet</string>
 	<string name="title">TwitLonger</string>

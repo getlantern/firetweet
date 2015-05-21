@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -57,7 +57,7 @@ import org.getlantern.firetweet.model.CustomTabConfiguration;
 import org.getlantern.firetweet.model.SupportTabSpec;
 import org.getlantern.firetweet.preference.WizardPageHeaderPreference;
 import org.getlantern.firetweet.preference.WizardPageNavPreference;
-import org.getlantern.firetweet.provider.TwidereDataStore.Tabs;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Tabs;
 import org.getlantern.firetweet.util.AsyncTaskUtils;
 import org.getlantern.firetweet.util.CustomTabUtils;
 import org.getlantern.firetweet.util.MathUtils;

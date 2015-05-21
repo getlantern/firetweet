@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.iface.IStatusesAdapter;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.support.UserFragment;
 import org.getlantern.firetweet.model.ParcelableMedia;
 import org.getlantern.firetweet.model.ParcelableStatus;
@@ -24,8 +24,8 @@ import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.SharedPreferencesWrapper;
 import org.getlantern.firetweet.util.StatusAdapterLinkClickHandler;
 import org.getlantern.firetweet.util.ThemeUtils;
-import org.getlantern.firetweet.util.TwidereLinkify;
-import org.getlantern.firetweet.util.TwidereLinkify.HighlightStyle;
+import org.getlantern.firetweet.util.FiretweetLinkify;
+import org.getlantern.firetweet.util.FiretweetLinkify.HighlightStyle;
 import org.getlantern.firetweet.util.Utils;
 import org.getlantern.firetweet.view.CardMediaContainer.PreviewStyle;
 import org.getlantern.firetweet.view.ShapedImageView.ShapeStyle;
@@ -48,7 +48,7 @@ public abstract class AbsStatusesAdapter<D> extends Adapter<ViewHolder> implemen
     private final MediaLoaderWrapper mImageLoader;
     private final ImageLoadingHandler mLoadingHandler;
     private final AsyncTwitterWrapper mTwitterWrapper;
-    private final TwidereLinkify mLinkify;
+    private final FiretweetLinkify mLinkify;
 
     private StatusAdapterListener mStatusAdapterListener;
 
@@ -75,7 +75,7 @@ public abstract class AbsStatusesAdapter<D> extends Adapter<ViewHolder> implemen
 
     public AbsStatusesAdapter(Context context, boolean compact) {
         mContext = context;
-        final FireTweetApplication app = FireTweetApplication.getInstance(context);
+        final FiretweetApplication app = FiretweetApplication.getInstance(context);
         mCardBackgroundColor = ThemeUtils.getCardBackgroundColor(context);
         mInflater = LayoutInflater.from(context);
         mImageLoader = app.getMediaLoaderWrapper();
@@ -93,7 +93,7 @@ public abstract class AbsStatusesAdapter<D> extends Adapter<ViewHolder> implemen
         mDisplayMediaPreview = preferences.getBoolean(KEY_MEDIA_PREVIEW, false);
         mSensitiveContentEnabled = preferences.getBoolean(KEY_DISPLAY_SENSITIVE_CONTENTS, false);
         mHideCardActions = preferences.getBoolean(KEY_HIDE_CARD_ACTIONS, false);
-        mLinkify = new TwidereLinkify(new StatusAdapterLinkClickHandler<>(this));
+        mLinkify = new FiretweetLinkify(new StatusAdapterLinkClickHandler<>(this));
         setShowInReplyTo(true);
     }
 
@@ -168,7 +168,7 @@ public abstract class AbsStatusesAdapter<D> extends Adapter<ViewHolder> implemen
     }
 
     @Override
-    public TwidereLinkify getTwidereLinkify() {
+    public FiretweetLinkify getFiretweetLinkify() {
         return mLinkify;
     }
 

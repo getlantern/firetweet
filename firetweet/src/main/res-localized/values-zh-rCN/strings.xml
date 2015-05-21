@@ -33,27 +33,27 @@
   <string name="edit_api">編輯 API</string>
   <string name="home">主頁</string>
   <string name="mentions">提及</string>
-  <string name="error_occurred">發生錯誤，請重試</string>
-  <string name="error_already_logged_in">您已經登入</string>
-  <string name="no_account_selected">沒有選擇帳號</string>
-  <string name="empty_account_selection_disallowed">請選擇至少一個帳號</string>
-  <string name="error_unknown_error">錯誤：未知錯誤，這很可能是個bug</string>
-  <string name="error_message">發生問題：&lt;xliff:g id="message"&gt;%s&lt;/xliff:g&gt;</string>
-  <string name="error_message_with_action">在&lt;xliff:g id="action"&gt;%1$s&lt;/xliff:g&gt;時發生問題：&lt;xliff:g id="message"&gt;%2$s&lt;/xliff:g&gt;</string>
-  <string name="error_message_rate_limit">超過了Twitter的取用次數限制，請在&lt;xliff:g id="time"&gt;%s&lt;/xliff:g&gt;重試</string>
-  <string name="error_message_rate_limit_with_action">在&lt;xliff:g id="action"&gt;%1$s&lt;/xliff:g&gt;時超過了Twitter的取用次數限制，請在&lt;xliff:g id="time"&gt;%2$s&lt;/xliff:g&gt;重試</string>
-  <string name="select_account">選擇帳號</string>
-  <string name="username">用戶名</string>
-  <string name="password">密碼</string>
-  <string name="label_tweetstore_provider">Twidere 資料庫存儲</string>
-  <string name="label_refresh_service">刷新服務</string>
-  <string name="label_background_operation_service">後台操作服務</string>
-  <string name="open_in_browser">在瀏覽器中打開</string>
-  <string name="tap_to_load_more">輕按以加載更多</string>
-  <string name="delete">刪除</string>
-  <string name="retweet">轉推</string>
-  <string name="retweets">轉推</string>
-  <string name="cancel_retweet">取消轉推</string>
+  <string name="error_occurred">发生错误，请重试</string>
+  <string name="error_already_logged_in">你已经登录</string>
+  <string name="no_account_selected">没有选择帐号</string>
+  <string name="empty_account_selection_disallowed">请选择至少一个帐号</string>
+  <string name="error_unknown_error">错误：未知错误，这很可能是个bug</string>
+  <string name="error_message">发生问题：<xliff:g id="message">%s</xliff:g></string>
+  <string name="error_message_with_action">在<xliff:g id="action">%1$s</xliff:g>时发生问题：<xliff:g id="message">%2$s</xliff:g></string>
+  <string name="error_message_rate_limit">超过了Twitter的调用次数限制，请在<xliff:g id="time">%s</xliff:g>重试</string>
+  <string name="error_message_rate_limit_with_action">在<xliff:g id="action">%1$s</xliff:g>时超过了Twitter的调用次数限制，请在<xliff:g id="time">%2$s</xliff:g>重试</string>
+  <string name="select_account">选择帐号</string>
+  <string name="username">用户名</string>
+  <string name="password">密码</string>
+  <string name="label_tweetstore_provider">Firetweet 数据库存储</string>
+  <string name="label_refresh_service">刷新服务</string>
+  <string name="label_background_operation_service">后台操作服务</string>
+  <string name="open_in_browser">在浏览器中打开</string>
+  <string name="tap_to_load_more">轻按以加载更多</string>
+  <string name="delete">删除</string>
+  <string name="retweet">转推</string>
+  <string name="retweets">转推</string>
+  <string name="cancel_retweet">取消转推</string>
   <string name="favorite">收藏</string>
   <string name="unfavorite">取消收藏</string>
   <string name="reply">回覆</string>
@@ -142,23 +142,26 @@
   <string name="quote_format">引用格式</string>
   <string name="quote_format_summary">\"[TEXT]\"：推文原文\n\"[NAME]\"：用戶名</string>
   <string name="direct_messages">私信</string>
-  <string name="blocked_users">已封鎖的用戶</string>
-  <string name="set_as_default">設為預設</string>
-  <string name="search_users">搜尋用戶</string>
-  <string name="search_statuses">搜尋推文</string>
-  <string name="created_at">建立日期</string>
-  <string name="search_hint">搜尋推文或用戶</string>
-  <string name="remember_position">記住位置</string>
-  <string name="remember_position_summary">打開Twidere時，恢復到退出前列表/頁面的位置</string>
-  <string name="user_blocked">你封鎖了這個用戶</string>
-  <string name="users_blocked">你封鎖了這些用戶</string>
-  <string name="user_unblocked">您解除了對這個用戶的封鎖</string>
-  <string name="reported_user_for_spam">您已回報這個用戶發送垃圾訊息</string>
-  <string name="reported_users_for_spam">您已回報這些用戶發送垃圾訊息</string>
-  <string name="filename_hint">檔案名</string>
-  <string name="please_wait">請稍等</string>
-  <string name="saved_to_gallery">已儲存到相冊</string>
-  <string name="proxy">代理伺服器</string>
+  <string name="blocked_users">已阻止的用户</string>
+  <string name="set_as_default">设为默认</string>
+  <string name="search_users">搜索用户</string>
+  <string name="search_statuses">搜索推文</string>
+  <string name="created_at">创建日期</string>
+  <string name="search_hint">搜索推文或用户</string>
+  <string name="remember_position">记住位置</string>
+  <string name="remember_position_summary">打开Firetweet时，恢复到退出前列表/页面的位置</string>
+  <string name="user_blocked">你阻止了这个用户</string>
+  <string name="users_blocked">你阻止了这些用户</string>
+  <string name="user_unblocked">你解除了对这个用户的阻止</string>
+  <string name="reported_user_for_spam">你已报告这个用户发送垃圾信息</string>
+  <string name="reported_users_for_spam">你已报告这些用户发送垃圾信息</string>
+  <string name="filename_hint">文件名</string>
+  <string name="overwrite_confirm">文件已经存在，覆盖吗？</string>
+  <string name="save_as">保存为</string>
+  <string name="please_wait">请稍等</string>
+  <string name="file_saved_to">文件已经保存到 <xliff:g id="filename">%s</xliff:g></string>
+  <string name="saved_to_gallery">已保存到相册</string>
+  <string name="proxy">代理服务器</string>
   <string name="http_proxy">HTTP代理</string>
   <string name="http_proxy_summary">為API請求使用HTTP代理</string>
   <string name="proxy_host">代理伺服器主機名</string>
@@ -338,24 +341,24 @@
   <string name="action_subscribing_to_list">訂閲列表</string>
   <string name="action_unsubscribing_from_list">退訂列表</string>
   <string name="action_saving_search">保存搜索</string>
-  <string name="action_deleting_search">刪除搜尋</string>
-  <string name="action_accepting_follow_request">同意關注請求</string>
-  <string name="action_denying_follow_request">拒絕關注請求</string>
-  <string name="status_is_duplicate">您發送了重複的推文</string>
-  <string name="silent_notifications">靜音通知</string>
-  <string name="silent_notifications_summary">在特定時間為通知禁用鈴聲和震動</string>
-  <string name="disable_background_service">禁用背景服務</string>
-  <string name="disable_background_service_summary">別傻了，Twidere 在關閉自動更新和數據統計之後是沒有背景服務的。</string>
-  <string name="text_copied">文字已複製到剪貼本</string>
-  <string name="hashtag">話題標籤</string>
-  <string name="links">連結</string>
-  <string name="edit_profile">編輯個人資料</string>
-  <string name="display_sensitive_contents">顯示敏感內容</string>
-  <string name="display_sensitive_contents_summary">顯示色情等敏感內容而不發出提示</string>
-  <string name="sensitive_content_warning">這條推文可能有敏感內容，繼續？</string>
-  <string name="mark_as_sensitive">標記為敏感</string>
-  <string name="remove_sensitive_mark">刪除敏感標記</string>
-  <string name="none">無</string>
+  <string name="action_deleting_search">删除搜索</string>
+  <string name="action_accepting_follow_request">同意关注请求</string>
+  <string name="action_denying_follow_request">拒绝关注请求</string>
+  <string name="status_is_duplicate">你发送了重复的推文</string>
+  <string name="silent_notifications">静默通知</string>
+  <string name="silent_notifications_summary">在特定时间为通知禁用铃声和震动</string>
+  <string name="disable_background_service">禁用后台服务</string>
+  <string name="disable_background_service_summary">别傻了，Firetweet在关闭自动刷新和数据统计之后是没有后台服务的。</string>
+  <string name="text_copied">文本已复制到剪贴板</string>
+  <string name="hashtag">话题标签</string>
+  <string name="links">链接</string>
+  <string name="edit_profile">编辑个人资料</string>
+  <string name="display_sensitive_contents">显示敏感内容</string>
+  <string name="display_sensitive_contents_summary">显示色情等敏感内容而不发出提示</string>
+  <string name="sensitive_content_warning">这条推文可能有敏感内容，继续？</string>
+  <string name="mark_as_sensitive">标记为敏感</string>
+  <string name="remove_sensitive_mark">删除敏感标记</string>
+  <string name="none">无</string>
   <string name="large">大尺寸</string>
   <string name="small">小尺寸</string>
   <string name="and_more">和其他&lt;xliff:g id="count"&gt;%d&lt;/xliff:g&gt;個</string>
@@ -374,32 +377,32 @@
   <string name="revoke_permissions">撤銷授權</string>
   <string name="fast_scroll_thumb">快速捲動條</string>
   <string name="indicate_your_status">指示你的推文</string>
-  <string name="default_ringtone">預設鈴聲</string>
-  <string name="phishing_link_warning">釣魚連結警告</string>
-  <string name="phishing_link_warning_summary">於您試圖打開私信中可能的釣魚連結時發出警告</string>
-  <string name="phishing_link_warning_message_1">您正在打開私信中一個可能是釣魚網站的連結。\n\n請在輸入任何個人資訊前，認真檢查網站的網址。</string>
-  <string name="phishing_link_warning_message_2">確定繼續嗎？</string>
-  <string name="image_preload_options">圖片預加載選項</string>
-  <string name="profile_images">個人資料圖片</string>
-  <string name="preview_images">推文預覽圖片</string>
-  <string name="preload_wifi_only">僅使用 Wi-Fi 預加載</string>
-  <string name="disable_tab_swipe">禁用滑動切換標籤頁</string>
-  <string name="sign_in_method_introduction_title">輸入密碼登錄是怎樣工作的？</string>
-  <string name="sign_in_method_introduction">大多數客戶端（例如twicca）通過打開瀏覽器驗證登錄Twitter，然後瀏覽器再將你引導回客戶端。有時這會導致許多不便，因為一些第三方瀏覽器不會引導你回客戶端。\n\nTwidere使用更加簡便的步驟代替瀏覽器登錄到Twitter，不必擔心你會洩露你的密碼，這個方式非常安全！\n\nTwidere不會儲存密碼，僅在登錄時發送給Twitter，只要網絡足夠安全，你的密碼永遠不會被第三方獲取！</string>
-  <string name="quote_protected_status_notice">不建議引用受保護的推文</string>
-  <string name="edit_draft">編輯草稿</string>
-  <string name="profile_image">個人資料圖片</string>
-  <string name="your_profile_image">你的頭像</string>
-  <string name="mention_user">提及&lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt;</string>
-  <string name="theme_color">主題顏色</string>
-  <string name="wrong_url_format">URL 格式錯誤</string>
-  <string name="wrong_username_password">用戶名/密碼錯誤</string>
-  <string name="network_error">網路錯誤</string>
-  <string name="api_data_corrupted">API 資料毀損</string>
-  <string name="ssl_error">SSL錯誤，你可能需要啟用“忽略SSL錯誤”選項（可能降低安全性）</string>
-  <string name="wrong_api_key">API地址或者consumer key/secret不正確，請檢查</string>
-  <string name="status_updated">推文已發送</string>
-  <string name="status_deleted">推文已刪除</string>
+  <string name="default_ringtone">默认铃声</string>
+  <string name="phishing_link_warning">钓鱼链接警告</string>
+  <string name="phishing_link_warning_summary">在你试图打开私信中可能的钓鱼链接时发出警告</string>
+  <string name="phishing_link_warning_message_1">你正在打开私信中一个可能是钓鱼站点的链接。\n\n请在输入任何个人信息前，认真检查站点的地址。</string>
+  <string name="phishing_link_warning_message_2">确定继续吗？</string>
+  <string name="image_preload_options">图片预加载选项</string>
+  <string name="profile_images">个人资料图片</string>
+  <string name="preview_images">推文预览图片</string>
+  <string name="preload_wifi_only">仅使用Wi-Fi预加载</string>
+  <string name="disable_tab_swipe">禁用滑动切换标签页</string>
+  <string name="sign_in_method_introduction_title">输入密码登录是怎样工作的？</string>
+  <string name="sign_in_method_introduction">大多数客户端（例如twicca）通过打开浏览器验证登录Twitter，然后浏览器再将你引导回客户端。有时这会导致许多不便，因为一些第三方浏览器不会引导你回客户端。\n\nFiretweet使用更加简便的步骤代替浏览器登录到Twitter，不必担心你会泄露你的密码，这个方式非常安全！\n\nFiretweet不会保存密码，仅在登录时发送给Twitter，只要网络足够安全，你的密码永远不会被第三方获取！</string>
+  <string name="quote_protected_status_notice">不建议引用受保护的推文</string>
+  <string name="edit_draft">编辑草稿</string>
+  <string name="profile_image">个人资料图片</string>
+  <string name="your_profile_image">你的头像</string>
+  <string name="mention_user">提及<xliff:g id="user">%s</xliff:g></string>
+  <string name="theme_color">主题颜色</string>
+  <string name="wrong_url_format">URL格式错误</string>
+  <string name="wrong_username_password">用户名/密码错误</string>
+  <string name="network_error">网络错误</string>
+  <string name="api_data_corrupted">API数据损坏</string>
+  <string name="ssl_error">SSL错误，你可能需要启用“忽略SSL错误”选项（可能降低安全性）</string>
+  <string name="wrong_api_key">API地址或者consumer key/secret不正确，请检查</string>
+  <string name="status_updated">推文已发送</string>
+  <string name="status_deleted">推文已删除</string>
   <string name="status_favorited">推文已收藏</string>
   <string name="status_unfavorited">推文已取消收藏</string>
   <string name="status_retweeted">已轉推</string>
@@ -439,24 +442,24 @@
   <string name="background_toast_notification">背景 Toast 通知</string>
   <string name="background_toast_notification_summary">切換到背景後顯示 Toast 通知</string>
   <string name="original_status">原推文</string>
-  <string name="compose_quit_action">退出\"撰寫\"界面的操作</string>
-  <string name="ask">詢問</string>
-  <string name="no_close_after_status_updated">發送推文之後仍然保持\"撰寫\"開啟</string>
-  <string name="no_close_after_status_updated_summary">給不二的小禮物</string>
-  <string name="status_saved_to_draft">推文已經儲存到草稿箱</string>
-  <string name="default_account">預設帳號</string>
-  <string name="created_at_with_N_tweets_per_day_quantity_one">&lt;xliff:g id="created_at"&gt;%1$s&lt;/xliff:g&gt; （每天&lt;xliff:g id="daily_tweet"&gt;%2$d&lt;/xliff:g&gt;推）</string>
-  <string name="created_at_with_N_tweets_per_day_quantity_other">&lt;xliff:g id="created_at"&gt;%1$s&lt;/xliff:g&gt; （每天&lt;xliff:g id="daily_tweet"&gt;%2$d&lt;/xliff:g&gt;推）</string>
-  <string name="empty_content">空內容</string>
-  <string name="fast_image_loading">快速圖像載入</string>
-  <string name="fast_image_loading_summary">啟用可以使圖片載入更快，如果一些圖片不能顯示的話則可以把它關閉</string>
-  <string name="select_user_list">選擇列表</string>
-  <string name="select_user">選擇用戶</string>
-  <string name="created_by">由 &lt;xliff:g id="created_by"&gt;%s&lt;/xliff:g&gt; 建立</string>
-  <string name="add_to_list">新增到列表</string>
-  <string name="account_delete_confirm_title">刪除帳號</string>
-  <string name="account_delete_confirm_message">這個帳號將會從 Twidere中 刪除</string>
-  <string name="theme">主題</string>
+  <string name="compose_quit_action">退出“撰写”界面的操作</string>
+  <string name="ask">询问</string>
+  <string name="no_close_after_status_updated">发送推文之后仍然保持“撰写”开启</string>
+  <string name="no_close_after_status_updated_summary">给不二的小礼物</string>
+  <string name="status_saved_to_draft">推文已经保存到草稿箱</string>
+  <string name="default_account">默认帐号</string>
+  <string name="created_at_with_N_tweets_per_day_quantity_one"><xliff:g id="created_at">%1$s</xliff:g> （每天<xliff:g id="daily_tweet">%2$d</xliff:g>推）</string>
+  <string name="created_at_with_N_tweets_per_day_quantity_other"><xliff:g id="created_at">%1$s</xliff:g> （每天<xliff:g id="daily_tweet">%2$d</xliff:g>推）</string>
+  <string name="empty_content">空内容</string>
+  <string name="fast_image_loading">快速图像载入</string>
+  <string name="fast_image_loading_summary">启用可以使图片载入更快，如果一些图片不能显示的话则可以把它禁用</string>
+  <string name="select_user_list">选择列表</string>
+  <string name="select_user">选择用户</string>
+  <string name="created_by">由<xliff:g id="created_by">%s</xliff:g>创建</string>
+  <string name="add_to_list">添加到列表</string>
+  <string name="account_delete_confirm_title">删除帐号</string>
+  <string name="account_delete_confirm_message">这个帐号将会从Firetweet中删除</string>
+  <string name="theme">主题</string>
   <string name="theme_dark">暗色</string>
   <string name="theme_light">亮色</string>
   <string name="settings_interface">界面</string>
@@ -480,53 +483,53 @@
   <string name="card_animation">卡片動畫</string>
   <string name="name_first">優先顯示名字</string>
   <string name="next">下一步</string>
-  <string name="settings_wizard">設定精靈</string>
-  <string name="wizard_page_welcome_title">歡迎</string>
-  <string name="wizard_page_welcome_text">感謝您選擇 Twidere。\n您想現在設定它嗎？</string>
+  <string name="settings_wizard">设定向导</string>
+  <string name="wizard_page_welcome_title">欢迎</string>
+  <string name="wizard_page_welcome_text">感谢你选择Firetweet。\n你想现在设定它吗？</string>
   <string name="wizard_page_welcome_yes">是的</string>
-  <string name="wizard_page_welcome_not_now">暫時不要</string>
-  <string name="wizard_page_welcome_import_settings">匯入設定</string>
-  <string name="wizard_page_theme_text">選擇一個您喜歡的主題。</string>
-  <string name="wizard_page_tabs_text">新增一些標籤頁到Twidere。\n即時關注您在意的人和事。</string>
-  <string name="wizard_page_tabs_unchanged_message">您可以稍後在設定中新增標籤頁</string>
-  <string name="wizard_page_cards_text">設定卡片項目。</string>
-  <string name="wizard_page_hints_text">這裡有一些有用的小提示。</string>
-  <string name="wizard_page_usage_statistics_text">Twidere加入了一些需要收集使用資訊的研究項目。</string>
+  <string name="wizard_page_welcome_not_now">暂时不</string>
+  <string name="wizard_page_welcome_import_settings">导入设定</string>
+  <string name="wizard_page_theme_text">选择一个你喜欢的主题。</string>
+  <string name="wizard_page_tabs_text">添加一些标签页到Firetweet。\n时刻关注你在意的人和事。</string>
+  <string name="wizard_page_tabs_unchanged_message">你可以稍后在设定中添加标签页</string>
+  <string name="wizard_page_cards_text">设定卡片项。</string>
+  <string name="wizard_page_hints_text">这里有一些有用的小提示。</string>
+  <string name="wizard_page_usage_statistics_text">Firetweet加入了一些需要收集使用信息的研究项目。</string>
   <string name="wizard_page_finished_title">完成</string>
-  <string name="wizard_page_finished_text">現在 Twidere 已經可以使用了。</string>
-  <string name="invalid_tab">無效標籤頁</string>
-  <string name="send_crash_report">發送 Twidere 的崩潰報告</string>
-  <string name="add_to_filter">新增到過濾器</string>
-  <string name="user_filter_name">用戶：&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;</string>
-  <string name="keyword_filter_name">關鍵詞：&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;</string>
-  <string name="source_filter_name">來源&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;</string>
-  <string name="block_user">封鎖&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;</string>
-  <string name="block_user_confirm_message">您確定要封鎖&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;嗎？</string>
-  <string name="unfollow_user">取消關注&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;</string>
-  <string name="unfollow_user_confirm_message">取消關注&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;嗎？你將不會在時間軸中看到這個用戶的推文。</string>
-  <string name="delete_user_list">刪除列表&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;</string>
-  <string name="delete_user_list_confirm_message">刪除列表&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;嗎？這個操作不能被取消。</string>
-  <string name="unsubscribe_from_user_list">從列表&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;退訂</string>
-  <string name="unsubscribe_from_user_list_confirm_message">取消訂閱列表&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;嗎？你稍後可以重新訂閱這個列表。</string>
-  <string name="destroy_status">刪除推文</string>
-  <string name="destroy_status_confirm_message">刪除這條推文嗎？</string>
-  <string name="destroy_saved_search">刪除儲存的搜尋 "&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;"</string>
-  <string name="destroy_saved_search_confirm_message">要刪除儲存的搜索“&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;”嗎？你可以稍後再儲存這個搜索。</string>
-  <string name="signing_in_error_browser_sign_in_hint">登錄時發生問題，你可能需要使用“瀏覽器登錄”。（這將在登錄時暫時忽略自定義API設定）</string>
-  <string name="report_user">報告&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;</string>
-  <string name="report_user_confirm_message">你確定報告&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;發送垃圾信息嗎？</string>
-  <string name="twidere_test">Twidere 測試</string>
-  <string name="staggered_home_timeline">主頁信息流</string>
-  <string name="unread_count">未讀條目</string>
-  <string name="developed_by">開發者</string>
-  <string name="project_account">項目帳號</string>
-  <string name="translators">翻譯者</string>
-  <string name="translate">翻譯</string>
-  <string name="sponsored_by">贊助</string>
-  <string name="special_thanks_to">特別感謝</string>
-  <string name="contributors_list_summary">如果你沒有看到你的名字，請聯繫我們的專案帳號</string>
-  <string name="account_options">帳號選項</string>
-  <string name="show_in_timeline">在時間軸中顯示</string>
+  <string name="wizard_page_finished_text">现在Firetweet已经可以使用了。</string>
+  <string name="invalid_tab">无效标签页</string>
+  <string name="send_crash_report">发送Firetweet的崩溃报告</string>
+  <string name="add_to_filter">添加到过滤器</string>
+  <string name="user_filter_name">用户：<xliff:g id="name">%s</xliff:g></string>
+  <string name="keyword_filter_name">关键词：<xliff:g id="name">%s</xliff:g></string>
+  <string name="source_filter_name">来源：<xliff:g id="name">%s</xliff:g></string>
+  <string name="block_user">阻止<xliff:g id="name">%s</xliff:g></string>
+  <string name="block_user_confirm_message">阻止<xliff:g id="name">%s</xliff:g>？这个用户将不能关注你、提及你，或者给你发送私信。</string>
+  <string name="unfollow_user">取消关注<xliff:g id="name">%s</xliff:g></string>
+  <string name="unfollow_user_confirm_message">取消关注<xliff:g id="name">%s</xliff:g>吗？你将不会在时间轴中看到这个用户的推文。</string>
+  <string name="delete_user_list">删除列表<xliff:g id="name">%s</xliff:g></string>
+  <string name="delete_user_list_confirm_message">删除列表<xliff:g id="name">%s</xliff:g>吗？这个操作不能撤销。</string>
+  <string name="unsubscribe_from_user_list">从列表<xliff:g id="name">%s</xliff:g>退订</string>
+  <string name="unsubscribe_from_user_list_confirm_message">取消订阅列表<xliff:g id="name">%s</xliff:g>吗？你稍后可以重新订阅这个列表。</string>
+  <string name="destroy_status">删除推文</string>
+  <string name="destroy_status_confirm_message">删除这条推文吗？</string>
+  <string name="destroy_saved_search">删除保存的搜索“<xliff:g id="name">%s</xliff:g>”</string>
+  <string name="destroy_saved_search_confirm_message">要删除保存的搜索“<xliff:g id="name">%s</xliff:g>”吗？你可以稍后再保存这个搜索。</string>
+  <string name="signing_in_error_browser_sign_in_hint">登录时发生问题，你可能需要使用“浏览器登录”。（这将在登录时暂时忽略自定义API设定）</string>
+  <string name="report_user">报告<xliff:g id="name">%s</xliff:g></string>
+  <string name="report_user_confirm_message">报告<xliff:g id="name">%s</xliff:g>发送垃圾信息吗？你将同时阻止这个用户。</string>
+  <string name="firetweet_test">Firetweet 测试</string>
+  <string name="staggered_home_timeline">主页信息流</string>
+  <string name="unread_count">未读条目</string>
+  <string name="developed_by">开发者</string>
+  <string name="project_account">项目帐号</string>
+  <string name="translators">翻译者</string>
+  <string name="translate">翻译</string>
+  <string name="sponsored_by">赞助</string>
+  <string name="special_thanks_to">特别感谢</string>
+  <string name="contributors_list_summary">如果你没有看到你的名字，请联系我们的项目帐号</string>
+  <string name="account_options">帐号选项</string>
+  <string name="show_in_timeline">在时间轴中显示</string>
   <string name="cards">卡片</string>
   <string name="no_tab_hint">沒有標籤頁</string>
   <string name="delete_user">刪除用戶&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;</string>
@@ -540,73 +543,73 @@
   <string name="theme_background_default">預設</string>
   <string name="theme_background_solid">純白/純黑</string>
   <string name="theme_background_transparent">透明</string>
-  <string name="theme_dark_actionbar">深色 ActionBar</string>
-  <string name="wizard_hint_compose_select_account">於撰寫推文時點擊這個圖示選擇帳號</string>
-  <string name="wizard_hint_quote_format">在\"設定\"-\"內容與存儲\"設定您喜歡的引用格式</string>
-  <string name="wizard_hint_filters">你可以透過使用\"過濾\"功能隱藏不想看到的推文和通知</string>
-  <string name="view_replies">檢視回應</string>
-  <string name="compact_cards">緊湊卡片視圖</string>
-  <string name="compact_cards_summary">在螢幕上顯示更多卡片</string>
-  <string name="dashclock_home_unread_count_name">Twidere 首頁未讀條數</string>
-  <string name="dashclock_home_unread_count_description">首頁未讀條數</string>
-  <string name="dashclock_mentions_unread_count_name">Twidere 提及未讀條數</string>
-  <string name="dashclock_mentions_unread_count_description">提及未讀條數</string>
-  <string name="dashclock_messages_unread_count_name">Twidere 私信未讀條數</string>
-  <string name="dashclock_messages_unread_count_description">私信未讀條數</string>
-  <string name="N_new_statuses_quantity_one">&lt;xliff:g id="items"&gt;%d&lt;/xliff:g&gt; 條新推文</string>
-  <string name="N_new_statuses_quantity_other">&lt;xliff:g id="items"&gt;%d&lt;/xliff:g&gt; 條新推文</string>
-  <string name="N_new_mentions_quantity_one">&lt;xliff:g id="items"&gt;%d&lt;/xliff:g&gt; 條新提及</string>
-  <string name="N_new_mentions_quantity_other">&lt;xliff:g id="items"&gt;%d&lt;/xliff:g&gt; 條新提及</string>
-  <string name="N_new_messages_quantity_one">&lt;xliff:g id="items"&gt;%d&lt;/xliff:g&gt; 個新對話</string>
-  <string name="N_new_messages_quantity_other">&lt;xliff:g id="items"&gt;%d&lt;/xliff:g&gt; 個新對話</string>
-  <string name="status_share_subject_format_with_time">來自&lt;xliff:g id="name"&gt;%1$s&lt;/xliff:g&gt;（@&lt;xliff:g id="screen_name"&gt;%2$s&lt;/xliff:g&gt;）的推文，寫於&lt;xliff:g id="time"&gt;%3$s&lt;/xliff:g&gt;</string>
-  <string name="status_share_text_format_with_link">&lt;xliff:g id="text"&gt;%1$s&lt;/xliff:g&gt;\n\n&lt;xliff:g id="link"&gt;%2$s&lt;/xliff:g&gt;</string>
-  <string name="rate_limit">流量限制</string>
-  <string name="wizard_hint_rate_limit">若您遇到流量限制問題，請不要埋怨我，那是 Twitter 的政策限制。</string>
-  <string name="preparing_database">正在準備資料庫</string>
-  <string name="preparing_database_toast">正在準備資料庫，請稍後。</string>
-  <string name="action_name_saved_at_time">&lt;xliff:g id="action"&gt;%1$s&lt;/xliff:g&gt;，儲存於 &lt;xliff:g id="time"&gt;%2$s&lt;/xliff:g&gt;</string>
-  <string name="update_status">發送推文</string>
-  <string name="sending_direct_message">正在發送私信</string>
-  <string name="tab_display_option">標籤頁顯示選項</string>
-  <string name="livewp_daydream_enabled_message">我有一份小禮物給您，去系統設定裡看看吧 :)</string>
-  <string name="center">置中</string>
-  <string name="multi_select">多選</string>
-  <string name="long_click_to_open_menu">長按以打開選單</string>
-  <string name="swipe_back">滑動關閉</string>
-  <string name="tab_display_option_icon">圖示</string>
-  <string name="tab_display_option_label">標籤</string>
-  <string name="tab_display_option_icon_and_label">圖示和標籤</string>
-  <string name="highlight_and_underline">高亮和底線</string>
+  <string name="theme_dark_actionbar">暗色 ActionBar</string>
+  <string name="wizard_hint_compose_select_account">在写推文时点击这个图标选择帐号</string>
+  <string name="wizard_hint_quote_format">在“设定”-“内容与存储”设定你喜欢的引用格式</string>
+  <string name="wizard_hint_filters">你可以通过使用“过滤”功能隐藏不想看到的推文和通知</string>
+  <string name="view_replies">查看回复</string>
+  <string name="compact_cards">紧凑卡片视图</string>
+  <string name="compact_cards_summary">在屏幕中显示更多卡片</string>
+  <string name="dashclock_home_unread_count_name">Firetweet主页未读条数</string>
+  <string name="dashclock_home_unread_count_description">主页未读条数</string>
+  <string name="dashclock_mentions_unread_count_name">Firetweet提及未读条数</string>
+  <string name="dashclock_mentions_unread_count_description">提及未读条数</string>
+  <string name="dashclock_messages_unread_count_name">Firetweet私信未读条数</string>
+  <string name="dashclock_messages_unread_count_description">私信未读条数</string>
+  <string name="N_new_statuses_quantity_one"><xliff:g id="items">%d</xliff:g>条新推文</string>
+  <string name="N_new_statuses_quantity_other"><xliff:g id="items">%d</xliff:g>条新推文</string>
+  <string name="N_new_mentions_quantity_one"><xliff:g id="items">%d</xliff:g>条提及</string>
+  <string name="N_new_mentions_quantity_other"><xliff:g id="items">%d</xliff:g>条提及</string>
+  <string name="N_new_messages_quantity_one"><xliff:g id="items">%d</xliff:g>个新对话</string>
+  <string name="N_new_messages_quantity_other"><xliff:g id="items">%d</xliff:g>个新对话</string>
+  <string name="status_share_subject_format_with_time">来自<xliff:g id="name">%1$s</xliff:g>（@<xliff:g id="screen_name">%2$s</xliff:g>）的推文，写于<xliff:g id="time">%3$s</xliff:g></string>
+  <string name="status_share_text_format_with_link"><xliff:g id="text">%1$s</xliff:g>\n\n<xliff:g id="link">%2$s</xliff:g></string>
+  <string name="rate_limit">调用限制</string>
+  <string name="wizard_hint_rate_limit">如果你遇到调用限制问题，请不要埋怨我，那是Twitter的政策所限</string>
+  <string name="preparing_database">正在准备数据库</string>
+  <string name="preparing_database_toast">正在准备数据库，请稍等。</string>
+  <string name="action_name_saved_at_time"><xliff:g id="action">%1$s</xliff:g>，保存于<xliff:g id="time">%2$s</xliff:g></string>
+  <string name="update_status">发送推文</string>
+  <string name="sending_direct_message">发送私信</string>
+  <string name="tab_display_option">标签页显示选项</string>
+  <string name="livewp_daydream_enabled_message">我有一份小礼物给你，去系统设置看看吧 :)</string>
+  <string name="center">居中</string>
+  <string name="multi_select">多选</string>
+  <string name="long_click_to_open_menu">长按打开菜单</string>
+  <string name="swipe_back">滑动关闭</string>
+  <string name="tab_display_option_icon">图标</string>
+  <string name="tab_display_option_label">标签</string>
+  <string name="tab_display_option_icon_and_label">图标和标签</string>
+  <string name="highlight_and_underline">高亮和下划线</string>
   <string name="back">返回</string>
-  <string name="theme_font_family">主題字型</string>
-  <string name="translation_destination">翻譯結果語言</string>
-  <string name="accept">同意並授權</string>
-  <string name="deny">拒絕</string>
-  <string name="accepted_users_follow_request">已接受來自 &lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt; 的關注請求。</string>
-  <string name="denied_users_follow_request">已拒絕來自 &lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt; 的關注請求。</string>
-  <string name="import_settings">匯入設定</string>
-  <string name="export_settings">匯出設定</string>
-  <string name="export_settings_type_dialog_title">匯出設定⋯</string>
-  <string name="import_settings_type_dialog_title">匯入設定⋯</string>
-  <string name="nicknames">暱稱</string>
-  <string name="user_colors">用戶顏色標籤</string>
-  <string name="import_export">匯入/匯出</string>
-  <string name="theme_background_alpha">主題背景透明度</string>
-  <string name="progress">進度</string>
-  <string name="hidden_settings">隱藏設定</string>
-  <string name="hidden_settings_warning_title">警告：這些設定受結界保護！</string>
-  <string name="hidden_settings_warning_message">*永遠* 不要在你清楚這些設定的意義下更改它們，否則它們會：\n * 殺掉你家的貓\n * 發射北韓的核彈\n * 把所有魔法少女變成偽娘\n * 毀滅宇宙</string>
-  <string name="force_using_private_apis">強制使用不公開的 API</string>
-  <string name="status_text_limit">推文字數限制</string>
-  <string name="load_more_from_top">從頂部載入更多</string>
-  <string name="load_more_from_top_summary">如果你習慣從底部向上閱讀的話會很有用</string>
-  <string name="twitter_link_handler">處理Twitter鏈接</string>
-  <string name="compose_now">即時撰寫</string>
-  <string name="compose_now_summary">用Twidere的撰寫界面替代Google Now的上滑操作</string>
-  <string name="compose_now_action">“即時撰寫”的預設操作</string>
-  <string name="open_with_account">用帳號打開</string>
-  <string name="card_highlight_option">卡片高亮選項</string>
+  <string name="theme_font_family">主题字体族</string>
+  <string name="translation_destination">翻译结果语言</string>
+  <string name="accept">同意并授权</string>
+  <string name="deny">拒绝</string>
+  <string name="accepted_users_follow_request">同意了<xliff:g id="user">%s</xliff:g>的关注请求</string>
+  <string name="denied_users_follow_request">拒绝了<xliff:g id="user">%s</xliff:g>的关注请求</string>
+  <string name="import_settings">导入设定</string>
+  <string name="export_settings">导出设定</string>
+  <string name="export_settings_type_dialog_title">导出设定&#8230;</string>
+  <string name="import_settings_type_dialog_title">导入设定&#8230;</string>
+  <string name="nicknames">昵称</string>
+  <string name="user_colors">用户颜色标签</string>
+  <string name="import_export">导入/导出</string>
+  <string name="theme_background_alpha">主题背景透明度</string>
+  <string name="progress">进度</string>
+  <string name="hidden_settings">隐藏设定</string>
+  <string name="hidden_settings_warning_title">警告：这些设定受结界保护！</string>
+  <string name="hidden_settings_warning_message">*永远*不要在你不明白这些设定的意义的情况下更改它们，否则它们会：\n * 干掉你家的猫\n * 发射金三胖家的核弹\n * 把所有魔法少女都变成魔女\n * 毁灭宇宙</string>
+  <string name="force_using_private_apis">强制使用不公开的API</string>
+  <string name="status_text_limit">推文字数限制</string>
+  <string name="load_more_from_top">从顶部载入更多</string>
+  <string name="load_more_from_top_summary">如果你偏好从底部向上阅读的话会很有用</string>
+  <string name="twitter_link_handler">处理Twitter链接</string>
+  <string name="compose_now">即时撰写</string>
+  <string name="compose_now_summary">用Firetweet的撰写界面替代Google Now的上滑操作</string>
+  <string name="compose_now_action">“即时撰写”的默认操作</string>
+  <string name="open_with_account">用帐号打开</string>
+  <string name="card_highlight_option">卡片高亮选项</string>
   <string name="card_highlight_option_highlight">高亮</string>
   <string name="card_highlight_option_line">線條</string>
   <string name="timeline_sync_service">時間軸同步服務</string>
@@ -699,21 +702,23 @@
   <string name="research_ucdavis_earlybird">UCDavis Earlybird</string>
   <string name="research_tsinghua_spice">Tsinghua Spice</string>
   <string name="unknown_location">未知位置</string>
-  <string name="ellipsis">…</string>
-  <string name="import_export_settings">導入/導出設定</string>
-  <string name="usage_statistics_header_summary">Twidere參與了一些研究項目，加入這些項目幫助Twidere和更多應用做得更好。</string>
-  <string name="no_tab">沒有標籤頁</string>
-  <string name="user_protected_summary">你需要向這個受保護的用戶發送關注請求來查看推文</string>
-  <string name="no_account">沒有帳號</string>
-  <string name="permission_description_shorten_status">應用程序可以為Twidere縮短推文，所以它可以訪問你正在發送的推文。</string>
-  <string name="permission_description_upload_media">應用程序可以為Twidere上傳媒體，所以它可以訪問你正在發送的推文中的媒體。</string>
-  <string name="permission_description_sync_timeline">應用程序可以為Twidere同步閱讀位置，所以它可以訪問你的閱讀位置。</string>
-  <string name="usage_statistics_notification_summary">幫助我們改進Twidere！</string>
-  <string name="from_name">來自&lt;xliff:g id="name"&gt;%1$s&lt;/xliff:g&gt;</string>
-  <string name="from_name_and_name">來自&lt;xliff:g id="name"&gt;%1$s&lt;/xliff:g&gt;和&lt;xliff:g id="name"&gt;%2$s&lt;/xliff:g&gt;</string>
-  <string name="from_name_and_N_others">來自&lt;xliff:g id="name"&gt;%1$s&lt;/xliff:g&gt;和其他&lt;xliff:g id="name"&gt;%2$d&lt;/xliff:g&gt;人</string>
-  <string name="projects_we_took_part">我們參與的項目</string>
-  <string name="activated_accounts">已啟用的帳號</string>
+  <string name="ellipsis">&#8230;</string>
+  <string name="designed_by">设计</string>
+  <string name="designer_name">Uucky Lee</string>
+  <string name="import_export_settings">导入/导出设定</string>
+  <string name="usage_statistics_header_summary">Firetweet参与了一些研究项目，加入这些项目帮助Firetweet和更多应用做得更好。</string>
+  <string name="no_tab">没有标签页</string>
+  <string name="user_protected_summary">你需要向这个受保护的用户发送关注请求来查看推文</string>
+  <string name="no_account">没有帐号</string>
+  <string name="permission_description_shorten_status">应用程序可以为Firetweet缩短推文，所以它可以访问你正在发送的推文。</string>
+  <string name="permission_description_upload_media">应用程序可以为Firetweet上传媒体，所以它可以访问你正在发送的推文中的媒体。</string>
+  <string name="permission_description_sync_timeline">应用程序可以为Firetweet同步阅读位置，所以它可以访问你的阅读位置。</string>
+  <string name="usage_statistics_notification_summary">帮助我们改进Firetweet！</string>
+  <string name="from_name">来自<xliff:g id="name">%1$s</xliff:g></string>
+  <string name="from_name_and_name">来自<xliff:g id="name">%1$s</xliff:g>和<xliff:g id="name">%2$s</xliff:g></string>
+  <string name="from_name_and_N_others">来自<xliff:g id="name">%1$s</xliff:g>和其他<xliff:g id="name">%2$d</xliff:g>人</string>
+  <string name="projects_we_took_part">我们参与的项目</string>
+  <string name="activated_accounts">已启用的帐号</string>
   <string name="search">搜索</string>
   <string name="crop">裁剪</string>
   <!--'Tweet' here is a verb-->

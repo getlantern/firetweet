@@ -1,5 +1,5 @@
 /*
- *				Twidere - Twitter client for Android
+ *				Firetweet - Twitter client for Android
  *
  * Copyright (C) 2012-2013 Mariotaku Lee <mariotaku.lee@gmail.com>
  *

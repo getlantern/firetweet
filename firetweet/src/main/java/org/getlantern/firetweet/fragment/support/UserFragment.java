@@ -1,5 +1,5 @@
 /*
- * Twidere - Twitter client for Android
+ * Firetweet - Twitter client for Android
  *
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  *
@@ -79,7 +79,8 @@ import android.widget.TextView;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
-import org.getlantern.querybuilder.Expression;
+import org.mariotaku.querybuilder.Expression;
+import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.iface.IThemedActivity;
 import org.getlantern.firetweet.activity.support.AccountSelectorActivity;
@@ -88,7 +89,7 @@ import org.getlantern.firetweet.activity.support.LinkHandlerActivity;
 import org.getlantern.firetweet.activity.support.UserListSelectorActivity;
 import org.getlantern.firetweet.activity.support.UserProfileEditorActivity;
 import org.getlantern.firetweet.adapter.support.SupportTabsAdapter;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.iface.IBaseFragment.SystemWindowsInsetsCallback;
 import org.getlantern.firetweet.fragment.iface.RefreshScrollTopInterface;
 import org.getlantern.firetweet.fragment.iface.SupportFragmentCallback;
@@ -100,8 +101,8 @@ import org.getlantern.firetweet.model.ParcelableMedia;
 import org.getlantern.firetweet.model.ParcelableUser;
 import org.getlantern.firetweet.model.ParcelableUserList;
 import org.getlantern.firetweet.model.SingleResponse;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedUsers;
-import org.getlantern.firetweet.provider.TwidereDataStore.Filters;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedUsers;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Filters;
 import org.getlantern.firetweet.text.TextAlphaSpan;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
 import org.getlantern.firetweet.util.ColorUtils;
@@ -111,14 +112,14 @@ import org.getlantern.firetweet.util.MathUtils;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.ParseUtils;
 import org.getlantern.firetweet.util.ThemeUtils;
-import org.getlantern.firetweet.util.TwidereLinkify;
-import org.getlantern.firetweet.util.TwidereLinkify.OnLinkClickListener;
+import org.getlantern.firetweet.util.FiretweetLinkify;
+import org.getlantern.firetweet.util.FiretweetLinkify.OnLinkClickListener;
 import org.getlantern.firetweet.util.UserColorNameUtils;
 import org.getlantern.firetweet.util.Utils;
 import org.getlantern.firetweet.util.accessor.ActivityAccessor;
 import org.getlantern.firetweet.util.accessor.ActivityAccessor.TaskDescriptionCompat;
 import org.getlantern.firetweet.util.accessor.ViewAccessor;
-import org.getlantern.firetweet.util.menu.TwidereMenuInfo;
+import org.getlantern.firetweet.util.menu.FiretweetMenuInfo;
 import org.getlantern.firetweet.util.message.FriendshipUpdatedEvent;
 import org.getlantern.firetweet.util.message.ProfileUpdatedEvent;
 import org.getlantern.firetweet.util.message.TaskStateChangedEvent;
@@ -473,7 +474,7 @@ public class UserFragment extends BaseSupportFragment implements OnClickListener
         mScreenNameView.setText("@" + user.screen_name);
         mDescriptionContainer.setVisibility(isEmpty(user.description_html) ? View.GONE : View.VISIBLE);
         mDescriptionView.setText(user.description_html != null ? Html.fromHtml(user.description_html) : user.description_plain);
-        final TwidereLinkify linkify = new TwidereLinkify(this);
+        final FiretweetLinkify linkify = new FiretweetLinkify(this);
         linkify.applyAllLinks(mDescriptionView, user.account_id, false);
         mDescriptionView.setMovementMethod(null);
         mLocationContainer.setVisibility(isEmpty(user.location) ? View.GONE : View.VISIBLE);
@@ -744,7 +745,7 @@ public class UserFragment extends BaseSupportFragment implements OnClickListener
     @Override
     public void onStart() {
         super.onStart();
-        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FiretweetApplication.getInstance(getActivity()).getMessageBus();
         bus.register(this);
     }
 
@@ -756,7 +757,7 @@ public class UserFragment extends BaseSupportFragment implements OnClickListener
 
     @Override
     public void onStop() {
-        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FiretweetApplication.getInstance(getActivity()).getMessageBus();
         bus.unregister(this);
         super.onStop();
     }
@@ -811,19 +812,19 @@ public class UserFragment extends BaseSupportFragment implements OnClickListener
             final MenuItem blockItem = menu.findItem(MENU_BLOCK);
             if (blockItem != null) {
                 final boolean blocking = relationship.isSourceBlockingTarget();
-                ActionIconDrawable.setMenuHighlight(blockItem, new TwidereMenuInfo(blocking));
+                ActionIconDrawable.setMenuHighlight(blockItem, new FiretweetMenuInfo(blocking));
                 blockItem.setTitle(blocking ? R.string.unblock : R.string.block);
             }
             final MenuItem muteItem = menu.findItem(MENU_MUTE_USER);
             if (muteItem != null) {
                 final boolean muting = relationship.isSourceMutingTarget();
-                ActionIconDrawable.setMenuHighlight(muteItem, new TwidereMenuInfo(muting));
+                ActionIconDrawable.setMenuHighlight(muteItem, new FiretweetMenuInfo(muting));
                 muteItem.setTitle(muting ? R.string.unmute : R.string.mute);
             }
             final MenuItem filterItem = menu.findItem(MENU_ADD_TO_FILTER);
             if (filterItem != null) {
                 final boolean filtering = Utils.isFilteringUser(getActivity(), user.id);
-                ActionIconDrawable.setMenuHighlight(filterItem, new TwidereMenuInfo(filtering));
+                ActionIconDrawable.setMenuHighlight(filterItem, new FiretweetMenuInfo(filtering));
                 filterItem.setTitle(filtering ? R.string.remove_from_filter : R.string.add_to_filter);
             }
         } else {
@@ -1111,15 +1112,15 @@ public class UserFragment extends BaseSupportFragment implements OnClickListener
         final ParcelableUser user = getUser();
         if (user == null) return;
         switch (type) {
-            case TwidereLinkify.LINK_TYPE_MENTION: {
+            case FiretweetLinkify.LINK_TYPE_MENTION: {
                 openUserProfile(getActivity(), user.account_id, -1, link, null);
                 break;
             }
-            case TwidereLinkify.LINK_TYPE_HASHTAG: {
+            case FiretweetLinkify.LINK_TYPE_HASHTAG: {
                 openTweetSearch(getActivity(), user.account_id, "#" + link);
                 break;
             }
-            case TwidereLinkify.LINK_TYPE_LINK: {
+            case FiretweetLinkify.LINK_TYPE_LINK: {
                 final Uri uri = Uri.parse(link);
                 final Intent intent;
                 if (uri.getScheme() != null) {
@@ -1130,7 +1131,7 @@ public class UserFragment extends BaseSupportFragment implements OnClickListener
                 startActivity(intent);
                 break;
             }
-            case TwidereLinkify.LINK_TYPE_LIST: {
+            case FiretweetLinkify.LINK_TYPE_LIST: {
                 if (link == null) break;
                 final String[] mentionList = link.split("/");
                 if (mentionList.length != 2) {
@@ -1138,7 +1139,7 @@ public class UserFragment extends BaseSupportFragment implements OnClickListener
                 }
                 break;
             }
-            case TwidereLinkify.LINK_TYPE_STATUS: {
+            case FiretweetLinkify.LINK_TYPE_STATUS: {
                 openStatus(getActivity(), accountId, parseLong(link));
                 break;
             }

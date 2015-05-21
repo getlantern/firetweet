@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -29,15 +29,15 @@ import android.view.ViewGroup;
 
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.model.DraftItem;
 import org.getlantern.firetweet.model.ParcelableMedia;
 import org.getlantern.firetweet.model.ParcelableMediaUpdate;
-import org.getlantern.firetweet.provider.TwidereDataStore.Drafts;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Drafts;
 import org.getlantern.firetweet.util.ImageLoadingHandler;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.SharedPreferencesWrapper;
-import org.getlantern.firetweet.util.TwidereArrayUtils;
+import org.getlantern.firetweet.util.FiretweetArrayUtils;
 import org.getlantern.firetweet.util.Utils;
 import org.getlantern.firetweet.view.holder.DraftViewHolder;
 
@@ -54,7 +54,7 @@ public class DraftsAdapter extends SimpleCursorAdapter implements Constants {
 
     public DraftsAdapter(final Context context) {
         super(context, R.layout.list_item_draft, null, new String[0], new int[0], 0);
-        mImageLoader = FireTweetApplication.getInstance(context).getMediaLoaderWrapper();
+        mImageLoader = FiretweetApplication.getInstance(context).getMediaLoaderWrapper();
         mImageLoadingHandler = new ImageLoadingHandler(R.id.media_preview_progress);
         final SharedPreferencesWrapper preferences = SharedPreferencesWrapper.getInstance(context,
                 SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
@@ -64,7 +64,7 @@ public class DraftsAdapter extends SimpleCursorAdapter implements Constants {
     @Override
     public void bindView(final View view, final Context context, final Cursor cursor) {
         final DraftViewHolder holder = (DraftViewHolder) view.getTag();
-        final long[] accountIds = TwidereArrayUtils.parseLongArray(cursor.getString(mIndices.account_ids), ',');
+        final long[] accountIds = FiretweetArrayUtils.parseLongArray(cursor.getString(mIndices.account_ids), ',');
         final String text = cursor.getString(mIndices.text);
         final ParcelableMediaUpdate[] mediaUpdates = ParcelableMediaUpdate.fromJSONString(cursor.getString(mIndices.media));
         final long timestamp = cursor.getLong(mIndices.timestamp);

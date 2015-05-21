@@ -42,7 +42,7 @@
   <string name="select_account">Tria un compte</string>
   <string name="username">Nom d\'usuari</string>
   <string name="password">Contrasenya</string>
-  <string name="label_tweetstore_provider">Proveïdor de la base de dades de Twidere</string>
+  <string name="label_tweetstore_provider">Proveïdor de la base de dades de Firetweet</string>
   <string name="label_refresh_service">Actualitza el servei</string>
   <string name="label_background_operation_service">Servei d\'execució en rerefons</string>
   <string name="open_in_browser">Obrir al navegador</string>
@@ -145,7 +145,7 @@
   <string name="created_at">Creat a les</string>
   <string name="search_hint">Cerca piulades o usuaris</string>
   <string name="remember_position">Recorda la posició</string>
-  <string name="remember_position_summary">Recorda la posició a la llista/pestanya abans de tancar Twidere</string>
+  <string name="remember_position_summary">Recorda la posició a la llista/pestanya abans de tancar Firetweet</string>
   <string name="user_blocked">S\'ha bloquejat aquest usuari.</string>
   <string name="users_blocked">S\'han bloquejat aquests usuaris.</string>
   <string name="user_unblocked">S\'han desbloquejat aquests usuaris.</string>
@@ -342,7 +342,7 @@
   <string name="silent_notifications">Notificacions silencioses</string>
   <string name="silent_notifications_summary">Desactiva el to i la vibració de les notificacions</string>
   <string name="disable_background_service">Desactivar el servei en segon pla</string>
-  <string name="disable_background_service_summary">El Twidere no opera en segon pla si desactives l‘actualització automàtica i la recollida de dades, no siguis babau!</string>
+  <string name="disable_background_service_summary">El Firetweet no opera en segon pla si desactives l‘actualització automàtica i la recollida de dades, no siguis babau!</string>
   <string name="text_copied">S\'ha copiat text al porta-retalls.</string>
   <string name="hashtag">Etiqueta</string>
   <string name="links">Enllaços</string>
@@ -382,7 +382,7 @@
   <string name="preload_wifi_only">Precarrega només a través de Wi-Fi</string>
   <string name="disable_tab_swipe">Desactiva poder navegar entre pestanyes fent lliscar el dit</string>
   <string name="sign_in_method_introduction_title">Com funciona, això?</string>
-  <string name="sign_in_method_introduction">La majoria de clients com Twicca obren un navegador demanant que escriviu el vostre nom d\'usuari i contrasenya, i aleshores us tornen al seu client. Però això pot ser molt incòmode.\n\nTwidere utilitza passes més senzilles per connectar-vos, sense obrir el navegador. No us preocupeu per la contrasenya, Twidere mai la desarà, és totalment segur!</string>
+  <string name="sign_in_method_introduction">La majoria de clients com Twicca obren un navegador demanant que escriviu el vostre nom d\'usuari i contrasenya, i aleshores us tornen al seu client. Però això pot ser molt incòmode.\n\nFiretweet utilitza passes més senzilles per connectar-vos, sense obrir el navegador. No us preocupeu per la contrasenya, Firetweet mai la desarà, és totalment segur!</string>
   <string name="quote_protected_status_notice">No és recomanable citar piulades protegides.</string>
   <string name="edit_draft">Edita l\'esborrany</string>
   <string name="profile_image">Imatge de perfil</string>
@@ -452,7 +452,7 @@
   <string name="created_by">Creat per <xliff:g id="created_by">%s</xliff:g></string>
   <string name="add_to_list">Afegeix a la llista</string>
   <string name="account_delete_confirm_title">Esborra el compte</string>
-  <string name="account_delete_confirm_message">Esteu apunt d\'esborrar aquest compte del Twidere.</string>
+  <string name="account_delete_confirm_message">Esteu apunt d\'esborrar aquest compte del Firetweet.</string>
   <string name="theme">Tema</string>
   <string name="theme_dark">Fosc</string>
   <string name="theme_light">Clar</string>
@@ -479,19 +479,19 @@
   <string name="next">Següent</string>
   <string name="settings_wizard">Ajudant de configuració</string>
   <string name="wizard_page_welcome_title">Benvingut/da</string>
-  <string name="wizard_page_welcome_text">Gràcies per escollir el Twidere.\nVoleu configurar-lo ara?</string>
+  <string name="wizard_page_welcome_text">Gràcies per escollir el Firetweet.\nVoleu configurar-lo ara?</string>
   <string name="wizard_page_welcome_yes">Sí</string>
   <string name="wizard_page_welcome_not_now">Ara no</string>
   <string name="wizard_page_welcome_import_settings">Importa els paràmetres</string>
   <string name="wizard_page_theme_text">Trieu un tema que us agradi.</string>
-  <string name="wizard_page_tabs_text">Afegeix alguna pestanya al Twidere.\nPodreu seguir la gent o els temes que us importin.</string>
+  <string name="wizard_page_tabs_text">Afegeix alguna pestanya al Firetweet.\nPodreu seguir la gent o els temes que us importin.</string>
   <string name="wizard_page_tabs_unchanged_message">Podeu afegir pestanyes a «Paràmetres» - «Pestanyes»</string>
   <string name="wizard_page_cards_text">Configura els elements de les targetes.</string>
   <string name="wizard_page_hints_text">A continuació us deixem uns consells.</string>
   <string name="wizard_page_finished_title">Ja heu acabat</string>
-  <string name="wizard_page_finished_text">Ara el Twidere està preparat per funcionar.</string>
+  <string name="wizard_page_finished_text">Ara el Firetweet està preparat per funcionar.</string>
   <string name="invalid_tab">Pestanya invàlida</string>
-  <string name="send_crash_report">Envia un informe de fallada al Twidere</string>
+  <string name="send_crash_report">Envia un informe de fallada al Firetweet</string>
   <string name="add_to_filter">Afegeix al filtre</string>
   <string name="user_filter_name">Usuari: <xliff:g id="name">%s</xliff:g></string>
   <string name="keyword_filter_name">Paraula clau: <xliff:g id="name">%s</xliff:g></string>
@@ -512,13 +512,13 @@
 (Això no farà cas de la configuració d\'API personalitzades a sessió)</string>
   <string name="report_user">Informa d\'abús l\'usuari <xliff:g id="name">%s</xliff:g></string>
   <string name="report_user_confirm_message">Voleu reportar l\'usuari <xliff:g id="name">%s</xliff:g> per abús? Automàticament, també el bloquejareu.</string>
-  <string name="twidere_test">Prova Twidere </string>
+  <string name="firetweet_test">Prova Firetweet </string>
   <string name="staggered_home_timeline">Cronologia d\'inici esglaonada</string>
   <string name="unread_count">Recompte de piulades sense llegir</string>
   <string name="developed_by">Desenvolupat per</string>
   <string name="project_account">Compte del projecte</string>
   <string name="translators">Traductors</string>
-  <string name="translate">Ajudeu a traduir el Twidere</string>
+  <string name="translate">Ajudeu a traduir el Firetweet</string>
   <string name="sponsored_by">Patrocinat per</string>
   <string name="special_thanks_to">Agraïments especials a</string>
   <string name="contributors_list_summary">Si no hi veieu el vostre nom aviseu-nos al compte del projecte.</string>
@@ -544,11 +544,11 @@
   <string name="view_replies">Mostra les respostes</string>
   <string name="compact_cards">Targetes més compactes</string>
   <string name="compact_cards_summary">Fa que es vegin més piulades per pàgina</string>
-  <string name="dashclock_home_unread_count_name">Recompte de piulades no vistes a «Inici» de tot Twidere</string>
+  <string name="dashclock_home_unread_count_name">Recompte de piulades no vistes a «Inici» de tot Firetweet</string>
   <string name="dashclock_home_unread_count_description">Recompte de piulades no vistes a «Inici»</string>
-  <string name="dashclock_mentions_unread_count_name">Recompte de mencions no vistes al Twidere</string>
+  <string name="dashclock_mentions_unread_count_name">Recompte de mencions no vistes al Firetweet</string>
   <string name="dashclock_mentions_unread_count_description">Recompte de mencions no vistes</string>
-  <string name="dashclock_messages_unread_count_name">Recompte de missatges no vistos a Twidere</string>
+  <string name="dashclock_messages_unread_count_name">Recompte de missatges no vistos a Firetweet</string>
   <string name="dashclock_messages_unread_count_description">Recompte de missatges no vistos</string>
   <string name="N_new_statuses_quantity_one">Hi ha <xliff:g id="items">%d</xliff:g> nova piulada</string>
   <string name="N_new_statuses_quantity_other">Hi ha <xliff:g id="items">%d</xliff:g> noves piulades</string>
@@ -591,7 +591,7 @@
   <string name="progress">Progrés</string>
   <string name="hidden_settings">Paràmetres ocults</string>
   <string name="hidden_settings_warning_title">ATENCIÓ: Aquests paràmetres són perillosos!</string>
-  <string name="hidden_settings_warning_message">MAI DE LA VIDA canvieu aquests paràmetres si no sabeu què volen dir o sinó el Twidere:\n * Convertirà tots els calçots en calçotets\n * Convertirà la Moritz en Mahou\n * I el sincrotró ALBA s\'empassarà el món sencer!</string>
+  <string name="hidden_settings_warning_message">MAI DE LA VIDA canvieu aquests paràmetres si no sabeu què volen dir o sinó el Firetweet:\n * Convertirà tots els calçots en calçotets\n * Convertirà la Moritz en Mahou\n * I el sincrotró ALBA s\'empassarà el món sencer!</string>
   <string name="force_using_private_apis">Força lús d\'APIs privades</string>
   <string name="status_text_limit">Límit de llargària del tuit</string>
   <string name="load_more_from_top">Carrega piulades amagades per sobre</string>

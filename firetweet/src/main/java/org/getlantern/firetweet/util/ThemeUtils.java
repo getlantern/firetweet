@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -67,7 +67,7 @@ import org.getlantern.firetweet.graphic.ActionBarColorDrawable;
 import org.getlantern.firetweet.graphic.ActionIconDrawable;
 import org.getlantern.firetweet.text.ParagraphSpacingSpan;
 import org.getlantern.firetweet.util.accessor.ViewAccessor;
-import org.getlantern.firetweet.util.menu.TwidereMenuInfo;
+import org.getlantern.firetweet.util.menu.FiretweetMenuInfo;
 import org.getlantern.firetweet.view.TabPagerIndicator;
 import org.getlantern.firetweet.view.iface.IThemedView;
 
@@ -347,8 +347,8 @@ public class ThemeUtils implements Constants {
             final ContextMenuInfo info = item.getMenuInfo();
             if (icon != null && !ArrayUtils.contains(excludedGroups, item.getGroupId())) {
                 icon.mutate();
-                if (info instanceof TwidereMenuInfo) {
-                    final TwidereMenuInfo sInfo = (TwidereMenuInfo) info;
+                if (info instanceof FiretweetMenuInfo) {
+                    final FiretweetMenuInfo sInfo = (FiretweetMenuInfo) info;
                     icon.setColorFilter(sInfo.isHighlight() ?
                             sInfo.getHighlightColor(highlightColor) : color, mode);
                 } else {
@@ -411,8 +411,8 @@ public class ThemeUtils implements Constants {
     }
 
     public static int getQuickSearchBarThemeResource(final String name) {
-        if (VALUE_THEME_NAME_DARK.equals(name)) return R.style.Theme_Twidere_Dark_QuickSearchBar;
-        return R.style.Theme_Twidere_Light_QuickSearchBar;
+        if (VALUE_THEME_NAME_DARK.equals(name)) return R.style.Theme_Firetweet_Dark_QuickSearchBar;
+        return R.style.Theme_Firetweet_Light_QuickSearchBar;
     }
 
     private static void applyColorTintForView(View view, int tintColor) {
@@ -529,16 +529,16 @@ public class ThemeUtils implements Constants {
 
     public static int getActionIconColor(final int themeRes) {
         switch (themeRes) {
-            case R.style.Theme_Twidere_Light:
-            case R.style.Theme_Twidere_Light_SolidBackground:
-            case R.style.Theme_Twidere_Light_Transparent:
-            case R.style.Theme_Twidere_Light_Compose:
-            case R.style.Theme_Twidere_Light_Dialog:
-            case R.style.Theme_Twidere_ActionBar_Colored_Light:
-            case R.style.Theme_Twidere_Settings_Light:
-            case R.style.Theme_Twidere_Drawer_Light:
-            case R.style.Theme_Twidere_Drawer_Light_Transparent:
-            case R.style.Theme_Twidere_Settings_Light_DarkActionBar_DarkIcon:
+            case R.style.Theme_Firetweet_Light:
+            case R.style.Theme_Firetweet_Light_SolidBackground:
+            case R.style.Theme_Firetweet_Light_Transparent:
+            case R.style.Theme_Firetweet_Light_Compose:
+            case R.style.Theme_Firetweet_Light_Dialog:
+            case R.style.Theme_Firetweet_ActionBar_Colored_Light:
+            case R.style.Theme_Firetweet_Settings_Light:
+            case R.style.Theme_Firetweet_Drawer_Light:
+            case R.style.Theme_Firetweet_Drawer_Light_Transparent:
+            case R.style.Theme_Firetweet_Settings_Light_DarkActionBar_DarkIcon:
                 return 0x99333333;
         }
         return 0xCCFFFFFF;
@@ -564,8 +564,8 @@ public class ThemeUtils implements Constants {
     }
 
     public static int getComposeThemeResource(final String name, final boolean darkActionBar) {
-        if (VALUE_THEME_NAME_DARK.equals(name)) return R.style.Theme_Twidere_Dark_Compose;
-        return R.style.Theme_Twidere_Light_Compose;
+        if (VALUE_THEME_NAME_DARK.equals(name)) return R.style.Theme_Firetweet_Dark_Compose;
+        return R.style.Theme_Firetweet_Light_Compose;
     }
 
     public static boolean getDarkActionBarOption(final Context context) {
@@ -583,8 +583,8 @@ public class ThemeUtils implements Constants {
     }
 
     public static int getDialogThemeResource(final String name) {
-        if (VALUE_THEME_NAME_DARK.equals(name)) return R.style.Theme_Twidere_Dark_Dialog;
-        return R.style.Theme_Twidere_Light_Dialog;
+        if (VALUE_THEME_NAME_DARK.equals(name)) return R.style.Theme_Firetweet_Dark_Dialog;
+        return R.style.Theme_Firetweet_Light_Dialog;
     }
 
     public static int getDrawerThemeResource(final Context context) {
@@ -593,11 +593,11 @@ public class ThemeUtils implements Constants {
 
     public static int getDrawerThemeResource(final int themeRes) {
         switch (themeRes) {
-            case R.style.Theme_Twidere_Dark_Transparent:
-            case R.style.Theme_Twidere_Light_Transparent:
-                return R.style.Theme_Twidere_Drawer_Dark_Transparent;
+            case R.style.Theme_Firetweet_Dark_Transparent:
+            case R.style.Theme_Firetweet_Light_Transparent:
+                return R.style.Theme_Firetweet_Drawer_Dark_Transparent;
         }
-        return R.style.Theme_Twidere_Drawer_Dark;
+        return R.style.Theme_Firetweet_Drawer_Dark;
     }
 
     public static int getLightDrawerThemeResource(final Context context) {
@@ -606,10 +606,10 @@ public class ThemeUtils implements Constants {
 
     public static int getLightDrawerThemeResource(final int themeRes) {
         switch (themeRes) {
-            case R.style.Theme_Twidere_Light_Transparent:
-                return R.style.Theme_Twidere_Drawer_Light_Transparent;
+            case R.style.Theme_Firetweet_Light_Transparent:
+                return R.style.Theme_Firetweet_Drawer_Light_Transparent;
         }
-        return R.style.Theme_Twidere_Drawer_Light;
+        return R.style.Theme_Firetweet_Drawer_Light;
     }
 
     public static Drawable getImageHighlightDrawable(final Context context) {
@@ -626,25 +626,25 @@ public class ThemeUtils implements Constants {
 
     public static int getMenuIconColor(final int themeRes) {
         switch (themeRes) {
-            case R.style.Theme_Twidere_Light:
-            case R.style.Theme_Twidere_Light_SolidBackground:
-            case R.style.Theme_Twidere_Light_Transparent:
-            case R.style.Theme_Twidere_Light_Compose:
-            case R.style.Theme_Twidere_Light_Dialog:
-            case R.style.Theme_Twidere_ActionBar_Colored_Light:
-            case R.style.Theme_Twidere_Settings_Light:
-            case R.style.Theme_Twidere_Settings_Light_DarkActionBar_DarkIcon:
+            case R.style.Theme_Firetweet_Light:
+            case R.style.Theme_Firetweet_Light_SolidBackground:
+            case R.style.Theme_Firetweet_Light_Transparent:
+            case R.style.Theme_Firetweet_Light_Compose:
+            case R.style.Theme_Firetweet_Light_Dialog:
+            case R.style.Theme_Firetweet_ActionBar_Colored_Light:
+            case R.style.Theme_Firetweet_Settings_Light:
+            case R.style.Theme_Firetweet_Settings_Light_DarkActionBar_DarkIcon:
                 return 0x99333333;
         }
         return 0xCCFFFFFF;
     }
 
     public static int getNoDisplayThemeResource(final Context context) {
-        if (context == null) return R.style.Theme_Twidere_Dark_NoDisplay;
+        if (context == null) return R.style.Theme_Firetweet_Dark_NoDisplay;
         final SharedPreferencesWrapper pref = getSharedPreferencesWrapper(context);
         final String theme = pref.getString(KEY_THEME, VALUE_THEME_NAME_TWIDERE);
-        if (VALUE_THEME_NAME_DARK.equals(theme)) return R.style.Theme_Twidere_Dark_NoDisplay;
-        return R.style.Theme_Twidere_Light_NoDisplay;
+        if (VALUE_THEME_NAME_DARK.equals(theme)) return R.style.Theme_Firetweet_Dark_NoDisplay;
+        return R.style.Theme_Firetweet_Light_NoDisplay;
     }
 
     public static Resources getResources(final Context context) {
@@ -670,14 +670,14 @@ public class ThemeUtils implements Constants {
 
     public static int getSettingsThemeResource(final String name, final boolean darkActionBar) {
         if (VALUE_THEME_NAME_TWIDERE.equals(name) || VALUE_THEME_NAME_LIGHT.equals(name))
-            return darkActionBar ? R.style.Theme_Twidere_Settings_Light_DarkActionBar
-                    : R.style.Theme_Twidere_Settings_Light;
-        else if (VALUE_THEME_NAME_DARK.equals(name)) return R.style.Theme_Twidere_Settings_Dark;
-        return R.style.Theme_Twidere_Settings_Light_DarkActionBar;
+            return darkActionBar ? R.style.Theme_Firetweet_Settings_Light_DarkActionBar
+                    : R.style.Theme_Firetweet_Settings_Light;
+        else if (VALUE_THEME_NAME_DARK.equals(name)) return R.style.Theme_Firetweet_Settings_Dark;
+        return R.style.Theme_Firetweet_Settings_Light_DarkActionBar;
     }
 
     public static int getSettingsWizardThemeResource(final Context context) {
-        return R.style.Theme_Twidere_Settings_Light;
+        return R.style.Theme_Firetweet_Settings_Light;
     }
 
     public static int getTextAppearanceLarge(final Context context) {
@@ -713,8 +713,8 @@ public class ThemeUtils implements Constants {
 
     public static int getThemeAlpha(final int themeRes) {
         switch (themeRes) {
-            case R.style.Theme_Twidere_Dark_Transparent:
-            case R.style.Theme_Twidere_Light_Transparent:
+            case R.style.Theme_Firetweet_Dark_Transparent:
+            case R.style.Theme_Firetweet_Light_Transparent:
                 return 0xa0;
         }
         return 0xff;
@@ -816,36 +816,36 @@ public class ThemeUtils implements Constants {
     public static int getNoActionBarThemeResource(final String name, final String background, final boolean darkActionBar) {
         if (VALUE_THEME_NAME_LIGHT.equals(name)) {
             if (VALUE_THEME_BACKGROUND_SOLID.equals(background))
-                return R.style.Theme_Twidere_Light_SolidBackground_NoActionBar;
+                return R.style.Theme_Firetweet_Light_SolidBackground_NoActionBar;
             else if (VALUE_THEME_BACKGROUND_TRANSPARENT.equals(background))
-                return R.style.Theme_Twidere_Light_Transparent_NoActionBar;
-            return R.style.Theme_Twidere_Light_NoActionBar;
+                return R.style.Theme_Firetweet_Light_Transparent_NoActionBar;
+            return R.style.Theme_Firetweet_Light_NoActionBar;
         } else if (VALUE_THEME_NAME_DARK.equals(name)) {
             if (VALUE_THEME_BACKGROUND_SOLID.equals(background))
-                return R.style.Theme_Twidere_Dark_SolidBackground_NoActionBar;
+                return R.style.Theme_Firetweet_Dark_SolidBackground_NoActionBar;
             else if (VALUE_THEME_BACKGROUND_TRANSPARENT.equals(background))
-                return R.style.Theme_Twidere_Dark_Transparent_NoActionBar;
-            return R.style.Theme_Twidere_Dark_NoActionBar;
+                return R.style.Theme_Firetweet_Dark_Transparent_NoActionBar;
+            return R.style.Theme_Firetweet_Dark_NoActionBar;
         }
-        return R.style.Theme_Twidere_Light_NoActionBar;
+        return R.style.Theme_Firetweet_Light_NoActionBar;
     }
 
     public static int getThemeResource(final String name, final String background, final boolean darkActionBar) {
         if (VALUE_THEME_NAME_LIGHT.equals(name)) {
             if (VALUE_THEME_BACKGROUND_SOLID.equals(background))
-                return R.style.Theme_Twidere_Light_SolidBackground;
+                return R.style.Theme_Firetweet_Light_SolidBackground;
             else if (VALUE_THEME_BACKGROUND_TRANSPARENT.equals(background))
-                return R.style.Theme_Twidere_Light_Transparent;
-            return R.style.Theme_Twidere_Light;
+                return R.style.Theme_Firetweet_Light_Transparent;
+            return R.style.Theme_Firetweet_Light;
 
         } else if (VALUE_THEME_NAME_DARK.equals(name)) {
             if (VALUE_THEME_BACKGROUND_SOLID.equals(background))
-                return R.style.Theme_Twidere_Dark_SolidBackground;
+                return R.style.Theme_Firetweet_Dark_SolidBackground;
             else if (VALUE_THEME_BACKGROUND_TRANSPARENT.equals(background))
-                return R.style.Theme_Twidere_Dark_Transparent;
-            return R.style.Theme_Twidere_Dark;
+                return R.style.Theme_Firetweet_Dark_Transparent;
+            return R.style.Theme_Firetweet_Dark;
         }
-        return R.style.Theme_Twidere_Light;
+        return R.style.Theme_Firetweet_Light;
     }
 
     public static int getTitleTextAppearance(final Context context) {
@@ -901,7 +901,7 @@ public class ThemeUtils implements Constants {
     }
 
     public static int getViewerThemeResource(final Context context) {
-        return R.style.Theme_Twidere_Viewer;
+        return R.style.Theme_Firetweet_Viewer;
     }
 
     public static Drawable getWindowBackground(final Context context) {
@@ -938,14 +938,14 @@ public class ThemeUtils implements Constants {
 
     public static boolean isDarkTheme(final int themeRes) {
         switch (themeRes) {
-            case R.style.Theme_Twidere_Dark:
-            case R.style.Theme_Twidere_Dark_SolidBackground:
-            case R.style.Theme_Twidere_Dark_Dialog:
-            case R.style.Theme_Twidere_Dark_Compose:
-            case R.style.Theme_Twidere_Dark_Transparent:
-            case R.style.Theme_Twidere_Dark_NoActionBar:
-            case R.style.Theme_Twidere_Dark_SolidBackground_NoActionBar:
-            case R.style.Theme_Twidere_Dark_Transparent_NoActionBar:
+            case R.style.Theme_Firetweet_Dark:
+            case R.style.Theme_Firetweet_Dark_SolidBackground:
+            case R.style.Theme_Firetweet_Dark_Dialog:
+            case R.style.Theme_Firetweet_Dark_Compose:
+            case R.style.Theme_Firetweet_Dark_Transparent:
+            case R.style.Theme_Firetweet_Dark_NoActionBar:
+            case R.style.Theme_Firetweet_Dark_SolidBackground_NoActionBar:
+            case R.style.Theme_Firetweet_Dark_Transparent_NoActionBar:
                 return true;
         }
         return false;
@@ -957,10 +957,10 @@ public class ThemeUtils implements Constants {
 
     public static boolean isTransparentBackground(final int themeRes) {
         switch (themeRes) {
-            case R.style.Theme_Twidere_Dark_Transparent:
-            case R.style.Theme_Twidere_Light_Transparent:
-            case R.style.Theme_Twidere_Dark_Transparent_NoActionBar:
-            case R.style.Theme_Twidere_Light_Transparent_NoActionBar:
+            case R.style.Theme_Firetweet_Dark_Transparent:
+            case R.style.Theme_Firetweet_Light_Transparent:
+            case R.style.Theme_Firetweet_Dark_Transparent_NoActionBar:
+            case R.style.Theme_Firetweet_Light_Transparent_NoActionBar:
                 return true;
         }
         return false;

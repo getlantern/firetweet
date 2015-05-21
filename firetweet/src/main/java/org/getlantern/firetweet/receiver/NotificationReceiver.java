@@ -1,5 +1,5 @@
 /*
- * Twidere - Twitter client for Android
+ * Firetweet - Twitter client for Android
  *
  *  Copyright (C) 2012-2015 Mariotaku Lee <mariotaku.lee@gmail.com>
  *
@@ -27,7 +27,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import org.getlantern.firetweet.Constants;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.model.StringLongPair;
 import org.getlantern.firetweet.util.ParseUtils;
 import org.getlantern.firetweet.util.ReadStateManager;
@@ -47,7 +47,7 @@ public class NotificationReceiver extends BroadcastReceiver implements Constants
                 final String tag = getPositionTag(uri.getLastPathSegment());
                 if (tag == null) return;
                 final long accountId = ParseUtils.parseLong(uri.getQueryParameter(QUERY_PARAM_ACCOUNT_ID), -1);
-                final FireTweetApplication app = FireTweetApplication.getInstance(context);
+                final FiretweetApplication app = FiretweetApplication.getInstance(context);
                 final ReadStateManager manager = app.getReadStateManager();
                 final String paramReadPosition, paramReadPositions;
                 if (!TextUtils.isEmpty(paramReadPosition = uri.getQueryParameter(QUERY_PARAM_READ_POSITION))) {

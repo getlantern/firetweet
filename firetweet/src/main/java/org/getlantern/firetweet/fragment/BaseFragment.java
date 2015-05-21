@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -28,15 +28,15 @@ import android.content.SharedPreferences;
 
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.activity.support.BaseActionBarActivity;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
 import org.getlantern.firetweet.util.MultiSelectManager;
 
 public class BaseFragment extends Fragment implements Constants {
 
-    public FireTweetApplication getApplication() {
+    public FiretweetApplication getApplication() {
         final Activity activity = getActivity();
-        if (activity != null) return (FireTweetApplication) activity.getApplication();
+        if (activity != null) return (FiretweetApplication) activity.getApplication();
         return null;
     }
 
@@ -47,7 +47,7 @@ public class BaseFragment extends Fragment implements Constants {
     }
 
     public MultiSelectManager getMultiSelectManager() {
-        final FireTweetApplication app = getApplication();
+        final FiretweetApplication app = getApplication();
         return app != null ? app.getMultiSelectManager() : null;
     }
 
@@ -64,7 +64,7 @@ public class BaseFragment extends Fragment implements Constants {
     }
 
     public AsyncTwitterWrapper getTwitterWrapper() {
-        final FireTweetApplication app = getApplication();
+        final FiretweetApplication app = getApplication();
         return app != null ? app.getTwitterWrapper() : null;
     }
 

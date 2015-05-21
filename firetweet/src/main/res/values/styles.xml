@@ -1,69 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Widget.Twidere.ActionBar.Colored" parent="Widget.Base.Light.ActionBar.Solid">
-        <!--<item name="android:background">@drawable/ab_twidere_solid_color_holo</item>-->
+    <style name="Widget.Firetweet.ActionBar.Colored" parent="Widget.Base.Light.ActionBar.Solid">
+        <!--<item name="android:background">@drawable/ab_firetweet_solid_color_holo</item>-->
         <!--<item name="android:background">@android:color/transparent</item>-->
     </style>
 
-    <style name="Widget.Twidere.ActionBar.Colored.Inverse" parent="Widget.Base.Light.ActionBar.Solid.Inverse">
-        <!--<item name="android:background">@drawable/ab_twidere_solid_color_holo</item>-->
+    <style name="Widget.Firetweet.ActionBar.Colored.Inverse" parent="Widget.Base.Light.ActionBar.Solid.Inverse">
+        <!--<item name="android:background">@drawable/ab_firetweet_solid_color_holo</item>-->
         <!--<item name="android:background">@android:color/transparent</item>-->
     </style>
 
-    <style name="Widget.Twidere.ActionBar.Dark" parent="Widget.Base.ActionBar.Solid">
-        <!--<item name="android:background">@drawable/ab_twidere_solid_dark_holo</item>-->
+    <style name="Widget.Firetweet.ActionBar.Dark" parent="Widget.Base.ActionBar.Solid">
+        <!--<item name="android:background">@drawable/ab_firetweet_solid_dark_holo</item>-->
         <!--<item name="android:background">@android:color/transparent</item>-->
     </style>
 
-    <style name="Widget.Twidere.ActionBar.Light" parent="Widget.Base.Light.ActionBar.Solid">
-        <!--<item name="android:background">@drawable/ab_twidere_solid_light_holo</item>-->
+    <style name="Widget.Firetweet.ActionBar.Light" parent="Widget.Base.Light.ActionBar.Solid">
+        <!--<item name="android:background">@drawable/ab_firetweet_solid_light_holo</item>-->
         <!--<item name="android:background">@android:color/transparent</item>-->
     </style>
 
-    <style name="Widget.Twidere.ActionBar.Light.DarkActionBar" parent="Widget.Base.Light.ActionBar.Solid.Inverse">
-        <!--<item name="android:background">@drawable/ab_twidere_solid_dark_holo</item>-->
+    <style name="Widget.Firetweet.ActionBar.Light.DarkActionBar" parent="Widget.Base.Light.ActionBar.Solid.Inverse">
+        <!--<item name="android:background">@drawable/ab_firetweet_solid_dark_holo</item>-->
         <!--<item name="android:background">@android:color/transparent</item>-->
     </style>
 
-    <style name="Widget.Twidere.Viewer.ActionBar" parent="Widget.AppCompat.ActionBar">
+    <style name="Widget.Firetweet.Viewer.ActionBar" parent="Widget.AppCompat.ActionBar">
         <item name="background">@drawable/bg_viewer_actionbar</item>
         <item name="backgroundSplit">@drawable/bg_viewer_actionbar</item>
     </style>
 
-    <style name="Widget.Twidere.ImageButton.Borderless" parent="Widget.Base.ImageButton">
+    <style name="Widget.Firetweet.ImageButton.Borderless" parent="Widget.Base.ImageButton">
         <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
 
-    <style name="Widget.Twidere.Light.ImageButton.Borderless" parent="Widget.Base.Light.ImageButton">
+    <style name="Widget.Firetweet.Light.ImageButton.Borderless" parent="Widget.Base.Light.ImageButton">
         <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
 
-    <style name="Widget.Twidere.SelectableView" parent="Widget.Base">
+    <style name="Widget.Firetweet.SelectableView" parent="Widget.Base">
         <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
 
-    <style name="Widget.Twidere.Light.SelectableView" parent="Widget.Base.Light">
+    <style name="Widget.Firetweet.Light.SelectableView" parent="Widget.Base.Light">
         <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
 
-    <style name="Widget.Twidere.ActionButton.Colored" parent="Widget.Base.Light.ActionButton">
+    <style name="Widget.Firetweet.ActionButton.Colored" parent="Widget.Base.Light.ActionButton">
         <item name="android:background">?android:actionBarItemBackground</item>
     </style>
 
-    <style name="Widget.Twidere.ActionButton.Overflow.Colored" parent="Widget.Base.Light.ActionButton.Overflow">
+    <style name="Widget.Firetweet.ActionButton.Overflow.Colored" parent="Widget.Base.Light.ActionButton.Overflow">
         <item name="android:background">?android:actionBarItemBackground</item>
     </style>
 
-    <style name="Widget.Twidere.ActionButton.Colored.DarkActionBar" parent="Widget.Base.ActionButton">
+    <style name="Widget.Firetweet.ActionButton.Colored.DarkActionBar" parent="Widget.Base.ActionButton">
         <item name="android:background">?android:actionBarItemBackground</item>
     </style>
 
-    <style name="Widget.Twidere.ActionButton.Overflow.Colored.DarkActionBar" parent="Widget.Base.ActionButton.Overflow">
+    <style name="Widget.Firetweet.ActionButton.Overflow.Colored.DarkActionBar" parent="Widget.Base.ActionButton.Overflow">
         <item name="android:background">?android:actionBarItemBackground</item>
     </style>
 
-    <style name="Animation.Twidere.Activity" parent="android:Animation.Activity">
+    <style name="Animation.Firetweet.Activity" parent="android:Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/activity_open_enter</item>
         <item name="android:activityOpenExitAnimation">@anim/activity_open_exit</item>
         <item name="android:activityCloseEnterAnimation">@anim/activity_close_enter</item>

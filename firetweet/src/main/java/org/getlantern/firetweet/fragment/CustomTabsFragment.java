@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -55,15 +55,15 @@ import com.mobeta.android.dslv.DragSortListView;
 import com.mobeta.android.dslv.DragSortListView.DropListener;
 import com.mobeta.android.dslv.SimpleDragSortCursorAdapter;
 
-import org.getlantern.querybuilder.Columns.Column;
-import org.getlantern.querybuilder.Expression;
-import org.getlantern.querybuilder.RawItemArray;
+import org.mariotaku.querybuilder.Columns.Column;
+import org.mariotaku.querybuilder.Expression;
+import org.mariotaku.querybuilder.RawItemArray;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.SettingsActivity;
 import org.getlantern.firetweet.activity.support.CustomTabEditorActivity;
 import org.getlantern.firetweet.model.CustomTabConfiguration;
 import org.getlantern.firetweet.model.CustomTabConfiguration.CustomTabConfigurationComparator;
-import org.getlantern.firetweet.provider.TwidereDataStore.Tabs;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Tabs;
 import org.getlantern.firetweet.util.SharedPreferencesWrapper;
 import org.getlantern.firetweet.util.ThemeUtils;
 import org.getlantern.firetweet.util.Utils;

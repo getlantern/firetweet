@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -46,7 +46,7 @@ import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.ArrayAdapter;
 import org.getlantern.firetweet.fragment.iface.ISupportDialogFragmentCallback;
 import org.getlantern.firetweet.util.ThemeUtils;
-import org.getlantern.firetweet.util.TwidereArrayUtils;
+import org.getlantern.firetweet.util.FiretweetArrayUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -259,7 +259,7 @@ public class FileSelectorDialogFragment extends BaseSupportDialogFragment implem
             super(context);
             this.path = path;
             this.extensions = extensions;
-            extensions_regex = extensions != null ? Pattern.compile(TwidereArrayUtils.toString(extensions, '|', false),
+            extensions_regex = extensions != null ? Pattern.compile(FiretweetArrayUtils.toString(extensions, '|', false),
                     Pattern.CASE_INSENSITIVE) : null;
         }
 

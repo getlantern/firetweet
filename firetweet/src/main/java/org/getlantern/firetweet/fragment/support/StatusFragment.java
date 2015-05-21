@@ -1,5 +1,5 @@
 /*
- * Twidere - Twitter client for Android
+ * Firetweet - Twitter client for Android
  *
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  *
@@ -81,7 +81,7 @@ import org.getlantern.firetweet.activity.support.ColorPickerDialogActivity;
 import org.getlantern.firetweet.adapter.AbsStatusesAdapter.StatusAdapterListener;
 import org.getlantern.firetweet.adapter.decorator.DividerItemDecoration;
 import org.getlantern.firetweet.adapter.iface.IStatusesAdapter;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.constant.IntentConstants;
 import org.getlantern.firetweet.loader.support.ParcelableStatusLoader;
 import org.getlantern.firetweet.loader.support.StatusRepliesLoader;
@@ -104,7 +104,7 @@ import org.getlantern.firetweet.util.SharedPreferencesWrapper;
 import org.getlantern.firetweet.util.StatusAdapterLinkClickHandler;
 import org.getlantern.firetweet.util.StatusLinkClickHandler;
 import org.getlantern.firetweet.util.ThemeUtils;
-import org.getlantern.firetweet.util.TwidereLinkify;
+import org.getlantern.firetweet.util.FiretweetLinkify;
 import org.getlantern.firetweet.util.TwitterCardUtils;
 import org.getlantern.firetweet.util.UserColorNameUtils;
 import org.getlantern.firetweet.util.Utils;
@@ -561,12 +561,12 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
         private final TextView locationView;
         private final TwitterCardContainer twitterCard;
         private final StatusLinkClickHandler linkClickHandler;
-        private final TwidereLinkify linkify;
+        private final FiretweetLinkify linkify;
 
         public DetailStatusViewHolder(StatusAdapter adapter, View itemView) {
             super(itemView);
             this.linkClickHandler = new StatusLinkClickHandler(adapter.getContext(), null);
-            this.linkify = new TwidereLinkify(linkClickHandler, false);
+            this.linkify = new FiretweetLinkify(linkClickHandler, false);
             this.adapter = adapter;
             cardView = (CardView) itemView.findViewById(R.id.card);
             menuBar = (ActionMenuView) itemView.findViewById(R.id.menu_bar);
@@ -1015,7 +1015,7 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
         private final LayoutInflater mInflater;
         private final MediaLoaderWrapper mImageLoader;
         private final ImageLoadingHandler mImageLoadingHandler;
-        private final TwidereLinkify mTwidereLinkify;
+        private final FiretweetLinkify mFiretweetLinkify;
 
         private final boolean mNameFirst;
         private final int mCardLayoutResource;
@@ -1048,7 +1048,7 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
             mFragment = fragment;
             mContext = context;
             mInflater = LayoutInflater.from(context);
-            mImageLoader = FireTweetApplication.getInstance(context).getMediaLoaderWrapper();
+            mImageLoader = FiretweetApplication.getInstance(context).getMediaLoaderWrapper();
             mImageLoadingHandler = new ImageLoadingHandler(R.id.media_preview_progress);
             mCardBackgroundColor = ThemeUtils.getCardBackgroundColor(context);
             mNameFirst = preferences.getBoolean(KEY_NAME_FIRST, true);
@@ -1066,7 +1066,7 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
             } else {
                 mCardLayoutResource = R.layout.card_item_status;
             }
-            mTwidereLinkify = new TwidereLinkify(new StatusAdapterLinkClickHandler<>(this));
+            mFiretweetLinkify = new FiretweetLinkify(new StatusAdapterLinkClickHandler<>(this));
         }
 
         public void addConversation(ParcelableStatus status, int position) {
@@ -1174,8 +1174,8 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
         }
 
         @Override
-        public TwidereLinkify getTwidereLinkify() {
-            return mTwidereLinkify;
+        public FiretweetLinkify getFiretweetLinkify() {
+            return mFiretweetLinkify;
         }
 
         @Override

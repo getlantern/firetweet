@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -45,7 +45,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.util.AsyncTaskUtils;
 import org.getlantern.firetweet.util.BitmapUtils;
@@ -115,7 +115,7 @@ public abstract class AccountsListPreference extends PreferenceCategory implemen
             final String switchPreferenceName = ACCOUNT_PREFERENCES_NAME_PREFIX + account.account_id;
             mAccount = account;
             mSwitchPreference = context.getSharedPreferences(switchPreferenceName, Context.MODE_PRIVATE);
-            final FireTweetApplication app = FireTweetApplication.getInstance(context);
+            final FiretweetApplication app = FiretweetApplication.getInstance(context);
             mImageLoader = app.getMediaLoaderWrapper();
             mSwitchKey = switchKey;
             mSwitchDefault = switchDefault;

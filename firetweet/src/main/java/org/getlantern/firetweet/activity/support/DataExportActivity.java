@@ -107,7 +107,7 @@ public class DataExportActivity extends BaseActionBarActivity implements FileSel
 		protected Boolean doInBackground(final Object... params) {
 			if (mPath == null) return false;
 			final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.US);
-			final String fileName = String.format("Twidere_Settings_%s.zip", sdf.format(new Date()));
+			final String fileName = String.format("Firetweet_Settings_%s.zip", sdf.format(new Date()));
 			final File file = new File(mPath, fileName);
 			file.delete();
 			try {

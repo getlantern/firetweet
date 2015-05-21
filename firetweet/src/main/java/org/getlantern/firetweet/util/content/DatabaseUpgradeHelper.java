@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -24,15 +24,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.getlantern.querybuilder.Columns;
-import org.getlantern.querybuilder.Columns.Column;
-import org.getlantern.querybuilder.Expression;
-import org.getlantern.querybuilder.NewColumn;
-import org.getlantern.querybuilder.OnConflict;
-import org.getlantern.querybuilder.Tables;
-import org.getlantern.querybuilder.query.SQLInsertQuery;
-import org.getlantern.querybuilder.query.SQLSelectQuery;
-import org.getlantern.firetweet.util.TwidereArrayUtils;
+import org.mariotaku.querybuilder.Columns;
+import org.mariotaku.querybuilder.Columns.Column;
+import org.mariotaku.querybuilder.Expression;
+import org.mariotaku.querybuilder.NewColumn;
+import org.mariotaku.querybuilder.OnConflict;
+import org.mariotaku.querybuilder.Tables;
+import org.mariotaku.querybuilder.query.SQLInsertQuery;
+import org.mariotaku.querybuilder.query.SQLSelectQuery;
+import org.getlantern.firetweet.util.FiretweetArrayUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -79,7 +79,7 @@ public final class DatabaseUpgradeHelper {
                 }
             }
             if (!differenct) return;
-        } else if (oldCols == null || TwidereArrayUtils.contentMatch(newColNames, oldCols)) return;
+        } else if (oldCols == null || FiretweetArrayUtils.contentMatch(newColNames, oldCols)) return;
         if (dropDirectly) {
             db.beginTransaction();
             db.execSQL(dropTable(true, table).getSQL());
@@ -121,7 +121,7 @@ public final class DatabaseUpgradeHelper {
             }
         }
         final String[] newInsertCols = newInsertColsList.toArray(new String[newInsertColsList.size()]);
-        if (!TwidereArrayUtils.contains(newInsertCols, notNullCols)) return null;
+        if (!FiretweetArrayUtils.contains(newInsertCols, notNullCols)) return null;
         qb.columns(newInsertCols);
         final Columns.Column[] oldDataCols = new Columns.Column[newInsertCols.length];
         for (int i = 0, j = oldDataCols.length; i < j; i++) {
@@ -172,7 +172,7 @@ public final class DatabaseUpgradeHelper {
                 notNullCols[count++] = column.getName();
             }
         }
-        return TwidereArrayUtils.subArray(notNullCols, 0, count);
+        return FiretweetArrayUtils.subArray(notNullCols, 0, count);
     }
 
     private static Map<String, String> getTypeMapByCreateQuery(final String query) {

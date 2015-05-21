@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -31,7 +31,7 @@ import android.view.ViewGroup;
 
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
-import org.getlantern.firetweet.util.TwidereLinkify;
+import org.getlantern.firetweet.util.FiretweetLinkify;
 import org.getlantern.firetweet.view.holder.StatusViewHolder;
 import org.getlantern.firetweet.view.holder.StatusViewHolder.DummyStatusHolderAdapter;
 
@@ -39,7 +39,7 @@ public class CardPreviewPreference extends Preference implements Constants, OnSh
 
     private final LayoutInflater mInflater;
     private final SharedPreferences mPreferences;
-    private final TwidereLinkify mLinkify;
+    private final FiretweetLinkify mLinkify;
     private StatusViewHolder mHolder;
     private boolean mCompactModeChanged;
     private DummyStatusHolderAdapter mAdapter;
@@ -55,7 +55,7 @@ public class CardPreviewPreference extends Preference implements Constants, OnSh
     public CardPreviewPreference(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
         mInflater = LayoutInflater.from(context);
-        mLinkify = new TwidereLinkify(null);
+        mLinkify = new FiretweetLinkify(null);
         mPreferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         mPreferences.registerOnSharedPreferenceChangeListener(this);
         mAdapter = new DummyStatusHolderAdapter(context);

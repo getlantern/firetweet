@@ -35,18 +35,18 @@ import android.widget.TextView;
 import com.mobeta.android.dslv.DragSortListView;
 import com.mobeta.android.dslv.DragSortListView.DropListener;
 
-import org.getlantern.querybuilder.Expression;
+import org.mariotaku.querybuilder.Expression;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.support.ColorPickerDialogActivity;
 import org.getlantern.firetweet.activity.support.SignInActivity;
 import org.getlantern.firetweet.adapter.AccountsAdapter;
 import org.getlantern.firetweet.model.ParcelableAccount;
-import org.getlantern.firetweet.provider.TwidereDataStore.Accounts;
-import org.getlantern.firetweet.provider.TwidereDataStore.DirectMessages;
-import org.getlantern.firetweet.provider.TwidereDataStore.DirectMessages.Inbox;
-import org.getlantern.firetweet.provider.TwidereDataStore.DirectMessages.Outbox;
-import org.getlantern.firetweet.provider.TwidereDataStore.Mentions;
-import org.getlantern.firetweet.provider.TwidereDataStore.Statuses;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;
+import org.getlantern.firetweet.provider.FiretweetDataStore.DirectMessages;
+import org.getlantern.firetweet.provider.FiretweetDataStore.DirectMessages.Inbox;
+import org.getlantern.firetweet.provider.FiretweetDataStore.DirectMessages.Outbox;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Mentions;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Statuses;
 import org.getlantern.firetweet.util.ThemeUtils;
 import org.getlantern.firetweet.util.Utils;
 

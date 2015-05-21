@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -34,12 +34,12 @@ import com.twitter.Extractor;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.support.BaseActionBarActivity;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.menu.AccountActionProvider;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.model.ParcelableStatus;
 import org.getlantern.firetweet.model.ParcelableUser;
-import org.getlantern.firetweet.provider.TwidereDataStore.Filters;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Filters;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,7 +56,7 @@ import static org.getlantern.firetweet.util.content.ContentResolverUtils.bulkIns
 @SuppressLint("Registered")
 public class MultiSelectEventHandler implements Constants, ActionMode.Callback, MultiSelectManager.Callback {
 
-    private FireTweetApplication mApplication;
+    private FiretweetApplication mApplication;
 
     private AsyncTwitterWrapper mTwitterWrapper;
 
@@ -78,7 +78,7 @@ public class MultiSelectEventHandler implements Constants, ActionMode.Callback, 
      * Call before super.onCreate
      */
     public void dispatchOnCreate() {
-        mApplication = mActivity.getFireTweetApplication();
+        mApplication = mActivity.getFiretweetApplication();
         mTwitterWrapper = mApplication.getTwitterWrapper();
         mMultiSelectManager = mApplication.getMultiSelectManager();
     }

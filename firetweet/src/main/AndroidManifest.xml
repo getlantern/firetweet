@@ -62,9 +62,9 @@
         android:permissionGroup="org.getlantern.firetweet.permission.PERMISSION_GROUP"/>
 
     <application
-        android:name=".app.FireTweetApplication"
+        android:name=".app.FiretweetApplication"
         android:allowBackup="true"
-        android:backupAgent=".backup.firetweetBackupAgentHelper"
+        android:backupAgent=".backup.FiretweetBackupAgentHelper"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -299,7 +299,7 @@
         <activity
             android:name=".activity.support.ColorPickerDialogActivity"
             android:label="@string/set_color"
-            android:theme="@style/Theme.firetweet.Light.NoDisplay"/>
+            android:theme="@style/Theme.Firetweet.Light.NoDisplay"/>
         <activity
             android:name=".activity.support.LinkHandlerActivity"
             android:windowSoftInputMode="adjustResize">
@@ -411,7 +411,7 @@
             android:hardwareAccelerated="true"
             android:label="@string/media"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.firetweet.Viewer">
+            android:theme="@style/Theme.Firetweet.Viewer">
             <intent-filter>
                 <action android:name="org.getlantern.firetweet.VIEW_MEDIA"/>
 
@@ -427,7 +427,7 @@
             android:name=".activity.support.FileSelectorActivity"
             android:exported="false"
             android:label="@string/pick_file"
-            android:theme="@style/Theme.firetweet.Light.NoDisplay"
+            android:theme="@style/Theme.Firetweet.Light.NoDisplay"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="org.getlantern.firetweet.PICK_FILE"/>
@@ -439,7 +439,7 @@
         <activity
             android:name=".activity.support.ImagePickerActivity"
             android:exported="false"
-            android:theme="@style/Theme.firetweet.Light.NoDisplay"
+            android:theme="@style/Theme.Firetweet.Light.NoDisplay"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -480,7 +480,7 @@
         <activity
             android:name=".activity.CreateComposeShortcutActivity"
             android:label="@string/compose"
-            android:theme="@style/Theme.firetweet.Dark.NoDisplay">
+            android:theme="@style/Theme.Firetweet.Dark.NoDisplay">
             <intent-filter>
                 <action android:name="android.intent.action.CREATE_SHORTCUT"/>
 
@@ -520,7 +520,7 @@
         <activity
             android:name=".activity.SettingsWizardActivity"
             android:label="@string/settings_wizard"
-            android:theme="@style/Theme.firetweet.Wizard"/>
+            android:theme="@style/Theme.Firetweet.Wizard"/>
         <activity
             android:name=".activity.support.DataExportActivity"
             android:label="@string/export_settings"
@@ -588,7 +588,7 @@
         <activity
             android:name=".activity.TestActivity"
             android:enabled="false"
-            android:label="firetweet test"
+            android:label="Firetweet test"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -642,14 +642,14 @@
         </service>
 
         <provider
-            android:name=".provider.firetweetDataProvider"
+            android:name=".provider.FiretweetDataProvider"
             android:authorities="firetweet"
             android:exported="true"
             android:grantUriPermissions="true"
             android:label="@string/label_tweetstore_provider"
             tools:ignore="ExportedContentProvider"/>
         <provider
-            android:name=".provider.firetweetCommandProvider"
+            android:name=".provider.FiretweetCommandProvider"
             android:authorities="firetweet.command"
             android:exported="true"
             tools:ignore="ExportedContentProvider"/>

@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -31,7 +31,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 
 import org.getlantern.firetweet.Constants;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.iface.RefreshScrollTopInterface;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
 import org.getlantern.firetweet.util.MultiSelectManager;
@@ -44,8 +44,8 @@ public class BaseListFragment extends ListFragment implements Constants, OnScrol
 
     private boolean mReachedBottom, mNotReachedBottomBefore = true;
 
-    public final FireTweetApplication getApplication() {
-        return FireTweetApplication.getInstance(getActivity());
+    public final FiretweetApplication getApplication() {
+        return FiretweetApplication.getInstance(getActivity());
     }
 
     public final ContentResolver getContentResolver() {

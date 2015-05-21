@@ -1,5 +1,5 @@
 /*
- * Twidere - Twitter client for Android
+ * Firetweet - Twitter client for Android
  *
  *  Copyright (C) 2012-2015 Mariotaku Lee <mariotaku.lee@gmail.com>
  *
@@ -54,20 +54,20 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.getlantern.querybuilder.Columns.Column;
-import org.getlantern.querybuilder.Expression;
-import org.getlantern.querybuilder.OrderBy;
-import org.getlantern.querybuilder.RawItemArray;
+import org.mariotaku.querybuilder.Columns.Column;
+import org.mariotaku.querybuilder.Expression;
+import org.mariotaku.querybuilder.OrderBy;
+import org.mariotaku.querybuilder.RawItemArray;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.support.QuickSearchBarActivity.SuggestionItem;
 import org.getlantern.firetweet.adapter.AccountsSpinnerAdapter;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.model.ParcelableUser;
 import org.getlantern.firetweet.model.ParcelableUser.CachedIndices;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedUsers;
-import org.getlantern.firetweet.provider.TwidereDataStore.SavedSearches;
-import org.getlantern.firetweet.provider.TwidereDataStore.SearchHistory;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedUsers;
+import org.getlantern.firetweet.provider.FiretweetDataStore.SavedSearches;
+import org.getlantern.firetweet.provider.FiretweetDataStore.SearchHistory;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.ParseUtils;
 import org.getlantern.firetweet.util.SwipeDismissListViewTouchListener;
@@ -468,7 +468,7 @@ public class QuickSearchBarActivity extends ThemedFragmentActivity implements On
         SuggestionsAdapter(Context context) {
             mContext = context;
             mInflater = LayoutInflater.from(context);
-            mImageLoader = FireTweetApplication.getInstance(context).getMediaLoaderWrapper();
+            mImageLoader = FiretweetApplication.getInstance(context).getMediaLoaderWrapper();
         }
 
         public boolean canDismiss(int position) {

@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -71,10 +71,11 @@ import com.squareup.otto.Subscribe;
 import org.apache.commons.lang3.ArrayUtils;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
+import org.getlantern.firetweet.FiretweetConstants;
 import org.getlantern.firetweet.activity.SettingsActivity;
 import org.getlantern.firetweet.activity.SettingsWizardActivity;
 import org.getlantern.firetweet.adapter.support.SupportTabsAdapter;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.CustomTabsFragment;
 import org.getlantern.firetweet.fragment.iface.IBaseFragment;
 import org.getlantern.firetweet.fragment.iface.IBasePullToRefreshFragment;
@@ -86,10 +87,11 @@ import org.getlantern.firetweet.fragment.support.TrendsSuggectionsFragment;
 import org.getlantern.firetweet.graphic.EmptyDrawable;
 import org.getlantern.firetweet.model.Lantern;
 import org.getlantern.firetweet.model.ParcelableAccount;
+import org.getlantern.firetweet.model.ParcelableUser;
 import org.getlantern.firetweet.model.SupportTabSpec;
-import org.getlantern.firetweet.provider.TwidereDataStore.Accounts;
-import org.getlantern.firetweet.provider.TwidereDataStore.Mentions;
-import org.getlantern.firetweet.provider.TwidereDataStore.Statuses;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Mentions;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Statuses;
 import org.getlantern.firetweet.util.AsyncTaskUtils;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
 import org.getlantern.firetweet.util.ColorUtils;
@@ -316,7 +318,7 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
 
         mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         mTwitterWrapper = getTwitterWrapper();
-        mReadStateManager = FireTweetApplication.getInstance(this).getReadStateManager();
+        mReadStateManager = FiretweetApplication.getInstance(this).getReadStateManager();
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mMultiSelectHandler = new MultiSelectEventHandler(this);
         mHotKeyHandler = new HotKeyHandler(this);
@@ -414,7 +416,7 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
         sendBroadcast(new Intent(BROADCAST_HOME_ACTIVITY_ONSTART));
         final ContentResolver resolver = getContentResolver();
         resolver.registerContentObserver(Accounts.CONTENT_URI, true, mAccountChangeObserver);
-        final Bus bus = FireTweetApplication.getInstance(this).getMessageBus();
+        final Bus bus = FiretweetApplication.getInstance(this).getMessageBus();
         bus.register(this);
         if (getTabDisplayOptionInt(this) != mTabDisplayOption) {
             restart();
@@ -435,7 +437,7 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
     protected void onStop() {
         mMultiSelectHandler.dispatchOnStop();
         mReadStateManager.unregisterOnSharedPreferenceChangeListener(mReadStateChangeListener);
-        final Bus bus = FireTweetApplication.getInstance(this).getMessageBus();
+        final Bus bus = FiretweetApplication.getInstance(this).getMessageBus();
         bus.unregister(this);
         final ContentResolver resolver = getContentResolver();
         resolver.unregisterContentObserver(mAccountChangeObserver);

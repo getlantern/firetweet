@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -87,9 +87,9 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.utils.IoUtils;
 import com.twitter.Extractor;
 
-import org.getlantern.dynamicgridview.DraggableArrayAdapter;
+import org.mariotaku.dynamicgridview.DraggableArrayAdapter;
 import org.getlantern.firetweet.R;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.support.BaseSupportDialogFragment;
 import org.getlantern.firetweet.fragment.support.ViewStatusDialogFragment;
 import org.getlantern.firetweet.model.DraftItem;
@@ -101,7 +101,7 @@ import org.getlantern.firetweet.model.ParcelableStatus;
 import org.getlantern.firetweet.model.ParcelableStatusUpdate;
 import org.getlantern.firetweet.model.ParcelableUser;
 import org.getlantern.firetweet.preference.ServicePickerPreference;
-import org.getlantern.firetweet.provider.TwidereDataStore.Drafts;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Drafts;
 import org.getlantern.firetweet.service.BackgroundOperationService;
 import org.getlantern.firetweet.util.AsyncTaskUtils;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
@@ -111,8 +111,8 @@ import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.ParseUtils;
 import org.getlantern.firetweet.util.SharedPreferencesWrapper;
 import org.getlantern.firetweet.util.ThemeUtils;
-import org.getlantern.firetweet.util.TwidereArrayUtils;
-import org.getlantern.firetweet.util.TwidereValidator;
+import org.getlantern.firetweet.util.FiretweetArrayUtils;
+import org.getlantern.firetweet.util.FiretweetValidator;
 import org.getlantern.firetweet.util.UserColorNameUtils;
 import org.getlantern.firetweet.util.Utils;
 import org.getlantern.firetweet.view.ActionIconView;
@@ -164,7 +164,7 @@ public class ComposeActivity extends ThemedFragmentActivity implements TextWatch
     private static final String EXTRA_SHARE_SCREENSHOT = "share_screenshot";
     private final Extractor mExtractor = new Extractor();
     private final Rect mWindowDecorHitRect = new Rect();
-    private TwidereValidator mValidator;
+    private FiretweetValidator mValidator;
     private AsyncTwitterWrapper mTwitterWrapper;
     private LocationManager mLocationManager;
     private SharedPreferencesWrapper mPreferences;
@@ -620,10 +620,10 @@ public class ComposeActivity extends ThemedFragmentActivity implements TextWatch
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mPreferences = SharedPreferencesWrapper.getInstance(this, SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
 
-        final FireTweetApplication app = FireTweetApplication.getInstance(this);
+        final FiretweetApplication app = FiretweetApplication.getInstance(this);
         mTwitterWrapper = app.getTwitterWrapper();
         mResolver = getContentResolver();
-        mValidator = new TwidereValidator(this);
+        mValidator = new FiretweetValidator(this);
         mImageLoader = app.getMediaLoaderWrapper();
         setContentView(R.layout.activity_compose);
 //        setSupportProgressBarIndeterminateVisibility(false);
@@ -687,9 +687,9 @@ public class ComposeActivity extends ThemedFragmentActivity implements TextWatch
             }
             final long[] accountIds = mAccountsAdapter.getSelectedAccountIds();
             if (accountIds.length == 0) {
-                final long[] idsInPrefs = TwidereArrayUtils.parseLongArray(
+                final long[] idsInPrefs = FiretweetArrayUtils.parseLongArray(
                         mPreferences.getString(KEY_COMPOSE_ACCOUNTS, null), ',');
-                final long[] intersection = TwidereArrayUtils.intersection(idsInPrefs, defaultAccountIds);
+                final long[] intersection = FiretweetArrayUtils.intersection(idsInPrefs, defaultAccountIds);
                 mAccountsAdapter.setSelectedAccountIds(intersection.length > 0 ? intersection : defaultAccountIds);
             }
             mOriginalText = ParseUtils.parseString(mEditText.getText());
@@ -1030,7 +1030,7 @@ public class ComposeActivity extends ThemedFragmentActivity implements TextWatch
     private void saveAccountSelection() {
         if (!mShouldSaveAccounts) return;
         final SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putString(KEY_COMPOSE_ACCOUNTS, TwidereArrayUtils.toString(mAccountsAdapter.getSelectedAccountIds(), ',', false));
+        editor.putString(KEY_COMPOSE_ACCOUNTS, FiretweetArrayUtils.toString(mAccountsAdapter.getSelectedAccountIds(), ',', false));
         editor.apply();
     }
 
@@ -1231,7 +1231,7 @@ public class ComposeActivity extends ThemedFragmentActivity implements TextWatch
         public AccountIconsAdapter(ComposeActivity activity) {
             mActivity = activity;
             mInflater = LayoutInflater.from(activity);
-            mImageLoader = FireTweetApplication.getInstance(activity).getMediaLoaderWrapper();
+            mImageLoader = FiretweetApplication.getInstance(activity).getMediaLoaderWrapper();
             mSelection = new LongSparseArray<>();
         }
 
@@ -1495,7 +1495,7 @@ public class ComposeActivity extends ThemedFragmentActivity implements TextWatch
 
         public MediaPreviewAdapter(final Context context) {
             super(context, R.layout.grid_item_media_editor);
-            mImageLoader = FireTweetApplication.getInstance(context).getMediaLoaderWrapper();
+            mImageLoader = FiretweetApplication.getInstance(context).getMediaLoaderWrapper();
         }
 
         public List<ParcelableMediaUpdate> getAsList() {

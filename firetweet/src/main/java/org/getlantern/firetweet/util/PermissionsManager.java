@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -50,7 +50,7 @@ public class PermissionsManager implements Constants {
 	public boolean accept(final String package_name, final String[] permissions) {
 		if (package_name == null || permissions == null) return false;
 		final SharedPreferences.Editor editor = mPreferences.edit();
-		editor.putString(package_name, TwidereArrayUtils.toString(permissions, '|', false));
+		editor.putString(package_name, FiretweetArrayUtils.toString(permissions, '|', false));
 		return editor.commit();
 	}
 
@@ -64,7 +64,7 @@ public class PermissionsManager implements Constants {
 		if (checkSignature(uid)) return true;
 		final String pname = getPackageNameByUid(uid);
 		final String[] permissions = getPermissions(pname);
-		return TwidereArrayUtils.contains(permissions, requiredPermissions);
+		return FiretweetArrayUtils.contains(permissions, requiredPermissions);
 	}
 
 	public boolean checkPermission(final String pname, final String... requiredPermissions) {
@@ -72,7 +72,7 @@ public class PermissionsManager implements Constants {
 		if (mContext.getPackageName().equals(pname)) return true;
 		if (checkSignature(pname)) return true;
 		final String[] permissions = getPermissions(pname);
-		return TwidereArrayUtils.contains(permissions, requiredPermissions);
+		return FiretweetArrayUtils.contains(permissions, requiredPermissions);
 	}
 
 	public boolean checkSignature(final int uid) {
@@ -130,7 +130,7 @@ public class PermissionsManager implements Constants {
 	}
 
 	public static boolean hasPermissions(final String[] permissions, final String... requiredPermissions) {
-		return TwidereArrayUtils.contains(permissions, requiredPermissions);
+		return FiretweetArrayUtils.contains(permissions, requiredPermissions);
 	}
 
 	public static boolean isPermissionValid(final String permissionsString) {

@@ -1,5 +1,5 @@
 /*
- * Twidere - Twitter client for Android
+ * Firetweet - Twitter client for Android
  *
  *  Copyright (C) 2012-2015 Mariotaku Lee <mariotaku.lee@gmail.com>
  *
@@ -26,7 +26,7 @@ import com.squareup.otto.Bus;
 
 import org.getlantern.firetweet.adapter.ParcelableActivitiesAdapter;
 import org.getlantern.firetweet.adapter.iface.IActivitiesAdapter;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.model.ParcelableActivity;
 
 import java.util.List;
@@ -49,13 +49,13 @@ public abstract class ParcelableActivitiesFragment extends AbsActivitiesFragment
     @Override
     public void onStart() {
         super.onStart();
-        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FiretweetApplication.getInstance(getActivity()).getMessageBus();
         bus.register(this);
     }
 
     @Override
     public void onStop() {
-        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FiretweetApplication.getInstance(getActivity()).getMessageBus();
         bus.unregister(this);
         super.onStop();
     }

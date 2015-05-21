@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Twidere - Twitter client for Android
+  ~ Firetweet - Twitter client for Android
   ~
   ~  Copyright (C) 2012-2015 Mariotaku Lee <mariotaku.lee@gmail.com>
   ~
@@ -132,7 +132,7 @@
                 android:layout_marginTop="@dimen/element_spacing_small"
                 android:gravity="center_vertical"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                tools:text="Jan 1 2015 0:00, via Twidere"/>
+                tools:text="Jan 1 2015 0:00, via Firetweet"/>
 
         </LinearLayout>
 
@@ -411,7 +411,7 @@
 
     </LinearLayout>
 
-    <org.getlantern.firetweet.view.TwidereActionMenuView
+    <org.getlantern.firetweet.view.FiretweetActionMenuView
         android:id="@+id/menu_bar"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"

@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -75,7 +75,7 @@ import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.OnLinkClickHandler;
 import org.getlantern.firetweet.util.ParseUtils;
 import org.getlantern.firetweet.util.ThemeUtils;
-import org.getlantern.firetweet.util.TwidereLinkify;
+import org.getlantern.firetweet.util.FiretweetLinkify;
 import org.getlantern.firetweet.util.UserColorNameUtils;
 import org.getlantern.firetweet.util.Utils;
 import org.getlantern.firetweet.view.ColorLabelLinearLayout;
@@ -204,7 +204,7 @@ public class UserListFragment extends BaseSupportFragment implements OnClickList
         final String description = userList.description;
         mDescriptionView.setVisibility(isEmpty(description) ? View.GONE : View.VISIBLE);
         mDescriptionView.setText(description);
-        final TwidereLinkify linkify = new TwidereLinkify(new OnLinkClickHandler(getActivity(),
+        final FiretweetLinkify linkify = new FiretweetLinkify(new OnLinkClickHandler(getActivity(),
                 getMultiSelectManager()));
         linkify.applyAllLinks(mDescriptionView, userList.account_id, false);
         mDescriptionView.setMovementMethod(LinkMovementMethod.getInstance());

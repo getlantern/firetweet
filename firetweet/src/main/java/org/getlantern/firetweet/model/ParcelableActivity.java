@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -21,8 +21,8 @@ package org.getlantern.firetweet.model;
 
 import android.support.annotation.NonNull;
 
-import org.getlantern.jsonserializer.JSONParcel;
-import org.getlantern.jsonserializer.JSONParcelable;
+import org.getlantern.firetweetserializer.JSONParcel;
+import org.getlantern.firetweetserializer.JSONParcelable;
 
 import java.util.Arrays;
 

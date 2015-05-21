@@ -19,7 +19,7 @@ import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.iface.ContentCardClickListener;
 import org.getlantern.firetweet.adapter.iface.IStatusesAdapter;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.model.ParcelableLocation;
 import org.getlantern.firetweet.model.ParcelableMedia;
 import org.getlantern.firetweet.model.ParcelableStatus;
@@ -29,7 +29,7 @@ import org.getlantern.firetweet.util.ImageLoadingHandler;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.SharedPreferencesWrapper;
 import org.getlantern.firetweet.util.SimpleValueSerializer;
-import org.getlantern.firetweet.util.TwidereLinkify;
+import org.getlantern.firetweet.util.FiretweetLinkify;
 import org.getlantern.firetweet.util.TwitterCardUtils;
 import org.getlantern.firetweet.util.UserColorNameUtils;
 import org.getlantern.firetweet.util.Utils;
@@ -118,7 +118,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
         screenNameView.setText("@" + TWIDERE_PREVIEW_SCREEN_NAME);
         if (adapter.getLinkHighlightingStyle() == VALUE_LINK_HIGHLIGHT_OPTION_CODE_NONE) {
             textView.setText(Html.fromHtml(TWIDERE_PREVIEW_TEXT_HTML));
-            adapter.getTwidereLinkify().applyAllLinks(textView, -1, -1, false, adapter.getLinkHighlightingStyle());
+            adapter.getFiretweetLinkify().applyAllLinks(textView, -1, -1, false, adapter.getLinkHighlightingStyle());
         } else {
             textView.setText(toPlainText(TWIDERE_PREVIEW_TEXT_HTML));
         }
@@ -137,7 +137,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
                               final boolean displayInReplyTo, final boolean shouldDisplayExtraType) {
         final MediaLoaderWrapper loader = adapter.getImageLoader();
         final AsyncTwitterWrapper twitter = adapter.getTwitterWrapper();
-        final TwidereLinkify linkify = adapter.getTwidereLinkify();
+        final FiretweetLinkify linkify = adapter.getFiretweetLinkify();
         final Context context = adapter.getContext();
         final boolean nameFirst = adapter.isNameFirst();
 
@@ -309,7 +309,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
                               final boolean displayInReplyTo) {
         final MediaLoaderWrapper loader = adapter.getImageLoader();
         final AsyncTwitterWrapper twitter = adapter.getTwitterWrapper();
-        final TwidereLinkify linkify = adapter.getTwidereLinkify();
+        final FiretweetLinkify linkify = adapter.getFiretweetLinkify();
         final Context context = adapter.getContext();
         final boolean nameFirst = adapter.isNameFirst();
 
@@ -636,7 +636,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
         private final MediaLoaderWrapper loader;
         private final ImageLoadingHandler handler;
         private final AsyncTwitterWrapper twitter;
-        private final TwidereLinkify linkify;
+        private final FiretweetLinkify linkify;
         private int profileImageStyle;
         private int mediaPreviewStyle;
         private int textSize;
@@ -650,11 +650,11 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
         public DummyStatusHolderAdapter(Context context) {
             this.context = context;
             preferences = SharedPreferencesWrapper.getInstance(context, SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-            final FireTweetApplication app = FireTweetApplication.getInstance(context);
+            final FiretweetApplication app = FiretweetApplication.getInstance(context);
             loader = app.getMediaLoaderWrapper();
             handler = new ImageLoadingHandler(R.id.media_preview_progress);
             twitter = app.getTwitterWrapper();
-            linkify = new TwidereLinkify(null);
+            linkify = new FiretweetLinkify(null);
             updateOptions();
         }
 
@@ -734,7 +734,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
         }
 
         @Override
-        public TwidereLinkify getTwidereLinkify() {
+        public FiretweetLinkify getFiretweetLinkify() {
             return linkify;
         }
 

@@ -17,20 +17,20 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.getlantern.firetweet.Twidere;
-import org.getlantern.firetweet.TwidereSharedPreferences;
+import org.getlantern.firetweet.Firetweet;
+import org.getlantern.firetweet.FiretweetSharedPreferences;
 import org.getlantern.firetweet.extension.streaming.util.OkHttpClientFactory;
-import org.getlantern.firetweet.extension.streaming.util.TwidereHostAddressResolverFactory;
+import org.getlantern.firetweet.extension.streaming.util.FiretweetHostAddressResolverFactory;
 import org.getlantern.firetweet.extension.streaming.util.Utils;
 import org.getlantern.firetweet.library.twitter4j.streaming.BuildConfig;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.model.ParcelableAccount.ParcelableCredentials;
-import org.getlantern.firetweet.provider.TwidereDataStore.Accounts;
-import org.getlantern.firetweet.provider.TwidereDataStore.DirectMessages;
-import org.getlantern.firetweet.provider.TwidereDataStore.Mentions;
-import org.getlantern.firetweet.provider.TwidereDataStore.Statuses;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;
+import org.getlantern.firetweet.provider.FiretweetDataStore.DirectMessages;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Mentions;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Statuses;
 import org.getlantern.firetweet.util.ContentValuesCreator;
-import org.getlantern.firetweet.util.TwidereArrayUtils;
+import org.getlantern.firetweet.util.FiretweetArrayUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ public class StreamingService extends Service implements Constants, PrivateConst
 
         @Override
         public void onChange(final boolean selfChange, final Uri uri) {
-            if (!TwidereArrayUtils.contentMatch(mAccountIds, Utils.getActivatedAccountIds(StreamingService.this))) {
+            if (!FiretweetArrayUtils.contentMatch(mAccountIds, Utils.getActivatedAccountIds(StreamingService.this))) {
                 initStreaming();
             }
         }
@@ -125,13 +125,13 @@ public class StreamingService extends Service implements Constants, PrivateConst
         if (!mPreferences.getBoolean(PREFERENCE_KEY_ENABLE_STREAMING, true)) return;
         final boolean granted;
         try {
-            granted = Twidere.isPermissionGranted(this);
+            granted = Firetweet.isPermissionGranted(this);
         } catch (final SecurityException e) {
             stopSelf();
             return;
         }
         if (granted) {
-            final TwidereSharedPreferences prefs = Twidere.getSharedPreferences(this);
+            final FiretweetSharedPreferences prefs = Firetweet.getSharedPreferences(this);
             if (setTwitterInstances(prefs)) {
                 final Intent intent = new Intent(this, SettingsActivity.class);
                 final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent,
@@ -140,7 +140,7 @@ public class StreamingService extends Service implements Constants, PrivateConst
                 final CharSequence contentText = getString(R.string.streaming_service_running);
                 final Notification notification = new Notification();
                 notification.flags = Notification.FLAG_ONGOING_EVENT;
-                notification.icon = R.drawable.ic_stat_twidere;
+                notification.icon = R.drawable.ic_stat_firetweet;
                 notification.tickerText = getString(R.string.streaming_service_running);
                 notification.setLatestEventInfo(this, contentTitle, contentText, contentIntent);
                 mNotificationManager.notify(NOTIFICATION_SERVICE_STARTED, notification);
@@ -162,7 +162,7 @@ public class StreamingService extends Service implements Constants, PrivateConst
         }
     }
 
-    private boolean setTwitterInstances(final TwidereSharedPreferences prefs) {
+    private boolean setTwitterInstances(final FiretweetSharedPreferences prefs) {
         if (prefs == null) return false;
         final List<ParcelableCredentials> accountsList = ParcelableAccount.getCredentialsList(this, true);
         if (BuildConfig.DEBUG) {
@@ -178,12 +178,12 @@ public class StreamingService extends Service implements Constants, PrivateConst
             mAccountIds[i] = account_id;
             final StreamConfigurationBuilder cb = new StreamConfigurationBuilder();
             cb.setHttpClientFactory(new OkHttpClientFactory(this));
-            cb.setHostAddressResolverFactory(new TwidereHostAddressResolverFactory(this));
+            cb.setHostAddressResolverFactory(new FiretweetHostAddressResolverFactory(this));
             cb.setGZIPEnabled(prefs.getBoolean(KEY_GZIP_COMPRESSING, true));
             cb.setIncludeEntitiesEnabled(true);
             if (prefs.getBoolean(KEY_IGNORE_SSL_ERROR, false)) {
                 cb.setIgnoreSSLError(true);
-                cb.setHostAddressResolverFactory(new TwidereHostAddressResolverFactory(this));
+                cb.setHostAddressResolverFactory(new FiretweetHostAddressResolverFactory(this));
             }
             final String default_consumer_key = Utils
                     .getNonEmptyString(prefs, KEY_CONSUMER_KEY, TWITTER_CONSUMER_KEY_2);
@@ -280,7 +280,7 @@ public class StreamingService extends Service implements Constants, PrivateConst
                 final ContentValues values = ContentValuesCreator.createDirectMessage(directMessage,
                         account_id, false);
                 final Uri.Builder builder = DirectMessages.Inbox.CONTENT_URI.buildUpon();
-                builder.appendQueryParameter(Twidere.QUERY_PARAM_NOTIFY, "true");
+                builder.appendQueryParameter(Firetweet.QUERY_PARAM_NOTIFY, "true");
                 if (values != null) {
                     resolver.insert(builder.build(), values);
                 }

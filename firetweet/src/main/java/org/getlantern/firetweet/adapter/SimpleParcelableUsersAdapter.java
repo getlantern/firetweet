@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.iface.IBaseAdapter;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.model.ParcelableUser;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.view.holder.TwoLineWithIconViewHolder;
@@ -48,7 +48,7 @@ public class SimpleParcelableUsersAdapter extends BaseArrayAdapter<ParcelableUse
     public SimpleParcelableUsersAdapter(final Context context, final int layoutRes) {
         super(context, layoutRes);
         mContext = context;
-        final FireTweetApplication app = FireTweetApplication.getInstance(context);
+        final FiretweetApplication app = FiretweetApplication.getInstance(context);
         mImageLoader = app.getMediaLoaderWrapper();
         configBaseAdapter(context, this);
     }

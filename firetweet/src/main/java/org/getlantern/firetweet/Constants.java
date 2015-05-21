@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -30,9 +30,9 @@ import static org.getlantern.firetweet.annotation.Preference.Type.STRING;
  *
  * @author mariotaku
  */
-public interface Constants extends TwidereConstants {
+public interface Constants extends FiretweetConstants {
 
-    String DATABASES_NAME = "twidere.sqlite";
+    String DATABASES_NAME = "firetweet.sqlite";
     int DATABASES_VERSION = 95;
 
     int MENU_GROUP_STATUS_EXTENSION = 10;
@@ -152,7 +152,7 @@ public interface Constants extends TwidereConstants {
 
     String TWIDERE_PREVIEW_NICKNAME = "FireTweet";
     String TWIDERE_PREVIEW_NAME = "FireTweet";
-    String TWIDERE_PREVIEW_SCREEN_NAME = "TwidereProject";
+    String TWIDERE_PREVIEW_SCREEN_NAME = "FiretweetProject";
     String TWIDERE_PREVIEW_TEXT_HTML = "FireTweet is a twitter client for Android";
     String TWIDERE_PREVIEW_SOURCE = "FireTweet for Android";
 

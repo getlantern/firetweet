@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -42,12 +42,12 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.utils.IoUtils;
 import com.twitter.Extractor;
 
-import org.getlantern.querybuilder.Expression;
+import org.mariotaku.querybuilder.Expression;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.MainActivity;
 import org.getlantern.firetweet.activity.MainHondaJOJOActivity;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.model.MediaUploadResult;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.model.ParcelableDirectMessage;
@@ -60,9 +60,9 @@ import org.getlantern.firetweet.model.SingleResponse;
 import org.getlantern.firetweet.model.StatusShortenResult;
 import org.getlantern.firetweet.model.UploaderMediaItem;
 import org.getlantern.firetweet.preference.ServicePickerPreference;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedHashtags;
-import org.getlantern.firetweet.provider.TwidereDataStore.DirectMessages;
-import org.getlantern.firetweet.provider.TwidereDataStore.Drafts;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedHashtags;
+import org.getlantern.firetweet.provider.FiretweetDataStore.DirectMessages;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Drafts;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
 import org.getlantern.firetweet.util.BitmapUtils;
 import org.getlantern.firetweet.util.ContentValuesCreator;
@@ -72,7 +72,7 @@ import org.getlantern.firetweet.util.MessagesManager;
 import org.getlantern.firetweet.util.ParseUtils;
 import org.getlantern.firetweet.util.StatusCodeMessageUtils;
 import org.getlantern.firetweet.util.StatusShortenerInterface;
-import org.getlantern.firetweet.util.TwidereValidator;
+import org.getlantern.firetweet.util.FiretweetValidator;
 import org.getlantern.firetweet.util.Utils;
 import org.getlantern.firetweet.util.io.ContentLengthInputStream;
 import org.getlantern.firetweet.util.io.ContentLengthInputStream.ReadListener;
@@ -104,7 +104,7 @@ import static org.getlantern.firetweet.util.Utils.getTwitterInstance;
 
 public class BackgroundOperationService extends IntentService implements Constants {
 
-    private TwidereValidator mValidator;
+    private FiretweetValidator mValidator;
     private final Extractor extractor = new Extractor();
 
     private Handler mHandler;
@@ -126,10 +126,10 @@ public class BackgroundOperationService extends IntentService implements Constan
     @Override
     public void onCreate() {
         super.onCreate();
-        final FireTweetApplication app = FireTweetApplication.getInstance(this);
+        final FiretweetApplication app = FiretweetApplication.getInstance(this);
         mHandler = new Handler();
         mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
-        mValidator = new TwidereValidator(this);
+        mValidator = new FiretweetValidator(this);
         mResolver = getContentResolver();
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mTwitter = app.getTwitterWrapper();

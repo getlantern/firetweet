@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -21,7 +21,7 @@ package org.getlantern.firetweet.model;
 
 import android.support.v4.app.Fragment;
 
-import org.getlantern.firetweet.TwidereConstants;
+import org.getlantern.firetweet.FiretweetConstants;
 
 import java.util.Comparator;
 import java.util.Map.Entry;
@@ -46,14 +46,14 @@ public final class CustomTabConfiguration {
 	public CustomTabConfiguration(final Class<? extends Fragment> cls, final int title, final int icon,
 			final int accountRequirement, final int secondaryFieldType, final int sortPosition,
 			final boolean singleTab, final ExtraConfiguration... extraConfigurations) {
-		this(cls, title, icon, accountRequirement, secondaryFieldType, 0, TwidereConstants.EXTRA_TEXT, sortPosition,
+		this(cls, title, icon, accountRequirement, secondaryFieldType, 0, FiretweetConstants.EXTRA_TEXT, sortPosition,
 				singleTab, extraConfigurations);
 	}
 
 	public CustomTabConfiguration(final Class<? extends Fragment> cls, final int title, final int icon,
 			final int accountRequirement, final int secondaryFieldType, final int sortPosition,
 			final ExtraConfiguration... extraConfigurations) {
-		this(cls, title, icon, accountRequirement, secondaryFieldType, 0, TwidereConstants.EXTRA_TEXT, sortPosition,
+		this(cls, title, icon, accountRequirement, secondaryFieldType, 0, FiretweetConstants.EXTRA_TEXT, sortPosition,
 				false, extraConfigurations);
 	}
 

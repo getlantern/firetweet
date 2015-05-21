@@ -132,7 +132,7 @@
   <string name="created_at">Gemaakt op</string>
   <string name="search_hint">Zoek tweets of gebruikers</string>
   <string name="remember_position">Onthoud positie</string>
-  <string name="remember_position_summary">Onthoud lijst of tab positie voor afsluiten Twidere</string>
+  <string name="remember_position_summary">Onthoud lijst of tab positie voor afsluiten Firetweet</string>
   <string name="user_blocked">Deze gebruiker is geblokkeerd.</string>
   <string name="users_blocked">Geblokkeerde gebruikers.</string>
   <string name="user_unblocked">Deze gebruiker is gedeblokkeerd.</string>
@@ -325,7 +325,7 @@
   <string name="silent_notifications">Stille notificaties</string>
   <string name="silent_notifications_summary">Schakel beltoon/vibratie uit voor meldingen</string>
   <string name="disable_background_service">Schakel achtergrond service uit</string>
-  <string name="disable_background_service_summary">Twidere heeft geen service op de achtergrond als je de automatisch vernieuwen en data profilering uitschakelt, doe niet zo gek!</string>
+  <string name="disable_background_service_summary">Firetweet heeft geen service op de achtergrond als je de automatisch vernieuwen en data profilering uitschakelt, doe niet zo gek!</string>
   <string name="text_copied">Tekst gekopieerd naar plakbord.</string>
   <string name="hashtag">Hashtag</string>
   <string name="links">Links</string>
@@ -364,7 +364,7 @@
   <string name="preload_wifi_only">Preload alleen via Wi-Fi</string>
   <string name="disable_tab_swipe">Schakel schuiven tussen tabbladen uit</string>
   <string name="sign_in_method_introduction_title">Hoe werkt het?</string>
-  <string name="sign_in_method_introduction">De meeste cliënten zoals twicca openen een browser en vragen je je gebruikersnaam en wachtwoord te typen, en daarna brengen ze je terug naar hun cliënten. Soms kan dit erg lastig worden.\n\nTwidere gebruikt gemakkelijkere stappen om in te loggen, zonder de browser te openen. Maak je geen zorgen over je wachtwoord, Twidere zal het nooit opslaan, het is geheel veilig!</string>
+  <string name="sign_in_method_introduction">De meeste cliënten zoals twicca openen een browser en vragen je je gebruikersnaam en wachtwoord te typen, en daarna brengen ze je terug naar hun cliënten. Soms kan dit erg lastig worden.\n\nFiretweet gebruikt gemakkelijkere stappen om in te loggen, zonder de browser te openen. Maak je geen zorgen over je wachtwoord, Firetweet zal het nooit opslaan, het is geheel veilig!</string>
   <string name="quote_protected_status_notice">Het is niet aangeraden om beschermde tweets te citeren.</string>
   <string name="edit_draft">Wijzig concept</string>
   <string name="profile_image">Profielfoto</string>
@@ -433,7 +433,7 @@
   <string name="created_by">Gemaakt door <xliff:g id="created_by">%s</xliff:g></string>
   <string name="add_to_list">Toevoegen aan lijst</string>
   <string name="account_delete_confirm_title">Verwijder account</string>
-  <string name="account_delete_confirm_message">Dit account zal worden verwijderd van Twidere.</string>
+  <string name="account_delete_confirm_message">Dit account zal worden verwijderd van Firetweet.</string>
   <string name="theme">Thema</string>
   <string name="theme_dark">Donker</string>
   <string name="theme_light">Licht</string>
@@ -460,19 +460,19 @@
   <string name="next">Volgende</string>
   <string name="settings_wizard">Instellingen tovenaar</string>
   <string name="wizard_page_welcome_title">Welkom</string>
-  <string name="wizard_page_welcome_text">Bedankt voor het kiezen van Twidere!\nWil je het nu configureren?</string>
+  <string name="wizard_page_welcome_text">Bedankt voor het kiezen van Firetweet!\nWil je het nu configureren?</string>
   <string name="wizard_page_welcome_yes">Ja</string>
   <string name="wizard_page_welcome_not_now">Niet nu</string>
   <string name="wizard_page_welcome_import_settings">Importeer instellingen</string>
   <string name="wizard_page_theme_text">Kies een thema dat je leuk vind.</string>
-  <string name="wizard_page_tabs_text">Voeg een paar tabbladen toe aan Twidere.\nHoud belangrijke mensen en dingen bij.</string>
+  <string name="wizard_page_tabs_text">Voeg een paar tabbladen toe aan Firetweet.\nHoud belangrijke mensen en dingen bij.</string>
   <string name="wizard_page_tabs_unchanged_message">Je kan tabbladen toevoegen in \'\'Instellingen\'\' - \'\'Tabbladen\'\'</string>
   <string name="wizard_page_cards_text">Configureer kaart items.</string>
   <string name="wizard_page_hints_text">Hier zijn een paar handige hints.</string>
   <string name="wizard_page_finished_title">Voltooid</string>
-  <string name="wizard_page_finished_text">Nu is Twidere klaar voor gebruik.</string>
+  <string name="wizard_page_finished_text">Nu is Firetweet klaar voor gebruik.</string>
   <string name="invalid_tab">Ongeldig tabblad</string>
-  <string name="send_crash_report">Stuur crash rapport van Twidere</string>
+  <string name="send_crash_report">Stuur crash rapport van Firetweet</string>
   <string name="add_to_filter">Voeg toe aan filter</string>
   <string name="user_filter_name">Gebruiker:<xliff:g id="name">%s</xliff:g></string>
   <string name="keyword_filter_name">Trefwoord:<xliff:g id="name">%s</xliff:g></string>
@@ -492,7 +492,7 @@
   <string name="signing_in_error_browser_sign_in_hint">Fout bij het ​​aanmelden, misschien moet je de browser inlog methode gebruiken. (Dit zal aangepaste API instellingen negeren tijdens aanmelden)</string>
   <string name="report_user">Rapporteer <xliff:g id="name">%s</xliff:g></string>
   <string name="report_user_confirm_message">Rapporteer <xliff:g id="name">%s</xliff:g> voor spam? Je zult deze gebruiker ook blokkeren.</string>
-  <string name="twidere_test">Twidere test</string>
+  <string name="firetweet_test">Firetweet test</string>
   <string name="staggered_home_timeline">Gespreide Thuis Tijdlijn</string>
   <string name="unread_count">Aantal ongelezen</string>
   <string name="developed_by">Ontworpen door</string>
@@ -523,11 +523,11 @@
   <string name="view_replies">Bekijk Reacties</string>
   <string name="compact_cards">Compacte kaarten</string>
   <string name="compact_cards_summary">Toon meer kaarten op het scherm</string>
-  <string name="dashclock_home_unread_count_name">Twidere aantal ongelezen tijdlijn tweets</string>
+  <string name="dashclock_home_unread_count_name">Firetweet aantal ongelezen tijdlijn tweets</string>
   <string name="dashclock_home_unread_count_description">Aantal ongelezen tijdlijn tweets</string>
-  <string name="dashclock_mentions_unread_count_name">Twidere aantal ongelezen vermeldingen</string>
+  <string name="dashclock_mentions_unread_count_name">Firetweet aantal ongelezen vermeldingen</string>
   <string name="dashclock_mentions_unread_count_description">Aantal ongelezen vermeldingen</string>
-  <string name="dashclock_messages_unread_count_name">Twidere aantal ongelezen berichten</string>
+  <string name="dashclock_messages_unread_count_name">Firetweet aantal ongelezen berichten</string>
   <string name="dashclock_messages_unread_count_description">Aantal ongelezen berichten</string>
   <string name="N_new_statuses_quantity_one"><xliff:g id="items">%d</xliff:g> nieuwe tweet</string>
   <string name="N_new_statuses_quantity_other"><xliff:g id="items">%d</xliff:g> nieuwe tweets</string>

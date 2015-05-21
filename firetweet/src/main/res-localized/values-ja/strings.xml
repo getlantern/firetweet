@@ -42,7 +42,7 @@
   <string name="select_account">アカウントを選択</string>
   <string name="username">ユーザー名かメールアドレス</string>
   <string name="password">パスワード</string>
-  <string name="label_tweetstore_provider">Twidereのデータベースストレージ</string>
+  <string name="label_tweetstore_provider">Firetweetのデータベースストレージ</string>
   <string name="label_refresh_service">サービスをリフレッシュ</string>
   <string name="label_background_operation_service">バックグラウンド操作サービス</string>
   <string name="open_in_browser">ブラウザで開く</string>
@@ -139,7 +139,7 @@
   <string name="created_at">作成日</string>
   <string name="search_hint">ツイートかユーザーの検索</string>
   <string name="remember_position">位置を記憶</string>
-  <string name="remember_position_summary">Twidereを閉じる時にリスト/タブの位置を記憶します。</string>
+  <string name="remember_position_summary">Firetweetを閉じる時にリスト/タブの位置を記憶します。</string>
   <string name="user_blocked">このユーザーをブロックしました。</string>
   <string name="users_blocked">選択したユーザーをブロックしました。</string>
   <string name="user_unblocked">このユーザーのブロックを解除しました。</string>
@@ -335,7 +335,7 @@
   <string name="silent_notifications">通知を止める時間帯</string>
   <string name="silent_notifications_summary">着信音/バイブ通知を無効にします。</string>
   <string name="disable_background_service">バックグラウンドサービスを無効にする</string>
-  <string name="disable_background_service_summary">Twidereは自動更新と匿名データ送信を無効にすれば裏で動きません!</string>
+  <string name="disable_background_service_summary">Firetweetは自動更新と匿名データ送信を無効にすれば裏で動きません!</string>
   <string name="text_copied">テキストがクリップボードにコピーされました。</string>
   <string name="hashtag">ハッシュタグ</string>
   <string name="links">リンク</string>
@@ -374,7 +374,7 @@
   <string name="preload_wifi_only">Wi-Fi接続時のみ先読み</string>
   <string name="disable_tab_swipe">タブのスワイプ操作を無効化</string>
   <string name="sign_in_method_introduction_title">どんなふうに動作するの?</string>
-  <string name="sign_in_method_introduction">ほとんどのクライアントではブラウザを開いてユーザー名とパスワードを入力させた後クライアントに戻ります。\n\nTTwidereではそんな面倒なことをせずにログインできます。パスワードの保管などはしていないのでご安心ください。</string>
+  <string name="sign_in_method_introduction">ほとんどのクライアントではブラウザを開いてユーザー名とパスワードを入力させた後クライアントに戻ります。\n\nTFiretweetではそんな面倒なことをせずにログインできます。パスワードの保管などはしていないのでご安心ください。</string>
   <string name="quote_protected_status_notice">非公開ツイートを引用するのはおすすめできません。</string>
   <string name="edit_draft">下書きを編集</string>
   <string name="profile_image">プロフィール画像</string>
@@ -444,7 +444,7 @@
   <string name="created_by"><xliff:g id="created_by">%s</xliff:g>により作成</string>
   <string name="add_to_list">リストに追加</string>
   <string name="account_delete_confirm_title">サインアウト</string>
-  <string name="account_delete_confirm_message">Twidereからアカウントを削除します。</string>
+  <string name="account_delete_confirm_message">Firetweetからアカウントを削除します。</string>
   <string name="theme">テーマ</string>
   <string name="theme_dark">ダーク</string>
   <string name="theme_light">ライト</string>
@@ -471,7 +471,7 @@
   <string name="next">次へ</string>
   <string name="settings_wizard">設定ウィザード</string>
   <string name="wizard_page_welcome_title">ようこそ</string>
-  <string name="wizard_page_welcome_text">Twidereを選んで頂きありがとうございます。\n初期設定をしますか?</string>
+  <string name="wizard_page_welcome_text">Firetweetを選んで頂きありがとうございます。\n初期設定をしますか?</string>
   <string name="wizard_page_welcome_yes">はい</string>
   <string name="wizard_page_welcome_not_now">今はしない</string>
   <string name="wizard_page_welcome_import_settings">設定をインポート</string>
@@ -481,9 +481,9 @@
   <string name="wizard_page_cards_text">カードアイテムを編集します。</string>
   <string name="wizard_page_hints_text">お役立ちヒント!</string>
   <string name="wizard_page_finished_title">完了</string>
-  <string name="wizard_page_finished_text">Twidereを使う準備ができました。</string>
+  <string name="wizard_page_finished_text">Firetweetを使う準備ができました。</string>
   <string name="invalid_tab">不正なタブです</string>
-  <string name="send_crash_report">Twidereのクラッシュレポートを送信</string>
+  <string name="send_crash_report">Firetweetのクラッシュレポートを送信</string>
   <string name="add_to_filter">フィルタに追加</string>
   <string name="user_filter_name">ユーザー: <xliff:g id="name">%s</xliff:g></string>
   <string name="keyword_filter_name">キーワード: <xliff:g id="name">%s</xliff:g></string>
@@ -503,7 +503,7 @@
   <string name="signing_in_error_browser_sign_in_hint">ログインエラー、ブラウザでログインする方法を試してみてください。(カスタムAPI設定は無視されます)</string>
   <string name="report_user"><xliff:g id="name">%s</xliff:g>をスパム報告する</string>
   <string name="report_user_confirm_message"><xliff:g id="name">%s</xliff:g>をスパム報告しますか? 同時にブロックもします。</string>
-  <string name="twidere_test">Twidereテスト</string>
+  <string name="firetweet_test">Firetweetテスト</string>
   <string name="staggered_home_timeline">二列ホームTL</string>
   <string name="unread_count">未読数の表示</string>
   <string name="developed_by">開発者</string>
@@ -535,11 +535,11 @@
   <string name="view_replies">返信を表示</string>
   <string name="compact_cards">カードのコンパクト化</string>
   <string name="compact_cards_summary">画面あたりのカード表示数を増やせます。</string>
-  <string name="dashclock_home_unread_count_name">Twidere ホームTL未読数表示</string>
+  <string name="dashclock_home_unread_count_name">Firetweet ホームTL未読数表示</string>
   <string name="dashclock_home_unread_count_description">ホームTLの未読数を表示</string>
-  <string name="dashclock_mentions_unread_count_name">Twidere @ツイート未読数表示</string>
+  <string name="dashclock_mentions_unread_count_name">Firetweet @ツイート未読数表示</string>
   <string name="dashclock_mentions_unread_count_description">自分宛の未読@ツイート数を表示</string>
-  <string name="dashclock_messages_unread_count_name">Twidere DM未読数表示</string>
+  <string name="dashclock_messages_unread_count_name">Firetweet DM未読数表示</string>
   <string name="dashclock_messages_unread_count_description">未読DM数を表示</string>
   <string name="N_new_statuses_quantity_one"><xliff:g id="items">%d</xliff:g>件の未読ツイート</string>
   <string name="N_new_statuses_quantity_other"><xliff:g id="items">%d</xliff:g>件の未読ツイート</string>

@@ -1,5 +1,5 @@
 /*
- * Twidere - Twitter client for Android
+ * Firetweet - Twitter client for Android
  *
  *  Copyright (C) 2012-2015 Mariotaku Lee <mariotaku.lee@gmail.com>
  *
@@ -21,9 +21,9 @@ package org.getlantern.firetweet.model;
 
 import android.content.Intent;
 
-import org.getlantern.firetweet.TwidereConstants;
+import org.getlantern.firetweet.FiretweetConstants;
 
-public class ComposingStatus implements TwidereConstants {
+public class ComposingStatus implements FiretweetConstants {
 
     public final String text, name, screen_name, in_reply_to_screen_name, in_reply_to_name;
     public final long in_reply_to_id;

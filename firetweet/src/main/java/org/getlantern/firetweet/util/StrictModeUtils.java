@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -28,7 +28,7 @@ import java.util.Locale;
 
 public class StrictModeUtils {
 
-	public static final String LOGTAG = "Twidere.StrictMode";
+	public static final String LOGTAG = "Firetweet.StrictMode";
 	public static final String CLASS_NAME = StrictModeUtils.class.getName();
 
 	public static void checkDiskIO() {

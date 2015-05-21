@@ -1,5 +1,5 @@
 /*
- * Twidere - Twitter client for Android
+ * Firetweet - Twitter client for Android
  *
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  *
@@ -21,7 +21,7 @@ package org.getlantern.firetweet.fragment.support;
 
 import android.net.Uri;
 
-import org.getlantern.firetweet.provider.TwidereDataStore.Statuses;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Statuses;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
 
 /**

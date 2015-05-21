@@ -1,6 +1,6 @@
 package org.getlantern.firetweet.extension.twitlonger;
 
-import org.getlantern.firetweet.Twidere;
+import org.getlantern.firetweet.Firetweet;
 import org.getlantern.firetweet.extension.twitlonger.TwitLonger.TwitLongerException;
 import org.getlantern.firetweet.extension.twitlonger.TwitLonger.TwitLongerResponse;
 import org.getlantern.firetweet.model.ComposingStatus;
@@ -37,7 +37,7 @@ public class TwitLongerPostActivity extends Activity implements Constants, OnCli
 					mTwitLongerPostTask = new TwitLongerPostTask();
 					mTwitLongerPostTask.execute();
 				} else {
-					Twidere.replaceComposeActivityText(this, mResult);
+					Firetweet.replaceComposeActivityText(this, mResult);
 				}
 				break;
 			}
@@ -52,7 +52,7 @@ public class TwitLongerPostActivity extends Activity implements Constants, OnCli
 		mPreview = (TextView) findViewById(R.id.text);
 		mActionButton = (ImageButton) findViewById(R.id.action);
 		mProgress = (ProgressBar) findViewById(R.id.progress);
-		mStatus = Twidere.getComposingStatusFromIntent(getIntent());
+		mStatus = Firetweet.getComposingStatusFromIntent(getIntent());
 		if (mStatus == null) {
 			finish();
 			return;

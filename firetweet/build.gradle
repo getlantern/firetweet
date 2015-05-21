@@ -76,7 +76,7 @@ configurations.all {
 }
 
 dependencies {
-//    wearApp project(':twidere.wear')
+//    wearApp project(':firetweet.wear')
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:support-v13:22.0.0'
     compile 'com.android.support:appcompat-v7:22.0.0'

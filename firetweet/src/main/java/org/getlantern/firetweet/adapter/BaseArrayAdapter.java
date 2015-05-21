@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -24,17 +24,17 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
 import org.getlantern.firetweet.adapter.iface.IBaseAdapter;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.OnLinkClickHandler;
-import org.getlantern.firetweet.util.TwidereLinkify;
+import org.getlantern.firetweet.util.FiretweetLinkify;
 import org.getlantern.firetweet.util.Utils;
 
 import java.util.Collection;
 
 public class BaseArrayAdapter<T> extends ArrayAdapter<T> implements IBaseAdapter, OnSharedPreferenceChangeListener {
 
-    private final TwidereLinkify mLinkify;
+    private final FiretweetLinkify mLinkify;
 
     private float mTextSize;
     private int mLinkHighlightOption;
@@ -50,8 +50,8 @@ public class BaseArrayAdapter<T> extends ArrayAdapter<T> implements IBaseAdapter
 
     public BaseArrayAdapter(final Context context, final int layoutRes, final Collection<? extends T> collection) {
         super(context, layoutRes, collection);
-        final FireTweetApplication app = FireTweetApplication.getInstance(context);
-        mLinkify = new TwidereLinkify(new OnLinkClickHandler(context, app.getMultiSelectManager()));
+        final FiretweetApplication app = FiretweetApplication.getInstance(context);
+        mLinkify = new FiretweetLinkify(new OnLinkClickHandler(context, app.getMultiSelectManager()));
         mImageLoader = app.getMediaLoaderWrapper();
         mNicknamePrefs = context.getSharedPreferences(USER_NICKNAME_PREFERENCES_NAME, Context.MODE_PRIVATE);
         mColorPrefs = context.getSharedPreferences(USER_COLOR_PREFERENCES_NAME, Context.MODE_PRIVATE);
@@ -69,7 +69,7 @@ public class BaseArrayAdapter<T> extends ArrayAdapter<T> implements IBaseAdapter
         return mLinkHighlightOption;
     }
 
-    public final TwidereLinkify getLinkify() {
+    public final FiretweetLinkify getLinkify() {
         return mLinkify;
     }
 

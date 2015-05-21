@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -67,10 +67,10 @@ import android.widget.TextView.OnEditorActionListener;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
-import org.getlantern.querybuilder.Columns.Column;
-import org.getlantern.querybuilder.Expression;
-import org.getlantern.querybuilder.OrderBy;
-import org.getlantern.querybuilder.RawItemArray;
+import org.mariotaku.querybuilder.Columns.Column;
+import org.mariotaku.querybuilder.Expression;
+import org.mariotaku.querybuilder.OrderBy;
+import org.mariotaku.querybuilder.RawItemArray;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.support.BaseActionBarActivity;
 import org.getlantern.firetweet.activity.support.ImagePickerActivity;
@@ -78,23 +78,23 @@ import org.getlantern.firetweet.adapter.AccountsSpinnerAdapter;
 import org.getlantern.firetweet.adapter.MessageConversationAdapter;
 import org.getlantern.firetweet.adapter.SimpleParcelableUsersAdapter;
 import org.getlantern.firetweet.adapter.iface.IBaseCardAdapter.MenuButtonClickListener;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.loader.support.UserSearchLoader;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.model.ParcelableDirectMessage;
 import org.getlantern.firetweet.model.ParcelableUser;
 import org.getlantern.firetweet.model.ParcelableUser.CachedIndices;
-import org.getlantern.firetweet.provider.TwidereDataStore;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedUsers;
-import org.getlantern.firetweet.provider.TwidereDataStore.DirectMessages;
-import org.getlantern.firetweet.provider.TwidereDataStore.DirectMessages.Conversation;
-import org.getlantern.firetweet.provider.TwidereDataStore.DirectMessages.ConversationEntries;
+import org.getlantern.firetweet.provider.FiretweetDataStore;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedUsers;
+import org.getlantern.firetweet.provider.FiretweetDataStore.DirectMessages;
+import org.getlantern.firetweet.provider.FiretweetDataStore.DirectMessages.Conversation;
+import org.getlantern.firetweet.provider.FiretweetDataStore.DirectMessages.ConversationEntries;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
 import org.getlantern.firetweet.util.ClipboardUtils;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.ParseUtils;
 import org.getlantern.firetweet.util.ReadStateManager;
-import org.getlantern.firetweet.util.TwidereValidator;
+import org.getlantern.firetweet.util.FiretweetValidator;
 import org.getlantern.firetweet.util.UserColorNameUtils;
 import org.getlantern.firetweet.util.Utils;
 import org.getlantern.firetweet.util.message.TaskStateChangedEvent;
@@ -119,7 +119,7 @@ public class MessagesConversationFragment extends BaseSupportFragment implements
 
     private static final String EXTRA_FROM_CACHE = "from_cache";
 
-    private TwidereValidator mValidator;
+    private FiretweetValidator mValidator;
     private AsyncTwitterWrapper mTwitterWrapper;
     private SharedPreferences mPreferences;
     private SharedPreferences mMessageDrafts;
@@ -205,10 +205,10 @@ public class MessagesConversationFragment extends BaseSupportFragment implements
         final BaseActionBarActivity activity = (BaseActionBarActivity) getActivity();
         mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         mMessageDrafts = getSharedPreferences(MESSAGE_DRAFTS_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        mImageLoader = FireTweetApplication.getInstance(activity).getMediaLoaderWrapper();
+        mImageLoader = FiretweetApplication.getInstance(activity).getMediaLoaderWrapper();
         mReadStateManager = getReadStateManager();
         mTwitterWrapper = getTwitterWrapper();
-        mValidator = new TwidereValidator(activity);
+        mValidator = new FiretweetValidator(activity);
 
         final View view = getView();
         if (view == null) throw new AssertionError();
@@ -427,7 +427,7 @@ public class MessagesConversationFragment extends BaseSupportFragment implements
         mConversationContainer.setVisibility(isValid ? View.VISIBLE : View.GONE);
         mRecipientSelectorContainer.setVisibility(isValid ? View.GONE : View.VISIBLE);
         if (!isValid)
-            return new CursorLoader(getActivity(), TwidereDataStore.CONTENT_URI_NULL, cols, null, null, null);
+            return new CursorLoader(getActivity(), FiretweetDataStore.CONTENT_URI_NULL, cols, null, null, null);
         final Uri uri = buildDirectMessageConversationUri(accountId, recipientId, null);
         return new CursorLoader(getActivity(), uri, cols, null, null, Conversation.DEFAULT_SORT_ORDER);
     }
@@ -510,7 +510,7 @@ public class MessagesConversationFragment extends BaseSupportFragment implements
 
 //    @Override
 //    public void onRefreshFromEnd() {
-//        new TwidereAsyncTask<Object, Object, long[][]>() {
+//        new FiretweetAsyncTask<Object, Object, long[][]>() {
 //
 //            @Override
 //            protected long[][] doInBackground(final Object... params) {
@@ -561,7 +561,7 @@ public class MessagesConversationFragment extends BaseSupportFragment implements
     @Override
     public void onStart() {
         super.onStart();
-        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FiretweetApplication.getInstance(getActivity()).getMessageBus();
         bus.register(this);
         updateTextCount();
         updateEmptyText();
@@ -569,7 +569,7 @@ public class MessagesConversationFragment extends BaseSupportFragment implements
 
     @Override
     public void onStop() {
-        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FiretweetApplication.getInstance(getActivity()).getMessageBus();
         bus.unregister(this);
         if (mPopupMenu != null) {
             mPopupMenu.dismiss();
@@ -677,7 +677,7 @@ public class MessagesConversationFragment extends BaseSupportFragment implements
 
 //    private void loadMoreMessages() {
 //        if (isRefreshing()) return;
-//        new TwidereAsyncTask<Object, Object, long[][]>() {
+//        new FiretweetAsyncTask<Object, Object, long[][]>() {
 //
 //            @Override
 //            protected long[][] doInBackground(final Object... params) {
@@ -794,7 +794,7 @@ public class MessagesConversationFragment extends BaseSupportFragment implements
 
         public SetReadStateTask(Context context, ParcelableAccount account, ParcelableUser recipient) {
             mContext = context;
-            mReadStateManager = FireTweetApplication.getInstance(context).getReadStateManager();
+            mReadStateManager = FiretweetApplication.getInstance(context).getReadStateManager();
             mAccount = account;
             mRecipient = recipient;
         }

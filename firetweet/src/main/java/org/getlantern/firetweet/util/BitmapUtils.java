@@ -28,7 +28,7 @@ import android.graphics.RectF;
 
 import com.nostra13.universalimageloader.utils.IoUtils;
 
-import org.getlantern.firetweet.TwidereConstants;
+import org.getlantern.firetweet.FiretweetConstants;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -61,10 +61,10 @@ public class BitmapUtils {
         // Corrupted image, so return now.
         if (o.outWidth <= 0 || o.outHeight <= 0) return false;
         o.inJustDecodeBounds = false;
-        if (o.outWidth > TwidereConstants.TWITTER_MAX_IMAGE_WIDTH || o.outHeight > TwidereConstants.TWITTER_MAX_IMAGE_HEIGHT) {
+        if (o.outWidth > FiretweetConstants.TWITTER_MAX_IMAGE_WIDTH || o.outHeight > FiretweetConstants.TWITTER_MAX_IMAGE_HEIGHT) {
             // The image dimension is larger than Twitter's limit.
-            o.inSampleSize = Utils.calculateInSampleSize(o.outWidth, o.outHeight, TwidereConstants.TWITTER_MAX_IMAGE_WIDTH,
-                    TwidereConstants.TWITTER_MAX_IMAGE_HEIGHT);
+            o.inSampleSize = Utils.calculateInSampleSize(o.outWidth, o.outHeight, FiretweetConstants.TWITTER_MAX_IMAGE_WIDTH,
+                    FiretweetConstants.TWITTER_MAX_IMAGE_HEIGHT);
             FileOutputStream fos = null;
             try {
                 final Bitmap b = BitmapDecodeHelper.decode(path, o);
@@ -81,7 +81,7 @@ public class BitmapUtils {
             } finally {
                 IoUtils.closeSilently(fos);
             }
-        } else if (imageFile.length() > TwidereConstants.TWITTER_MAX_IMAGE_SIZE) {
+        } else if (imageFile.length() > FiretweetConstants.TWITTER_MAX_IMAGE_SIZE) {
             // The file size is larger than Twitter's limit.
             FileOutputStream fos = null;
             try {

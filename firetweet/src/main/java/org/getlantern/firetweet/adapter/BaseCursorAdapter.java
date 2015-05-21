@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -26,15 +26,15 @@ import android.database.Cursor;
 import android.support.v4.widget.SimpleCursorAdapter;
 
 import org.getlantern.firetweet.adapter.iface.IBaseAdapter;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.OnLinkClickHandler;
-import org.getlantern.firetweet.util.TwidereLinkify;
+import org.getlantern.firetweet.util.FiretweetLinkify;
 import org.getlantern.firetweet.util.Utils;
 
 public class BaseCursorAdapter extends SimpleCursorAdapter implements IBaseAdapter, OnSharedPreferenceChangeListener {
 
-    private final TwidereLinkify mLinkify;
+    private final FiretweetLinkify mLinkify;
 
     private float mTextSize;
 
@@ -53,8 +53,8 @@ public class BaseCursorAdapter extends SimpleCursorAdapter implements IBaseAdapt
     public BaseCursorAdapter(final Context context, final int layout, final Cursor c, final String[] from,
                              final int[] to, final int flags) {
         super(context, layout, c, from, to, flags);
-        final FireTweetApplication app = FireTweetApplication.getInstance(context);
-        mLinkify = new TwidereLinkify(new OnLinkClickHandler(context, app.getMultiSelectManager()));
+        final FiretweetApplication app = FiretweetApplication.getInstance(context);
+        mLinkify = new FiretweetLinkify(new OnLinkClickHandler(context, app.getMultiSelectManager()));
         mImageLoader = app.getMediaLoaderWrapper();
         mNicknamePrefs = context.getSharedPreferences(USER_NICKNAME_PREFERENCES_NAME, Context.MODE_PRIVATE);
         mColorPrefs = context.getSharedPreferences(USER_COLOR_PREFERENCES_NAME, Context.MODE_PRIVATE);
@@ -72,7 +72,7 @@ public class BaseCursorAdapter extends SimpleCursorAdapter implements IBaseAdapt
         return mLinkHighlightOption;
     }
 
-    public final TwidereLinkify getLinkify() {
+    public final FiretweetLinkify getLinkify() {
         return mLinkify;
     }
 

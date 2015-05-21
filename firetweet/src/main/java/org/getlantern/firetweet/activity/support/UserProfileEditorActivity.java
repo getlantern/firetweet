@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -40,7 +40,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.getlantern.firetweet.R;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.support.SupportProgressDialogFragment;
 import org.getlantern.firetweet.loader.support.ParcelableUserLoader;
 import org.getlantern.firetweet.model.ParcelableUser;
@@ -130,8 +130,8 @@ public class UserProfileEditorActivity extends BaseActionBarActivity implements 
             finish();
             return;
         }
-        mAsyncTaskManager = FireTweetApplication.getInstance(this).getAsyncTaskManager();
-        mLazyImageLoader = FireTweetApplication.getInstance(this).getMediaLoaderWrapper();
+        mAsyncTaskManager = FiretweetApplication.getInstance(this).getAsyncTaskManager();
+        mLazyImageLoader = FiretweetApplication.getInstance(this).getMediaLoaderWrapper();
         mAccountId = accountId;
 
 

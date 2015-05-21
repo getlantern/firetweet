@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -26,8 +26,8 @@ import android.text.TextUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.getlantern.firetweet.provider.TwidereDataStore.Drafts;
-import org.getlantern.firetweet.util.TwidereArrayUtils;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Drafts;
+import org.getlantern.firetweet.util.FiretweetArrayUtils;
 
 public class DraftItem implements Parcelable {
 
@@ -56,7 +56,7 @@ public class DraftItem implements Parcelable {
         _id = cursor.getLong(indices._id);
         text = cursor.getString(indices.text);
         media = ParcelableMediaUpdate.fromJSONString(cursor.getString(indices.media));
-        account_ids = TwidereArrayUtils.parseLongArray(cursor.getString(indices.account_ids), ',');
+        account_ids = FiretweetArrayUtils.parseLongArray(cursor.getString(indices.account_ids), ',');
         in_reply_to_status_id = cursor.getLong(indices.in_reply_to_status_id);
         is_possibly_sensitive = cursor.getShort(indices.is_possibly_sensitive) == 1;
         location = new ParcelableLocation(cursor.getString(indices.location));

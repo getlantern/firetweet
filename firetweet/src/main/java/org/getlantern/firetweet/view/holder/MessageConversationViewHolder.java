@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -36,7 +36,7 @@ import org.getlantern.firetweet.model.ParcelableMedia;
 import org.getlantern.firetweet.util.ColorUtils;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.SimpleValueSerializer;
-import org.getlantern.firetweet.util.TwidereLinkify;
+import org.getlantern.firetweet.util.FiretweetLinkify;
 import org.getlantern.firetweet.util.Utils;
 import org.getlantern.firetweet.util.Utils.OnMediaClickListener;
 import org.getlantern.firetweet.view.CardMediaContainer;
@@ -73,7 +73,7 @@ public class MessageConversationViewHolder extends ViewHolder implements OnMedia
 
     public void displayMessage(Cursor cursor, CursorIndices indices) {
         final Context context = adapter.getContext();
-        final TwidereLinkify linkify = adapter.getLinkify();
+        final FiretweetLinkify linkify = adapter.getLinkify();
         final MediaLoaderWrapper loader = adapter.getImageLoader();
 
         final long accountId = cursor.getLong(indices.account_id);

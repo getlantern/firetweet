@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -78,6 +78,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.getlantern.firetweet.R;
+import org.getlantern.firetweet.activity.FiltersActivity;
 import org.getlantern.firetweet.activity.SettingsActivity;
 import org.getlantern.firetweet.activity.iface.IThemedActivity;
 import org.getlantern.firetweet.activity.support.AccountsManagerActivity;
@@ -88,10 +89,10 @@ import org.getlantern.firetweet.activity.support.HomeActivity;
 import org.getlantern.firetweet.activity.support.QuickSearchBarActivity;
 import org.getlantern.firetweet.activity.support.UserProfileEditorActivity;
 import org.getlantern.firetweet.adapter.ArrayAdapter;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.menu.SupportAccountActionProvider;
 import org.getlantern.firetweet.model.ParcelableAccount;
-import org.getlantern.firetweet.provider.TwidereDataStore.Accounts;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;
 import org.getlantern.firetweet.util.CompareUtils;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.ThemeUtils;
@@ -103,6 +104,7 @@ import org.getlantern.firetweet.view.ShapedImageView;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
+import org.getlantern.firetweet.model.Lantern;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -375,7 +377,7 @@ public class AccountsDashboardFragment extends BaseSupportListFragment implement
         final View view = getView();
         if (view == null) throw new AssertionError();
         final Context context = view.getContext();
-        mImageLoader = FireTweetApplication.getInstance(context).getMediaLoaderWrapper();
+        mImageLoader = FiretweetApplication.getInstance(context).getMediaLoaderWrapper();
         final LayoutInflater inflater = LayoutInflater.from(context);
         final ListView listView = getListView();
         mAdapter = new MergeAdapter();
@@ -652,7 +654,7 @@ public class AccountsDashboardFragment extends BaseSupportListFragment implement
 
         AccountSelectorAdapter(Context context, AccountsDashboardFragment fragment) {
             mInflater = LayoutInflater.from(context);
-            mImageLoader = FireTweetApplication.getInstance(context).getMediaLoaderWrapper();
+            mImageLoader = FiretweetApplication.getInstance(context).getMediaLoaderWrapper();
             mFragment = fragment;
             setHasStableIds(true);
         }

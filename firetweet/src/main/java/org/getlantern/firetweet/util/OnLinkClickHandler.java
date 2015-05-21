@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -28,7 +28,7 @@ import android.support.annotation.Nullable;
 
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.model.ParcelableMedia;
-import org.getlantern.firetweet.util.TwidereLinkify.OnLinkClickListener;
+import org.getlantern.firetweet.util.FiretweetLinkify.OnLinkClickListener;
 
 import edu.tsinghua.spice.Utilies.SpiceProfilingUtil;
 import edu.tsinghua.spice.Utilies.TypeMappingUtil;
@@ -64,15 +64,15 @@ public class OnLinkClickHandler implements OnLinkClickListener, Constants {
         }
 
         switch (type) {
-            case TwidereLinkify.LINK_TYPE_MENTION: {
+            case FiretweetLinkify.LINK_TYPE_MENTION: {
                 openUserProfile(context, accountId, -1, link, null);
                 break;
             }
-            case TwidereLinkify.LINK_TYPE_HASHTAG: {
+            case FiretweetLinkify.LINK_TYPE_HASHTAG: {
                 openTweetSearch(context, accountId, "#" + link);
                 break;
             }
-            case TwidereLinkify.LINK_TYPE_LINK: {
+            case FiretweetLinkify.LINK_TYPE_LINK: {
                 if (MediaPreviewUtils.isLinkSupported(link)) {
                     openMedia(accountId, extraId, sensitive, link, start, end);
                 } else {
@@ -80,7 +80,7 @@ public class OnLinkClickHandler implements OnLinkClickListener, Constants {
                 }
                 break;
             }
-            case TwidereLinkify.LINK_TYPE_LIST: {
+            case FiretweetLinkify.LINK_TYPE_LIST: {
                 final String[] mentionList = link.split("/");
                 if (mentionList.length != 2) {
                     break;
@@ -88,15 +88,15 @@ public class OnLinkClickHandler implements OnLinkClickListener, Constants {
                 openUserListDetails(context, accountId, -1, -1, mentionList[0], mentionList[1]);
                 break;
             }
-            case TwidereLinkify.LINK_TYPE_CASHTAG: {
+            case FiretweetLinkify.LINK_TYPE_CASHTAG: {
                 openTweetSearch(context, accountId, link);
                 break;
             }
-            case TwidereLinkify.LINK_TYPE_USER_ID: {
+            case FiretweetLinkify.LINK_TYPE_USER_ID: {
                 openUserProfile(context, accountId, ParseUtils.parseLong(link), null, null);
                 break;
             }
-            case TwidereLinkify.LINK_TYPE_STATUS: {
+            case FiretweetLinkify.LINK_TYPE_STATUS: {
                 openStatus(context, accountId, ParseUtils.parseLong(link));
                 break;
             }

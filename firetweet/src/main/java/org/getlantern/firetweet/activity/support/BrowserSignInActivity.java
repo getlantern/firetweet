@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -40,15 +40,16 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import org.getlantern.firetweet.R;
-import org.getlantern.firetweet.app.FireTweetApplication;
-import org.getlantern.firetweet.provider.TwidereDataStore.Accounts;
+import org.getlantern.firetweet.app.FiretweetApplication;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;
 import org.getlantern.firetweet.proxy.ProxySettings;
 import org.getlantern.firetweet.util.AsyncTaskUtils;
 import org.getlantern.firetweet.util.OAuthPasswordAuthenticator;
+import org.getlantern.firetweet.util.ParseUtils;
 import org.getlantern.firetweet.util.TwitterContentUtils;
 import org.getlantern.firetweet.util.Utils;
 import org.getlantern.firetweet.util.net.OkHttpClientFactory;
-import org.getlantern.firetweet.util.net.TwidereHostResolverFactory;
+import org.getlantern.firetweet.util.net.FiretweetHostResolverFactory;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
@@ -240,13 +241,13 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
     static class GetRequestTokenTask extends AsyncTask<Object, Object, RequestToken> {
 
         private final String mConsumerKey, mConsumerSecret;
-        private final FireTweetApplication mApplication;
+        private final FiretweetApplication mApplication;
         private final SharedPreferences mPreferences;
         private final BrowserSignInActivity mActivity;
 
         public GetRequestTokenTask(final BrowserSignInActivity activity) {
             mActivity = activity;
-            mApplication = FireTweetApplication.getInstance(activity);
+            mApplication = FiretweetApplication.getInstance(activity);
             mPreferences = activity.getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
             final Intent intent = activity.getIntent();
             mConsumerKey = intent.getStringExtra(Accounts.CONSUMER_KEY);
@@ -262,7 +263,7 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
             final String consumerKey = getNonEmptyString(mPreferences, KEY_CONSUMER_KEY, TWITTER_CONSUMER_KEY_3);
             final String consumerSecret = getNonEmptyString(mPreferences, KEY_CONSUMER_SECRET,
                     TWITTER_CONSUMER_SECRET_3);
-            cb.setHostAddressResolverFactory(new TwidereHostResolverFactory(mApplication));
+            cb.setHostAddressResolverFactory(new FiretweetHostResolverFactory(mApplication));
             cb.setHttpClientFactory(new OkHttpClientFactory(mApplication));
             if (TwitterContentUtils.isOfficialKey(mActivity, consumerKey, consumerSecret)) {
                 Utils.setMockOfficialUserAgent(mActivity, cb);

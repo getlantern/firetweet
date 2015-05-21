@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -26,7 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.getlantern.firetweet.R;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.support.MessagesConversationFragment;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
@@ -47,7 +47,7 @@ public class AccountsSpinnerAdapter extends ArrayAdapter<ParcelableAccount> {
     public AccountsSpinnerAdapter(final Context context, int itemViewResource) {
         super(context, itemViewResource);
         mContext = context;
-        mImageLoader = FireTweetApplication.getInstance(context).getMediaLoaderWrapper();
+        mImageLoader = FiretweetApplication.getInstance(context).getMediaLoaderWrapper();
         mDisplayProfileImage = context.getSharedPreferences(MessagesConversationFragment.SHARED_PREFERENCES_NAME,
                 Context.MODE_PRIVATE).getBoolean(MessagesConversationFragment.KEY_DISPLAY_PROFILE_IMAGE, true);
     }

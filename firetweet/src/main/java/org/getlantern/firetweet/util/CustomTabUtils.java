@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -50,7 +50,7 @@ import org.getlantern.firetweet.fragment.support.UserTimelineFragment;
 import org.getlantern.firetweet.model.CustomTabConfiguration;
 import org.getlantern.firetweet.model.CustomTabConfiguration.ExtraConfiguration;
 import org.getlantern.firetweet.model.SupportTabSpec;
-import org.getlantern.firetweet.provider.TwidereDataStore.Tabs;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Tabs;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -117,7 +117,7 @@ public class CustomTabUtils implements Constants {
         CUSTOM_TABS_ICON_NAME_MAP.put("staggered", R.drawable.ic_action_view_quilt);
         CUSTOM_TABS_ICON_NAME_MAP.put("star", R.drawable.ic_action_star);
         CUSTOM_TABS_ICON_NAME_MAP.put("trends", R.drawable.ic_action_trends);
-        CUSTOM_TABS_ICON_NAME_MAP.put("twidere", R.drawable.ic_action_twidere);
+        CUSTOM_TABS_ICON_NAME_MAP.put("firetweet", R.drawable.ic_action_firetweet);
         CUSTOM_TABS_ICON_NAME_MAP.put("twitter", R.drawable.ic_action_twitter);
         CUSTOM_TABS_ICON_NAME_MAP.put("user", R.drawable.ic_action_user);
     }

@@ -25,7 +25,7 @@
 
                 <data
                     android:host="map"
-                    android:scheme="twidere"/>
+                    android:scheme="firetweet"/>
             </intent-filter>
         </activity>
     </application>

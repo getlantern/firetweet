@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -34,8 +34,8 @@ import android.widget.ListView;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
-import org.getlantern.firetweet.app.FireTweetApplication;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedTrends;
+import org.getlantern.firetweet.app.FiretweetApplication;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedTrends;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
 import org.getlantern.firetweet.util.MultiSelectManager;
 import org.getlantern.firetweet.util.message.TaskStateChangedEvent;
@@ -103,13 +103,13 @@ public class TrendsSuggectionsFragment extends BasePullToRefreshListFragment imp
     public void onStart() {
         super.onStart();
         getLoaderManager().restartLoader(0, null, this);
-        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FiretweetApplication.getInstance(getActivity()).getMessageBus();
         bus.register(this);
     }
 
     @Override
     public void onStop() {
-        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FiretweetApplication.getInstance(getActivity()).getMessageBus();
         bus.unregister(this);
         super.onStop();
     }

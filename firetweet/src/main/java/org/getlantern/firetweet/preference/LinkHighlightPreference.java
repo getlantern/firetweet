@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -27,7 +27,7 @@ import android.widget.TextView;
 
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
-import org.getlantern.firetweet.text.TwidereHighLightStyle;
+import org.getlantern.firetweet.text.FiretweetHighLightStyle;
 import org.getlantern.firetweet.util.Utils;
 
 public class LinkHighlightPreference extends AutoInvalidateListPreference implements Constants {
@@ -64,7 +64,7 @@ public class LinkHighlightPreference extends AutoInvalidateListPreference implem
 
 	private static CharSequence getStyledEntry(final int option, final CharSequence entry) {
 		final SpannableString str = new SpannableString(entry);
-		str.setSpan(new TwidereHighLightStyle(option), 0, str.length(), 0);
+		str.setSpan(new FiretweetHighLightStyle(option), 0, str.length(), 0);
 		return str;
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -38,7 +38,7 @@ import android.widget.Toast;
 import org.apache.commons.lang3.ArrayUtils;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.AccountsAdapter;
-import org.getlantern.firetweet.provider.TwidereDataStore.Accounts;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;
 
 public class AccountSelectorActivity extends BaseSupportDialogActivity implements LoaderCallbacks<Cursor>,
         OnClickListener, OnItemClickListener {

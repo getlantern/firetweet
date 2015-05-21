@@ -1,5 +1,5 @@
 /*
- * Twidere - Twitter client for Android
+ * Firetweet - Twitter client for Android
  *
  *  Copyright (C) 2012-2015 Mariotaku Lee <mariotaku.lee@gmail.com>
  *
@@ -27,10 +27,10 @@ import com.nostra13.universalimageloader.core.download.ImageDownloader;
 import com.nostra13.universalimageloader.utils.IoUtils;
 import com.squareup.otto.Bus;
 
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.model.SingleResponse;
 import org.getlantern.firetweet.task.ManagedAsyncTask;
-import org.getlantern.firetweet.util.imageloader.TwidereImageDownloader;
+import org.getlantern.firetweet.util.imageloader.FiretweetImageDownloader;
 import org.getlantern.firetweet.util.message.VideoLoadFinishedEvent;
 
 import java.io.File;
@@ -50,10 +50,10 @@ public class VideoLoader {
     private final Bus mBus;
 
     public VideoLoader(Context context) {
-        final FireTweetApplication app = FireTweetApplication.getInstance(context);
+        final FiretweetApplication app = FiretweetApplication.getInstance(context);
         mContext = context;
         mDiskCache = app.getDiskCache();
-        mImageDownloader = new TwidereImageDownloader(context, false, false);
+        mImageDownloader = new FiretweetImageDownloader(context, false, false);
         mTaskManager = app.getAsyncTaskManager();
         mBus = app.getMessageBus();
     }

@@ -1,5 +1,5 @@
 /*
- * Twidere - Twitter client for Android
+ * Firetweet - Twitter client for Android
  *
  *  Copyright (C) 2012-2015 Mariotaku Lee <mariotaku.lee@gmail.com>
  *
@@ -34,7 +34,7 @@ import android.widget.TextView;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.iface.IActivitiesAdapter;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.support.UserFragment;
 import org.getlantern.firetweet.model.ParcelableActivity;
 import org.getlantern.firetweet.model.ParcelableMedia;
@@ -44,8 +44,8 @@ import org.getlantern.firetweet.util.ImageLoadingHandler;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.SharedPreferencesWrapper;
 import org.getlantern.firetweet.util.ThemeUtils;
-import org.getlantern.firetweet.util.TwidereLinkify;
-import org.getlantern.firetweet.util.TwidereLinkify.OnLinkClickListener;
+import org.getlantern.firetweet.util.FiretweetLinkify;
+import org.getlantern.firetweet.util.FiretweetLinkify.OnLinkClickListener;
 import org.getlantern.firetweet.util.Utils;
 import org.getlantern.firetweet.view.holder.ActivityTitleSummaryViewHolder;
 import org.getlantern.firetweet.view.holder.GapViewHolder;
@@ -78,7 +78,7 @@ public abstract class AbsActivitiesAdapter<Data> extends Adapter<ViewHolder> imp
     private final boolean mDisplayMediaPreview;
     private final boolean mNameFirst;
     private final boolean mDisplayProfileImage;
-    private final TwidereLinkify mLinkify;
+    private final FiretweetLinkify mLinkify;
     private final DummyStatusHolderAdapter mStatusAdapterDelegate;
     private boolean mLoadMoreSupported;
     private boolean mLoadMoreIndicatorVisible;
@@ -86,7 +86,7 @@ public abstract class AbsActivitiesAdapter<Data> extends Adapter<ViewHolder> imp
 
     protected AbsActivitiesAdapter(final Context context, boolean compact) {
         mContext = context;
-        final FireTweetApplication app = FireTweetApplication.getInstance(context);
+        final FiretweetApplication app = FiretweetApplication.getInstance(context);
         mCardBackgroundColor = ThemeUtils.getCardBackgroundColor(context);
         mInflater = LayoutInflater.from(context);
         mImageLoader = app.getMediaLoaderWrapper();
@@ -102,7 +102,7 @@ public abstract class AbsActivitiesAdapter<Data> extends Adapter<ViewHolder> imp
         mDisplayProfileImage = preferences.getBoolean(KEY_DISPLAY_PROFILE_IMAGE, true);
         mDisplayMediaPreview = preferences.getBoolean(KEY_MEDIA_PREVIEW, false);
         mNameFirst = preferences.getBoolean(KEY_NAME_FIRST, true);
-        mLinkify = new TwidereLinkify(this);
+        mLinkify = new FiretweetLinkify(this);
         mStatusAdapterDelegate = new DummyStatusHolderAdapter(context);
     }
 
@@ -179,7 +179,7 @@ public abstract class AbsActivitiesAdapter<Data> extends Adapter<ViewHolder> imp
         return mLinkHighlightingStyle;
     }
 
-    public TwidereLinkify getLinkify() {
+    public FiretweetLinkify getLinkify() {
         return mLinkify;
     }
 

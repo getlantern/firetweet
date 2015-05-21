@@ -1,5 +1,5 @@
 /*
- * Twidere - Twitter client for Android
+ * Firetweet - Twitter client for Android
  *
  *  Copyright (C) 2012-2015 Mariotaku Lee <mariotaku.lee@gmail.com>
  *
@@ -38,7 +38,7 @@ import android.widget.PopupWindow;
 import org.apache.commons.lang3.ArrayUtils;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.ArrayAdapter;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.ThemeUtils;
@@ -150,7 +150,7 @@ public class AccountSelectorPopupWindow {
 
         public AccountsGridAdapter(Context context) {
             super(context, R.layout.grid_item_selector_account);
-            mImageLoader = FireTweetApplication.getInstance(context).getMediaLoaderWrapper();
+            mImageLoader = FiretweetApplication.getInstance(context).getMediaLoaderWrapper();
         }
 
         @Override

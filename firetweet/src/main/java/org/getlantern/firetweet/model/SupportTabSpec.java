@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -23,13 +23,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
-import org.getlantern.firetweet.TwidereConstants;
+import org.getlantern.firetweet.FiretweetConstants;
 
 import static org.getlantern.firetweet.util.CompareUtils.bundleEquals;
 import static org.getlantern.firetweet.util.CompareUtils.classEquals;
 import static org.getlantern.firetweet.util.CompareUtils.objectEquals;
 
-public class SupportTabSpec implements Comparable<SupportTabSpec>, TwidereConstants {
+public class SupportTabSpec implements Comparable<SupportTabSpec>, FiretweetConstants {
 
     public final String name;
     public final Object icon;

@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -27,8 +27,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.getlantern.firetweet.Constants;
-import org.getlantern.firetweet.app.FireTweetApplication;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedStatuses;
+import org.getlantern.firetweet.app.FiretweetApplication;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedStatuses;
 import org.getlantern.firetweet.util.HtmlEscapeHelper;
 
 public class SourceAutoCompleteAdapter extends SimpleCursorAdapter implements Constants {
@@ -43,7 +43,7 @@ public class SourceAutoCompleteAdapter extends SimpleCursorAdapter implements Co
 
 	public SourceAutoCompleteAdapter(final Context context) {
 		super(context, android.R.layout.simple_list_item_1, null, FROM, TO, 0);
-		final FireTweetApplication app = FireTweetApplication.getInstance(context);
+		final FiretweetApplication app = FiretweetApplication.getInstance(context);
 		mDatabase = app != null ? app.getSQLiteDatabase() : null;
 	}
 

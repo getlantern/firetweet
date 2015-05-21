@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -28,10 +28,10 @@ import android.text.TextUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.getlantern.jsonserializer.JSONParcel;
-import org.getlantern.jsonserializer.JSONParcelable;
-import org.getlantern.jsonserializer.JSONSerializer;
-import org.getlantern.firetweet.provider.TwidereDataStore.Statuses;
+import org.getlantern.firetweetserializer.JSONParcel;
+import org.getlantern.firetweetserializer.JSONParcelable;
+import org.getlantern.firetweetserializer.JSONSerializer;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Statuses;
 import org.getlantern.firetweet.util.HtmlEscapeHelper;
 import org.getlantern.firetweet.util.SimpleValueSerializer;
 import org.getlantern.firetweet.util.TwitterContentUtils;
@@ -51,7 +51,7 @@ import twitter4j.Status;
 import twitter4j.User;
 
 @SuppressWarnings("unused")
-public class ParcelableStatus implements TwidereParcelable, Comparable<ParcelableStatus> {
+public class ParcelableStatus implements FiretweetParcelable, Comparable<ParcelableStatus> {
 
     public static final Parcelable.Creator<ParcelableStatus> CREATOR = new Parcelable.Creator<ParcelableStatus>() {
         @Override
@@ -689,7 +689,7 @@ public class ParcelableStatus implements TwidereParcelable, Comparable<Parcelabl
 
     }
 
-    public static final class ParcelableCardEntity implements TwidereParcelable {
+    public static final class ParcelableCardEntity implements FiretweetParcelable {
 
         public static final Parcelable.Creator<ParcelableCardEntity> CREATOR = new Parcelable.Creator<ParcelableCardEntity>() {
             @Override
@@ -774,7 +774,7 @@ public class ParcelableStatus implements TwidereParcelable, Comparable<Parcelabl
             return null;
         }
 
-        public static final class ParcelableImageValue implements TwidereParcelable {
+        public static final class ParcelableImageValue implements FiretweetParcelable {
 
             public static final Parcelable.Creator<ParcelableImageValue> CREATOR = new Parcelable.Creator<ParcelableImageValue>() {
                 @Override
@@ -840,7 +840,7 @@ public class ParcelableStatus implements TwidereParcelable, Comparable<Parcelabl
             }
         }
 
-        public static final class ParcelableUserValue implements TwidereParcelable {
+        public static final class ParcelableUserValue implements FiretweetParcelable {
 
             public static final Parcelable.Creator<ParcelableUserValue> CREATOR = new Parcelable.Creator<ParcelableUserValue>() {
                 @Override
@@ -895,7 +895,7 @@ public class ParcelableStatus implements TwidereParcelable, Comparable<Parcelabl
             }
         }
 
-        public static final class ParcelableValueItem implements TwidereParcelable {
+        public static final class ParcelableValueItem implements FiretweetParcelable {
 
             public static final Parcelable.Creator<ParcelableValueItem> CREATOR = new Parcelable.Creator<ParcelableValueItem>() {
                 @Override

@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -27,7 +27,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.CancellationSignal;
 
-import org.getlantern.firetweet.util.TwidereArrayUtils;
+import org.getlantern.firetweet.util.FiretweetArrayUtils;
 
 import java.util.Collection;
 
@@ -51,9 +51,9 @@ public class ContentResolverUtils {
         int rows_deleted = 0;
         for (int i = 0; i < blocks_count; i++) {
             final int start = i * MAX_BULK_COUNT, end = Math.min(start + MAX_BULK_COUNT, col_values_length);
-            final String[] block = TwidereArrayUtils.toStringArray(TwidereArrayUtils.subArray(colValues, start, end));
+            final String[] block = FiretweetArrayUtils.toStringArray(FiretweetArrayUtils.subArray(colValues, start, end));
             if (valuesIsString) {
-                final StringBuilder where = new StringBuilder(inColumn + " IN(" + TwidereArrayUtils.toStringForSQL(block)
+                final StringBuilder where = new StringBuilder(inColumn + " IN(" + FiretweetArrayUtils.toStringForSQL(block)
                         + ")");
                 if (!isEmpty(extraWhere)) {
                     where.append("AND ").append(extraWhere);
@@ -61,7 +61,7 @@ public class ContentResolverUtils {
                 rows_deleted += resolver.delete(uri, where.toString(), block);
             } else {
                 final StringBuilder where = new StringBuilder(inColumn + " IN("
-                        + TwidereArrayUtils.toString(block, ',', true) + ")");
+                        + FiretweetArrayUtils.toString(block, ',', true) + ")");
                 if (!isEmpty(extraWhere)) {
                     where.append("AND ").append(extraWhere);
                 }

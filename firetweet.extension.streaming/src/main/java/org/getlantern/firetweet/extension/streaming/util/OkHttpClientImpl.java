@@ -1,5 +1,5 @@
 /*
- * Twidere - Twitter client for Android
+ * Firetweet - Twitter client for Android
  *
  *  Copyright (C) 2012-2015 Mariotaku Lee <mariotaku.lee@gmail.com>
  *
@@ -32,7 +32,7 @@ import com.squareup.okhttp.Response;
 import com.squareup.okhttp.internal.Internal;
 import com.squareup.okhttp.internal.Network;
 
-import org.getlantern.firetweet.TwidereConstants;
+import org.getlantern.firetweet.FiretweetConstants;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -65,7 +65,7 @@ import twitter4j.http.RequestMethod;
 /**
  * Created by mariotaku on 15/1/22.
  */
-public class OkHttpClientImpl implements HttpClient, TwidereConstants {
+public class OkHttpClientImpl implements HttpClient, FiretweetConstants {
 
     public static final MediaType APPLICATION_FORM_URLENCODED = MediaType.parse("application/x-www-form-urlencoded; charset=UTF-8");
     private final HttpClientConfiguration conf;

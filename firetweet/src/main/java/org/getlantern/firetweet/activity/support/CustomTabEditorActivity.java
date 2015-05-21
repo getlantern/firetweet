@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -47,7 +47,7 @@ import android.widget.Toast;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.AccountsSpinnerAdapter;
 import org.getlantern.firetweet.adapter.ArrayAdapter;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.support.BaseSupportDialogFragment;
 import org.getlantern.firetweet.model.CustomTabConfiguration;
 import org.getlantern.firetweet.model.CustomTabConfiguration.ExtraConfiguration;
@@ -270,7 +270,7 @@ public class CustomTabEditorActivity extends BaseSupportDialogActivity implement
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
-        mImageLoader = FireTweetApplication.getInstance(this).getMediaLoaderWrapper();
+        mImageLoader = FiretweetApplication.getInstance(this).getMediaLoaderWrapper();
         final Intent intent = getIntent();
         final String type = mTabType = intent.getStringExtra(EXTRA_TYPE);
         final CustomTabConfiguration conf = getTabConfiguration(type);

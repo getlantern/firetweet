@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -19,9 +19,9 @@
 
 package org.getlantern.firetweet.constant;
 
-import org.getlantern.firetweet.TwidereConstants;
+import org.getlantern.firetweet.FiretweetConstants;
 import org.getlantern.firetweet.annotation.Preference;
-import org.getlantern.firetweet.provider.TwidereDataStore.Accounts;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;
 
 import static org.getlantern.firetweet.annotation.Preference.Type.BOOLEAN;
 import static org.getlantern.firetweet.annotation.Preference.Type.INT;
@@ -80,7 +80,7 @@ public interface SharedPreferenceConstants {
     String VALUE_THEME_BACKGROUND_SOLID = "solid";
     String VALUE_THEME_BACKGROUND_TRANSPARENT = "transparent";
 
-    String VALUE_THEME_NAME_TWIDERE = "twidere";
+    String VALUE_THEME_NAME_TWIDERE = "firetweet";
     String VALUE_THEME_NAME_DARK = "dark";
     String VALUE_THEME_NAME_LIGHT = "light";
 
@@ -251,9 +251,9 @@ public interface SharedPreferenceConstants {
     String KEY_NO_VERSION_SUFFIX = "no_version_suffix";
     @Preference(type = INT, hasDefault = true, defaultInt = Accounts.AUTH_TYPE_OAUTH)
     String KEY_AUTH_TYPE = "auth_type";
-    @Preference(type = STRING, hasDefault = true, defaultString = TwidereConstants.TWITTER_CONSUMER_KEY_3)
+    @Preference(type = STRING, hasDefault = true, defaultString = FiretweetConstants.TWITTER_CONSUMER_KEY_3)
     String KEY_CONSUMER_KEY = "consumer_key";
-    @Preference(type = STRING, hasDefault = true, defaultString = TwidereConstants.TWITTER_CONSUMER_SECRET_3)
+    @Preference(type = STRING, hasDefault = true, defaultString = FiretweetConstants.TWITTER_CONSUMER_SECRET_3)
     String KEY_CONSUMER_SECRET = "consumer_secret";
     String KEY_SETTINGS_WIZARD_COMPLETED = "settings_wizard_completed";
     @Preference(type = BOOLEAN, hasDefault = true, defaultBoolean = true)

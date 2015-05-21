@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -36,12 +36,12 @@ import android.util.Log;
 import com.squareup.otto.Bus;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.getlantern.querybuilder.Columns.Column;
-import org.getlantern.querybuilder.Expression;
-import org.getlantern.querybuilder.RawItemArray;
-import org.getlantern.querybuilder.SQLFunctions;
+import org.mariotaku.querybuilder.Columns.Column;
+import org.mariotaku.querybuilder.Expression;
+import org.mariotaku.querybuilder.RawItemArray;
+import org.mariotaku.querybuilder.SQLFunctions;
 import org.getlantern.firetweet.R;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.model.ListResponse;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.model.ParcelableLocation;
@@ -53,16 +53,16 @@ import org.getlantern.firetweet.model.ParcelableUser;
 import org.getlantern.firetweet.model.ParcelableUserList;
 import org.getlantern.firetweet.model.SingleResponse;
 import org.getlantern.firetweet.preference.HomeRefreshContentPreference;
-import org.getlantern.firetweet.provider.TwidereDataStore;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedHashtags;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedTrends;
-import org.getlantern.firetweet.provider.TwidereDataStore.DirectMessages;
-import org.getlantern.firetweet.provider.TwidereDataStore.DirectMessages.Inbox;
-import org.getlantern.firetweet.provider.TwidereDataStore.DirectMessages.Outbox;
-import org.getlantern.firetweet.provider.TwidereDataStore.Drafts;
-import org.getlantern.firetweet.provider.TwidereDataStore.Mentions;
-import org.getlantern.firetweet.provider.TwidereDataStore.SavedSearches;
-import org.getlantern.firetweet.provider.TwidereDataStore.Statuses;
+import org.getlantern.firetweet.provider.FiretweetDataStore;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedHashtags;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedTrends;
+import org.getlantern.firetweet.provider.FiretweetDataStore.DirectMessages;
+import org.getlantern.firetweet.provider.FiretweetDataStore.DirectMessages.Inbox;
+import org.getlantern.firetweet.provider.FiretweetDataStore.DirectMessages.Outbox;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Drafts;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Mentions;
+import org.getlantern.firetweet.provider.FiretweetDataStore.SavedSearches;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Statuses;
 import org.getlantern.firetweet.service.BackgroundOperationService;
 import org.getlantern.firetweet.task.CacheUsersStatusesTask;
 import org.getlantern.firetweet.task.ManagedAsyncTask;
@@ -104,7 +104,7 @@ import org.getlantern.firetweet.Constants;
 
 import com.crashlytics.android.Crashlytics;
 
-import static org.getlantern.firetweet.provider.TwidereDataStore.STATUSES_URIS;
+import static org.getlantern.firetweet.provider.FiretweetDataStore.STATUSES_URIS;
 import static org.getlantern.firetweet.util.ContentValuesCreator.createDirectMessage;
 import static org.getlantern.firetweet.util.ContentValuesCreator.createStatus;
 import static org.getlantern.firetweet.util.ContentValuesCreator.createTrends;
@@ -143,7 +143,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
 
     public AsyncTwitterWrapper(final Context context) {
         mContext = context;
-        final FireTweetApplication app = FireTweetApplication.getInstance(context);
+        final FiretweetApplication app = FiretweetApplication.getInstance(context);
         mAsyncTaskManager = app.getAsyncTaskManager();
         mMessagesManager = app.getMessagesManager();
         mPreferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
@@ -580,7 +580,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
             super.onPostExecute(result);
             if (result.hasData()) {
                 Utils.showOkMessage(mContext, R.string.profile_banner_image_updated, false);
-                final Bus bus = FireTweetApplication.getInstance(mContext).getMessageBus();
+                final Bus bus = FiretweetApplication.getInstance(mContext).getMessageBus();
                 bus.post(new ProfileUpdatedEvent(result.getData()));
             } else {
                 Utils.showErrorMessage(mContext, R.string.action_updating_profile_banner_image, result.getException(),
@@ -653,7 +653,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
             super.onPostExecute(result);
             if (result.hasData()) {
                 Utils.showOkMessage(mContext, R.string.profile_image_updated, false);
-                final Bus bus = FireTweetApplication.getInstance(mContext).getMessageBus();
+                final Bus bus = FiretweetApplication.getInstance(mContext).getMessageBus();
                 bus.post(new ProfileUpdatedEvent(result.getData()));
             } else {
                 Utils.showErrorMessage(mContext, R.string.action_updating_profile_image, result.getException(), true);
@@ -688,7 +688,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
         protected void onPostExecute(final SingleResponse<ParcelableUser> result) {
             if (result.hasData()) {
                 Utils.showOkMessage(context, R.string.profile_updated, false);
-                final Bus bus = FireTweetApplication.getInstance(context).getMessageBus();
+                final Bus bus = FiretweetApplication.getInstance(context).getMessageBus();
                 bus.post(new ProfileUpdatedEvent(result.getData()));
             } else {
                 Utils.showErrorMessage(context, context.getString(R.string.action_updating_profile),
@@ -879,7 +879,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                 final String message = mContext.getString(R.string.blocked_user,
                         getUserName(mContext, result.getData()));
                 mMessagesManager.showInfoMessage(message, false);
-                final Bus bus = FireTweetApplication.getInstance(mContext).getMessageBus();
+                final Bus bus = FiretweetApplication.getInstance(mContext).getMessageBus();
                 bus.post(new FriendshipUpdatedEvent(result.getData()));
             } else {
                 mMessagesManager.showErrorMessage(R.string.action_blocking, result.getException(), true);
@@ -913,7 +913,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                 final Expression where = Expression.and(Expression.equals(Statuses.ACCOUNT_ID, account_id),
                         Expression.or(Expression.equals(Statuses.STATUS_ID, status_id),
                                 Expression.equals(Statuses.RETWEET_ID, status_id)));
-                for (final Uri uri : TwidereDataStore.STATUSES_URIS) {
+                for (final Uri uri : FiretweetDataStore.STATUSES_URIS) {
                     mResolver.update(uri, values, where.getSQL(), null);
                 }
                 return SingleResponse.getInstance(new ParcelableStatus(status, account_id, false));
@@ -928,7 +928,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
         protected void onPreExecute() {
             super.onPreExecute();
             mCreatingFavoriteIds.put(account_id, status_id);
-            final Bus bus = FireTweetApplication.getInstance(mContext).getMessageBus();
+            final Bus bus = FiretweetApplication.getInstance(mContext).getMessageBus();
             bus.post(new StatusListChangedEvent());
         }
 
@@ -936,7 +936,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
         protected void onPostExecute(final SingleResponse<ParcelableStatus> result) {
             mCreatingFavoriteIds.remove(account_id, status_id);
             if (result.hasData()) {
-                final Bus bus = FireTweetApplication.getInstance(mContext).getMessageBus();
+                final Bus bus = FiretweetApplication.getInstance(mContext).getMessageBus();
                 bus.post(new FavoriteCreatedEvent(result.getData()));
                 mMessagesManager.showOkMessage(R.string.status_favorited, false);
             } else {
@@ -998,7 +998,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                     message = mContext.getString(R.string.followed_user, getUserName(mContext, user));
                 }
                 mMessagesManager.showOkMessage(message, false);
-                final Bus bus = FireTweetApplication.getInstance(mContext).getMessageBus();
+                final Bus bus = FiretweetApplication.getInstance(mContext).getMessageBus();
                 bus.post(new FriendshipUpdatedEvent(result.getData()));
             } else {
                 mMessagesManager.showErrorMessage(R.string.action_following, result.getException(), false);
@@ -1101,7 +1101,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                 final String message = mContext.getString(R.string.muted_user,
                         getUserName(mContext, result.getData()));
                 mMessagesManager.showInfoMessage(message, false);
-                final Bus bus = FireTweetApplication.getInstance(mContext).getMessageBus();
+                final Bus bus = FiretweetApplication.getInstance(mContext).getMessageBus();
                 bus.post(new FriendshipUpdatedEvent(result.getData()));
             } else {
                 mMessagesManager.showErrorMessage(R.string.action_muting, result.getException(), true);
@@ -1376,7 +1376,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                 final String message = mContext.getString(R.string.unblocked_user,
                         getUserName(mContext, result.getData()));
                 mMessagesManager.showInfoMessage(message, false);
-                final Bus bus = FireTweetApplication.getInstance(mContext).getMessageBus();
+                final Bus bus = FiretweetApplication.getInstance(mContext).getMessageBus();
                 bus.post(new FriendshipUpdatedEvent(result.getData()));
             } else {
                 mMessagesManager.showErrorMessage(R.string.action_unblocking, result.getException(), true);
@@ -1466,7 +1466,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                     values.put(Statuses.IS_FAVORITE, 0);
                     final Expression where = Expression.and(Expression.equals(Statuses.ACCOUNT_ID, account_id),
                             Expression.or(Expression.equals(Statuses.STATUS_ID, status_id), Expression.equals(Statuses.RETWEET_ID, status_id)));
-                    for (final Uri uri : TwidereDataStore.STATUSES_URIS) {
+                    for (final Uri uri : FiretweetDataStore.STATUSES_URIS) {
                         mResolver.update(uri, values, where.getSQL(), null);
                     }
                     return SingleResponse.getInstance(new ParcelableStatus(status, account_id, false));
@@ -1482,7 +1482,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
         protected void onPreExecute() {
             super.onPreExecute();
             mDestroyingFavoriteIds.put(account_id, status_id);
-            final Bus bus = FireTweetApplication.getInstance(mContext).getMessageBus();
+            final Bus bus = FiretweetApplication.getInstance(mContext).getMessageBus();
             bus.post(new StatusListChangedEvent());
         }
 
@@ -1490,7 +1490,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
         protected void onPostExecute(final SingleResponse<ParcelableStatus> result) {
             mDestroyingFavoriteIds.remove(account_id, status_id);
             if (result.hasData()) {
-                final Bus bus = FireTweetApplication.getInstance(mContext).getMessageBus();
+                final Bus bus = FiretweetApplication.getInstance(mContext).getMessageBus();
                 bus.post(new FavoriteDestroyedEvent(result.getData()));
                 mMessagesManager.showInfoMessage(R.string.status_unfavorited, false);
             } else {
@@ -1548,7 +1548,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                 final String message = mContext.getString(R.string.unfollowed_user,
                         getUserName(mContext, result.getData()));
                 mMessagesManager.showInfoMessage(message, false);
-                final Bus bus = FireTweetApplication.getInstance(mContext).getMessageBus();
+                final Bus bus = FiretweetApplication.getInstance(mContext).getMessageBus();
                 bus.post(new FriendshipUpdatedEvent(result.getData()));
             } else {
                 mMessagesManager.showErrorMessage(R.string.action_unfollowing, result.getException(), true);
@@ -1590,7 +1590,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                 final String message = mContext.getString(R.string.unmuted_user,
                         getUserName(mContext, result.getData()));
                 mMessagesManager.showInfoMessage(message, false);
-                final Bus bus = FireTweetApplication.getInstance(mContext).getMessageBus();
+                final Bus bus = FiretweetApplication.getInstance(mContext).getMessageBus();
                 bus.post(new FriendshipUpdatedEvent(result.getData()));
             } else {
                 mMessagesManager.showErrorMessage(R.string.action_unmuting, result.getException(), true);
@@ -1663,7 +1663,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
             if (status != null || exception.getErrorCode() == HttpResponseCode.NOT_FOUND) {
                 final ContentValues values = new ContentValues();
                 values.put(Statuses.MY_RETWEET_ID, -1);
-                for (final Uri uri : TwidereDataStore.STATUSES_URIS) {
+                for (final Uri uri : FiretweetDataStore.STATUSES_URIS) {
                     mResolver.delete(uri, Statuses.STATUS_ID + " = " + status_id, null);
                     mResolver.update(uri, values, Statuses.MY_RETWEET_ID + " = " + status_id, null);
                 }
@@ -1675,7 +1675,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
         protected void onPreExecute() {
             super.onPreExecute();
             mDestroyingStatusIds.put(account_id, status_id);
-            final Bus bus = FireTweetApplication.getInstance(mContext).getMessageBus();
+            final Bus bus = FiretweetApplication.getInstance(mContext).getMessageBus();
             bus.post(new StatusListChangedEvent());
         }
 
@@ -1689,7 +1689,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                 } else {
                     mMessagesManager.showInfoMessage(R.string.status_deleted, false);
                 }
-                final Bus bus = FireTweetApplication.getInstance(mContext).getMessageBus();
+                final Bus bus = FiretweetApplication.getInstance(mContext).getMessageBus();
                 bus.post(new StatusDestroyedEvent(status));
             } else {
                 mMessagesManager.showErrorMessage(R.string.action_deleting, result.getException(), true);
@@ -1886,14 +1886,14 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            final Bus bus = FireTweetApplication.getInstance(getContext()).getMessageBus();
+            final Bus bus = FiretweetApplication.getInstance(getContext()).getMessageBus();
             bus.post(new GetMessagesTaskEvent(getDatabaseUri(), true, null));
         }
 
         @Override
         protected void onPostExecute(final List<MessageListResponse> result) {
             super.onPostExecute(result);
-            final Bus bus = FireTweetApplication.getInstance(getContext()).getMessageBus();
+            final Bus bus = FiretweetApplication.getInstance(getContext()).getMessageBus();
             bus.post(new GetMessagesTaskEvent(getDatabaseUri(), false, getException(result)));
         }
 
@@ -2127,9 +2127,9 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
             }
             countCur.close();
             // UCD
-            ProfilingUtil.profile(mContext, accountId, "Download tweets, " + TwidereArrayUtils.toString(statusIds, ',', true));
+            ProfilingUtil.profile(mContext, accountId, "Download tweets, " + FiretweetArrayUtils.toString(statusIds, ',', true));
             //spice
-            SpiceProfilingUtil.profile(mContext, accountId, accountId + ",Refresh," + TwidereArrayUtils.toString(statusIds, ',', true));
+            SpiceProfilingUtil.profile(mContext, accountId, accountId + ",Refresh," + FiretweetArrayUtils.toString(statusIds, ',', true));
             //end
 
             // Insert a gap.
@@ -2149,14 +2149,14 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
         @Override
         protected void onPostExecute(List<StatusListResponse> result) {
             super.onPostExecute(result);
-            final Bus bus = FireTweetApplication.getInstance(mContext).getMessageBus();
+            final Bus bus = FiretweetApplication.getInstance(mContext).getMessageBus();
             bus.post(new GetStatusesTaskEvent(getDatabaseUri(), false, getException(result)));
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            final Bus bus = FireTweetApplication.getInstance(mContext).getMessageBus();
+            final Bus bus = FiretweetApplication.getInstance(mContext).getMessageBus();
             bus.post(new GetStatusesTaskEvent(getDatabaseUri(), true, null));
         }
 
@@ -2333,7 +2333,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                     mResolver.delete(uri, where, null);
                 }
                 mMessagesManager.showInfoMessage(R.string.reported_user_for_spam, false);
-                final Bus bus = FireTweetApplication.getInstance(mContext).getMessageBus();
+                final Bus bus = FiretweetApplication.getInstance(mContext).getMessageBus();
                 bus.post(new FriendshipUpdatedEvent(result.getData()));
             } else {
                 mMessagesManager.showErrorMessage(R.string.action_reporting_for_spam, result.getException(), true);
@@ -2375,7 +2375,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
         protected void onPreExecute() {
             super.onPreExecute();
             mCreatingRetweetIds.put(account_id, status_id);
-            final Bus bus = FireTweetApplication.getInstance(mContext).getMessageBus();
+            final Bus bus = FiretweetApplication.getInstance(mContext).getMessageBus();
             bus.post(new StatusListChangedEvent());
         }
 
@@ -2393,7 +2393,7 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                 for (final Uri uri : STATUSES_URIS) {
                     mResolver.update(uri, values, where.getSQL(), null);
                 }
-                final Bus bus = FireTweetApplication.getInstance(mContext).getMessageBus();
+                final Bus bus = FiretweetApplication.getInstance(mContext).getMessageBus();
                 bus.post(new StatusRetweetedEvent(status));
                 //spice
                 if (status.media == null) {

@@ -3,16 +3,16 @@ package org.getlantern.firetweet.extension.streaming.util;
 import android.content.Context;
 import android.database.Cursor;
 
-import org.getlantern.firetweet.TwidereConstants;
-import org.getlantern.firetweet.TwidereSharedPreferences;
-import org.getlantern.firetweet.provider.TwidereDataStore.Accounts;
+import org.getlantern.firetweet.FiretweetConstants;
+import org.getlantern.firetweet.FiretweetSharedPreferences;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;
 
 import java.io.Closeable;
 import java.io.IOException;
 
 import static android.text.TextUtils.isEmpty;
 
-public class Utils implements TwidereConstants {
+public class Utils implements FiretweetConstants {
 
 
     public static void closeSilently(Closeable closeable) {
@@ -45,7 +45,7 @@ public class Utils implements TwidereConstants {
         return accounts;
     }
 
-    public static String getNonEmptyString(final TwidereSharedPreferences pref, final String key, final String def) {
+    public static String getNonEmptyString(final FiretweetSharedPreferences pref, final String key, final String def) {
         if (pref == null) return def;
         final String val = pref.getString(key, def);
         return isEmpty(val) ? def : val;

@@ -9,7 +9,7 @@
 	<PreferenceScreen android:title="@string/donate">
 		<intent
 			android:action="android.intent.action.VIEW"
-			android:data="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=mariotaku.lee%40gmail%2ecom&amp;item_name=Donate%20to%20Twidere&amp;currency_code=USD"/>
+			android:data="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=mariotaku.lee%40gmail%2ecom&amp;item_name=Donate%20to%20Firetweet&amp;currency_code=USD"/>
 	</PreferenceScreen>
 
 </PreferenceScreen>

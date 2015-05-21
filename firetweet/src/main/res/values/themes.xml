@@ -10,26 +10,26 @@
     <style name="Theme.Blank" parent="Theme.Compat.Base.NoActionBar">
 
         <!-- Window attributes -->
-        <!--<item name="android:windowAnimationStyle">@style/Animation.Twidere.Activity</item>-->
+        <!--<item name="android:windowAnimationStyle">@style/Animation.Firetweet.Activity</item>-->
         <item name="android:windowBackground">@android:color/black</item>
     </style>
 
     <style name="Theme.Blank.Translucent" parent="Theme.Compat.Base.NoActionBar">
 
         <!-- Window attributes -->
-        <!--<item name="android:windowAnimationStyle">@style/Animation.Twidere.Activity</item>-->
+        <!--<item name="android:windowAnimationStyle">@style/Animation.Firetweet.Activity</item>-->
         <item name="android:windowBackground">@android:color/black</item>
     </style>
 
     <style name="Theme.Blank.Dialog" parent="Theme.Compat.Base.Dialog"/>
 
-    <style name="Theme.Twidere.Dark" parent="Theme.Compat.Base">
+    <style name="Theme.Firetweet.Dark" parent="Theme.Compat.Base">
 
         <!-- Colors -->
         <!--<item name="android:colorBackgroundCacheHint">@color/bg_color_dark</item>-->
 
         <!-- Window attributes -->
-        <!--<item name="android:windowAnimationStyle">@style/Animation.Twidere.Activity</item>-->
+        <!--<item name="android:windowAnimationStyle">@style/Animation.Firetweet.Activity</item>-->
         <item name="android:windowBackground">@color/background_color_window_dark</item>
 
         <!-- ActionBar styles -->
@@ -44,24 +44,24 @@
         <item name="profileImageStyleLarge">@style/Widget.ProfileImage.Large</item>
         <item name="cardItemBackgroundColor">@color/background_color_card_item_dark</item>
 
-        <!-- Twidere specific styles -->
+        <!-- Firetweet specific styles -->
         <item name="menuIconColor">@color/action_icon_light</item>
         <item name="menuIconColorActionBar">?menuIconColor</item>
         <item name="messageBubbleColor">@color/message_bubble_color_dark</item>
     </style>
 
-    <style name="Theme.Twidere.Light" parent="Theme.Compat.Base.Light.DarkActionBar">
+    <style name="Theme.Firetweet.Light" parent="Theme.Compat.Base.Light.DarkActionBar">
 
         <!-- Colors -->
         <!--<item name="android:colorBackgroundCacheHint">@color/bg_color_light</item>-->
 
         <!-- Window attributes -->
-        <!--<item name="android:windowAnimationStyle">@style/Animation.Twidere.Activity</item>-->
+        <!--<item name="android:windowAnimationStyle">@style/Animation.Firetweet.Activity</item>-->
         <item name="android:windowBackground">@color/background_color_window_light</item>
 
         <!-- ActionBar styles -->
-        <!--<item name="android:actionBarStyle">@style/Widget.Twidere.ActionBar.Light.DarkActionBar</item>-->
-        <!--<item name="android:actionBarWidgetTheme">@style/Theme.Twidere.Dark</item>-->
+        <!--<item name="android:actionBarStyle">@style/Widget.Firetweet.ActionBar.Light.DarkActionBar</item>-->
+        <!--<item name="android:actionBarWidgetTheme">@style/Theme.Firetweet.Dark</item>-->
 
         <!-- Custom view styles -->
 
@@ -70,14 +70,14 @@
         <item name="profileImageStyle">@style/Widget.Light.ProfileImage</item>
         <item name="profileImageStyleLarge">@style/Widget.Light.ProfileImage.Large</item>
         <item name="cardItemBackgroundColor">#f8f8f8</item>
-        <!-- Twidere specific styles -->
+        <!-- Firetweet specific styles -->
         <item name="menuIconColor">@color/action_icon_dark</item>
         <item name="menuIconColorDisabled">@color/action_icon_dark_disabled</item>
         <item name="menuIconColorActionBar">@color/action_icon_light</item>
         <item name="messageBubbleColor">@color/message_bubble_color_light</item>
     </style>
 
-    <style name="Theme.Twidere.Dark.Transparent">
+    <style name="Theme.Firetweet.Dark.Transparent">
 
         <!-- Colors -->
         <item name="android:colorBackgroundCacheHint">@null</item>
@@ -88,7 +88,7 @@
     </style>
 
 
-    <style name="Theme.Twidere.Light.Transparent">
+    <style name="Theme.Firetweet.Light.Transparent">
         <!-- Colors -->
         <item name="android:colorBackgroundCacheHint">@null</item>
 
@@ -97,59 +97,59 @@
         <item name="android:windowShowWallpaper">true</item>
     </style>
 
-    <style name="Theme.Twidere.Dark.SolidBackground">
+    <style name="Theme.Firetweet.Dark.SolidBackground">
 
         <!-- Window attributes -->
         <item name="android:windowBackground">@android:color/black</item>
     </style>
 
-    <style name="Theme.Twidere.Light.SolidBackground">
+    <style name="Theme.Firetweet.Light.SolidBackground">
 
         <!-- Window attributes -->
         <item name="android:windowBackground">@android:color/white</item>
     </style>
 
-    <style name="Theme.Twidere.ActionBar.Colored.Light" parent="Theme.Twidere.Light">
+    <style name="Theme.Firetweet.ActionBar.Colored.Light" parent="Theme.Firetweet.Light">
         <!--<item name="android:actionBarItemBackground">@drawable/list_selector_white_light</item>-->
     </style>
 
-    <style name="Theme.Twidere.ActionBar.Colored.Dark" parent="Theme.Twidere.Dark">
+    <style name="Theme.Firetweet.ActionBar.Colored.Dark" parent="Theme.Firetweet.Dark">
         <!--<item name="android:actionBarItemBackground">@drawable/list_selector_white</item>-->
     </style>
 
-    <style name="Theme.Twidere.Dark.NoActionBar">
+    <style name="Theme.Firetweet.Dark.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.Twidere.Light.NoActionBar">
+    <style name="Theme.Firetweet.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.Twidere.Dark.Transparent.NoActionBar">
+    <style name="Theme.Firetweet.Dark.Transparent.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.Twidere.Light.Transparent.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
-    </style>
-
-
-    <style name="Theme.Twidere.Dark.SolidBackground.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.Twidere.Light.SolidBackground.NoActionBar">
+    <style name="Theme.Firetweet.Light.Transparent.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 
 
-    <style name="Theme.Twidere.Dark.Dialog" parent="Theme.Base.Dialog">
+    <style name="Theme.Firetweet.Dark.SolidBackground.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Firetweet.Light.SolidBackground.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+
+    <style name="Theme.Firetweet.Dark.Dialog" parent="Theme.Base.Dialog">
 
         <!-- Custom view styles -->
 
@@ -160,13 +160,13 @@
         <item name="cardItemBackgroundColor">@color/background_color_card_item_dark</item>
 
 
-        <!-- Twidere specific styles -->
+        <!-- Firetweet specific styles -->
         <item name="menuIconColor">@color/action_icon_light</item>
         <item name="menuIconColorActionBar">?menuIconColor</item>
         <item name="messageBubbleColor">@color/message_bubble_color_dark</item>
     </style>
 
-    <style name="Theme.Twidere.Light.Dialog" parent="Theme.Base.Light.Dialog">
+    <style name="Theme.Firetweet.Light.Dialog" parent="Theme.Base.Light.Dialog">
 
         <!-- Custom view styles -->
 
@@ -177,13 +177,13 @@
         <item name="cardItemBackgroundColor">@color/background_color_card_item_light</item>
 
 
-        <!-- Twidere specific styles -->
+        <!-- Firetweet specific styles -->
         <item name="menuIconColor">@color/action_icon_dark</item>
         <item name="menuIconColorActionBar">?menuIconColor</item>
         <item name="messageBubbleColor">@color/message_bubble_color_light</item>
     </style>
 
-    <style name="Theme.Twidere.Dark.Compose" parent="Theme.Compat.Base.Dialog">
+    <style name="Theme.Firetweet.Dark.Compose" parent="Theme.Compat.Base.Dialog">
         <item name="windowActionBar">false</item>
         <item name="windowActionModeOverlay">false</item>
 
@@ -202,13 +202,13 @@
         <item name="cardItemBackgroundColor">@color/background_color_card_item_dark</item>
 
 
-        <!-- Twidere specific styles -->
+        <!-- Firetweet specific styles -->
         <item name="menuIconColor">@color/action_icon_light</item>
         <item name="menuIconColorActionBar">?menuIconColor</item>
         <item name="messageBubbleColor">@color/message_bubble_color_dark</item>
     </style>
 
-    <style name="Theme.Twidere.Light.Compose" parent="Theme.Compat.Base.Light.Dialog">
+    <style name="Theme.Firetweet.Light.Compose" parent="Theme.Compat.Base.Light.Dialog">
         <item name="windowActionBar">false</item>
         <item name="windowActionModeOverlay">false</item>
 
@@ -227,13 +227,13 @@
         <item name="cardItemBackgroundColor">@color/background_color_card_item_light</item>
 
 
-        <!-- Twidere specific styles -->
+        <!-- Firetweet specific styles -->
         <item name="menuIconColor">@color/action_icon_dark</item>
         <item name="menuIconColorActionBar">?menuIconColor</item>
         <item name="messageBubbleColor">@color/message_bubble_color_light</item>
     </style>
 
-    <style name="Theme.Twidere.Light.QuickSearchBar" parent="Theme.Twidere.Light.Dialog">
+    <style name="Theme.Firetweet.Light.QuickSearchBar" parent="Theme.Firetweet.Light.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
@@ -242,7 +242,7 @@
         <item name="android:windowActionModeOverlay">false</item>
     </style>
 
-    <style name="Theme.Twidere.Dark.QuickSearchBar" parent="Theme.Twidere.Dark.Dialog">
+    <style name="Theme.Firetweet.Dark.QuickSearchBar" parent="Theme.Firetweet.Dark.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
@@ -251,15 +251,15 @@
         <item name="android:windowActionModeOverlay">false</item>
     </style>
 
-    <style name="Theme.Twidere.Viewer" parent="Theme.AppCompat">
+    <style name="Theme.Firetweet.Viewer" parent="Theme.AppCompat">
 
         <!-- Window attributes -->
-        <!--<item name="android:windowAnimationStyle">@style/Animation.Twidere.Activity</item>-->
+        <!--<item name="android:windowAnimationStyle">@style/Animation.Firetweet.Activity</item>-->
         <item name="android:windowBackground">@color/bg_color_media_viewer</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="windowActionBarOverlay">true</item>
-        <item name="actionBarStyle">@style/Widget.Twidere.Viewer.ActionBar</item>
+        <item name="actionBarStyle">@style/Widget.Firetweet.Viewer.ActionBar</item>
         <item name="actionModeShareDrawable">@drawable/ic_action_share</item>
 
 
@@ -269,35 +269,35 @@
         <item name="profileImageStyleLarge">@style/Widget.ProfileImage.Large</item>
         <item name="cardItemBackgroundColor">@color/background_color_card_item_dark</item>
 
-        <!-- Twidere specific styles -->
+        <!-- Firetweet specific styles -->
         <item name="menuIconColor">@color/action_icon_light</item>
         <item name="menuIconColorActionBar">?menuIconColor</item>
         <item name="messageBubbleColor">@color/message_bubble_color_dark</item>
     </style>
 
-    <style name="Theme.Twidere.Drawer.Dark" parent="Theme.Twidere.Dark">
+    <style name="Theme.Firetweet.Drawer.Dark" parent="Theme.Firetweet.Dark">
 
         <!-- Window attributes -->
         <item name="android:windowBackground">@color/bg_color_drawer_dark</item>
     </style>
 
-    <style name="Theme.Twidere.Drawer.Dark.Transparent" parent="Theme.Twidere.Dark.Transparent">
+    <style name="Theme.Firetweet.Drawer.Dark.Transparent" parent="Theme.Firetweet.Dark.Transparent">
 
         <!-- Window attributes -->
         <item name="android:windowBackground">@color/bg_color_drawer_transparent_dark</item>
     </style>
 
-    <style name="Theme.Twidere.Drawer.Light" parent="Theme.Twidere.Light">
+    <style name="Theme.Firetweet.Drawer.Light" parent="Theme.Firetweet.Light">
 
         <!-- Window attributes -->
     </style>
 
-    <style name="Theme.Twidere.Drawer.Light.Transparent" parent="Theme.Twidere.Light.Transparent">
+    <style name="Theme.Firetweet.Drawer.Light.Transparent" parent="Theme.Firetweet.Light.Transparent">
 
         <!-- Window attributes -->
     </style>
 
-    <style name="Theme.Twidere.Dark.NoDisplay" parent="Theme.Compat.Base">
+    <style name="Theme.Firetweet.Dark.NoDisplay" parent="Theme.Compat.Base">
         <item name="android:windowBackground">@null</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowIsTranslucent">true</item>
@@ -306,7 +306,7 @@
         <item name="android:windowNoDisplay">true</item>
     </style>
 
-    <style name="Theme.Twidere.Light.NoDisplay" parent="Theme.Compat.Base.Light">
+    <style name="Theme.Firetweet.Light.NoDisplay" parent="Theme.Compat.Base.Light">
         <item name="android:windowBackground">@null</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowIsTranslucent">true</item>
@@ -322,13 +322,13 @@
         <item name="android:windowBackground">@color/nyan_background</item>
     </style>
 
-    <style name="Theme.Twidere.Settings.Dark" parent="Theme.Base">
+    <style name="Theme.Firetweet.Settings.Dark" parent="Theme.Base">
 
         <!-- Colors -->
         <item name="android:colorBackgroundCacheHint">@color/background_color_window_dark</item>
 
         <!-- Window attributes -->
-        <!--<item name="android:windowAnimationStyle">@style/Animation.Twidere.Activity</item>-->
+        <!--<item name="android:windowAnimationStyle">@style/Animation.Firetweet.Activity</item>-->
         <item name="android:windowBackground">@color/background_color_window_dark</item>
 
         <!-- ActionBar styles -->
@@ -343,19 +343,19 @@
         <item name="profileImageStyleLarge">@style/Widget.ProfileImage.Large</item>
         <item name="cardItemBackgroundColor">@color/background_color_card_item_dark</item>
 
-        <!-- Twidere specific styles -->
+        <!-- Firetweet specific styles -->
         <item name="menuIconColor">@color/action_icon_light</item>
         <item name="menuIconColorActionBar">?menuIconColor</item>
         <item name="messageBubbleColor">@color/message_bubble_color_dark</item>
     </style>
 
-    <style name="Theme.Twidere.Settings.Light" parent="Theme.Base.Light">
+    <style name="Theme.Firetweet.Settings.Light" parent="Theme.Base.Light">
 
         <!-- Colors -->
         <item name="android:colorBackgroundCacheHint">@color/background_color_window_light</item>
 
         <!-- Window attributes -->
-        <!--<item name="android:windowAnimationStyle">@style/Animation.Twidere.Activity</item>-->
+        <!--<item name="android:windowAnimationStyle">@style/Animation.Firetweet.Activity</item>-->
         <item name="android:windowBackground">@color/background_color_window_light</item>
 
         <!-- Custom view styles -->
@@ -366,19 +366,19 @@
         <item name="profileImageStyleLarge">@style/Widget.Light.ProfileImage.Large</item>
         <item name="cardItemBackgroundColor">@color/background_color_card_item_light</item>
 
-        <!-- Twidere specific styles -->
+        <!-- Firetweet specific styles -->
         <item name="menuIconColor">@color/action_icon_dark</item>
         <item name="menuIconColorActionBar">?menuIconColor</item>
         <item name="messageBubbleColor">@color/message_bubble_color_light</item>
     </style>
 
-    <style name="Theme.Twidere.Settings.Light.DarkActionBar" parent="Theme.Base.Light.DarkActionBar">
+    <style name="Theme.Firetweet.Settings.Light.DarkActionBar" parent="Theme.Base.Light.DarkActionBar">
 
         <!-- Colors -->
         <!--<item name="android:colorBackgroundCacheHint">@color/bg_color_light</item>-->
 
         <!-- Window attributes -->
-        <!--<item name="android:windowAnimationStyle">@style/Animation.Twidere.Activity</item>-->
+        <!--<item name="android:windowAnimationStyle">@style/Animation.Firetweet.Activity</item>-->
         <item name="android:windowBackground">@color/background_color_window_light</item>
 
         <!-- Custom view styles -->
@@ -389,15 +389,15 @@
         <item name="profileImageStyleLarge">@style/Widget.Light.ProfileImage.Large</item>
         <item name="cardItemBackgroundColor">@color/background_color_card_item_light</item>
 
-        <!-- Twidere specific styles -->
+        <!-- Firetweet specific styles -->
         <item name="menuIconColor">@color/action_icon_dark</item>
         <item name="menuIconColorActionBar">@color/action_icon_light</item>
         <item name="messageBubbleColor">@color/message_bubble_color_dark</item>
     </style>
 
-    <style name="Theme.Twidere.Settings.Light.DarkActionBar.DarkIcon"/>
+    <style name="Theme.Firetweet.Settings.Light.DarkActionBar.DarkIcon"/>
 
-    <style name="Theme.Twidere.Wizard" parent="Theme.Twidere.Settings.Light">
+    <style name="Theme.Firetweet.Wizard" parent="Theme.Firetweet.Settings.Light">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowBackground">@color/background_color_window_settings_wizard</item>

@@ -12,7 +12,7 @@
     </PreferenceCategory>
 
     <org.getlantern.firetweet.preference.SummaryListPreference
-        android:defaultValue="twidere"
+        android:defaultValue="firetweet"
         android:entries="@array/entries_theme"
         android:entryValues="@array/values_theme"
         android:key="theme"

@@ -43,7 +43,7 @@
   <string name="select_account">Seleccione la cuenta</string>
   <string name="username">Nombre de usuario</string>
   <string name="password">Contraseña</string>
-  <string name="label_tweetstore_provider">Proveedor de base de datos de Twidere</string>
+  <string name="label_tweetstore_provider">Proveedor de base de datos de Firetweet</string>
   <string name="label_refresh_service">Recargar servicio</string>
   <string name="label_background_operation_service">Servicio en segundo plano</string>
   <string name="open_in_browser">Abrir en el navegador</string>
@@ -147,7 +147,7 @@
   <string name="created_at">Creado en</string>
   <string name="search_hint">Búsqueda de tweets o usuarios</string>
   <string name="remember_position">Recuerde la posición</string>
-  <string name="remember_position_summary">Recuerda la posición de la lista/ficha antes de cerrar Twidere</string>
+  <string name="remember_position_summary">Recuerda la posición de la lista/ficha antes de cerrar Firetweet</string>
   <string name="user_blocked">Desbloquear este usuario.</string>
   <string name="users_blocked">Estos usuarios han sido bloqueados.</string>
   <string name="user_unblocked">Desbloquear este usuario.</string>
@@ -356,7 +356,7 @@
   <string name="silent_notifications">Silenciar notificaciones</string>
   <string name="silent_notifications_summary">Desactivar tono/vibración para notificaciones</string>
   <string name="disable_background_service">Desactivar servicio en segundo plano</string>
-  <string name="disable_background_service_summary">Twidere no dispondrá de un servicio en segundo plano si deshabilitas las actualizaciones automáticas, ¡no seas tonto!</string>
+  <string name="disable_background_service_summary">Firetweet no dispondrá de un servicio en segundo plano si deshabilitas las actualizaciones automáticas, ¡no seas tonto!</string>
   <string name="text_copied">Texto copiado al portapapeles.</string>
   <string name="hashtag">Hashtag</string>
   <string name="links">Enlaces</string>
@@ -396,7 +396,7 @@
   <string name="preload_wifi_only">Precargar solo con Wi-Fi</string>
   <string name="disable_tab_swipe">Desactivar el cambio de pestañas deslizando el dedo por la pantalla</string>
   <string name="sign_in_method_introduction_title">¿Cómo funciona?</string>
-  <string name="sign_in_method_introduction">La mayoría de los clientes como twicca abren un navegador solicitando que escribas el nombre de usuario y la contraseña, después el navegador te devuelve al cliente. A veces esto puede llegar a ser muy inconveniente. \n\n Twidere usa unos pasos más simples para iniciar sesión, sin abrir el navegador. No te preocupes por tu contraseña, Twidere nunca la almacenará, ¡es totalmente seguro!</string>
+  <string name="sign_in_method_introduction">La mayoría de los clientes como twicca abren un navegador solicitando que escribas el nombre de usuario y la contraseña, después el navegador te devuelve al cliente. A veces esto puede llegar a ser muy inconveniente. \n\n Firetweet usa unos pasos más simples para iniciar sesión, sin abrir el navegador. No te preocupes por tu contraseña, Firetweet nunca la almacenará, ¡es totalmente seguro!</string>
   <string name="quote_protected_status_notice">No se recomienda citar tweets protegidos.</string>
   <string name="edit_draft">Editar borrador</string>
   <string name="profile_image">Imagen de perfil</string>
@@ -466,7 +466,7 @@
   <string name="created_by">Creado por <xliff:g id="created_by">%s</xliff:g></string>
   <string name="add_to_list">Añadir a la lista</string>
   <string name="account_delete_confirm_title">Eliminar la cuenta</string>
-  <string name="account_delete_confirm_message">Se eliminará esta cuenta de Twidere.</string>
+  <string name="account_delete_confirm_message">Se eliminará esta cuenta de Firetweet.</string>
   <string name="theme">Tema</string>
   <string name="theme_dark">Oscuro</string>
   <string name="theme_light">Claro</string>
@@ -493,20 +493,20 @@
   <string name="next">Siguiente</string>
   <string name="settings_wizard">Asistente de configuración</string>
   <string name="wizard_page_welcome_title">Bienvenido</string>
-  <string name="wizard_page_welcome_text">Gracias por escoger Twidere.\n¿Quieres configurarlo ahora?</string>
+  <string name="wizard_page_welcome_text">Gracias por escoger Firetweet.\n¿Quieres configurarlo ahora?</string>
   <string name="wizard_page_welcome_yes">Si</string>
   <string name="wizard_page_welcome_not_now">Ahora no</string>
   <string name="wizard_page_welcome_import_settings">Importar configuración</string>
   <string name="wizard_page_theme_text">Selecciona el tema que te gusta.</string>
-  <string name="wizard_page_tabs_text">Añade algunas pestañas a Twidere.\nMantén un registro de las personas o las cosas que te importan.</string>
+  <string name="wizard_page_tabs_text">Añade algunas pestañas a Firetweet.\nMantén un registro de las personas o las cosas que te importan.</string>
   <string name="wizard_page_tabs_unchanged_message">Puedes añadir pestañas en \"Configuración\">\"Pestañas\"</string>
   <string name="wizard_page_cards_text">Configura artículos de la tarjeta.</string>
   <string name="wizard_page_hints_text">Aquí algunos consejos útiles.</string>
-  <string name="wizard_page_usage_statistics_text">Twidere participa de un proyecto de investigación que necesita algunos datos de uso.</string>
+  <string name="wizard_page_usage_statistics_text">Firetweet participa de un proyecto de investigación que necesita algunos datos de uso.</string>
   <string name="wizard_page_finished_title">Finalizado</string>
-  <string name="wizard_page_finished_text">Ahora Twidere está preparado para usarse.</string>
+  <string name="wizard_page_finished_text">Ahora Firetweet está preparado para usarse.</string>
   <string name="invalid_tab">Pestaña inválida</string>
-  <string name="send_crash_report">Enviar informe de error de Twidere</string>
+  <string name="send_crash_report">Enviar informe de error de Firetweet</string>
   <string name="add_to_filter">Añadir a filtros</string>
   <string name="user_filter_name">Usuario: <xliff:g id="name">%s</xliff:g></string>
   <string name="keyword_filter_name">Palabra Clave: <xliff:g id="name">%s</xliff:g></string>
@@ -526,7 +526,7 @@
   <string name="signing_in_error_browser_sign_in_hint">Error al iniciar sesión, es posible que debas utilizar el logueo en el navegador. (Esto ignorará la configuración de la API modificada durante el inicio de sesión)</string>
   <string name="report_user">Reportar a <xliff:g id="name">%s</xliff:g></string>
   <string name="report_user_confirm_message">¿Reportar a <xliff:g id="name">%s</xliff:g> por spam? Esto bloqueará al usuario.</string>
-  <string name="twidere_test">Test de Twidere</string>
+  <string name="firetweet_test">Test de Firetweet</string>
   <string name="staggered_home_timeline">Cronología escalonada</string>
   <string name="unread_count">Contador de No leídos</string>
   <string name="developed_by">Desarrollado por</string>
@@ -558,11 +558,11 @@
   <string name="view_replies">Ver respuestas</string>
   <string name="compact_cards">Compactar tarjetas</string>
   <string name="compact_cards_summary">Visualizar más tarjetas en pantalla</string>
-  <string name="dashclock_home_unread_count_name">Contador \"No Leídos\" en Inicio de Twidere</string>
+  <string name="dashclock_home_unread_count_name">Contador \"No Leídos\" en Inicio de Firetweet</string>
   <string name="dashclock_home_unread_count_description">Contador \"No Leídos\" en Inicio</string>
-  <string name="dashclock_mentions_unread_count_name">Contador \"No Leídos\" en menciones Twidere</string>
+  <string name="dashclock_mentions_unread_count_name">Contador \"No Leídos\" en menciones Firetweet</string>
   <string name="dashclock_mentions_unread_count_description">Contador \"No Leídos\" en menciones</string>
-  <string name="dashclock_messages_unread_count_name">Contador \"No Leídos\" en mensajes Twidere</string>
+  <string name="dashclock_messages_unread_count_name">Contador \"No Leídos\" en mensajes Firetweet</string>
   <string name="dashclock_messages_unread_count_description">Contador \"No Leídos\" en mensajes</string>
   <string name="N_new_statuses_quantity_one"><xliff:g id="items">%d</xliff:g> nuevo tweet</string>
   <string name="N_new_statuses_quantity_other"><xliff:g id="items">%d</xliff:g> nuevos tweets</string>
@@ -714,14 +714,14 @@
   <string name="designed_by">Diseñado por</string>
   <string name="designer_name">Uucky Lee</string>
   <string name="import_export_settings">Importar/Exportar ajustes</string>
-  <string name="usage_statistics_header_summary">Twidere forma parte de un proyecto de investigación, unirse a estos proyectos hará de Twidere, y otras, una aplicación mejor.</string>
+  <string name="usage_statistics_header_summary">Firetweet forma parte de un proyecto de investigación, unirse a estos proyectos hará de Firetweet, y otras, una aplicación mejor.</string>
   <string name="no_tab">Sin pestañas</string>
   <string name="user_protected_summary">Necesitas mandar una petición de seguimiento a este usuario protegido para ver sus tweets</string>
   <string name="no_account">Sin cuenta</string>
-  <string name="permission_description_shorten_status">La aplicación puede ordenar tweets para Twidere, así puede acceder a tu tweet para enviarlo.</string>
-  <string name="permission_description_upload_media">La aplicación puede subir el contenido para Twidere, así puede acceder a tu contenido para enviarlo.</string>
-  <string name="permission_description_sync_timeline">La aplicación puede sincronizar la posición para Twidere, así puede acceder a tu posición de lectura.</string>
-  <string name="usage_statistics_notification_summary">¡Ayúdanos a mejorar Twidere!</string>
+  <string name="permission_description_shorten_status">La aplicación puede ordenar tweets para Firetweet, así puede acceder a tu tweet para enviarlo.</string>
+  <string name="permission_description_upload_media">La aplicación puede subir el contenido para Firetweet, así puede acceder a tu contenido para enviarlo.</string>
+  <string name="permission_description_sync_timeline">La aplicación puede sincronizar la posición para Firetweet, así puede acceder a tu posición de lectura.</string>
+  <string name="usage_statistics_notification_summary">¡Ayúdanos a mejorar Firetweet!</string>
   <string name="from_name">De <xliff:g id="name">%1$s</xliff:g></string>
   <string name="from_name_and_name">De <xliff:g id="name">%1$s</xliff:g> y <xliff:g id="name">%2$s</xliff:g></string>
   <string name="from_name_and_N_others">De <xliff:g id="name">%1$s</xliff:g> y <xliff:g id="name">%2$d</xliff:g> otros</string>

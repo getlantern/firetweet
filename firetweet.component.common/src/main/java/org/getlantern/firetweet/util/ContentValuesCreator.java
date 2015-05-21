@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -23,8 +23,8 @@ import android.content.ContentValues;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.getlantern.jsonserializer.JSONSerializer;
-import org.getlantern.firetweet.TwidereConstants;
+import org.getlantern.firetweetserializer.JSONSerializer;
+import org.getlantern.firetweet.FiretweetConstants;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.model.ParcelableDirectMessage;
 import org.getlantern.firetweet.model.ParcelableLocation;
@@ -35,15 +35,15 @@ import org.getlantern.firetweet.model.ParcelableStatus.ParcelableCardEntity;
 import org.getlantern.firetweet.model.ParcelableStatusUpdate;
 import org.getlantern.firetweet.model.ParcelableUser;
 import org.getlantern.firetweet.model.ParcelableUserMention;
-import org.getlantern.firetweet.provider.TwidereDataStore.Accounts;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedRelationships;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedTrends;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedUsers;
-import org.getlantern.firetweet.provider.TwidereDataStore.DirectMessages;
-import org.getlantern.firetweet.provider.TwidereDataStore.Drafts;
-import org.getlantern.firetweet.provider.TwidereDataStore.Filters;
-import org.getlantern.firetweet.provider.TwidereDataStore.SavedSearches;
-import org.getlantern.firetweet.provider.TwidereDataStore.Statuses;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedRelationships;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedTrends;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedUsers;
+import org.getlantern.firetweet.provider.FiretweetDataStore.DirectMessages;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Drafts;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Filters;
+import org.getlantern.firetweet.provider.FiretweetDataStore.SavedSearches;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Statuses;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +63,7 @@ import twitter4j.conf.Configuration;
 
 import static org.getlantern.firetweet.util.HtmlEscapeHelper.toPlainText;
 
-public final class ContentValuesCreator implements TwidereConstants {
+public final class ContentValuesCreator implements FiretweetConstants {
 
     public static ContentValues createAccount(final Configuration conf, final String basicUsername,
                                               final String basicPassword, final User user,
@@ -267,7 +267,7 @@ public final class ContentValuesCreator implements TwidereConstants {
         final ContentValues values = new ContentValues();
         values.put(Drafts.ACTION_TYPE, Drafts.ACTION_SEND_DIRECT_MESSAGE);
         values.put(Drafts.TEXT, text);
-        values.put(Drafts.ACCOUNT_IDS, TwidereArrayUtils.toString(new long[]{accountId}, ',', false));
+        values.put(Drafts.ACCOUNT_IDS, FiretweetArrayUtils.toString(new long[]{accountId}, ',', false));
         values.put(Drafts.TIMESTAMP, System.currentTimeMillis());
         if (imageUri != null) {
             final ParcelableMediaUpdate[] mediaArray = {new ParcelableMediaUpdate(imageUri, 0)};
@@ -413,7 +413,7 @@ public final class ContentValuesCreator implements TwidereConstants {
         final ContentValues values = new ContentValues();
         values.put(Drafts.ACTION_TYPE, Drafts.ACTION_UPDATE_STATUS);
         values.put(Drafts.TEXT, status.text);
-        values.put(Drafts.ACCOUNT_IDS, TwidereArrayUtils.toString(accountIds, ',', false));
+        values.put(Drafts.ACCOUNT_IDS, FiretweetArrayUtils.toString(accountIds, ',', false));
         values.put(Drafts.IN_REPLY_TO_STATUS_ID, status.in_reply_to_status_id);
         values.put(Drafts.LOCATION, ParcelableLocation.toString(status.location));
         values.put(Drafts.IS_POSSIBLY_SENSITIVE, status.is_possibly_sensitive);

@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -55,10 +55,10 @@ import android.widget.Toast;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.SettingsActivity;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.support.BaseSupportDialogFragment;
 import org.getlantern.firetweet.fragment.support.SupportProgressDialogFragment;
-import org.getlantern.firetweet.provider.TwidereDataStore.Accounts;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;
 import org.getlantern.firetweet.util.AsyncTaskUtils;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
 import org.getlantern.firetweet.util.ContentValuesCreator;
@@ -70,8 +70,11 @@ import org.getlantern.firetweet.util.ParseUtils;
 import org.getlantern.firetweet.util.ThemeUtils;
 import org.getlantern.firetweet.util.TwitterContentUtils;
 import org.getlantern.firetweet.util.Utils;
+import org.getlantern.firetweet.util.accessor.ViewAccessor;
 import org.getlantern.firetweet.util.net.OkHttpClientFactory;
-import org.getlantern.firetweet.util.net.TwidereHostResolverFactory;
+import org.getlantern.firetweet.util.net.FiretweetHostResolverFactory;
+
+import java.util.Locale;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterConstants;
@@ -93,6 +96,7 @@ import static org.getlantern.firetweet.util.ContentValuesCreator.createAccount;
 import static org.getlantern.firetweet.util.Utils.getAccountIds;
 import static org.getlantern.firetweet.util.Utils.getActivatedAccountIds;
 import static org.getlantern.firetweet.util.Utils.getNonEmptyString;
+import static org.getlantern.firetweet.util.Utils.isUserLoggedIn;
 import static org.getlantern.firetweet.util.Utils.showErrorMessage;
 import static org.getlantern.firetweet.util.Utils.trim;
 
@@ -115,7 +119,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
     private Button mSignInButton, mSignUpButton;
     private LinearLayout mSigninSignupContainer, mUsernamePasswordContainer;
 
-    private FireTweetApplication mApplication;
+    private FiretweetApplication mApplication;
     private SharedPreferences mPreferences;
     private ContentResolver mResolver;
     private AbstractSignInTask mTask;
@@ -306,7 +310,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         super.onCreate(savedInstanceState);
         mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
         mResolver = getContentResolver();
-        mApplication = FireTweetApplication.getInstance(this);
+        mApplication = FiretweetApplication.getInstance(this);
         setContentView(R.layout.activity_sign_in);
         setSupportProgressBarIndeterminateVisibility(false);
         final long[] account_ids = getActivatedAccountIds(this);
@@ -386,7 +390,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         final boolean enable_gzip_compressing = mPreferences.getBoolean(KEY_GZIP_COMPRESSING, false);
         final boolean ignore_ssl_error = mPreferences.getBoolean(KEY_IGNORE_SSL_ERROR, false);
         final boolean enable_proxy = mPreferences.getBoolean(KEY_ENABLE_PROXY, false);
-        cb.setHostAddressResolverFactory(new TwidereHostResolverFactory(mApplication));
+        cb.setHostAddressResolverFactory(new FiretweetHostResolverFactory(mApplication));
         cb.setHttpClientFactory(new OkHttpClientFactory(mApplication));
         if (TwitterContentUtils.isOfficialKey(this, mConsumerKey, mConsumerSecret)) {
             Utils.setMockOfficialUserAgent(this, cb);

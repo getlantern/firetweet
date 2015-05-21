@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -129,7 +129,7 @@ public class MultiSelectManager implements Constants {
 				ids_list.add(((ParcelableStatus) item).user_id);
 			}
 		}
-		return TwidereArrayUtils.fromList(ids_list);
+		return FiretweetArrayUtils.fromList(ids_list);
 	}
 
 	public static interface Callback {

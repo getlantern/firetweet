@@ -1,5 +1,5 @@
 /*
- * Twidere - Twitter client for Android
+ * Firetweet - Twitter client for Android
  *
  *  Copyright (C) 2012-2015 Mariotaku Lee <mariotaku.lee@gmail.com>
  *
@@ -23,7 +23,7 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
 import android.view.MenuItem;
 
-import org.getlantern.firetweet.util.menu.TwidereMenuInfo;
+import org.getlantern.firetweet.util.menu.FiretweetMenuInfo;
 
 /**
  * Created by mariotaku on 15/1/16.
@@ -38,7 +38,7 @@ public class ActionIconDrawable extends DrawableWrapper {
         setHighlightColor(0);
     }
 
-    public static void setMenuHighlight(MenuItem item, TwidereMenuInfo info) {
+    public static void setMenuHighlight(MenuItem item, FiretweetMenuInfo info) {
         final Drawable icon = item.getIcon();
         if (icon instanceof ActionIconDrawable) {
             ((ActionIconDrawable) icon).setHighlightColor(info.isHighlight() ? info.getHighlightColor(0) : 0);

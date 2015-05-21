@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -112,19 +112,19 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.getlantern.jsonserializer.JSONSerializer;
-import org.getlantern.querybuilder.AllColumns;
-import org.getlantern.querybuilder.Columns;
-import org.getlantern.querybuilder.Columns.Column;
-import org.getlantern.querybuilder.Expression;
-import org.getlantern.querybuilder.OrderBy;
-import org.getlantern.querybuilder.RawItemArray;
-import org.getlantern.querybuilder.SQLFunctions;
-import org.getlantern.querybuilder.SQLQueryBuilder;
-import org.getlantern.querybuilder.Selectable;
-import org.getlantern.querybuilder.Table;
-import org.getlantern.querybuilder.Tables;
-import org.getlantern.querybuilder.query.SQLSelectQuery;
+import org.getlantern.firetweetserializer.JSONSerializer;
+import org.mariotaku.querybuilder.AllColumns;
+import org.mariotaku.querybuilder.Columns;
+import org.mariotaku.querybuilder.Columns.Column;
+import org.mariotaku.querybuilder.Expression;
+import org.mariotaku.querybuilder.OrderBy;
+import org.mariotaku.querybuilder.RawItemArray;
+import org.mariotaku.querybuilder.SQLFunctions;
+import org.mariotaku.querybuilder.SQLQueryBuilder;
+import org.mariotaku.querybuilder.Selectable;
+import org.mariotaku.querybuilder.Table;
+import org.mariotaku.querybuilder.Tables;
+import org.mariotaku.querybuilder.query.SQLSelectQuery;
 import org.getlantern.firetweet.BuildConfig;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
@@ -134,7 +134,7 @@ import org.getlantern.firetweet.activity.support.ColorPickerDialogActivity;
 import org.getlantern.firetweet.activity.support.MediaViewerActivity;
 import org.getlantern.firetweet.adapter.iface.IBaseAdapter;
 import org.getlantern.firetweet.adapter.iface.IBaseCardAdapter;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.iface.IBaseFragment.SystemWindowsInsetsCallback;
 import org.getlantern.firetweet.fragment.support.AddStatusFilterDialogFragment;
 import org.getlantern.firetweet.fragment.support.DestroyStatusDialogFragment;
@@ -168,6 +168,7 @@ import org.getlantern.firetweet.fragment.support.UserTimelineFragment;
 import org.getlantern.firetweet.fragment.support.UsersListFragment;
 import org.getlantern.firetweet.graphic.ActionIconDrawable;
 import org.getlantern.firetweet.graphic.PaddingDrawable;
+import org.getlantern.firetweet.menu.SupportStatusShareProvider;
 import org.getlantern.firetweet.model.AccountPreferences;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.model.ParcelableAccount.ParcelableCredentials;
@@ -177,37 +178,37 @@ import org.getlantern.firetweet.model.ParcelableMedia;
 import org.getlantern.firetweet.model.ParcelableStatus;
 import org.getlantern.firetweet.model.ParcelableUser;
 import org.getlantern.firetweet.model.ParcelableUserList;
-import org.getlantern.firetweet.model.TwidereParcelable;
-import org.getlantern.firetweet.provider.TwidereDataStore;
-import org.getlantern.firetweet.provider.TwidereDataStore.Accounts;
-import org.getlantern.firetweet.provider.TwidereDataStore.CacheFiles;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedHashtags;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedImages;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedRelationships;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedStatuses;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedTrends;
-import org.getlantern.firetweet.provider.TwidereDataStore.CachedUsers;
-import org.getlantern.firetweet.provider.TwidereDataStore.DNS;
-import org.getlantern.firetweet.provider.TwidereDataStore.DirectMessages;
-import org.getlantern.firetweet.provider.TwidereDataStore.DirectMessages.ConversationEntries;
-import org.getlantern.firetweet.provider.TwidereDataStore.Drafts;
-import org.getlantern.firetweet.provider.TwidereDataStore.Filters;
-import org.getlantern.firetweet.provider.TwidereDataStore.Filters.Users;
-import org.getlantern.firetweet.provider.TwidereDataStore.Mentions;
-import org.getlantern.firetweet.provider.TwidereDataStore.Notifications;
-import org.getlantern.firetweet.provider.TwidereDataStore.Permissions;
-import org.getlantern.firetweet.provider.TwidereDataStore.Preferences;
-import org.getlantern.firetweet.provider.TwidereDataStore.SavedSearches;
-import org.getlantern.firetweet.provider.TwidereDataStore.SearchHistory;
-import org.getlantern.firetweet.provider.TwidereDataStore.Statuses;
-import org.getlantern.firetweet.provider.TwidereDataStore.Tabs;
-import org.getlantern.firetweet.provider.TwidereDataStore.UnreadCounts;
+import org.getlantern.firetweet.model.FiretweetParcelable;
+import org.getlantern.firetweet.provider.FiretweetDataStore;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CacheFiles;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedHashtags;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedImages;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedRelationships;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedStatuses;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedTrends;
+import org.getlantern.firetweet.provider.FiretweetDataStore.CachedUsers;
+import org.getlantern.firetweet.provider.FiretweetDataStore.DNS;
+import org.getlantern.firetweet.provider.FiretweetDataStore.DirectMessages;
+import org.getlantern.firetweet.provider.FiretweetDataStore.DirectMessages.ConversationEntries;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Drafts;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Filters;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Filters.Users;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Mentions;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Notifications;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Permissions;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Preferences;
+import org.getlantern.firetweet.provider.FiretweetDataStore.SavedSearches;
+import org.getlantern.firetweet.provider.FiretweetDataStore.SearchHistory;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Statuses;
+import org.getlantern.firetweet.provider.FiretweetDataStore.Tabs;
+import org.getlantern.firetweet.provider.FiretweetDataStore.UnreadCounts;
 import org.getlantern.firetweet.service.RefreshService;
-import org.getlantern.firetweet.util.TwidereLinkify.HighlightStyle;
+import org.getlantern.firetweet.util.FiretweetLinkify.HighlightStyle;
 import org.getlantern.firetweet.util.content.ContentResolverUtils;
-import org.getlantern.firetweet.util.menu.TwidereMenuInfo;
+import org.getlantern.firetweet.util.menu.FiretweetMenuInfo;
 import org.getlantern.firetweet.util.net.OkHttpClientFactory;
-import org.getlantern.firetweet.util.net.TwidereHostResolverFactory;
+import org.getlantern.firetweet.util.net.FiretweetHostResolverFactory;
 import org.getlantern.firetweet.view.CardMediaContainer.PreviewStyle;
 import org.getlantern.firetweet.view.ShapedImageView;
 import org.getlantern.firetweet.view.ShapedImageView.ShapeStyle;
@@ -267,11 +268,11 @@ import com.crashlytics.android.Crashlytics;
 
 import static android.text.TextUtils.isEmpty;
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
-import static org.getlantern.firetweet.provider.TwidereDataStore.CACHE_URIS;
-import static org.getlantern.firetweet.provider.TwidereDataStore.DIRECT_MESSAGES_URIS;
-import static org.getlantern.firetweet.provider.TwidereDataStore.STATUSES_URIS;
-import static org.getlantern.firetweet.util.TwidereLinkify.PATTERN_TWITTER_PROFILE_IMAGES;
-import static org.getlantern.firetweet.util.TwidereLinkify.TWITTER_PROFILE_IMAGES_AVAILABLE_SIZES;
+import static org.getlantern.firetweet.provider.FiretweetDataStore.CACHE_URIS;
+import static org.getlantern.firetweet.provider.FiretweetDataStore.DIRECT_MESSAGES_URIS;
+import static org.getlantern.firetweet.provider.FiretweetDataStore.STATUSES_URIS;
+import static org.getlantern.firetweet.util.FiretweetLinkify.PATTERN_TWITTER_PROFILE_IMAGES;
+import static org.getlantern.firetweet.util.FiretweetLinkify.TWITTER_PROFILE_IMAGES_AVAILABLE_SIZES;
 import static org.getlantern.firetweet.util.UserColorNameUtils.clearUserNickname;
 import static org.getlantern.firetweet.util.UserColorNameUtils.getUserColor;
 import static org.getlantern.firetweet.util.UserColorNameUtils.getUserNickname;
@@ -289,84 +290,84 @@ public final class Utils implements Constants, TwitterConstants {
     private static final UriMatcher HOME_TABS_URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, Accounts.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, Accounts.CONTENT_PATH,
                 TABLE_ID_ACCOUNTS);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, Statuses.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, Statuses.CONTENT_PATH,
                 TABLE_ID_STATUSES);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, Mentions.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, Mentions.CONTENT_PATH,
                 TABLE_ID_MENTIONS);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, Drafts.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, Drafts.CONTENT_PATH,
                 TABLE_ID_DRAFTS);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, CachedUsers.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, CachedUsers.CONTENT_PATH,
                 TABLE_ID_CACHED_USERS);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, Filters.Users.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, Filters.Users.CONTENT_PATH,
                 TABLE_ID_FILTERED_USERS);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, Filters.Keywords.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, Filters.Keywords.CONTENT_PATH,
                 TABLE_ID_FILTERED_KEYWORDS);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, Filters.Sources.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, Filters.Sources.CONTENT_PATH,
                 TABLE_ID_FILTERED_SOURCES);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, Filters.Links.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, Filters.Links.CONTENT_PATH,
                 TABLE_ID_FILTERED_LINKS);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, DirectMessages.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, DirectMessages.CONTENT_PATH,
                 TABLE_ID_DIRECT_MESSAGES);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, DirectMessages.Inbox.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, DirectMessages.Inbox.CONTENT_PATH,
                 TABLE_ID_DIRECT_MESSAGES_INBOX);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, DirectMessages.Outbox.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, DirectMessages.Outbox.CONTENT_PATH,
                 TABLE_ID_DIRECT_MESSAGES_OUTBOX);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, DirectMessages.Conversation.CONTENT_PATH + "/#/#",
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, DirectMessages.Conversation.CONTENT_PATH + "/#/#",
                 TABLE_ID_DIRECT_MESSAGES_CONVERSATION);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, DirectMessages.Conversation.CONTENT_PATH_SCREEN_NAME + "/#/*",
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, DirectMessages.Conversation.CONTENT_PATH_SCREEN_NAME + "/#/*",
                 TABLE_ID_DIRECT_MESSAGES_CONVERSATION_SCREEN_NAME);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, DirectMessages.ConversationEntries.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, DirectMessages.ConversationEntries.CONTENT_PATH,
                 TABLE_ID_DIRECT_MESSAGES_CONVERSATIONS_ENTRIES);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, CachedTrends.Local.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, CachedTrends.Local.CONTENT_PATH,
                 TABLE_ID_TRENDS_LOCAL);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, Tabs.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, Tabs.CONTENT_PATH,
                 TABLE_ID_TABS);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, CachedStatuses.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, CachedStatuses.CONTENT_PATH,
                 TABLE_ID_CACHED_STATUSES);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, CachedHashtags.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, CachedHashtags.CONTENT_PATH,
                 TABLE_ID_CACHED_HASHTAGS);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, CachedRelationships.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, CachedRelationships.CONTENT_PATH,
                 TABLE_ID_CACHED_RELATIONSHIPS);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, SavedSearches.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, SavedSearches.CONTENT_PATH,
                 TABLE_ID_SAVED_SEARCHES);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, SearchHistory.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, SearchHistory.CONTENT_PATH,
                 TABLE_ID_SEARCH_HISTORY);
 
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, Notifications.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, Notifications.CONTENT_PATH,
                 VIRTUAL_TABLE_ID_NOTIFICATIONS);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, Notifications.CONTENT_PATH + "/#",
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, Notifications.CONTENT_PATH + "/#",
                 VIRTUAL_TABLE_ID_NOTIFICATIONS);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, Notifications.CONTENT_PATH + "/#/#",
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, Notifications.CONTENT_PATH + "/#/#",
                 VIRTUAL_TABLE_ID_NOTIFICATIONS);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, Permissions.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, Permissions.CONTENT_PATH,
                 VIRTUAL_TABLE_ID_PERMISSIONS);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, DNS.CONTENT_PATH + "/*",
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, DNS.CONTENT_PATH + "/*",
                 VIRTUAL_TABLE_ID_DNS);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, CachedImages.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, CachedImages.CONTENT_PATH,
                 VIRTUAL_TABLE_ID_CACHED_IMAGES);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, CacheFiles.CONTENT_PATH + "/*",
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, CacheFiles.CONTENT_PATH + "/*",
                 VIRTUAL_TABLE_ID_CACHE_FILES);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, Preferences.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, Preferences.CONTENT_PATH,
                 VIRTUAL_TABLE_ID_ALL_PREFERENCES);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, Preferences.CONTENT_PATH + "/*",
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, Preferences.CONTENT_PATH + "/*",
                 VIRTUAL_TABLE_ID_PREFERENCES);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, UnreadCounts.CONTENT_PATH,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, UnreadCounts.CONTENT_PATH,
                 VIRTUAL_TABLE_ID_UNREAD_COUNTS);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, UnreadCounts.CONTENT_PATH + "/#",
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, UnreadCounts.CONTENT_PATH + "/#",
                 VIRTUAL_TABLE_ID_UNREAD_COUNTS);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, UnreadCounts.CONTENT_PATH + "/#/#/*",
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, UnreadCounts.CONTENT_PATH + "/#/#/*",
                 VIRTUAL_TABLE_ID_UNREAD_COUNTS);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, UnreadCounts.ByType.CONTENT_PATH + "/*",
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, UnreadCounts.ByType.CONTENT_PATH + "/*",
                 VIRTUAL_TABLE_ID_UNREAD_COUNTS_BY_TYPE);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, TwidereDataStore.CONTENT_PATH_DATABASE_READY,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, FiretweetDataStore.CONTENT_PATH_DATABASE_READY,
                 VIRTUAL_TABLE_ID_DATABASE_READY);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, CachedUsers.CONTENT_PATH_WITH_RELATIONSHIP + "/#",
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, CachedUsers.CONTENT_PATH_WITH_RELATIONSHIP + "/#",
                 VIRTUAL_TABLE_ID_CACHED_USERS_WITH_RELATIONSHIP);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, CachedUsers.CONTENT_PATH_WITH_SCORE + "/#",
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, CachedUsers.CONTENT_PATH_WITH_SCORE + "/#",
                 VIRTUAL_TABLE_ID_CACHED_USERS_WITH_SCORE);
-        CONTENT_PROVIDER_URI_MATCHER.addURI(TwidereDataStore.AUTHORITY, Drafts.CONTENT_PATH_UNSENT,
+        CONTENT_PROVIDER_URI_MATCHER.addURI(FiretweetDataStore.AUTHORITY, Drafts.CONTENT_PATH_UNSENT,
                 VIRTUAL_TABLE_ID_DRAFTS_UNSENT);
 
         LINK_HANDLER_URI_MATCHER.addURI(AUTHORITY_STATUS, null, LINK_ID_STATUS);
@@ -442,7 +443,7 @@ public final class Utils implements Constants, TwitterConstants {
 
     public static void addIntentToMenuForExtension(final Context context, final Menu menu, final int groupId,
                                                    final String action, final String parelableKey, final String parelableJSONKey,
-                                                   final TwidereParcelable parcelable) {
+                                                   final FiretweetParcelable parcelable) {
         if (context == null || menu == null || action == null || parelableKey == null || parcelable == null)
             return;
         final PackageManager pm = context.getPackageManager();
@@ -527,7 +528,7 @@ public final class Utils implements Constants, TwitterConstants {
 
     public static Uri buildDirectMessageConversationUri(final long account_id, final long conversation_id,
                                                         final String screen_name) {
-        if (conversation_id <= 0 && screen_name == null) return TwidereDataStore.CONTENT_URI_NULL;
+        if (conversation_id <= 0 && screen_name == null) return FiretweetDataStore.CONTENT_URI_NULL;
         final Uri.Builder builder = conversation_id > 0 ? DirectMessages.Conversation.CONTENT_URI.buildUpon()
                 : DirectMessages.Conversation.CONTENT_URI_SCREEN_NAME.buildUpon();
         builder.appendPath(String.valueOf(account_id));
@@ -1069,18 +1070,18 @@ public final class Utils implements Constants, TwitterConstants {
             return tag;
         final long[] accountIdsClone = accountIds.clone();
         Arrays.sort(accountIdsClone);
-        return tag + "_" + TwidereArrayUtils.toString(accountIdsClone, '_', false);
+        return tag + "_" + FiretweetArrayUtils.toString(accountIdsClone, '_', false);
     }
 
     public static String getReadPositionTagWithAccounts(Context context, boolean activatedIfMissing, String tag, long... accountIds) {
         if (accountIds == null || accountIds.length == 0 || (accountIds.length == 1 && accountIds[0] < 0)) {
             final long[] activatedIds = getActivatedAccountIds(context);
             Arrays.sort(activatedIds);
-            return tag + "_" + TwidereArrayUtils.toString(activatedIds, '_', false);
+            return tag + "_" + FiretweetArrayUtils.toString(activatedIds, '_', false);
         }
         final long[] accountIdsClone = accountIds.clone();
         Arrays.sort(accountIdsClone);
-        return tag + "_" + TwidereArrayUtils.toString(accountIdsClone, '_', false);
+        return tag + "_" + FiretweetArrayUtils.toString(accountIdsClone, '_', false);
     }
 
     public static String getStatusShareText(final Context context, final ParcelableStatus status) {
@@ -1635,7 +1636,7 @@ public final class Utils implements Constants, TwitterConstants {
         if (context == null) throw new NullPointerException();
         final File extCacheDir;
         try {
-            // Workaround for https://github.com/mariotaku/twidere/issues/138
+            // Workaround for https://github.com/mariotaku/firetweet/issues/138
             extCacheDir = context.getExternalCacheDir();
         } catch (final Exception e) {
             Crashlytics.logException(e);
@@ -1809,8 +1810,8 @@ public final class Utils implements Constants, TwitterConstants {
         final int timeoutMillis = prefs.getInt(KEY_CONNECTION_TIMEOUT, 10000) * 1000;
         final Proxy proxy = getProxy(context);
         final String userAgent = generateBrowserUserAgent();
-        final HostAddressResolverFactory resolverFactory = new TwidereHostResolverFactory(
-                FireTweetApplication.getInstance(context));
+        final HostAddressResolverFactory resolverFactory = new FiretweetHostResolverFactory(
+                FiretweetApplication.getInstance(context));
         return getHttpClient(context, timeoutMillis, true, proxy, resolverFactory, userAgent, false);
     }
 
@@ -1820,8 +1821,8 @@ public final class Utils implements Constants, TwitterConstants {
         final int timeoutMillis = prefs.getInt(KEY_CONNECTION_TIMEOUT, 10000) * 1000;
         final Proxy proxy = getProxy(context);
         final String userAgent = generateBrowserUserAgent();
-        final HostAddressResolverFactory resolverFactory = new TwidereHostResolverFactory(
-                FireTweetApplication.getInstance(context));
+        final HostAddressResolverFactory resolverFactory = new FiretweetHostResolverFactory(
+                FiretweetApplication.getInstance(context));
         return getHttpClient(context, timeoutMillis, true, proxy, resolverFactory, userAgent, false);
     }
 
@@ -1873,7 +1874,7 @@ public final class Utils implements Constants, TwitterConstants {
             return ParseUtils.parseString(text);
         final SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         final String imageUploadFormat = getNonEmptyString(prefs, KEY_IMAGE_UPLOAD_FORMAT, DEFAULT_IMAGE_UPLOAD_FORMAT);
-        return imageUploadFormat.replace(FORMAT_PATTERN_LINK, TwidereArrayUtils.toString(links, ' ', false)).replace(
+        return imageUploadFormat.replace(FORMAT_PATTERN_LINK, FiretweetArrayUtils.toString(links, ' ', false)).replace(
                 FORMAT_PATTERN_TEXT, text);
     }
 
@@ -1961,7 +1962,7 @@ public final class Utils implements Constants, TwitterConstants {
                 list.add(key);
             }
         }
-        return TwidereArrayUtils.fromList(list);
+        return FiretweetArrayUtils.fromList(list);
     }
 
     public static long[] getNewestMessageIdsFromDatabase(final Context context, final Uri uri) {
@@ -2327,7 +2328,7 @@ public final class Utils implements Constants, TwitterConstants {
 
     public static int getTextCount(final String string) {
         if (string == null) return 0;
-        return TwidereArrayUtils.toStringArray(string).length;
+        return FiretweetArrayUtils.toStringArray(string).length;
     }
 
     public static int getTextCount(final TextView view) {
@@ -2512,7 +2513,7 @@ public final class Utils implements Constants, TwitterConstants {
                                              final boolean includeEntities,
                                              final boolean includeRetweets) {
         if (context == null) return null;
-        final FireTweetApplication app = FireTweetApplication.getInstance(context);
+        final FiretweetApplication app = FiretweetApplication.getInstance(context);
         final SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         final int connection_timeout = prefs.getInt(KEY_CONNECTION_TIMEOUT, 10) * 1000;
         final boolean enableGzip = prefs.getBoolean(KEY_GZIP_COMPRESSING, true);
@@ -2523,7 +2524,7 @@ public final class Utils implements Constants, TwitterConstants {
         final ParcelableCredentials credentials = ParcelableCredentials.getCredentials(context, accountId);
         if (credentials == null) return null;
         final ConfigurationBuilder cb = new ConfigurationBuilder();
-        cb.setHostAddressResolverFactory(new TwidereHostResolverFactory(app));
+        cb.setHostAddressResolverFactory(new FiretweetHostResolverFactory(app));
         cb.setHttpClientFactory(new OkHttpClientFactory(context));
         cb.setHttpConnectionTimeout(connection_timeout);
         cb.setGZIPEnabled(enableGzip);
@@ -2717,7 +2718,7 @@ public final class Utils implements Constants, TwitterConstants {
     }
 
     public static boolean isDatabaseReady(final Context context) {
-        final Cursor c = context.getContentResolver().query(TwidereDataStore.CONTENT_URI_DATABASE_READY, null, null, null,
+        final Cursor c = context.getContentResolver().query(FiretweetDataStore.CONTENT_URI_DATABASE_READY, null, null, null,
                 null);
         try {
             return c != null;
@@ -3089,7 +3090,7 @@ public final class Utils implements Constants, TwitterConstants {
 
     public static void openStatus(final Context context, final long accountId, final long statusId) {
         if (context == null || accountId <= 0 || statusId <= 0) return;
-        final Uri uri = LinkCreator.getTwidereStatusLink(accountId, statusId);
+        final Uri uri = LinkCreator.getFiretweetStatusLink(accountId, statusId);
         final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         context.startActivity(intent);
     }
@@ -3426,7 +3427,7 @@ public final class Utils implements Constants, TwitterConstants {
     public static void openUserProfile(final Context context, final long accountId, final long userId,
                                        final String screenName, final Bundle activityOptions) {
         if (context == null || accountId <= 0 || userId <= 0 && isEmpty(screenName)) return;
-        final Uri uri = LinkCreator.getTwidereUserLink(accountId, userId, screenName);
+        final Uri uri = LinkCreator.getFiretweetUserLink(accountId, userId, screenName);
         final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         if (context instanceof Activity) {
             ActivityCompat.startActivity((Activity) context, intent, activityOptions);
@@ -3588,17 +3589,17 @@ public final class Utils implements Constants, TwitterConstants {
         final MenuItem retweet = menu.findItem(MENU_RETWEET);
         if (retweet != null) {
             retweet.setVisible(!status.user_is_protected || isMyRetweet);
-            ActionIconDrawable.setMenuHighlight(retweet, new TwidereMenuInfo(isMyRetweet, retweetHighlight));
+            ActionIconDrawable.setMenuHighlight(retweet, new FiretweetMenuInfo(isMyRetweet, retweetHighlight));
             retweet.setTitle(isMyRetweet ? R.string.cancel_retweet : R.string.retweet);
         }
         final MenuItem retweetSubItem = menu.findItem(R.id.retweet_submenu);
         if (retweetSubItem != null) {
-            ActionIconDrawable.setMenuHighlight(retweetSubItem, new TwidereMenuInfo(isMyRetweet,
+            ActionIconDrawable.setMenuHighlight(retweetSubItem, new FiretweetMenuInfo(isMyRetweet,
                     retweetHighlight));
         }
         final MenuItem favorite = menu.findItem(MENU_FAVORITE);
         if (favorite != null) {
-            ActionIconDrawable.setMenuHighlight(favorite, new TwidereMenuInfo(status.is_favorite, favoriteHighlight));
+            ActionIconDrawable.setMenuHighlight(favorite, new FiretweetMenuInfo(status.is_favorite, favoriteHighlight));
             favorite.setTitle(status.is_favorite ? R.string.unfavorite : R.string.favorite);
         }
         final MenuItem translate = menu.findItem(MENU_TRANSLATE);

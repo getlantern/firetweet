@@ -6,8 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import android.content.Context;
+
 import org.getlantern.firetweet.R;
+import org.getlantern.firetweet.activity.MainActivity;
 import org.getlantern.firetweet.activity.support.HomeActivity;
+
+import org.getlantern.firetweet.model.Lantern;
 
 public class SplashScreen extends Activity {
  

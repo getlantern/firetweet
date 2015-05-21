@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.getlantern.firetweet.R;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.loader.support.MediaTimelineLoader;
 import org.getlantern.firetweet.model.ParcelableMedia;
 import org.getlantern.firetweet.model.ParcelableStatus;
@@ -167,7 +167,7 @@ public class UserMediaTimelineFragment extends BaseSupportFragment
 
         MediaTimelineAdapter(Context context) {
             mInflater = LayoutInflater.from(context);
-            mImageLoader = FireTweetApplication.getInstance(context).getMediaLoaderWrapper();
+            mImageLoader = FiretweetApplication.getInstance(context).getMediaLoaderWrapper();
             mLoadingHandler = new ImageLoadingHandler(R.id.media_image_progress);
         }
 

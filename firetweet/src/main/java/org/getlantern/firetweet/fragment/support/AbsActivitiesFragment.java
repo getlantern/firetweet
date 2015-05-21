@@ -1,5 +1,5 @@
 /*
- * Twidere - Twitter client for Android
+ * Firetweet - Twitter client for Android
  *
  *  Copyright (C) 2012-2015 Mariotaku Lee <mariotaku.lee@gmail.com>
  *
@@ -42,7 +42,7 @@ import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.AbsActivitiesAdapter;
 import org.getlantern.firetweet.adapter.AbsActivitiesAdapter.ActivityAdapterListener;
 import org.getlantern.firetweet.adapter.decorator.DividerItemDecoration;
-import org.getlantern.firetweet.app.FireTweetApplication;
+import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.iface.RefreshScrollTopInterface;
 import org.getlantern.firetweet.model.ParcelableActivity;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
@@ -188,13 +188,13 @@ public abstract class AbsActivitiesFragment<Data> extends BaseSupportFragment im
     @Override
     public void onStart() {
         super.onStart();
-        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FiretweetApplication.getInstance(getActivity()).getMessageBus();
         bus.register(mStatusesBusCallback);
     }
 
     @Override
     public void onStop() {
-        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FiretweetApplication.getInstance(getActivity()).getMessageBus();
         bus.unregister(mStatusesBusCallback);
         super.onStop();
     }

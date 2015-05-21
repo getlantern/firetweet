@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -23,11 +23,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.AttributeSet;
 
-import org.getlantern.firetweet.TwidereConstants;
+import org.getlantern.firetweet.FiretweetConstants;
 import org.getlantern.firetweet.fragment.AccountRefreshSettingsFragment;
 import org.getlantern.firetweet.model.ParcelableAccount;
 
-public class AutoRefreshAccountsListPreference extends AccountsListPreference implements TwidereConstants {
+public class AutoRefreshAccountsListPreference extends AccountsListPreference implements FiretweetConstants {
 
 	public AutoRefreshAccountsListPreference(final Context context) {
 		super(context);

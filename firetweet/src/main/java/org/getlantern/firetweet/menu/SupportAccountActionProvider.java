@@ -1,5 +1,5 @@
 /*
- * Twidere - Twitter client for Android
+ * Firetweet - Twitter client for Android
  *
  *  Copyright (C) 2012-2015 Mariotaku Lee <mariotaku.lee@gmail.com>
  *
@@ -28,10 +28,10 @@ import android.view.SubMenu;
 import android.view.View;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.getlantern.firetweet.TwidereConstants;
+import org.getlantern.firetweet.FiretweetConstants;
 import org.getlantern.firetweet.model.ParcelableAccount;
 
-public class SupportAccountActionProvider extends ActionProvider implements TwidereConstants {
+public class SupportAccountActionProvider extends ActionProvider implements FiretweetConstants {
 
     public static final int MENU_GROUP = 201;
 

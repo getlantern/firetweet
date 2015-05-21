@@ -1,5 +1,5 @@
 /*
- * 				Twidere - Twitter client for Android
+ * 				Firetweet - Twitter client for Android
  * 
  *  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
  * 
@@ -27,7 +27,7 @@ import android.util.AttributeSet;
 
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.provider.RecentSearchProvider;
-import org.getlantern.firetweet.provider.TwidereDataStore.SearchHistory;
+import org.getlantern.firetweet.provider.FiretweetDataStore.SearchHistory;
 
 public class ClearSearchHistoryPreference extends AsyncTaskPreference implements Constants, OnPreferenceClickListener {
 
