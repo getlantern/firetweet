@@ -25,9 +25,9 @@ import android.text.TextUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.getlantern.firetweetserializer.JSONParcel;
-import org.getlantern.firetweetserializer.JSONParcelable;
-import org.getlantern.firetweetserializer.JSONSerializer;
+import org.getlantern.jsonserializer.JSONParcel;
+import org.getlantern.jsonserializer.JSONParcelable;
+import org.getlantern.jsonserializer.JSONSerializer;
 
 import twitter4j.Status;
 import twitter4j.UserMentionEntity;

@@ -23,7 +23,7 @@ import android.content.ContentValues;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.getlantern.firetweetserializer.JSONSerializer;
+import org.getlantern.jsonserializer.JSONSerializer;
 import org.getlantern.firetweet.FiretweetConstants;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.model.ParcelableDirectMessage;

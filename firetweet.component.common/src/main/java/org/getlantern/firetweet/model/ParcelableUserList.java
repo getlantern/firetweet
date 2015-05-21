@@ -23,8 +23,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-import org.getlantern.firetweetserializer.JSONParcel;
-import org.getlantern.firetweetserializer.JSONParcelable;
+import org.getlantern.jsonserializer.JSONParcel;
+import org.getlantern.jsonserializer.JSONParcelable;
 
 import twitter4j.User;
 import twitter4j.UserList;

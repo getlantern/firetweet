@@ -26,8 +26,8 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import org.getlantern.firetweetserializer.JSONParcel;
-import org.getlantern.firetweetserializer.JSONParcelable;
+import org.getlantern.jsonserializer.JSONParcel;
+import org.getlantern.jsonserializer.JSONParcelable;
 import org.getlantern.firetweet.provider.FiretweetDataStore.CachedUsers;
 import org.getlantern.firetweet.provider.FiretweetDataStore.DirectMessages.ConversationEntries;
 import org.getlantern.firetweet.util.HtmlEscapeHelper;
