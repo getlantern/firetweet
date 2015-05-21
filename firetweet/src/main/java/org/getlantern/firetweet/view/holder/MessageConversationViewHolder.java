@@ -28,7 +28,7 @@ import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
-import org.getlantern.messagebubbleview.library.MessageBubbleView;
+import org.mariotaku.messagebubbleview.library.MessageBubbleView;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.MessageConversationAdapter;
 import org.getlantern.firetweet.model.ParcelableDirectMessage.CursorIndices;
