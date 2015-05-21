@@ -42,7 +42,7 @@ public class BaseSupportDialogActivity extends ThemedFragmentActivity implements
         return ThemeUtils.getDialogThemeResource(this);
     }
 
-    public FireTweetApplication getTwidereApplication() {
+    public FireTweetApplication getFireTweetApplication() {
         return (FireTweetApplication) getApplication();
     }
 

@@ -47,7 +47,7 @@ public class BaseActionBarActivity extends ThemedActionBarActivity implements Co
     private ArrayList<ControlBarOffsetListener> mControlBarOffsetListeners = new ArrayList<>();
 
     public MessagesManager getMessagesManager() {
-        return getTwidereApplication() != null ? getTwidereApplication().getMessagesManager() : null;
+        return getFireTweetApplication() != null ? getTwidereApplication().getMessagesManager() : null;
     }
 
     @Override
@@ -60,12 +60,12 @@ public class BaseActionBarActivity extends ThemedActionBarActivity implements Co
         return ThemeUtils.getThemeResource(this);
     }
 
-    public FireTweetApplication getTwidereApplication() {
+    public FireTweetApplication getFireTweetApplication() {
         return (FireTweetApplication) getApplication();
     }
 
     public AsyncTwitterWrapper getTwitterWrapper() {
-        return getTwidereApplication() != null ? getTwidereApplication().getTwitterWrapper() : null;
+        return getFireTweetApplication() != null ? getTwidereApplication().getTwitterWrapper() : null;
     }
 
     public boolean isOnTop() {

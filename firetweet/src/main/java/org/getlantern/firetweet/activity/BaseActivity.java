@@ -35,7 +35,7 @@ public class BaseActivity extends BaseThemedActivity implements Constants {
 	private boolean mInstanceStateSaved, mIsVisible, mIsOnTop;
 
 	public MessagesManager getMessagesManager() {
-		return getTwidereApplication() != null ? getTwidereApplication().getMessagesManager() : null;
+		return getFireTweetApplication() != null ? getTwidereApplication().getMessagesManager() : null;
 	}
 
     @Override
@@ -48,12 +48,12 @@ public class BaseActivity extends BaseThemedActivity implements Constants {
 		return ThemeUtils.getThemeResource(this);
 	}
 
-	public FireTweetApplication getTwidereApplication() {
+	public FireTweetApplication getFireTweetApplication() {
 		return (FireTweetApplication) getApplication();
 	}
 
 	public AsyncTwitterWrapper getTwitterWrapper() {
-		return getTwidereApplication() != null ? getTwidereApplication().getTwitterWrapper() : null;
+		return getFireTweetApplication() != null ? getTwidereApplication().getTwitterWrapper() : null;
 	}
 
 	public boolean isOnTop() {

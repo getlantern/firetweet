@@ -78,7 +78,7 @@ public class MultiSelectEventHandler implements Constants, ActionMode.Callback, 
      * Call before super.onCreate
      */
     public void dispatchOnCreate() {
-        mApplication = mActivity.getTwidereApplication();
+        mApplication = mActivity.getFireTweetApplication();
         mTwitterWrapper = mApplication.getTwitterWrapper();
         mMultiSelectManager = mApplication.getMultiSelectManager();
     }
