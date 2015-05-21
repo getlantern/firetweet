@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Twidere - Twitter client for Android
+  ~ Firetweet - Twitter client for Android
   ~
   ~  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
   ~
@@ -25,7 +25,7 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
-    <org.mariotaku.messagebubbleview.library.MessageBubbleView
+    <org.getlantern.messagebubbleview.library.MessageBubbleView
         android:id="@+id/message_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,6 +38,6 @@
         app:cornerRadius="2dp">
 
         <include layout="@layout/card_item_message_conversation_common"/>
-    </org.mariotaku.messagebubbleview.library.MessageBubbleView>
+    </org.getlantern.messagebubbleview.library.MessageBubbleView>
 
 </FrameLayout>

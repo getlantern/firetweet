@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.provider.Settings.Secure;
 
-import org.mariotaku.twidere.util.Utils;
+import org.getlantern.firetweet.util.Utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,7 +17,7 @@ import twitter4j.http.HttpClientWrapper;
 import twitter4j.http.HttpParameter;
 import twitter4j.http.HttpResponse;
 
-import static org.mariotaku.twidere.util.Utils.copyStream;
+import static org.getlantern.firetweet.util.Utils.copyStream;
 
 public class UploadTask extends AsyncTask<Object, Object, Object> {
 

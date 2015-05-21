@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Twidere - Twitter client for Android
+  ~ Firetweet - Twitter client for Android
   ~
   ~  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
   ~
@@ -27,7 +27,7 @@
     android:orientation="horizontal"
     tools:showIn="@layout/fragment_messages_conversation">
 
-    <org.mariotaku.twidere.view.ActionIconView
+    <org.getlantern.firetweet.view.ActionIconView
         android:id="@+id/add_image"
         style="?android:borderlessButtonStyle"
         android:layout_width="?android:actionBarSize"
@@ -39,7 +39,7 @@
         android:scaleType="centerInside"
         android:src="@drawable/ic_action_gallery"/>
 
-    <org.mariotaku.twidere.view.StatusComposeEditText
+    <org.getlantern.firetweet.view.StatusComposeEditText
         android:id="@+id/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
         android:layout_weight="0"
         android:padding="0dp">
 
-        <org.mariotaku.twidere.view.ActionIconView
+        <org.getlantern.firetweet.view.ActionIconView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:color="?android:textColorSecondary"
@@ -69,7 +69,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/ic_action_send"/>
 
-        <org.mariotaku.twidere.view.StatusTextCountView
+        <org.getlantern.firetweet.view.StatusTextCountView
             android:id="@+id/text_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

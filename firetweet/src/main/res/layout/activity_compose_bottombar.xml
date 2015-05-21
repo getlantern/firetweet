@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Twidere - Twitter client for Android
+  ~ Firetweet - Twitter client for Android
   ~
   ~  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
   ~
@@ -44,7 +44,7 @@
             android:clickable="true"
             android:padding="@dimen/element_spacing_msmall">
 
-            <org.mariotaku.twidere.view.SquareShapedImageView
+            <org.getlantern.firetweet.view.SquareShapedImageView
                 android:id="@+id/account_profile_image"
                 style="?profileImageStyle"
                 android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
                 app:sivBorder="true"
                 app:sivBorderWidth="@dimen/line_width_compose_account_profile_image"/>
 
-            <org.mariotaku.twidere.view.BadgeView
+            <org.getlantern.firetweet.view.BadgeView
                 android:id="@+id/accounts_count"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <org.mariotaku.twidere.view.TwidereActionMenuView
+            <org.getlantern.firetweet.view.FiretweetActionMenuView
                 android:id="@+id/menu_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -94,7 +94,7 @@
         android:paddingRight="@dimen/element_spacing_normal"
         android:paddingTop="@dimen/element_spacing_normal">
 
-        <org.mariotaku.twidere.view.StatusTextCountView
+        <org.getlantern.firetweet.view.StatusTextCountView
             android:id="@+id/status_text_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
             android:minWidth="@dimen/element_size_small"
             android:textAppearance="?android:textAppearanceSmall"/>
 
-        <org.mariotaku.twidere.view.ActionIconView
+        <org.getlantern.firetweet.view.ActionIconView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:color="?android:textColorSecondary"

@@ -145,7 +145,7 @@
   <string name="created_at">Создан</string>
   <string name="search_hint">Поиск твитов или пользователей</string>
   <string name="remember_position">Запомнить положение</string>
-  <string name="remember_position_summary">Запомнить позицию списка/вкладки перед выходом из Twidere</string>
+  <string name="remember_position_summary">Запомнить позицию списка/вкладки перед выходом из Firetweet</string>
   <string name="user_blocked">Заблокировать этого пользователя.</string>
   <string name="users_blocked">Заблокировать этих пользователей.</string>
   <string name="user_unblocked">Разблокировать этого пользователя.</string>
@@ -354,7 +354,7 @@
   <string name="silent_notifications">Бесшумные уведомления</string>
   <string name="silent_notifications_summary">Выключить звук/вибрацию уведомлений</string>
   <string name="disable_background_service">Выключить фоновый режим</string>
-  <string name="disable_background_service_summary">Twidere не использует фоновый сервис при отключенном автообновлении.</string>
+  <string name="disable_background_service_summary">Firetweet не использует фоновый сервис при отключенном автообновлении.</string>
   <string name="text_copied">Текст скопирован в буфер обмена.</string>
   <string name="hashtag">Хэштег</string>
   <string name="links">Ссылки</string>
@@ -394,7 +394,7 @@
   <string name="preload_wifi_only">Предзагружать только по Wi-Fi</string>
   <string name="disable_tab_swipe">Выкл свайп между вкладками</string>
   <string name="sign_in_method_introduction_title">Как это работает?</string>
-  <string name="sign_in_method_introduction">Большинство программ-клиентов, таких как twicca, открывает запрос логина и пароля через браузер, а затем возвращает вас обратно в программу-клиент. Иногда это очень неудобно. Twidere использует другой, более простой механизм входа без перехода в браузер. Не переживайте за ваши пароли, Twidere нигде их не хранит, это абсолютно безопасно!
+  <string name="sign_in_method_introduction">Большинство программ-клиентов, таких как twicca, открывает запрос логина и пароля через браузер, а затем возвращает вас обратно в программу-клиент. Иногда это очень неудобно. Firetweet использует другой, более простой механизм входа без перехода в браузер. Не переживайте за ваши пароли, Firetweet нигде их не хранит, это абсолютно безопасно!
 </string>
   <string name="quote_protected_status_notice">Не рекомендуется цитировать защищенный твит.</string>
   <string name="edit_draft">Редактировать черновик</string>
@@ -465,7 +465,7 @@
   <string name="created_by">Создано пользователем <xliff:g id="created_by">%s</xliff:g></string>
   <string name="add_to_list">Добавить к списку</string>
   <string name="account_delete_confirm_title">Удалить учетную запись</string>
-  <string name="account_delete_confirm_message">Эта учетная запись будет удалена из Twidere.</string>
+  <string name="account_delete_confirm_message">Эта учетная запись будет удалена из Firetweet.</string>
   <string name="theme">Темы оформления</string>
   <string name="theme_dark">Тёмный</string>
   <string name="theme_light">Светлый</string>
@@ -492,20 +492,20 @@
   <string name="next">Далее</string>
   <string name="settings_wizard">Мастер настройки</string>
   <string name="wizard_page_welcome_title">Добро пожаловать</string>
-  <string name="wizard_page_welcome_text">Спасибо за то, что выбрали Twidere. Вы бы хотели настроить его сейчас?</string>
+  <string name="wizard_page_welcome_text">Спасибо за то, что выбрали Firetweet. Вы бы хотели настроить его сейчас?</string>
   <string name="wizard_page_welcome_yes">Да</string>
   <string name="wizard_page_welcome_not_now">Не сейчас</string>
   <string name="wizard_page_welcome_import_settings">Импортировать параметры</string>
   <string name="wizard_page_theme_text">Выберите тему, которая вам нравится.</string>
-  <string name="wizard_page_tabs_text">Добавьте свои вкладки в Twidere. \nБудьте в курсе нужных именно вам вещей.</string>
+  <string name="wizard_page_tabs_text">Добавьте свои вкладки в Firetweet. \nБудьте в курсе нужных именно вам вещей.</string>
   <string name="wizard_page_tabs_unchanged_message">Вы можете добавить вкладки в \"Настройках\" - \"Вкладки\"</string>
   <string name="wizard_page_cards_text">Настроим карточки.</string>
   <string name="wizard_page_hints_text">Здесь вы найдёте несколько полезных подсказок.</string>
-  <string name="wizard_page_usage_statistics_text">Twidere принимает участие в научно-исследовательской работе, для которой нужны некоторые данные об использовании приложения.</string>
+  <string name="wizard_page_usage_statistics_text">Firetweet принимает участие в научно-исследовательской работе, для которой нужны некоторые данные об использовании приложения.</string>
   <string name="wizard_page_finished_title">Завершено</string>
-  <string name="wizard_page_finished_text">Теперь Twidere готов к использованию.</string>
+  <string name="wizard_page_finished_text">Теперь Firetweet готов к использованию.</string>
   <string name="invalid_tab">Неверная вкладка</string>
-  <string name="send_crash_report">Отправить отчёт об ошибке в Twidere</string>
+  <string name="send_crash_report">Отправить отчёт об ошибке в Firetweet</string>
   <string name="add_to_filter">Добавить в фильтр</string>
   <string name="user_filter_name">Пользователь:<xliff:g id="name">%s</xliff:g></string>
   <string name="keyword_filter_name">Ключевое слово:<xliff:g id="name">%s</xliff:g></string>
@@ -525,7 +525,7 @@
   <string name="signing_in_error_browser_sign_in_hint">Не получается войти, возможно вам нужно использовать браузер для входа. (Это проигнорирует ваши настройки API)</string>
   <string name="report_user">Пожаловаться на <xliff:g id="name">%s</xliff:g></string>
   <string name="report_user_confirm_message">Пожаловаться на <xliff:g id="name">%s</xliff:g> за спам? Вы также заблокируете этого пользователя.</string>
-  <string name="twidere_test">Тест Twidere</string>
+  <string name="firetweet_test">Тест Firetweet</string>
   <string name="staggered_home_timeline">Перемешать ленту</string>
   <string name="unread_count">Счётчик непрочитанного</string>
   <string name="developed_by">Разработано</string>
@@ -557,9 +557,9 @@
   <string name="view_replies">Посмотреть ответы</string>
   <string name="compact_cards">Компактные карточки твитов</string>
   <string name="compact_cards_summary">Отображать на экране больше карточек</string>
-  <string name="dashclock_home_unread_count_name">Счётчик непрочитанного для ленты Twidere</string>
+  <string name="dashclock_home_unread_count_name">Счётчик непрочитанного для ленты Firetweet</string>
   <string name="dashclock_home_unread_count_description">Количество непрочитанных твитов в домашней ленте</string>
-  <string name="dashclock_mentions_unread_count_name">Количество непрочитанных уведомлений Twidere</string>
+  <string name="dashclock_mentions_unread_count_name">Количество непрочитанных уведомлений Firetweet</string>
   <string name="dashclock_mentions_unread_count_description">Количество непрочитанных уведомлений</string>
   <string name="dashclock_messages_unread_count_name">Количество непрочитанных сообщений</string>
   <string name="dashclock_messages_unread_count_description">Количество непрочитанных сообщений</string>

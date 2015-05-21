@@ -1,5 +1,5 @@
 /*
- * Twidere - Twitter client for Android
+ * Firetweet - Twitter client for Android
  *
  *  Copyright (C) 2012-2015 Mariotaku Lee <mariotaku.lee@gmail.com>
  *
@@ -19,8 +19,8 @@
 
 package edu.tsinghua.spice.Utilies;
 
-import org.mariotaku.twidere.model.ParcelableMedia;
-import org.mariotaku.twidere.util.TwidereLinkify;
+import org.getlantern.firetweet.model.ParcelableMedia;
+import org.getlantern.firetweet.util.FiretweetLinkify;
 
 /**
  * Created by Denny C. Ng on 2/26/15.
@@ -32,25 +32,25 @@ public class TypeMappingUtil {
     public static String getLinkType(int type) {
         String linkType = "";
         switch (type) {
-            case TwidereLinkify.LINK_TYPE_MENTION:
+            case FiretweetLinkify.LINK_TYPE_MENTION:
                 linkType = "mention";
                 break;
-            case TwidereLinkify.LINK_TYPE_CASHTAG:
+            case FiretweetLinkify.LINK_TYPE_CASHTAG:
                 linkType = "cashTag";
                 break;
-            case TwidereLinkify.LINK_TYPE_LINK:
+            case FiretweetLinkify.LINK_TYPE_LINK:
                 linkType = "urlLink";
                 break;
-            case TwidereLinkify.LINK_TYPE_LIST:
+            case FiretweetLinkify.LINK_TYPE_LIST:
                 linkType = "userList";
                 break;
-            case TwidereLinkify.LINK_TYPE_STATUS:
+            case FiretweetLinkify.LINK_TYPE_STATUS:
                 linkType = "status";
                 break;
-            case TwidereLinkify.LINK_TYPE_USER_ID:
+            case FiretweetLinkify.LINK_TYPE_USER_ID:
                 linkType = "userID";
                 break;
-            case TwidereLinkify.LINK_TYPE_HASHTAG:
+            case FiretweetLinkify.LINK_TYPE_HASHTAG:
                 linkType = "hashTag";
                 break;
             default:

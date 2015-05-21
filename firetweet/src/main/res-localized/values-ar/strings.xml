@@ -41,7 +41,7 @@
   <string name="select_account">اختيار حساب</string>
   <string name="username">اسم المستخدم</string>
   <string name="password">كلمة المرور</string>
-  <string name="label_tweetstore_provider">مزود قاعدة بيانات Twidere</string>
+  <string name="label_tweetstore_provider">مزود قاعدة بيانات Firetweet</string>
   <string name="label_refresh_service">تحديث الخدمة</string>
   <string name="label_background_operation_service">خدمة التشغيل في الخلفية</string>
   <string name="open_in_browser">فتح بالمستعرض</string>
@@ -139,7 +139,7 @@
   <string name="created_at">تم إنشاءه في</string>
   <string name="search_hint">البحث في التغريدات أو المستخدمين</string>
   <string name="remember_position">تذكر المكان</string>
-  <string name="remember_position_summary">Twidere تذكر مكان القائمة/اللسان قبل إغلاق </string>
+  <string name="remember_position_summary">Firetweet تذكر مكان القائمة/اللسان قبل إغلاق </string>
   <string name="user_blocked">تم حظر هذا المستخدم.</string>
   <string name="users_blocked">حظر هؤلاء المستخدمين.</string>
   <string name="user_unblocked">تم إلغاء الحظر عن هذا المستخدم.</string>
@@ -465,7 +465,7 @@
   <string name="destroy_status">حذف التغريدة</string>
   <string name="destroy_status_confirm_message">هل تريد حذف هذه التغريدة؟</string>
   <string name="report_user">تقرير <xliff:g id="name">%s</xliff:g></string>
-  <string name="twidere_test">تجريب تويدر</string>
+  <string name="firetweet_test">تجريب تويدر</string>
   <string name="unread_count">عدد غير المقروء</string>
   <string name="developed_by">من تطوير</string>
   <string name="project_account">حساب المشروع</string>

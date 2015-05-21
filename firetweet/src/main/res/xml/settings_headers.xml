@@ -3,7 +3,7 @@
 
     <header android:title="@string/appearance"/>
     <!--<header
-        android:fragment="org.mariotaku.twidere.fragment.SettingsDetailsFragment"
+        android:fragment="org.getlantern.firetweet.fragment.SettingsDetailsFragment"
         android:icon="@drawable/ic_action_color_palette"
         android:title="@string/theme">
         <extra
@@ -11,7 +11,7 @@
             android:value="@xml/preferences_theme"/>
     </header>-->
     <header
-        android:fragment="org.mariotaku.twidere.fragment.SettingsDetailsFragment"
+        android:fragment="org.getlantern.firetweet.fragment.SettingsDetailsFragment"
         android:icon="@drawable/ic_action_view_quilt"
         android:title="@string/settings_interface">
         <extra
@@ -19,7 +19,7 @@
             android:value="@xml/preferences_interface"/>
     </header>
     <!--<header
-        android:fragment="org.mariotaku.twidere.fragment.SettingsDetailsFragment"
+        android:fragment="org.getlantern.firetweet.fragment.SettingsDetailsFragment"
         android:icon="@drawable/ic_action_card"
         android:title="@string/cards">
         <extra
@@ -27,11 +27,11 @@
             android:value="@xml/preferences_cards"/>
     </header>-->
     <!--<header
-        android:fragment="org.mariotaku.twidere.fragment.ExtensionsListFragment"
+        android:fragment="org.getlantern.firetweet.fragment.ExtensionsListFragment"
         android:icon="@drawable/ic_action_extension"
         android:title="@string/extensions"/>-->
     <header
-        android:fragment="org.mariotaku.twidere.fragment.SettingsDetailsFragment"
+        android:fragment="org.getlantern.firetweet.fragment.SettingsDetailsFragment"
         android:icon="@drawable/ic_action_server"
         android:title="@string/network">
         <extra
@@ -39,7 +39,7 @@
             android:value="@xml/preferences_network"/>
     </header>
     <header
-        android:fragment="org.mariotaku.twidere.fragment.SettingsDetailsFragment"
+        android:fragment="org.getlantern.firetweet.fragment.SettingsDetailsFragment"
         android:icon="@drawable/ic_action_storage"
         android:title="@string/storage">
         <extra
@@ -47,7 +47,7 @@
             android:value="@xml/preferences_storage"/>
     </header>
     <header
-        android:fragment="org.mariotaku.twidere.fragment.SettingsDetailsFragment"
+        android:fragment="org.getlantern.firetweet.fragment.SettingsDetailsFragment"
         android:icon="@drawable/ic_action_refresh"
         android:title="@string/refresh">
         <extra
@@ -55,7 +55,7 @@
             android:value="@xml/preferences_refresh"/>
     </header>
     <header
-        android:fragment="org.mariotaku.twidere.fragment.SettingsDetailsFragment"
+        android:fragment="org.getlantern.firetweet.fragment.SettingsDetailsFragment"
         android:icon="@drawable/ic_action_notification"
         android:title="@string/notifications">
         <extra

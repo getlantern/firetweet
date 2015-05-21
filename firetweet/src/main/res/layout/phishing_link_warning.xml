@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Twidere - Twitter client for Android
+  ~ Firetweet - Twitter client for Android
   ~
   ~  Copyright (C) 2012-2014 Mariotaku Lee <mariotaku.lee@gmail.com>
   ~
@@ -31,7 +31,7 @@
         android:text="@string/phishing_link_warning_message_1"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-    <!--<org.mariotaku.twidere.view.AutoAdjustHeightImageView-->
+    <!--<org.getlantern.firetweet.view.AutoAdjustHeightImageView-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:layout_marginBottom="8dp"-->

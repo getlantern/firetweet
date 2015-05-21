@@ -42,7 +42,7 @@
   <string name="select_account">Wybierz konto</string>
   <string name="username">Nazwa użytkownika</string>
   <string name="password">Hasło</string>
-  <string name="label_tweetstore_provider">Dostawca bazy Twidere</string>
+  <string name="label_tweetstore_provider">Dostawca bazy Firetweet</string>
   <string name="label_refresh_service">Odświeżanie</string>
   <string name="label_background_operation_service">Usługa operacji w tle</string>
   <string name="open_in_browser">Otwórz w przeglądarce</string>
@@ -144,7 +144,7 @@
   <string name="created_at">Utworzone w</string>
   <string name="search_hint">Szukaj tweetów lub użytkowników</string>
   <string name="remember_position">Zapamiętaj pozycję</string>
-  <string name="remember_position_summary">Zapamiętaj pozycję listy/zakładki przed zamknięciem Twidere</string>
+  <string name="remember_position_summary">Zapamiętaj pozycję listy/zakładki przed zamknięciem Firetweet</string>
   <string name="user_blocked">Zablokowano tego użytkownika.</string>
   <string name="users_blocked">Zablokowano tych użytkowników.</string>
   <string name="user_unblocked">Odblokowano tego użytkownika.</string>
@@ -340,7 +340,7 @@
   <string name="silent_notifications">Ciche powiadomienia</string>
   <string name="silent_notifications_summary">Wyłącz dzwonek/wibracje dla powiadomień</string>
   <string name="disable_background_service">Wyłącz pracę w tle</string>
-  <string name="disable_background_service_summary">Jeśli automatyczne odświeżanie strumienia jest wyłączone, żadne usługi Twidere nie działają w tle.</string>
+  <string name="disable_background_service_summary">Jeśli automatyczne odświeżanie strumienia jest wyłączone, żadne usługi Firetweet nie działają w tle.</string>
   <string name="text_copied">Tekst skopiowany do schowka.</string>
   <string name="hashtag">Hashtag</string>
   <string name="links">Odnośniki</string>
@@ -381,7 +381,7 @@
   <string name="disable_tab_swipe">Wyłącz przełączanie kart gestem</string>
   <string name="sign_in_method_introduction_title">Jak to działa?</string>
   <string name="sign_in_method_introduction">Większość klientów jak np. Twicca otwiera okno przeglądarki gdzie należy podać nazwę użytkownika i hasło a następnie wraca do aplikacji. Czasami może to być całkiem niewygodne.\n\n
-Twidere używa znacznie prostszego mechanizmu logowania, bez otwierania okna przeglądarki. Twoje hasło jest całkowicie bezpieczne gdyż Twidere nigdy go nie przechowuje.</string>
+Firetweet używa znacznie prostszego mechanizmu logowania, bez otwierania okna przeglądarki. Twoje hasło jest całkowicie bezpieczne gdyż Firetweet nigdy go nie przechowuje.</string>
   <string name="quote_protected_status_notice">Nie jest zalecane cytowanie chronionych tweetów.</string>
   <string name="edit_draft">Edytuj szkic</string>
   <string name="profile_image">Zdjęcie profilowe</string>
@@ -451,7 +451,7 @@ Twidere używa znacznie prostszego mechanizmu logowania, bez otwierania okna prz
   <string name="created_by">Utworzone przez <xliff:g id="created_by">%s</xliff:g></string>
   <string name="add_to_list">Dodaj do listy</string>
   <string name="account_delete_confirm_title">Usuń konto</string>
-  <string name="account_delete_confirm_message">Konto zostanie usunięte z Twidere.</string>
+  <string name="account_delete_confirm_message">Konto zostanie usunięte z Firetweet.</string>
   <string name="theme">Motyw</string>
   <string name="theme_dark">Ciemny</string>
   <string name="theme_light">Jasny</string>
@@ -478,19 +478,19 @@ Twidere używa znacznie prostszego mechanizmu logowania, bez otwierania okna prz
   <string name="next">Dalej</string>
   <string name="settings_wizard">Kreator ustawień</string>
   <string name="wizard_page_welcome_title">Witamy</string>
-  <string name="wizard_page_welcome_text">Dziękujemy za wybranie Twidere.\nCzy chcesz go skonfigurować teraz?</string>
+  <string name="wizard_page_welcome_text">Dziękujemy za wybranie Firetweet.\nCzy chcesz go skonfigurować teraz?</string>
   <string name="wizard_page_welcome_yes">Tak</string>
   <string name="wizard_page_welcome_not_now">Nie teraz</string>
   <string name="wizard_page_welcome_import_settings">Zaimportuj ustawienia</string>
   <string name="wizard_page_theme_text">Wybierz swój motyw.</string>
-  <string name="wizard_page_tabs_text">Dodaj karty do Twidere.\nŚledź ludzi bądź rzeczy na których Ci zależy.</string>
+  <string name="wizard_page_tabs_text">Dodaj karty do Firetweet.\nŚledź ludzi bądź rzeczy na których Ci zależy.</string>
   <string name="wizard_page_tabs_unchanged_message">Możesz dodać karty w \"Ustawienia\" - \"Karty\"</string>
   <string name="wizard_page_cards_text">Ustaw wygląd tweeta.</string>
   <string name="wizard_page_hints_text">Oto kilka użytecznych porad.</string>
   <string name="wizard_page_finished_title">Zakończono</string>
-  <string name="wizard_page_finished_text">Twidere jest już gotowy do działania.</string>
+  <string name="wizard_page_finished_text">Firetweet jest już gotowy do działania.</string>
   <string name="invalid_tab">Nieprawidłowa karta</string>
-  <string name="send_crash_report">Wyślij raport błędu Twidere</string>
+  <string name="send_crash_report">Wyślij raport błędu Firetweet</string>
   <string name="add_to_filter">Dodaj do filtra</string>
   <string name="user_filter_name">Użytkownik: <xliff:g id="name">%s</xliff:g></string>
   <string name="keyword_filter_name">Słowo kluczowe: <xliff:g id="name">%s</xliff:g></string>
@@ -510,7 +510,7 @@ Twidere używa znacznie prostszego mechanizmu logowania, bez otwierania okna prz
   <string name="signing_in_error_browser_sign_in_hint">Błąd podczas logowania, może być konieczne użycie przeglądarki do zalogowania się (Niestandarowe ustawienia API zostaną zostaną zignorowane jeśli użyjesz tej metody logowania)</string>
   <string name="report_user">Zgłoś <xliff:g id="name">%s</xliff:g></string>
   <string name="report_user_confirm_message">Zgłoś <xliff:g id="name">%s</xliff:g> za spam? Użytkownik zostanie także zablokowany.</string>
-  <string name="twidere_test">Test Twidere</string>
+  <string name="firetweet_test">Test Firetweet</string>
   <string name="unread_count">Licznik nieprzeczytanych</string>
   <string name="developed_by">Rozwijana przez</string>
   <string name="project_account">Konto projektu</string>
@@ -543,9 +543,9 @@ Twidere używa znacznie prostszego mechanizmu logowania, bez otwierania okna prz
   <string name="compact_cards_summary">Wyświetla więcej tweetów na ekranie</string>
   <string name="dashclock_home_unread_count_name">Ilość nieprzeczytanych tweetów</string>
   <string name="dashclock_home_unread_count_description">Ilość nieprzeczytanych tweetów</string>
-  <string name="dashclock_mentions_unread_count_name">Licznik nieprzeczytanych wzmianek Twidere</string>
+  <string name="dashclock_mentions_unread_count_name">Licznik nieprzeczytanych wzmianek Firetweet</string>
   <string name="dashclock_mentions_unread_count_description">Licznik nieprzeczytanych wzmianek</string>
-  <string name="dashclock_messages_unread_count_name">Licznik nieprzeczytanych wiadomości Twidere</string>
+  <string name="dashclock_messages_unread_count_name">Licznik nieprzeczytanych wiadomości Firetweet</string>
   <string name="dashclock_messages_unread_count_description">Licznik nieprzeczytanych wiadomości</string>
   <string name="N_new_statuses_quantity_one"><xliff:g id="items">%d</xliff:g> nowy tweet</string>
   <string name="N_new_statuses_quantity_other"><xliff:g id="items">%d</xliff:g> nowych tweetów</string>

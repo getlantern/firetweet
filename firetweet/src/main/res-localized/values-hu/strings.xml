@@ -40,7 +40,7 @@
   <string name="select_account">Válasszon fiókot</string>
   <string name="username">Felhasználónév</string>
   <string name="password">Jelszó</string>
-  <string name="label_tweetstore_provider">Twidere adatbázis szolgáltató</string>
+  <string name="label_tweetstore_provider">Firetweet adatbázis szolgáltató</string>
   <string name="label_refresh_service">Szolgáltatások frissítése</string>
   <string name="label_background_operation_service">Háttér szolgáltatás</string>
   <string name="open_in_browser">Megnyitás böngészőben</string>
@@ -130,7 +130,7 @@
   <string name="created_at">Létrehozva:</string>
   <string name="search_hint">Keresés tweetek és felhasználók között</string>
   <string name="remember_position">Pozíció megjegyzése</string>
-  <string name="remember_position_summary">Lista/fül pozíció megjegyzése a Twidere bezárása előtt</string>
+  <string name="remember_position_summary">Lista/fül pozíció megjegyzése a Firetweet bezárása előtt</string>
   <string name="user_blocked">Felhasználó blokkolva.</string>
   <string name="users_blocked">Blokkolja a következő felhasználókat.</string>
   <string name="user_unblocked">Felhasználó blokkolás feloldva.</string>
@@ -358,7 +358,7 @@
   <string name="select_user">Felhasználó kiválasztása</string>
   <string name="add_to_list">Hozzáadás a listához</string>
   <string name="account_delete_confirm_title">Fiók törlése</string>
-  <string name="account_delete_confirm_message">Ez a fiók törlésre kerül a Twidere-ből.</string>
+  <string name="account_delete_confirm_message">Ez a fiók törlésre kerül a Firetweet-ből.</string>
   <string name="theme">Téma</string>
   <string name="theme_dark">Sötét</string>
   <string name="theme_light">Világos</string>
@@ -372,12 +372,12 @@
   <string name="name_first">Először a név jelenjen meg</string>
   <string name="next">Következő</string>
   <string name="settings_wizard">Beállítások varázsló</string>
-  <string name="wizard_page_welcome_text">Köszönjük, hogy a Twidere programot választotta.\nSzeretné most konfigurálni?</string>
+  <string name="wizard_page_welcome_text">Köszönjük, hogy a Firetweet programot választotta.\nSzeretné most konfigurálni?</string>
   <string name="wizard_page_welcome_yes">Igen</string>
   <string name="wizard_page_welcome_not_now">Most nem</string>
   <string name="wizard_page_welcome_import_settings">Beállítások importálása</string>
   <string name="wizard_page_hints_text">Itt van néhány hasznos link:</string>
-  <string name="wizard_page_finished_text">A Twidere készen áll a használatra.</string>
+  <string name="wizard_page_finished_text">A Firetweet készen áll a használatra.</string>
   <string name="destroy_status">Tweet törlése</string>
   <string name="destroy_status_confirm_message">Ennek a tweetnek a törlése?</string>
   <string name="destroy_saved_search">Elmentett keresés törlése: \"<xliff:g id="name">%s</xliff:g>\"</string>
