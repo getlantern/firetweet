@@ -1,8 +1,8 @@
 package org.getlantern.firetweet.extension.streaming;
 
-import org.getlantern.firetweet.TwidereConstants;
+import org.getlantern.firetweet.FiretweetConstants;
 
-public interface Constants extends TwidereConstants {
+public interface Constants extends FiretweetConstants {
 
 	public static final String LOGTAG = "Twidere.Streaming";
 
