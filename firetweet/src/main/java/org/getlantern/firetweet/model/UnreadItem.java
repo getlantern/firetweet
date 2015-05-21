@@ -19,8 +19,8 @@
 
 package org.getlantern.firetweet.model;
 
-import org.getlantern.firetweetserializer.JSONParcel;
-import org.getlantern.firetweetserializer.JSONParcelable;
+import org.getlantern.jsonserializer.JSONParcel;
+import org.getlantern.jsonserializer.JSONParcelable;
 
 public class UnreadItem implements JSONParcelable {
 

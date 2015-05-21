@@ -17,7 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.getlantern.firetweetserializer;
+package org.getlantern.jsonserializer;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

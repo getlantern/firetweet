@@ -1,4 +1,4 @@
-package org.getlantern.firetweetserializer;
+package org.getlantern.jsonserializer;
 
 import android.content.Context;
 

@@ -25,7 +25,7 @@
  * For more information, please refer to <http://unlicense.org/>
  */
 
-package org.getlantern.firetweetserializer;
+package org.getlantern.jsonserializer;
 
 public interface JSONParcelable {
 

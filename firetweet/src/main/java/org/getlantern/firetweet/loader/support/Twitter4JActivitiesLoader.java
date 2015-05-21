@@ -25,7 +25,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.util.Pair;
 
-import org.getlantern.firetweetserializer.JSONFileIO;
+import org.getlantern.jsonserializer.JSONFileIO;
 import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.model.ParcelableActivity;
 

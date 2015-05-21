@@ -23,8 +23,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import org.json.JSONObject;
-import org.getlantern.firetweetserializer.JSONFileIO;
-import org.getlantern.firetweetserializer.JSONSerializer;
+import org.getlantern.jsonserializer.JSONFileIO;
+import org.getlantern.jsonserializer.JSONSerializer;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.annotation.Preference;
 import org.getlantern.firetweet.constant.SharedPreferenceConstants;

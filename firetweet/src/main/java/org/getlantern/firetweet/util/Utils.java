@@ -112,7 +112,7 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.getlantern.firetweetserializer.JSONSerializer;
+import org.getlantern.jsonserializer.JSONSerializer;
 import org.mariotaku.querybuilder.AllColumns;
 import org.mariotaku.querybuilder.Columns;
 import org.mariotaku.querybuilder.Columns.Column;

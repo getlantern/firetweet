@@ -26,7 +26,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import org.getlantern.firetweetserializer.JSONFileIO;
+import org.getlantern.jsonserializer.JSONFileIO;
 import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.model.ParcelableStatus;
 

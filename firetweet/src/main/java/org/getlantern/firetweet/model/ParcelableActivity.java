@@ -21,8 +21,8 @@ package org.getlantern.firetweet.model;
 
 import android.support.annotation.NonNull;
 
-import org.getlantern.firetweetserializer.JSONParcel;
-import org.getlantern.firetweetserializer.JSONParcelable;
+import org.getlantern.jsonserializer.JSONParcel;
+import org.getlantern.jsonserializer.JSONParcelable;
 
 import java.util.Arrays;
 
