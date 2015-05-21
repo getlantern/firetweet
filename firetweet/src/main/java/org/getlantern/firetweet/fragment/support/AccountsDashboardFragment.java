@@ -88,7 +88,7 @@ import org.getlantern.firetweet.activity.support.HomeActivity;
 import org.getlantern.firetweet.activity.support.QuickSearchBarActivity;
 import org.getlantern.firetweet.activity.support.UserProfileEditorActivity;
 import org.getlantern.firetweet.adapter.ArrayAdapter;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.menu.SupportAccountActionProvider;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.provider.TwidereDataStore.Accounts;
@@ -375,7 +375,7 @@ public class AccountsDashboardFragment extends BaseSupportListFragment implement
         final View view = getView();
         if (view == null) throw new AssertionError();
         final Context context = view.getContext();
-        mImageLoader = TwidereApplication.getInstance(context).getMediaLoaderWrapper();
+        mImageLoader = FireTweetApplication.getInstance(context).getMediaLoaderWrapper();
         final LayoutInflater inflater = LayoutInflater.from(context);
         final ListView listView = getListView();
         mAdapter = new MergeAdapter();
@@ -652,7 +652,7 @@ public class AccountsDashboardFragment extends BaseSupportListFragment implement
 
         AccountSelectorAdapter(Context context, AccountsDashboardFragment fragment) {
             mInflater = LayoutInflater.from(context);
-            mImageLoader = TwidereApplication.getInstance(context).getMediaLoaderWrapper();
+            mImageLoader = FireTweetApplication.getInstance(context).getMediaLoaderWrapper();
             mFragment = fragment;
             setHasStableIds(true);
         }

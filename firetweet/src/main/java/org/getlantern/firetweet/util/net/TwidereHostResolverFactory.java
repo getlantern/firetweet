@@ -1,6 +1,6 @@
 package org.getlantern.firetweet.util.net;
 
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 
 import twitter4j.http.HostAddressResolver;
 import twitter4j.http.HostAddressResolverFactory;
@@ -8,9 +8,9 @@ import twitter4j.http.HttpClientConfiguration;
 
 public class TwidereHostResolverFactory implements HostAddressResolverFactory {
 
-	private final TwidereApplication mApplication;
+	private final FireTweetApplication mApplication;
 
-	public TwidereHostResolverFactory(final TwidereApplication application) {
+	public TwidereHostResolverFactory(final FireTweetApplication application) {
 		mApplication = application;
 	}
 

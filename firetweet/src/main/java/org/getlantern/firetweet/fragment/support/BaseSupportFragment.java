@@ -33,7 +33,7 @@ import android.view.View;
 
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.activity.support.BaseActionBarActivity;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.fragment.iface.IBaseFragment;
 import org.getlantern.firetweet.fragment.iface.SupportFragmentCallback;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
@@ -53,9 +53,9 @@ public class BaseSupportFragment extends Fragment implements IBaseFragment, Cons
 
     }
 
-    public TwidereApplication getApplication() {
+    public FireTweetApplication getApplication() {
         final Activity activity = getActivity();
-        if (activity != null) return (TwidereApplication) activity.getApplication();
+        if (activity != null) return (FireTweetApplication) activity.getApplication();
         return null;
     }
 

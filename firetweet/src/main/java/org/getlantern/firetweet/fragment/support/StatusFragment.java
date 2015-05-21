@@ -81,7 +81,7 @@ import org.getlantern.firetweet.activity.support.ColorPickerDialogActivity;
 import org.getlantern.firetweet.adapter.AbsStatusesAdapter.StatusAdapterListener;
 import org.getlantern.firetweet.adapter.decorator.DividerItemDecoration;
 import org.getlantern.firetweet.adapter.iface.IStatusesAdapter;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.constant.IntentConstants;
 import org.getlantern.firetweet.loader.support.ParcelableStatusLoader;
 import org.getlantern.firetweet.loader.support.StatusRepliesLoader;
@@ -1048,7 +1048,7 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
             mFragment = fragment;
             mContext = context;
             mInflater = LayoutInflater.from(context);
-            mImageLoader = TwidereApplication.getInstance(context).getMediaLoaderWrapper();
+            mImageLoader = FireTweetApplication.getInstance(context).getMediaLoaderWrapper();
             mImageLoadingHandler = new ImageLoadingHandler(R.id.media_preview_progress);
             mCardBackgroundColor = ThemeUtils.getCardBackgroundColor(context);
             mNameFirst = preferences.getBoolean(KEY_NAME_FIRST, true);

@@ -28,7 +28,7 @@ import android.view.ViewGroup;
 
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.iface.IBaseCardAdapter;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.model.ParcelableUserList;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.MultiSelectManager;
@@ -59,7 +59,7 @@ public class ParcelableUserListsListAdapter extends BaseArrayAdapter<ParcelableU
         super(context, getItemResource(compactCards));
         mContext = context;
         mLocale = context.getResources().getConfiguration().locale;
-        final TwidereApplication app = TwidereApplication.getInstance(context);
+        final FireTweetApplication app = FireTweetApplication.getInstance(context);
         mImageLoader = app.getMediaLoaderWrapper();
         mMultiSelectManager = app.getMultiSelectManager();
         configBaseCardAdapter(context, this);

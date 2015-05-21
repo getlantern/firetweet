@@ -27,7 +27,7 @@ import android.view.MenuItem;
 
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.activity.iface.IControlBarActivity;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.fragment.iface.IBaseFragment.SystemWindowsInsetsCallback;
 import org.getlantern.firetweet.fragment.iface.IBasePullToRefreshFragment;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
@@ -60,8 +60,8 @@ public class BaseActionBarActivity extends ThemedActionBarActivity implements Co
         return ThemeUtils.getThemeResource(this);
     }
 
-    public TwidereApplication getTwidereApplication() {
-        return (TwidereApplication) getApplication();
+    public FireTweetApplication getTwidereApplication() {
+        return (FireTweetApplication) getApplication();
     }
 
     public AsyncTwitterWrapper getTwitterWrapper() {

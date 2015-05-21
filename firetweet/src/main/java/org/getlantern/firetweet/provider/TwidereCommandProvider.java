@@ -28,7 +28,7 @@ import android.database.MatrixCursor;
 import android.net.Uri;
 
 import org.getlantern.firetweet.Constants;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.provider.TwidereCommands.Refresh;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
 import org.getlantern.firetweet.util.PermissionsManager;
@@ -70,7 +70,7 @@ public class TwidereCommandProvider extends ContentProvider implements Constants
 	@Override
 	public boolean onCreate() {
 		mContext = getContext();
-		final TwidereApplication app = TwidereApplication.getInstance(mContext);
+		final FireTweetApplication app = FireTweetApplication.getInstance(mContext);
 		mPermissionsManager = new PermissionsManager(mContext);
 		mTwitterWrapper = app.getTwitterWrapper();
 		return true;

@@ -88,7 +88,7 @@ import org.getlantern.firetweet.activity.support.LinkHandlerActivity;
 import org.getlantern.firetweet.activity.support.UserListSelectorActivity;
 import org.getlantern.firetweet.activity.support.UserProfileEditorActivity;
 import org.getlantern.firetweet.adapter.support.SupportTabsAdapter;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.fragment.iface.IBaseFragment.SystemWindowsInsetsCallback;
 import org.getlantern.firetweet.fragment.iface.RefreshScrollTopInterface;
 import org.getlantern.firetweet.fragment.iface.SupportFragmentCallback;
@@ -744,7 +744,7 @@ public class UserFragment extends BaseSupportFragment implements OnClickListener
     @Override
     public void onStart() {
         super.onStart();
-        final Bus bus = TwidereApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
         bus.register(this);
     }
 
@@ -756,7 +756,7 @@ public class UserFragment extends BaseSupportFragment implements OnClickListener
 
     @Override
     public void onStop() {
-        final Bus bus = TwidereApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
         bus.unregister(this);
         super.onStop();
     }

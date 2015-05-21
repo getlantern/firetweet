@@ -134,7 +134,7 @@ import org.getlantern.firetweet.activity.support.ColorPickerDialogActivity;
 import org.getlantern.firetweet.activity.support.MediaViewerActivity;
 import org.getlantern.firetweet.adapter.iface.IBaseAdapter;
 import org.getlantern.firetweet.adapter.iface.IBaseCardAdapter;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.fragment.iface.IBaseFragment.SystemWindowsInsetsCallback;
 import org.getlantern.firetweet.fragment.support.AddStatusFilterDialogFragment;
 import org.getlantern.firetweet.fragment.support.DestroyStatusDialogFragment;
@@ -1810,7 +1810,7 @@ public final class Utils implements Constants, TwitterConstants {
         final Proxy proxy = getProxy(context);
         final String userAgent = generateBrowserUserAgent();
         final HostAddressResolverFactory resolverFactory = new TwidereHostResolverFactory(
-                TwidereApplication.getInstance(context));
+                FireTweetApplication.getInstance(context));
         return getHttpClient(context, timeoutMillis, true, proxy, resolverFactory, userAgent, false);
     }
 
@@ -1821,7 +1821,7 @@ public final class Utils implements Constants, TwitterConstants {
         final Proxy proxy = getProxy(context);
         final String userAgent = generateBrowserUserAgent();
         final HostAddressResolverFactory resolverFactory = new TwidereHostResolverFactory(
-                TwidereApplication.getInstance(context));
+                FireTweetApplication.getInstance(context));
         return getHttpClient(context, timeoutMillis, true, proxy, resolverFactory, userAgent, false);
     }
 
@@ -2512,7 +2512,7 @@ public final class Utils implements Constants, TwitterConstants {
                                              final boolean includeEntities,
                                              final boolean includeRetweets) {
         if (context == null) return null;
-        final TwidereApplication app = TwidereApplication.getInstance(context);
+        final FireTweetApplication app = FireTweetApplication.getInstance(context);
         final SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         final int connection_timeout = prefs.getInt(KEY_CONNECTION_TIMEOUT, 10) * 1000;
         final boolean enableGzip = prefs.getBoolean(KEY_GZIP_COMPRESSING, true);

@@ -74,7 +74,7 @@ import static org.getlantern.firetweet.util.Utils.getInternalCacheDir;
 import static org.getlantern.firetweet.util.Utils.initAccountColor;
 import static org.getlantern.firetweet.util.Utils.startRefreshServiceIfNeeded;
 
-public class TwidereApplication extends MultiDexApplication implements Constants,
+public class FireTweetApplication extends MultiDexApplication implements Constants,
         OnSharedPreferenceChangeListener {
 
     private static final String KEY_UCD_DATA_PROFILING = "ucd_data_profiling";
@@ -163,8 +163,8 @@ public class TwidereApplication extends MultiDexApplication implements Constants
     }
 
     @NonNull
-    public static TwidereApplication getInstance(@NonNull final Context context) {
-        return (TwidereApplication) context.getApplicationContext();
+    public static FireTweetApplication getInstance(@NonNull final Context context) {
+        return (FireTweetApplication) context.getApplicationContext();
     }
 
     public Bus getMessageBus() {

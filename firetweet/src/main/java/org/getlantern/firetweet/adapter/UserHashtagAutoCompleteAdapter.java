@@ -40,7 +40,7 @@ import org.getlantern.querybuilder.OrderBy;
 import org.getlantern.querybuilder.RawItemArray;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.provider.TwidereDataStore.CachedHashtags;
 import org.getlantern.firetweet.provider.TwidereDataStore.CachedUsers;
 import org.getlantern.firetweet.provider.TwidereDataStore.CachedValues;
@@ -85,7 +85,7 @@ public class UserHashtagAutoCompleteAdapter extends SimpleCursorAdapter implemen
         mPreferences = SharedPreferencesWrapper.getInstance(context, SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         mUserNicknamePreferences = context.getSharedPreferences(USER_NICKNAME_PREFERENCES_NAME, Context.MODE_PRIVATE);
         mResolver = context.getContentResolver();
-        final TwidereApplication app = TwidereApplication.getInstance(context);
+        final FireTweetApplication app = FireTweetApplication.getInstance(context);
         mProfileImageLoader = app.getMediaLoaderWrapper();
         mDatabase = app.getSQLiteDatabase();
         mDisplayProfileImage = mPreferences.getBoolean(KEY_DISPLAY_PROFILE_IMAGE, true);

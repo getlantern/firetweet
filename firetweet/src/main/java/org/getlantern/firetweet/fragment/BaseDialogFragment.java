@@ -27,7 +27,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 
 import org.getlantern.firetweet.Constants;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 
 public class BaseDialogFragment extends DialogFragment implements Constants {
 
@@ -35,9 +35,9 @@ public class BaseDialogFragment extends DialogFragment implements Constants {
 
 	}
 
-	public TwidereApplication getApplication() {
+	public FireTweetApplication getApplication() {
 		final Activity activity = getActivity();
-		if (activity != null) return (TwidereApplication) activity.getApplication();
+		if (activity != null) return (FireTweetApplication) activity.getApplication();
 		return null;
 	}
 

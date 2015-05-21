@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.iface.IStatusesAdapter;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.fragment.support.UserFragment;
 import org.getlantern.firetweet.model.ParcelableMedia;
 import org.getlantern.firetweet.model.ParcelableStatus;
@@ -75,7 +75,7 @@ public abstract class AbsStatusesAdapter<D> extends Adapter<ViewHolder> implemen
 
     public AbsStatusesAdapter(Context context, boolean compact) {
         mContext = context;
-        final TwidereApplication app = TwidereApplication.getInstance(context);
+        final FireTweetApplication app = FireTweetApplication.getInstance(context);
         mCardBackgroundColor = ThemeUtils.getCardBackgroundColor(context);
         mInflater = LayoutInflater.from(context);
         mImageLoader = app.getMediaLoaderWrapper();

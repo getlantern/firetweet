@@ -28,7 +28,7 @@ import com.squareup.otto.Subscribe;
 
 import org.getlantern.firetweet.adapter.ParcelableStatusesAdapter;
 import org.getlantern.firetweet.adapter.iface.IStatusesAdapter;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.model.ParcelableStatus;
 import org.getlantern.firetweet.util.message.FavoriteCreatedEvent;
 import org.getlantern.firetweet.util.message.FavoriteDestroyedEvent;
@@ -80,13 +80,13 @@ public abstract class ParcelableStatusesFragment extends AbsStatusesFragment<Lis
     @Override
     public void onStart() {
         super.onStart();
-        final Bus bus = TwidereApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
         bus.register(this);
     }
 
     @Override
     public void onStop() {
-        final Bus bus = TwidereApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
         bus.unregister(this);
         super.onStop();
     }

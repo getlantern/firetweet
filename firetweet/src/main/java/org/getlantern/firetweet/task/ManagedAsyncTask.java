@@ -25,7 +25,7 @@ import android.os.AsyncTask;
 import com.squareup.otto.Bus;
 
 import org.getlantern.firetweet.Constants;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.util.AsyncTaskManager;
 import org.getlantern.firetweet.util.message.TaskStateChangedEvent;
 
@@ -63,21 +63,21 @@ public abstract class ManagedAsyncTask<Params, Progress, Result> extends AsyncTa
     @Override
     protected void onCancelled() {
         super.onCancelled();
-        final Bus bus = TwidereApplication.getInstance(context).getMessageBus();
+        final Bus bus = FireTweetApplication.getInstance(context).getMessageBus();
         bus.post(new TaskStateChangedEvent());
     }
 
     @Override
     protected void onPostExecute(final Result result) {
         super.onPostExecute(result);
-        final Bus bus = TwidereApplication.getInstance(context).getMessageBus();
+        final Bus bus = FireTweetApplication.getInstance(context).getMessageBus();
         bus.post(new TaskStateChangedEvent());
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        final Bus bus = TwidereApplication.getInstance(context).getMessageBus();
+        final Bus bus = FireTweetApplication.getInstance(context).getMessageBus();
         bus.post(new TaskStateChangedEvent());
     }
 

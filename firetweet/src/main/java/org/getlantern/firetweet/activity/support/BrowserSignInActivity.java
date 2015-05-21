@@ -40,12 +40,11 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import org.getlantern.firetweet.R;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.provider.TwidereDataStore.Accounts;
 import org.getlantern.firetweet.proxy.ProxySettings;
 import org.getlantern.firetweet.util.AsyncTaskUtils;
 import org.getlantern.firetweet.util.OAuthPasswordAuthenticator;
-import org.getlantern.firetweet.util.ParseUtils;
 import org.getlantern.firetweet.util.TwitterContentUtils;
 import org.getlantern.firetweet.util.Utils;
 import org.getlantern.firetweet.util.net.OkHttpClientFactory;
@@ -241,13 +240,13 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
     static class GetRequestTokenTask extends AsyncTask<Object, Object, RequestToken> {
 
         private final String mConsumerKey, mConsumerSecret;
-        private final TwidereApplication mApplication;
+        private final FireTweetApplication mApplication;
         private final SharedPreferences mPreferences;
         private final BrowserSignInActivity mActivity;
 
         public GetRequestTokenTask(final BrowserSignInActivity activity) {
             mActivity = activity;
-            mApplication = TwidereApplication.getInstance(activity);
+            mApplication = FireTweetApplication.getInstance(activity);
             mPreferences = activity.getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
             final Intent intent = activity.getIntent();
             mConsumerKey = intent.getStringExtra(Accounts.CONSUMER_KEY);

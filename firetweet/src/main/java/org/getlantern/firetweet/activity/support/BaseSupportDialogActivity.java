@@ -24,7 +24,7 @@ import android.os.Bundle;
 
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.activity.iface.IThemedActivity;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.util.ThemeUtils;
 
 @SuppressLint("Registered")
@@ -42,8 +42,8 @@ public class BaseSupportDialogActivity extends ThemedFragmentActivity implements
         return ThemeUtils.getDialogThemeResource(this);
     }
 
-    public TwidereApplication getTwidereApplication() {
-        return (TwidereApplication) getApplication();
+    public FireTweetApplication getTwidereApplication() {
+        return (FireTweetApplication) getApplication();
     }
 
     @Override

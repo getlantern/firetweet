@@ -31,7 +31,7 @@ import com.mobeta.android.dslv.SimpleDragSortCursorAdapter;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.iface.IBaseAdapter;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.model.ParcelableAccount.Indices;
 import org.getlantern.firetweet.provider.TwidereDataStore.Accounts;
@@ -51,7 +51,7 @@ public class AccountsAdapter extends SimpleDragSortCursorAdapter implements Cons
     public AccountsAdapter(final Context context) {
         super(context, R.layout.list_item_account, null, new String[]{Accounts.NAME},
                 new int[]{android.R.id.text1}, 0);
-        final TwidereApplication application = TwidereApplication.getInstance(context);
+        final FireTweetApplication application = FireTweetApplication.getInstance(context);
         mImageLoader = application.getMediaLoaderWrapper();
         mPreferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
     }

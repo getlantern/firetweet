@@ -40,7 +40,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.getlantern.firetweet.R;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.fragment.support.SupportProgressDialogFragment;
 import org.getlantern.firetweet.loader.support.ParcelableUserLoader;
 import org.getlantern.firetweet.model.ParcelableUser;
@@ -130,8 +130,8 @@ public class UserProfileEditorActivity extends BaseActionBarActivity implements 
             finish();
             return;
         }
-        mAsyncTaskManager = TwidereApplication.getInstance(this).getAsyncTaskManager();
-        mLazyImageLoader = TwidereApplication.getInstance(this).getMediaLoaderWrapper();
+        mAsyncTaskManager = FireTweetApplication.getInstance(this).getAsyncTaskManager();
+        mLazyImageLoader = FireTweetApplication.getInstance(this).getMediaLoaderWrapper();
         mAccountId = accountId;
 
 

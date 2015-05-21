@@ -31,7 +31,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 
 import org.getlantern.firetweet.Constants;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.fragment.iface.RefreshScrollTopInterface;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
 import org.getlantern.firetweet.util.MultiSelectManager;
@@ -44,8 +44,8 @@ public class BaseListFragment extends ListFragment implements Constants, OnScrol
 
     private boolean mReachedBottom, mNotReachedBottomBefore = true;
 
-    public final TwidereApplication getApplication() {
-        return TwidereApplication.getInstance(getActivity());
+    public final FireTweetApplication getApplication() {
+        return FireTweetApplication.getInstance(getActivity());
     }
 
     public final ContentResolver getContentResolver() {

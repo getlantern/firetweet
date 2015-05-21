@@ -61,7 +61,7 @@ import org.getlantern.querybuilder.RawItemArray;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.support.QuickSearchBarActivity.SuggestionItem;
 import org.getlantern.firetweet.adapter.AccountsSpinnerAdapter;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.model.ParcelableUser;
 import org.getlantern.firetweet.model.ParcelableUser.CachedIndices;
@@ -468,7 +468,7 @@ public class QuickSearchBarActivity extends ThemedFragmentActivity implements On
         SuggestionsAdapter(Context context) {
             mContext = context;
             mInflater = LayoutInflater.from(context);
-            mImageLoader = TwidereApplication.getInstance(context).getMediaLoaderWrapper();
+            mImageLoader = FireTweetApplication.getInstance(context).getMediaLoaderWrapper();
         }
 
         public boolean canDismiss(int position) {

@@ -67,7 +67,7 @@ import org.getlantern.querybuilder.query.SQLSelectQuery;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.support.HomeActivity;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.model.AccountPreferences;
 import org.getlantern.firetweet.model.ParcelableStatus;
 import org.getlantern.firetweet.model.StringLongPair;
@@ -322,7 +322,7 @@ public final class TwidereDataProvider extends ContentProvider implements Consta
     @Override
     public boolean onCreate() {
         final Context context = getContext();
-        final TwidereApplication app = TwidereApplication.getInstance(context);
+        final FireTweetApplication app = FireTweetApplication.getInstance(context);
         mHandler = new Handler(Looper.getMainLooper());
         mDatabaseWrapper = new SQLiteDatabaseWrapper(this);
         mHostAddressResolver = app.getHostAddressResolver();
@@ -344,7 +344,7 @@ public final class TwidereDataProvider extends ContentProvider implements Consta
 
     @Override
     public SQLiteDatabase onCreateSQLiteDatabase() {
-        final TwidereApplication app = TwidereApplication.getInstance(getContext());
+        final FireTweetApplication app = FireTweetApplication.getInstance(getContext());
         final SQLiteOpenHelper helper = app.getSQLiteOpenHelper();
         return helper.getWritableDatabase();
     }
@@ -476,7 +476,7 @@ public final class TwidereDataProvider extends ContentProvider implements Consta
                     return c;
                 }
                 case VIRTUAL_TABLE_ID_DRAFTS_UNSENT: {
-                    final TwidereApplication app = TwidereApplication.getInstance(getContext());
+                    final FireTweetApplication app = FireTweetApplication.getInstance(getContext());
                     final AsyncTwitterWrapper twitter = app.getTwitterWrapper();
                     final RawItemArray sendingIds = new RawItemArray(twitter.getSendingDraftIds());
                     final Expression where;
@@ -750,7 +750,7 @@ public final class TwidereDataProvider extends ContentProvider implements Consta
 
     private void notifyUnreadCountChanged(final int position) {
         final Context context = getContext();
-        final Bus bus = TwidereApplication.getInstance(context).getMessageBus();
+        final Bus bus = FireTweetApplication.getInstance(context).getMessageBus();
         mHandler.post(new Runnable() {
             @Override
             public void run() {

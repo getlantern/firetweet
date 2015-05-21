@@ -34,7 +34,7 @@ import com.twitter.Extractor;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.support.BaseActionBarActivity;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.menu.AccountActionProvider;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.model.ParcelableStatus;
@@ -56,7 +56,7 @@ import static org.getlantern.firetweet.util.content.ContentResolverUtils.bulkIns
 @SuppressLint("Registered")
 public class MultiSelectEventHandler implements Constants, ActionMode.Callback, MultiSelectManager.Callback {
 
-    private TwidereApplication mApplication;
+    private FireTweetApplication mApplication;
 
     private AsyncTwitterWrapper mTwitterWrapper;
 

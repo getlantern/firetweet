@@ -47,7 +47,7 @@ import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.MainActivity;
 import org.getlantern.firetweet.activity.MainHondaJOJOActivity;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.model.MediaUploadResult;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.model.ParcelableDirectMessage;
@@ -126,7 +126,7 @@ public class BackgroundOperationService extends IntentService implements Constan
     @Override
     public void onCreate() {
         super.onCreate();
-        final TwidereApplication app = TwidereApplication.getInstance(this);
+        final FireTweetApplication app = FireTweetApplication.getInstance(this);
         mHandler = new Handler();
         mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
         mValidator = new TwidereValidator(this);

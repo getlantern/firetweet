@@ -55,7 +55,7 @@ import android.widget.Toast;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.SettingsActivity;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.fragment.support.BaseSupportDialogFragment;
 import org.getlantern.firetweet.fragment.support.SupportProgressDialogFragment;
 import org.getlantern.firetweet.provider.TwidereDataStore.Accounts;
@@ -115,7 +115,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
     private Button mSignInButton, mSignUpButton;
     private LinearLayout mSigninSignupContainer, mUsernamePasswordContainer;
 
-    private TwidereApplication mApplication;
+    private FireTweetApplication mApplication;
     private SharedPreferences mPreferences;
     private ContentResolver mResolver;
     private AbstractSignInTask mTask;
@@ -306,7 +306,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         super.onCreate(savedInstanceState);
         mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
         mResolver = getContentResolver();
-        mApplication = TwidereApplication.getInstance(this);
+        mApplication = FireTweetApplication.getInstance(this);
         setContentView(R.layout.activity_sign_in);
         setSupportProgressBarIndeterminateVisibility(false);
         final long[] account_ids = getActivatedAccountIds(this);

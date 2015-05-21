@@ -26,7 +26,7 @@ import android.os.Handler;
 import android.util.Pair;
 
 import org.getlantern.jsonserializer.JSONFileIO;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.model.ParcelableActivity;
 
 import java.io.File;
@@ -63,7 +63,7 @@ public abstract class Twitter4JActivitiesLoader extends ParcelableActivitiesLoad
         mAccountIds = accountId;
         mSinceId = sinceId;
         mMaxId = maxId;
-        mDatabase = TwidereApplication.getInstance(context).getSQLiteDatabase();
+        mDatabase = FireTweetApplication.getInstance(context).getSQLiteDatabase();
         mHandler = new Handler();
         mSavedStatusesFileArgs = savedStatusesArgs;
     }

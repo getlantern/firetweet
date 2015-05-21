@@ -45,7 +45,7 @@ import android.widget.TextView;
 
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.activity.iface.IControlBarActivity;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.fragment.iface.IBaseFragment;
 import org.getlantern.firetweet.fragment.iface.RefreshScrollTopInterface;
 import org.getlantern.firetweet.fragment.iface.SupportFragmentCallback;
@@ -76,8 +76,8 @@ public class BaseSupportListFragment extends ListFragment implements IBaseFragme
     private boolean mStoppedPreviously;
 
 
-    public final TwidereApplication getApplication() {
-        return TwidereApplication.getInstance(getActivity());
+    public final FireTweetApplication getApplication() {
+        return FireTweetApplication.getInstance(getActivity());
     }
 
     public final ContentResolver getContentResolver() {

@@ -34,7 +34,7 @@ import android.widget.TextView;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.iface.IActivitiesAdapter;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.fragment.support.UserFragment;
 import org.getlantern.firetweet.model.ParcelableActivity;
 import org.getlantern.firetweet.model.ParcelableMedia;
@@ -86,7 +86,7 @@ public abstract class AbsActivitiesAdapter<Data> extends Adapter<ViewHolder> imp
 
     protected AbsActivitiesAdapter(final Context context, boolean compact) {
         mContext = context;
-        final TwidereApplication app = TwidereApplication.getInstance(context);
+        final FireTweetApplication app = FireTweetApplication.getInstance(context);
         mCardBackgroundColor = ThemeUtils.getCardBackgroundColor(context);
         mInflater = LayoutInflater.from(context);
         mImageLoader = app.getMediaLoaderWrapper();

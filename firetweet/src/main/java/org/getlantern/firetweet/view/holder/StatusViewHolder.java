@@ -19,7 +19,7 @@ import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.iface.ContentCardClickListener;
 import org.getlantern.firetweet.adapter.iface.IStatusesAdapter;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.model.ParcelableLocation;
 import org.getlantern.firetweet.model.ParcelableMedia;
 import org.getlantern.firetweet.model.ParcelableStatus;
@@ -650,7 +650,7 @@ public class StatusViewHolder extends RecyclerView.ViewHolder implements Constan
         public DummyStatusHolderAdapter(Context context) {
             this.context = context;
             preferences = SharedPreferencesWrapper.getInstance(context, SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-            final TwidereApplication app = TwidereApplication.getInstance(context);
+            final FireTweetApplication app = FireTweetApplication.getInstance(context);
             loader = app.getMediaLoaderWrapper();
             handler = new ImageLoadingHandler(R.id.media_preview_progress);
             twitter = app.getTwitterWrapper();

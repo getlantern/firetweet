@@ -26,7 +26,7 @@ import android.database.Cursor;
 import android.support.v4.widget.SimpleCursorAdapter;
 
 import org.getlantern.firetweet.adapter.iface.IBaseAdapter;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.OnLinkClickHandler;
 import org.getlantern.firetweet.util.TwidereLinkify;
@@ -53,7 +53,7 @@ public class BaseCursorAdapter extends SimpleCursorAdapter implements IBaseAdapt
     public BaseCursorAdapter(final Context context, final int layout, final Cursor c, final String[] from,
                              final int[] to, final int flags) {
         super(context, layout, c, from, to, flags);
-        final TwidereApplication app = TwidereApplication.getInstance(context);
+        final FireTweetApplication app = FireTweetApplication.getInstance(context);
         mLinkify = new TwidereLinkify(new OnLinkClickHandler(context, app.getMultiSelectManager()));
         mImageLoader = app.getMediaLoaderWrapper();
         mNicknamePrefs = context.getSharedPreferences(USER_NICKNAME_PREFERENCES_NAME, Context.MODE_PRIVATE);

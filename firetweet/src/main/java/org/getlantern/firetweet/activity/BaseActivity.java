@@ -23,7 +23,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import org.getlantern.firetweet.Constants;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.fragment.support.BasePullToRefreshListFragment;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
 import org.getlantern.firetweet.util.MessagesManager;
@@ -48,8 +48,8 @@ public class BaseActivity extends BaseThemedActivity implements Constants {
 		return ThemeUtils.getThemeResource(this);
 	}
 
-	public TwidereApplication getTwidereApplication() {
-		return (TwidereApplication) getApplication();
+	public FireTweetApplication getTwidereApplication() {
+		return (FireTweetApplication) getApplication();
 	}
 
 	public AsyncTwitterWrapper getTwitterWrapper() {

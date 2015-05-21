@@ -33,7 +33,7 @@ import android.view.ViewGroup;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.iface.IContentCardAdapter;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.model.StringLongPair;
 import org.getlantern.firetweet.provider.TwidereDataStore.DirectMessages.ConversationEntries;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
@@ -71,7 +71,7 @@ public class MessageEntriesAdapter extends Adapter<ViewHolder> implements Consta
     public MessageEntriesAdapter(final Context context) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
-        final TwidereApplication app = TwidereApplication.getInstance(context);
+        final FireTweetApplication app = FireTweetApplication.getInstance(context);
         mMultiSelectManager = app.getMultiSelectManager();
         mImageLoader = app.getMediaLoaderWrapper();
         final SharedPreferencesWrapper preferences = SharedPreferencesWrapper.getInstance(context,

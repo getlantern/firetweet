@@ -27,7 +27,7 @@ import com.nostra13.universalimageloader.core.download.ImageDownloader;
 import com.nostra13.universalimageloader.utils.IoUtils;
 import com.squareup.otto.Bus;
 
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.model.SingleResponse;
 import org.getlantern.firetweet.task.ManagedAsyncTask;
 import org.getlantern.firetweet.util.imageloader.TwidereImageDownloader;
@@ -50,7 +50,7 @@ public class VideoLoader {
     private final Bus mBus;
 
     public VideoLoader(Context context) {
-        final TwidereApplication app = TwidereApplication.getInstance(context);
+        final FireTweetApplication app = FireTweetApplication.getInstance(context);
         mContext = context;
         mDiskCache = app.getDiskCache();
         mImageDownloader = new TwidereImageDownloader(context, false, false);

@@ -60,7 +60,7 @@ import org.getlantern.firetweet.adapter.MessageEntriesAdapter;
 import org.getlantern.firetweet.adapter.MessageEntriesAdapter.DirectMessageEntry;
 import org.getlantern.firetweet.adapter.MessageEntriesAdapter.MessageEntriesAdapterListener;
 import org.getlantern.firetweet.adapter.decorator.DividerItemDecoration;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.fragment.iface.RefreshScrollTopInterface;
 import org.getlantern.firetweet.provider.TwidereDataStore.Accounts;
 import org.getlantern.firetweet.provider.TwidereDataStore.DirectMessages;
@@ -265,7 +265,7 @@ public class DirectMessagesFragment extends BaseSupportFragment implements Loade
         super.onStart();
         final ContentResolver resolver = getContentResolver();
         resolver.registerContentObserver(Accounts.CONTENT_URI, true, mReloadContentObserver);
-        final Bus bus = TwidereApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
         bus.register(this);
         mAdapter.updateReadState();
         updateRefreshState();
@@ -283,7 +283,7 @@ public class DirectMessagesFragment extends BaseSupportFragment implements Loade
 
     @Override
     public void onStop() {
-        final Bus bus = TwidereApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
         bus.unregister(this);
         final ContentResolver resolver = getContentResolver();
         resolver.unregisterContentObserver(mReloadContentObserver);

@@ -26,7 +26,7 @@ import com.squareup.otto.Bus;
 
 import org.getlantern.firetweet.adapter.ParcelableActivitiesAdapter;
 import org.getlantern.firetweet.adapter.iface.IActivitiesAdapter;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.model.ParcelableActivity;
 
 import java.util.List;
@@ -49,13 +49,13 @@ public abstract class ParcelableActivitiesFragment extends AbsActivitiesFragment
     @Override
     public void onStart() {
         super.onStart();
-        final Bus bus = TwidereApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
         bus.register(this);
     }
 
     @Override
     public void onStop() {
-        final Bus bus = TwidereApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
         bus.unregister(this);
         super.onStop();
     }

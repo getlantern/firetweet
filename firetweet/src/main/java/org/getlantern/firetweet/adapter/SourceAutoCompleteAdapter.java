@@ -27,7 +27,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.getlantern.firetweet.Constants;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.provider.TwidereDataStore.CachedStatuses;
 import org.getlantern.firetweet.util.HtmlEscapeHelper;
 
@@ -43,7 +43,7 @@ public class SourceAutoCompleteAdapter extends SimpleCursorAdapter implements Co
 
 	public SourceAutoCompleteAdapter(final Context context) {
 		super(context, android.R.layout.simple_list_item_1, null, FROM, TO, 0);
-		final TwidereApplication app = TwidereApplication.getInstance(context);
+		final FireTweetApplication app = FireTweetApplication.getInstance(context);
 		mDatabase = app != null ? app.getSQLiteDatabase() : null;
 	}
 

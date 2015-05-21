@@ -89,7 +89,7 @@ import com.twitter.Extractor;
 
 import org.getlantern.dynamicgridview.DraggableArrayAdapter;
 import org.getlantern.firetweet.R;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.fragment.support.BaseSupportDialogFragment;
 import org.getlantern.firetweet.fragment.support.ViewStatusDialogFragment;
 import org.getlantern.firetweet.model.DraftItem;
@@ -620,7 +620,7 @@ public class ComposeActivity extends ThemedFragmentActivity implements TextWatch
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mPreferences = SharedPreferencesWrapper.getInstance(this, SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
 
-        final TwidereApplication app = TwidereApplication.getInstance(this);
+        final FireTweetApplication app = FireTweetApplication.getInstance(this);
         mTwitterWrapper = app.getTwitterWrapper();
         mResolver = getContentResolver();
         mValidator = new TwidereValidator(this);
@@ -1231,7 +1231,7 @@ public class ComposeActivity extends ThemedFragmentActivity implements TextWatch
         public AccountIconsAdapter(ComposeActivity activity) {
             mActivity = activity;
             mInflater = LayoutInflater.from(activity);
-            mImageLoader = TwidereApplication.getInstance(activity).getMediaLoaderWrapper();
+            mImageLoader = FireTweetApplication.getInstance(activity).getMediaLoaderWrapper();
             mSelection = new LongSparseArray<>();
         }
 
@@ -1495,7 +1495,7 @@ public class ComposeActivity extends ThemedFragmentActivity implements TextWatch
 
         public MediaPreviewAdapter(final Context context) {
             super(context, R.layout.grid_item_media_editor);
-            mImageLoader = TwidereApplication.getInstance(context).getMediaLoaderWrapper();
+            mImageLoader = FireTweetApplication.getInstance(context).getMediaLoaderWrapper();
         }
 
         public List<ParcelableMediaUpdate> getAsList() {

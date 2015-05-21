@@ -24,7 +24,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 
 import org.getlantern.firetweet.adapter.iface.IBaseAdapter;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.OnLinkClickHandler;
 import org.getlantern.firetweet.util.TwidereLinkify;
@@ -50,7 +50,7 @@ public class BaseArrayAdapter<T> extends ArrayAdapter<T> implements IBaseAdapter
 
     public BaseArrayAdapter(final Context context, final int layoutRes, final Collection<? extends T> collection) {
         super(context, layoutRes, collection);
-        final TwidereApplication app = TwidereApplication.getInstance(context);
+        final FireTweetApplication app = FireTweetApplication.getInstance(context);
         mLinkify = new TwidereLinkify(new OnLinkClickHandler(context, app.getMultiSelectManager()));
         mImageLoader = app.getMediaLoaderWrapper();
         mNicknamePrefs = context.getSharedPreferences(USER_NICKNAME_PREFERENCES_NAME, Context.MODE_PRIVATE);

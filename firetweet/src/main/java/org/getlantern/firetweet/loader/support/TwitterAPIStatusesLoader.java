@@ -27,7 +27,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import org.getlantern.jsonserializer.JSONFileIO;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.model.ParcelableStatus;
 
 import java.io.File;
@@ -63,7 +63,7 @@ public abstract class TwitterAPIStatusesLoader extends ParcelableStatusesLoader 
         mAccountId = accountId;
         mMaxId = maxId;
         mSinceId = sinceId;
-        mDatabase = TwidereApplication.getInstance(context).getSQLiteDatabase();
+        mDatabase = FireTweetApplication.getInstance(context).getSQLiteDatabase();
         mSavedStatusesFileArgs = savedStatusesArgs;
     }
 

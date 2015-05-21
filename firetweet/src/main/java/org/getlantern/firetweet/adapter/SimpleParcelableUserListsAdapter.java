@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.iface.IBaseAdapter;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.model.ParcelableUserList;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.UserColorNameUtils;
@@ -43,7 +43,7 @@ public class SimpleParcelableUserListsAdapter extends BaseArrayAdapter<Parcelabl
     public SimpleParcelableUserListsAdapter(final Context context) {
         super(context, R.layout.list_item_two_line);
         mContext = context;
-        final TwidereApplication app = TwidereApplication.getInstance(context);
+        final FireTweetApplication app = FireTweetApplication.getInstance(context);
         mImageLoader = app.getMediaLoaderWrapper();
         configBaseAdapter(context, this);
     }

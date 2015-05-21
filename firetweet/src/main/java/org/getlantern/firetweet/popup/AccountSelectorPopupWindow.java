@@ -38,7 +38,7 @@ import android.widget.PopupWindow;
 import org.apache.commons.lang3.ArrayUtils;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.ArrayAdapter;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.util.MediaLoaderWrapper;
 import org.getlantern.firetweet.util.ThemeUtils;
@@ -150,7 +150,7 @@ public class AccountSelectorPopupWindow {
 
         public AccountsGridAdapter(Context context) {
             super(context, R.layout.grid_item_selector_account);
-            mImageLoader = TwidereApplication.getInstance(context).getMediaLoaderWrapper();
+            mImageLoader = FireTweetApplication.getInstance(context).getMediaLoaderWrapper();
         }
 
         @Override

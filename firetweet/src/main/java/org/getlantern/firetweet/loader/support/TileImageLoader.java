@@ -34,7 +34,7 @@ import com.nostra13.universalimageloader.cache.disc.DiskCache;
 import com.nostra13.universalimageloader.core.download.ImageDownloader;
 import com.nostra13.universalimageloader.utils.IoUtils;
 
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.util.BitmapUtils;
 import org.getlantern.firetweet.util.Exif;
 import org.getlantern.firetweet.util.ImageValidator;
@@ -63,7 +63,7 @@ public class TileImageLoader extends AsyncTaskLoader<TileImageLoader.Result> {
         mAccountId = accountId;
         mUri = uri;
         mListener = listener;
-        final TwidereApplication app = TwidereApplication.getInstance(context);
+        final FireTweetApplication app = FireTweetApplication.getInstance(context);
         mDownloader = app.getFullImageDownloader();
         mDiskCache = app.getFullDiskCache();
         final Resources res = context.getResources();

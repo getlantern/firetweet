@@ -32,7 +32,7 @@ import android.widget.ImageView.ScaleType;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.iface.IDirectMessagesAdapter;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.model.ParcelableDirectMessage;
 import org.getlantern.firetweet.model.ParcelableDirectMessage.CursorIndices;
 import org.getlantern.firetweet.util.DirectMessageOnLinkClickHandler;
@@ -70,7 +70,7 @@ public class MessageConversationAdapter extends Adapter<ViewHolder>
     public MessageConversationAdapter(final Context context) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
-        final TwidereApplication app = TwidereApplication.getInstance(context);
+        final FireTweetApplication app = FireTweetApplication.getInstance(context);
         mLinkify = new TwidereLinkify(new DirectMessageOnLinkClickHandler(context, null));
         mMultiSelectManager = app.getMultiSelectManager();
         mImageLoader = app.getMediaLoaderWrapper();

@@ -29,7 +29,7 @@ import android.view.ViewGroup;
 
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.model.DraftItem;
 import org.getlantern.firetweet.model.ParcelableMedia;
 import org.getlantern.firetweet.model.ParcelableMediaUpdate;
@@ -54,7 +54,7 @@ public class DraftsAdapter extends SimpleCursorAdapter implements Constants {
 
     public DraftsAdapter(final Context context) {
         super(context, R.layout.list_item_draft, null, new String[0], new int[0], 0);
-        mImageLoader = TwidereApplication.getInstance(context).getMediaLoaderWrapper();
+        mImageLoader = FireTweetApplication.getInstance(context).getMediaLoaderWrapper();
         mImageLoadingHandler = new ImageLoadingHandler(R.id.media_preview_progress);
         final SharedPreferencesWrapper preferences = SharedPreferencesWrapper.getInstance(context,
                 SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);

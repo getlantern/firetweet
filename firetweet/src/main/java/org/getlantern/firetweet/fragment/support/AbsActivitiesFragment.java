@@ -42,7 +42,7 @@ import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.adapter.AbsActivitiesAdapter;
 import org.getlantern.firetweet.adapter.AbsActivitiesAdapter.ActivityAdapterListener;
 import org.getlantern.firetweet.adapter.decorator.DividerItemDecoration;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.fragment.iface.RefreshScrollTopInterface;
 import org.getlantern.firetweet.model.ParcelableActivity;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
@@ -188,13 +188,13 @@ public abstract class AbsActivitiesFragment<Data> extends BaseSupportFragment im
     @Override
     public void onStart() {
         super.onStart();
-        final Bus bus = TwidereApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
         bus.register(mStatusesBusCallback);
     }
 
     @Override
     public void onStop() {
-        final Bus bus = TwidereApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
         bus.unregister(mStatusesBusCallback);
         super.onStop();
     }

@@ -78,7 +78,7 @@ import org.getlantern.firetweet.adapter.AccountsSpinnerAdapter;
 import org.getlantern.firetweet.adapter.MessageConversationAdapter;
 import org.getlantern.firetweet.adapter.SimpleParcelableUsersAdapter;
 import org.getlantern.firetweet.adapter.iface.IBaseCardAdapter.MenuButtonClickListener;
-import org.getlantern.firetweet.app.TwidereApplication;
+import org.getlantern.firetweet.app.FireTweetApplication;
 import org.getlantern.firetweet.loader.support.UserSearchLoader;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.model.ParcelableDirectMessage;
@@ -205,7 +205,7 @@ public class MessagesConversationFragment extends BaseSupportFragment implements
         final BaseActionBarActivity activity = (BaseActionBarActivity) getActivity();
         mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         mMessageDrafts = getSharedPreferences(MESSAGE_DRAFTS_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        mImageLoader = TwidereApplication.getInstance(activity).getMediaLoaderWrapper();
+        mImageLoader = FireTweetApplication.getInstance(activity).getMediaLoaderWrapper();
         mReadStateManager = getReadStateManager();
         mTwitterWrapper = getTwitterWrapper();
         mValidator = new TwidereValidator(activity);
@@ -561,7 +561,7 @@ public class MessagesConversationFragment extends BaseSupportFragment implements
     @Override
     public void onStart() {
         super.onStart();
-        final Bus bus = TwidereApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
         bus.register(this);
         updateTextCount();
         updateEmptyText();
@@ -569,7 +569,7 @@ public class MessagesConversationFragment extends BaseSupportFragment implements
 
     @Override
     public void onStop() {
-        final Bus bus = TwidereApplication.getInstance(getActivity()).getMessageBus();
+        final Bus bus = FireTweetApplication.getInstance(getActivity()).getMessageBus();
         bus.unregister(this);
         if (mPopupMenu != null) {
             mPopupMenu.dismiss();
@@ -794,7 +794,7 @@ public class MessagesConversationFragment extends BaseSupportFragment implements
 
         public SetReadStateTask(Context context, ParcelableAccount account, ParcelableUser recipient) {
             mContext = context;
-            mReadStateManager = TwidereApplication.getInstance(context).getReadStateManager();
+            mReadStateManager = FireTweetApplication.getInstance(context).getReadStateManager();
             mAccount = account;
             mRecipient = recipient;
         }
