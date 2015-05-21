@@ -17,7 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.mariotaku.extension.twitlonger;
+package org.getlantern.extension.twitlonger;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
