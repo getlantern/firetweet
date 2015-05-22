@@ -144,6 +144,8 @@ public interface Constants extends FiretweetConstants {
 
     long LANTERN_ACCOUNT_ID = 289474250;
     long FIRETWEET_ACCOUNT_ID = 3108618309L;
+    long MANOTO_TV_ACCOUNT_ID = 34209496L;
+    long MANOTO_NEWS_ACCOUNT_ID = 410718052L;
 
     String DIR_NAME_IMAGE_CACHE = "image_cache";
     String DIR_NAME_FULL_IMAGE_CACHE = "full_image_cache";
