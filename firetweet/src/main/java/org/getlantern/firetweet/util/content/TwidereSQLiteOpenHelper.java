@@ -55,8 +55,8 @@ import org.getlantern.firetweet.provider.TwidereDataStore.SavedSearches;
 import org.getlantern.firetweet.provider.TwidereDataStore.SearchHistory;
 import org.getlantern.firetweet.provider.TwidereDataStore.Statuses;
 import org.getlantern.firetweet.provider.TwidereDataStore.Tabs;
-import org.getlantern.firetweet.util.TwidereQueryBuilder.ConversationsEntryQueryBuilder;
-import org.getlantern.firetweet.util.TwidereQueryBuilder.DirectMessagesQueryBuilder;
+import org.getlantern.firetweet.util.FiretweetQueryBuilder.ConversationsEntryQueryBuilder;
+import org.getlantern.firetweet.util.FiretweetQueryBuilder.DirectMessagesQueryBuilder;
 
 import java.util.HashMap;
 
