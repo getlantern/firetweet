@@ -56,12 +56,12 @@ public interface FiretweetConstants extends SharedPreferenceConstants, IntentCon
     public static final String SCHEME_HTTP = "http";
     public static final String SCHEME_HTTPS = "https";
     public static final String SCHEME_CONTENT = "content";
-    public static final String SCHEME_TWIDERE = "firetweet";
+    public static final String SCHEME_FIRETWEET = "firetweet";
 
     public static final String PROTOCOL_HTTP = SCHEME_HTTP + "://";
     public static final String PROTOCOL_HTTPS = SCHEME_HTTPS + "://";
     public static final String PROTOCOL_CONTENT = SCHEME_CONTENT + "://";
-    public static final String PROTOCOL_TWIDERE = SCHEME_TWIDERE + "://";
+    public static final String PROTOCOL_FIRETWEET = SCHEME_FIRETWEET + "://";
 
     public static final String AUTHORITY_USER = "user";
     public static final String AUTHORITY_HOME = "home";
@@ -127,7 +127,7 @@ public interface FiretweetConstants extends SharedPreferenceConstants, IntentCon
     public static final String DEFAULT_PROTOCOL = PROTOCOL_HTTPS;
 
     public static final String OAUTH_CALLBACK_OOB = "oob";
-    public static final String OAUTH_CALLBACK_URL = PROTOCOL_TWIDERE + "com.twitter.oauth/";
+    public static final String OAUTH_CALLBACK_URL = PROTOCOL_FIRETWEET + "com.twitter.oauth/";
 
     public static final int REQUEST_TAKE_PHOTO = 1;
     public static final int REQUEST_PICK_IMAGE = 2;

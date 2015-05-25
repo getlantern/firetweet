@@ -30,27 +30,9 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="#23CBFF">
+            android:background="@drawable/firetweet_splash">
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingLeft="30dp"
-            android:paddingTop="30dp"
-            android:background="@android:color/transparent"
-            android:lines="2"
-            android:id="@+id/text2"
-            android:clickable="true"
-            android:textStyle="bold"
-            android:textColor="@color/accent_white"
-            android:text="@string/welcome_to_firetweet"
-            android:autoLink="all"
-            android:fontFamily="Arial"
-            android:typeface="serif"
-            android:textSize="30sp" />
-
-            <Button
+        <!--<Button
                 android:id="@+id/sign_in_method_introduction"
                 style="?android:borderlessButtonStyle"
                 android:layout_width="match_parent"
@@ -66,15 +48,9 @@
                 android:text="@string/sign_in_twitter"
                 android:textSize="18sp"
                 android:textColor="#000000"
-                android:textAppearance="?android:textAppearanceSmall"/>
+                android:textAppearance="?android:textAppearanceSmall"/>-->
 
-        <RelativeLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center">
-
-            <LinearLayout
+            <!--<LinearLayout
                 android:id="@+id/username_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -106,12 +82,15 @@
                     android:background="@color/accent_white"
                     android:typeface="normal"/>
             </LinearLayout>
+            -->
 
             <LinearLayout
                 android:id="@+id/sign_in_sign_up"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_below="@+id/username_password"
+                android:layout_height="0dip"
+                android:gravity="center|bottom"
+                android:layout_weight="1"
                 android:orientation="horizontal"
                 android:padding="8dp">
 
@@ -143,7 +122,6 @@
                     android:text="@string/sign_in"/>
 
             </LinearLayout>
-        </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 

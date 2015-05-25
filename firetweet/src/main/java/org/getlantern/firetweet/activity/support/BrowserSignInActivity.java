@@ -211,16 +211,7 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
         public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
             final Uri uri = Uri.parse(url);
 
-
-
-            Log.d("TwitterBrowserSignIn", "Uri is " + uri.toString());
-
-            if (uri.toString().toLowerCase().contains("mobile.twitter.com/welcome/interests")) {
-                view.setVisibility(View.GONE);
-                mActivity.finish();
-                return true;
-            }
-            else if (url.startsWith(OAUTH_CALLBACK_URL)) {
+            if (url.startsWith(OAUTH_CALLBACK_URL)) {
                 final String oauth_verifier = uri.getQueryParameter(EXTRA_OAUTH_VERIFIER);
                 final RequestToken request_token = mActivity.mRequestToken;
                 if (oauth_verifier != null && request_token != null) {
@@ -229,6 +220,7 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
                     intent.putExtra(EXTRA_REQUEST_TOKEN, request_token.getToken());
                     intent.putExtra(EXTRA_REQUEST_TOKEN_SECRET, request_token.getTokenSecret());
                     mActivity.setResult(RESULT_OK, intent);
+                    view.setVisibility(View.GONE);
                     mActivity.finish();
                 }
                 return true;
@@ -263,6 +255,9 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
             final String consumerKey = getNonEmptyString(mPreferences, KEY_CONSUMER_KEY, TWITTER_CONSUMER_KEY_3);
             final String consumerSecret = getNonEmptyString(mPreferences, KEY_CONSUMER_SECRET,
                     TWITTER_CONSUMER_SECRET_3);
+            final String proxy_host = "127.0.0.1";
+            final int proxy_port = 9192;
+
             cb.setHostAddressResolverFactory(new FiretweetHostResolverFactory(mApplication));
             cb.setHttpClientFactory(new OkHttpClientFactory(mApplication));
             if (TwitterContentUtils.isOfficialKey(mActivity, consumerKey, consumerSecret)) {
@@ -283,17 +278,11 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
             }
             cb.setGZIPEnabled(enable_gzip_compressing);
             cb.setIgnoreSSLError(ignore_ssl_error);
-            //if (enable_proxy) {
-                //final String proxy_host = mPreferences.getString(KEY_PROXY_HOST, null);
-                //final int proxy_port = ParseUtils.parseInt(mPreferences.getString(KEY_PROXY_PORT, "-1"));
-                final String proxy_host = "127.0.0.1";
-                final int proxy_port = 9192;
-                //if (!isEmpty(proxy_host) && proxy_port > 0) {
-                    cb.setHttpProxyHost(proxy_host);
-                    cb.setHttpProxyPort(proxy_port);
-                    Log.d("TwitterBrowserSignIn", "Enabled proxy configuration");
-                //}
-            //}
+
+            cb.setHttpProxyHost(proxy_host);
+            cb.setHttpProxyPort(proxy_port);
+            Log.d("TwitterBrowserSignIn", "Enabled proxy configuration");
+
             try {
                 final Twitter twitter = new TwitterFactory(cb.build()).getInstance();
                 return twitter.getOAuthRequestToken(OAUTH_CALLBACK_OOB);
@@ -314,8 +303,9 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
                 }
                 return;
             }
-            mActivity.loadUrl("https://mobile.twitter.com/signup?oauth_token=" + data.getToken() + "&context=oauth");
-
+            mActivity.loadUrl(data.getAuthorizationURL());
+            //mActivity.loadUrl("https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=what%20is%20my%20ip%20address");
+            //mActivity.loadUrl("https://mobile.twitter.com/signup?oauth_token=" + data.getToken() + "&context=oauth");
         }
 
         @Override

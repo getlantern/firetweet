@@ -94,7 +94,7 @@
         <meta-data
             android:name="override_tinted_status_bar_defaults"
             android:value="true"/>
-        <activity
+        <!--<activity
             android:name=".activity.SplashScreen"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
@@ -104,7 +104,7 @@
  
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity>-->
 
         <activity
             android:name=".activity.MainActivity"
@@ -114,9 +114,9 @@
             android:theme="@style/Theme.Launcher"
             android:windowSoftInputMode="adjustNothing">
             <intent-filter>
-                <!--<action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>-->
+                <category android:name="android.intent.category.LAUNCHER"/>
                 <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>

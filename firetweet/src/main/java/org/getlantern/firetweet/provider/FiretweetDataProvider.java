@@ -996,7 +996,7 @@ public final class FiretweetDataProvider extends ContentProvider implements Cons
         // Setup click intent
         final Intent homeIntent = new Intent(context, HomeActivity.class);
         final Uri.Builder homeLinkBuilder = new Uri.Builder();
-        homeLinkBuilder.scheme(SCHEME_TWIDERE);
+        homeLinkBuilder.scheme(SCHEME_FIRETWEET);
         homeLinkBuilder.authority(type);
         homeLinkBuilder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(accountId));
         homeIntent.setData(homeLinkBuilder.build());
@@ -1008,7 +1008,7 @@ public final class FiretweetDataProvider extends ContentProvider implements Cons
         final Intent recvIntent = new Intent(context, NotificationReceiver.class);
         recvIntent.setAction(BROADCAST_NOTIFICATION_DELETED);
         final Uri.Builder recvLinkBuilder = new Uri.Builder();
-        recvLinkBuilder.scheme(SCHEME_TWIDERE);
+        recvLinkBuilder.scheme(SCHEME_FIRETWEET);
         recvLinkBuilder.authority(AUTHORITY_NOTIFICATIONS);
         recvLinkBuilder.appendPath(type);
         recvLinkBuilder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(accountId));
@@ -1021,7 +1021,7 @@ public final class FiretweetDataProvider extends ContentProvider implements Cons
         // Setup delete intent
         final Intent recvIntent = new Intent(context, NotificationReceiver.class);
         final Uri.Builder recvLinkBuilder = new Uri.Builder();
-        recvLinkBuilder.scheme(SCHEME_TWIDERE);
+        recvLinkBuilder.scheme(SCHEME_FIRETWEET);
         recvLinkBuilder.authority(AUTHORITY_NOTIFICATIONS);
         recvLinkBuilder.appendPath(type);
         recvLinkBuilder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(accountId));

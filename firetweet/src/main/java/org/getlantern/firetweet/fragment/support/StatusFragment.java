@@ -1151,9 +1151,16 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
         @Override
         public ParcelableStatus getStatus(int position) {
             final int conversationCount = getConversationCount();
+
             if (position == getItemCount() - 1) {
                 return null;
             } else if (position < conversationCount) {
+
+                // out of bounds issue
+                if (position < 0) {
+                    position = 0;
+                }
+
                 return mConversation != null ? mConversation.get(position) : null;
             } else if (position > conversationCount) {
                 return mReplies != null ? mReplies.get(position - conversationCount - 1) : null;

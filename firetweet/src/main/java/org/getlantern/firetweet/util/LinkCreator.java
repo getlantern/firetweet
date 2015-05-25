@@ -42,7 +42,7 @@ public class LinkCreator implements Constants {
 
     public static Uri getFiretweetStatusLink(long accountId, long statusId) {
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_STATUS);
         if (accountId > 0) {
             builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(accountId));
@@ -53,7 +53,7 @@ public class LinkCreator implements Constants {
 
     public static Uri getFiretweetUserLink(long accountId, long userId, String screenName) {
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_USER);
         if (accountId > 0) {
             builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(accountId));

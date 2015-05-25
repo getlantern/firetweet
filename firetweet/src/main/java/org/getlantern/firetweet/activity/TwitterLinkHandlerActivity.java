@@ -132,7 +132,7 @@ public class TwitterLinkHandlerActivity extends Activity implements Constants {
         switch (URI_MATCHER.match(uri)) {
             case URI_CODE_TWITTER_STATUS: {
                 final Uri.Builder builder = new Uri.Builder();
-                builder.scheme(SCHEME_TWIDERE);
+                builder.scheme(SCHEME_FIRETWEET);
                 builder.authority(AUTHORITY_STATUS);
                 builder.appendQueryParameter(QUERY_PARAM_STATUS_ID, pathSegments.get(2));
                 return new Intent(Intent.ACTION_VIEW, builder.build());
@@ -148,7 +148,7 @@ public class TwitterLinkHandlerActivity extends Activity implements Constants {
             case URI_CODE_TWITTER_USER: {
                 final String pathSegment = pathSegments.get(0);
                 final Uri.Builder builder = new Uri.Builder();
-                builder.scheme(SCHEME_TWIDERE);
+                builder.scheme(SCHEME_FIRETWEET);
                 if ("share".equals(pathSegment)) {
                     final Intent handledIntent = new Intent(this, ComposeActivity.class);
                     handledIntent.setAction(Intent.ACTION_SEND);
@@ -174,21 +174,21 @@ public class TwitterLinkHandlerActivity extends Activity implements Constants {
             }
             case URI_CODE_TWITTER_USER_FOLLOWING: {
                 final Uri.Builder builder = new Uri.Builder();
-                builder.scheme(SCHEME_TWIDERE);
+                builder.scheme(SCHEME_FIRETWEET);
                 builder.authority(AUTHORITY_USER_FRIENDS);
                 builder.appendQueryParameter(QUERY_PARAM_SCREEN_NAME, pathSegments.get(0));
                 return new Intent(Intent.ACTION_VIEW, builder.build());
             }
             case URI_CODE_TWITTER_USER_FOLLOWERS: {
                 final Uri.Builder builder = new Uri.Builder();
-                builder.scheme(SCHEME_TWIDERE);
+                builder.scheme(SCHEME_FIRETWEET);
                 builder.authority(AUTHORITY_USER_FOLLOWERS);
                 builder.appendQueryParameter(QUERY_PARAM_SCREEN_NAME, pathSegments.get(0));
                 return new Intent(Intent.ACTION_VIEW, builder.build());
             }
             case URI_CODE_TWITTER_USER_FAVORITES: {
                 final Uri.Builder builder = new Uri.Builder();
-                builder.scheme(SCHEME_TWIDERE);
+                builder.scheme(SCHEME_FIRETWEET);
                 builder.authority(AUTHORITY_USER_FAVORITES);
                 builder.appendQueryParameter(QUERY_PARAM_SCREEN_NAME, pathSegments.get(0));
                 return new Intent(Intent.ACTION_VIEW, builder.build());
@@ -199,7 +199,7 @@ public class TwitterLinkHandlerActivity extends Activity implements Constants {
                     return null;
                 }
                 final Uri.Builder builder = new Uri.Builder();
-                builder.scheme(SCHEME_TWIDERE);
+                builder.scheme(SCHEME_FIRETWEET);
                 builder.authority(AUTHORITY_USER_LIST);
                 builder.appendQueryParameter(QUERY_PARAM_SCREEN_NAME, firstSegment);
                 builder.appendQueryParameter(QUERY_PARAM_LIST_NAME, pathSegments.get(1));
@@ -211,7 +211,7 @@ public class TwitterLinkHandlerActivity extends Activity implements Constants {
                     return null;
                 }
                 final Uri.Builder builder = new Uri.Builder();
-                builder.scheme(SCHEME_TWIDERE);
+                builder.scheme(SCHEME_FIRETWEET);
                 builder.authority(AUTHORITY_USER_LIST_MEMBERS);
                 builder.appendQueryParameter(QUERY_PARAM_SCREEN_NAME, firstSegment);
                 builder.appendQueryParameter(QUERY_PARAM_LIST_NAME, pathSegments.get(1));
@@ -223,7 +223,7 @@ public class TwitterLinkHandlerActivity extends Activity implements Constants {
                     return null;
                 }
                 final Uri.Builder builder = new Uri.Builder();
-                builder.scheme(SCHEME_TWIDERE);
+                builder.scheme(SCHEME_FIRETWEET);
                 builder.authority(AUTHORITY_USER_LIST_SUBSCRIBERS);
                 builder.appendQueryParameter(QUERY_PARAM_SCREEN_NAME, firstSegment);
                 builder.appendQueryParameter(QUERY_PARAM_LIST_NAME, pathSegments.get(1));

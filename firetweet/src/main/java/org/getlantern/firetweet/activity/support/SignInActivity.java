@@ -103,7 +103,6 @@ import static org.getlantern.firetweet.util.Utils.trim;
 public class SignInActivity extends BaseActionBarActivity implements TwitterConstants, OnClickListener,
         TextWatcher {
 
-    private static final String TWITTER_SIGNUP_URL = "https://twitter.com/signup";
     private static final String EXTRA_API_LAST_CHANGE = "api_last_change";
     public static final String FRAGMENT_TAG_SIGN_IN_PROGRESS = "sign_in_progress";
     private static final String DEFAULT_TWITTER_API_URL_FORMAT = "https://[DOMAIN.]twitter.com/";
@@ -181,7 +180,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
     @Override
     public void onClick(final View v) {
         switch (v.getId()) {
-            case R.id.sign_up: {
+            case R.id.sign_in: {
                 final Context context = this;
 
                 final Intent intent = new Intent(this, BrowserSignInActivity.class);
@@ -194,10 +193,6 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
                 //startActivity(intent);
                 break;
             }
-            case R.id.sign_in: {
-                doLogin();
-                break;
-            }
         }
     }
 
@@ -207,19 +202,19 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
     @Override
     public void onSupportContentChanged() {
         super.onSupportContentChanged();
-        mEditUsername = (EditText) findViewById(R.id.username);
-        mEditPassword = (EditText) findViewById(R.id.password);
+        //mEditUsername = (EditText) findViewById(R.id.username);
+        //mEditPassword = (EditText) findViewById(R.id.password);
         mSignInButton = (Button) findViewById(R.id.sign_in);
         mSignUpButton = (Button) findViewById(R.id.sign_up);
         mSigninSignupContainer = (LinearLayout) findViewById(R.id.sign_in_sign_up);
         mUsernamePasswordContainer = (LinearLayout) findViewById(R.id.username_password);
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.menu_sign_in, menu);
         return true;
-    }
+    }*/
 
     @Override
     public void onDestroy() {
@@ -227,7 +222,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         super.onDestroy();
     }
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case MENU_HOME: {
@@ -281,11 +276,11 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
             itemBrowser.setEnabled(is_oauth);
         }
         return super.onPrepareOptionsMenu(menu);
-    }
+    }*/
 
     @Override
     public void onSaveInstanceState(final Bundle outState) {
-        saveEditedText();
+        //saveEditedText();
         setDefaultAPI();
         outState.putString(Accounts.API_URL_FORMAT, mAPIUrlFormat);
         outState.putInt(Accounts.AUTH_TYPE, mAuthType);
@@ -332,15 +327,15 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
 
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/ProximaNova-Semibold.ttf");
 
-        mUsernamePasswordContainer
-                .setVisibility(mAuthType == Accounts.AUTH_TYPE_TWIP_O_MODE ? View.GONE : View.VISIBLE);
+        //mUsernamePasswordContainer
+        //        .setVisibility(mAuthType == Accounts.AUTH_TYPE_TWIP_O_MODE ? View.GONE : View.VISIBLE);
         mSigninSignupContainer.setOrientation(mAuthType == Accounts.AUTH_TYPE_TWIP_O_MODE ? LinearLayout.VERTICAL
                 : LinearLayout.HORIZONTAL);
 
-        mEditUsername.setText(mUsername);
-        mEditUsername.addTextChangedListener(this);
-        mEditPassword.setText(mPassword);
-        mEditPassword.addTextChangedListener(this);
+        //mEditUsername.setText(mUsername);
+        //mEditUsername.addTextChangedListener(this);
+        //mEditPassword.setText(mPassword);
+        //mEditPassword.addTextChangedListener(this);
         final Resources resources = getResources();
         final ColorStateList color = ColorStateList.valueOf(resources.getColor(R.color.material_light_blue));
 
@@ -350,8 +345,8 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         mSignInButton.setTypeface(font);
         mSignUpButton.setTypeface(font);
 
-        Button signIn = (Button) findViewById(R.id.sign_in_method_introduction);
-        signIn.setTypeface(font);
+        //Button signIn = (Button) findViewById(R.id.sign_in_method_introduction);
+        //signIn.setTypeface(font);
         //ViewAccessor.setBackgroundTintList(mSignInButton, color);
 
         setSignInButton();
@@ -361,7 +356,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING) {
             mTask.cancel(true);
         }
-        saveEditedText();
+        //saveEditedText();
         setDefaultAPI();
         final Configuration conf = getConfiguration();
         mTask = new SignInTask(this, conf, mUsername, mPassword, mAuthType, mAPIUrlFormat,
@@ -374,7 +369,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING) {
             mTask.cancel(true);
         }
-        saveEditedText();
+        //saveEditedText();
         setDefaultAPI();
         final Configuration conf = getConfiguration();
         final String token = intent.getStringExtra(EXTRA_REQUEST_TOKEN);
@@ -467,8 +462,9 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
     }
 
     private void setSignInButton() {
-        mSignInButton.setEnabled(mEditPassword.getText().length() > 0 && mEditUsername.getText().length() > 0
-                || mAuthType == Accounts.AUTH_TYPE_TWIP_O_MODE);
+        mSignInButton.setEnabled(true);
+//        mSignInButton.setEnabled(mEditPassword.getText().length() > 0 && mEditUsername.getText().length() > 0
+ //               || mAuthType == Accounts.AUTH_TYPE_TWIP_O_MODE);
     }
 
     private void friendDefaultAccounts(final long accountId) {
@@ -750,10 +746,10 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
 
     }
 
-    @Override
+    /*@Override
     public int getThemeResourceId() {
         return ThemeUtils.getThemeResource(this);
-    }
+    }*/
 
     static class SignInResponse {
 

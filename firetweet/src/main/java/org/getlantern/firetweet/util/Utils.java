@@ -2945,7 +2945,7 @@ public final class Utils implements Constants, TwitterConstants {
                                                final long recipientId) {
         if (activity == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_DIRECT_MESSAGES_CONVERSATION);
         if (accountId > 0 && recipientId > 0) {
             builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(accountId));
@@ -3037,7 +3037,7 @@ public final class Utils implements Constants, TwitterConstants {
     public static void openIncomingFriendships(final Context context, final long accountId) {
         if (context == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_INCOMING_FRIENDSHIPS);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(accountId));
         final Intent intent = new Intent(Intent.ACTION_VIEW, builder.build());
@@ -3047,7 +3047,7 @@ public final class Utils implements Constants, TwitterConstants {
     public static void openMap(final Context context, final double latitude, final double longitude) {
         if (context == null || !ParcelableLocation.isValidLocation(latitude, longitude)) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_MAP);
         builder.appendQueryParameter(QUERY_PARAM_LAT, String.valueOf(latitude));
         builder.appendQueryParameter(QUERY_PARAM_LNG, String.valueOf(longitude));
@@ -3059,7 +3059,7 @@ public final class Utils implements Constants, TwitterConstants {
     public static void openMutesUsers(final Activity activity, final long account_id) {
         if (activity == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_MUTES_USERS);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(account_id));
         final Intent intent = new Intent(Intent.ACTION_VIEW, builder.build());
@@ -3069,7 +3069,7 @@ public final class Utils implements Constants, TwitterConstants {
     public static void openSavedSearches(final Activity activity, final long account_id) {
         if (activity == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_SAVED_SEARCHES);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(account_id));
         final Intent intent = new Intent(Intent.ACTION_VIEW, builder.build());
@@ -3079,7 +3079,7 @@ public final class Utils implements Constants, TwitterConstants {
     public static void openSearch(final Context context, final long account_id, final String query) {
         if (context == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_SEARCH);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(account_id));
         builder.appendQueryParameter(QUERY_PARAM_QUERY, query);
@@ -3101,7 +3101,7 @@ public final class Utils implements Constants, TwitterConstants {
         final Bundle extras = new Bundle();
         extras.putParcelable(EXTRA_STATUS, status);
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_STATUS);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(account_id));
         builder.appendQueryParameter(QUERY_PARAM_STATUS_ID, String.valueOf(status_id));
@@ -3120,7 +3120,7 @@ public final class Utils implements Constants, TwitterConstants {
         final Bundle extras = new Bundle();
         extras.putParcelableArrayList(EXTRA_STATUSES, new ArrayList<>(statuses));
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_STATUSES);
         final Intent intent = new Intent(Intent.ACTION_VIEW, builder.build());
         intent.putExtras(extras);
@@ -3130,7 +3130,7 @@ public final class Utils implements Constants, TwitterConstants {
     public static void openStatusFavoriters(final Activity activity, final long accountId, final long statusId) {
         if (activity == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_STATUS_FAVORITERS);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(accountId));
         builder.appendQueryParameter(QUERY_PARAM_STATUS_ID, String.valueOf(statusId));
@@ -3142,7 +3142,7 @@ public final class Utils implements Constants, TwitterConstants {
                                          final String screenName) {
         if (activity == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_STATUS_REPLIES);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(accountId));
         builder.appendQueryParameter(QUERY_PARAM_STATUS_ID, String.valueOf(statusId));
@@ -3154,7 +3154,7 @@ public final class Utils implements Constants, TwitterConstants {
     public static void openStatusRetweeters(final Context context, final long accountId, final long statusId) {
         if (context == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_STATUS_RETWEETERS);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(accountId));
         builder.appendQueryParameter(QUERY_PARAM_STATUS_ID, String.valueOf(statusId));
@@ -3165,7 +3165,7 @@ public final class Utils implements Constants, TwitterConstants {
     public static void openTweetSearch(final Context context, final long accountId, final String query) {
         if (context == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_SEARCH);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(accountId));
         builder.appendQueryParameter(QUERY_PARAM_TYPE, QUERY_PARAM_VALUE_TWEETS);
@@ -3179,7 +3179,7 @@ public final class Utils implements Constants, TwitterConstants {
     public static void openUserBlocks(final Activity activity, final long account_id) {
         if (activity == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_USER_BLOCKS);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(account_id));
         final Intent intent = new Intent(Intent.ACTION_VIEW, builder.build());
@@ -3190,7 +3190,7 @@ public final class Utils implements Constants, TwitterConstants {
                                          final String screen_name) {
         if (activity == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_USER_FAVORITES);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(account_id));
         if (user_id > 0) {
@@ -3208,7 +3208,7 @@ public final class Utils implements Constants, TwitterConstants {
                                          final String screen_name) {
         if (activity == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_USER_FOLLOWERS);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(account_id));
         if (user_id > 0) {
@@ -3225,7 +3225,7 @@ public final class Utils implements Constants, TwitterConstants {
                                        final String screen_name) {
         if (activity == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_USER_FRIENDS);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(account_id));
         if (user_id > 0) {
@@ -3243,7 +3243,7 @@ public final class Utils implements Constants, TwitterConstants {
                                            final long userId, final String screenName, final String listName) {
         if (context == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_USER_LIST);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(accountId));
         if (listId > 0) {
@@ -3269,7 +3269,7 @@ public final class Utils implements Constants, TwitterConstants {
         final Bundle extras = new Bundle();
         extras.putParcelable(EXTRA_USER_LIST, userList);
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_USER_LIST);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(accountId));
         builder.appendQueryParameter(QUERY_PARAM_USER_ID, String.valueOf(userId));
@@ -3284,7 +3284,7 @@ public final class Utils implements Constants, TwitterConstants {
                                            final long userId, final String screenName, final String listName) {
         if (activity == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_USER_LIST_MEMBERS);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(accountId));
         if (listId > 0) {
@@ -3312,7 +3312,7 @@ public final class Utils implements Constants, TwitterConstants {
                                                final String screen_name) {
         if (activity == null || account_id <= 0 || user_id <= 0 && isEmpty(screen_name)) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_USER_LIST_MEMBERSHIPS);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(account_id));
         if (user_id > 0) {
@@ -3329,7 +3329,7 @@ public final class Utils implements Constants, TwitterConstants {
                                      final String screen_name) {
         if (activity == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_USER_LISTS);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(account_id));
         if (user_id > 0) {
@@ -3346,7 +3346,7 @@ public final class Utils implements Constants, TwitterConstants {
                                                final long userId, final String screenName, final String listName) {
         if (activity == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_USER_LIST_SUBSCRIBERS);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(accountId));
         if (listId > 0) {
@@ -3374,7 +3374,7 @@ public final class Utils implements Constants, TwitterConstants {
                                             final long userId, final String screenName, final String listName) {
         if (activity == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_USER_LIST_TIMELINE);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(accountId));
         if (listId > 0) {
@@ -3414,7 +3414,7 @@ public final class Utils implements Constants, TwitterConstants {
     public static void openUserMentions(final Activity activity, final long account_id, final String screen_name) {
         if (activity == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_USER_MENTIONS);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(account_id));
         if (screen_name != null) {
@@ -3457,7 +3457,7 @@ public final class Utils implements Constants, TwitterConstants {
         final Bundle extras = new Bundle();
         extras.putParcelable(EXTRA_USER, user);
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_USER);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(user.account_id));
         if (user.id > 0) {
@@ -3481,7 +3481,7 @@ public final class Utils implements Constants, TwitterConstants {
         final Bundle extras = new Bundle();
         extras.putParcelableArrayList(EXTRA_USERS, new ArrayList<>(users));
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_USERS);
         final Intent intent = new Intent(Intent.ACTION_VIEW, builder.build());
         intent.putExtras(extras);
@@ -3492,7 +3492,7 @@ public final class Utils implements Constants, TwitterConstants {
                                         final String screen_name) {
         if (activity == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_USER_TIMELINE);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(account_id));
         if (user_id > 0) {
@@ -3509,7 +3509,7 @@ public final class Utils implements Constants, TwitterConstants {
                                              final String screen_name) {
         if (activity == null) return;
         final Uri.Builder builder = new Uri.Builder();
-        builder.scheme(SCHEME_TWIDERE);
+        builder.scheme(SCHEME_FIRETWEET);
         builder.authority(AUTHORITY_USER_MEDIA_TIMELINE);
         builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(account_id));
         if (user_id > 0) {

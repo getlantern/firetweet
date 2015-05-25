@@ -897,7 +897,7 @@ public class UserFragment extends BaseSupportFragment implements OnClickListener
             }
             case MENU_SEND_DIRECT_MESSAGE: {
                 final Uri.Builder builder = new Uri.Builder();
-                builder.scheme(SCHEME_TWIDERE);
+                builder.scheme(SCHEME_FIRETWEET);
                 builder.authority(AUTHORITY_DIRECT_MESSAGES_CONVERSATION);
                 builder.appendQueryParameter(QUERY_PARAM_ACCOUNT_ID, String.valueOf(user.account_id));
                 builder.appendQueryParameter(QUERY_PARAM_USER_ID, String.valueOf(user.id));
