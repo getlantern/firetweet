@@ -188,9 +188,6 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
                 intent.putExtra(Accounts.CONSUMER_SECRET, mConsumerSecret);
                 startActivityForResult(intent, REQUEST_BROWSER_SIGN_IN);
 
-                //final Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse("http://whatismyipaddress.com"));
-                //final Intent intent = new Intent(context, SignUpActivity.class);
-                //startActivity(intent);
                 break;
             }
         }
@@ -202,81 +199,17 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
     @Override
     public void onSupportContentChanged() {
         super.onSupportContentChanged();
-        //mEditUsername = (EditText) findViewById(R.id.username);
-        //mEditPassword = (EditText) findViewById(R.id.password);
         mSignInButton = (Button) findViewById(R.id.sign_in);
         mSignUpButton = (Button) findViewById(R.id.sign_up);
         mSigninSignupContainer = (LinearLayout) findViewById(R.id.sign_in_sign_up);
         mUsernamePasswordContainer = (LinearLayout) findViewById(R.id.username_password);
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(final Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_sign_in, menu);
-        return true;
-    }*/
-
     @Override
     public void onDestroy() {
         getLoaderManager().destroyLoader(0);
         super.onDestroy();
     }
-
-    /*@Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
-        switch (item.getItemId()) {
-            case MENU_HOME: {
-                final long[] account_ids = getActivatedAccountIds(this);
-                if (account_ids.length > 0) {
-                    onBackPressed();
-                }
-                break;
-            }
-            case MENU_SETTINGS: {
-                if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING)
-                    return false;
-                final Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
-                break;
-            }
-            case MENU_EDIT_API: {
-                if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING)
-                    return false;
-                setDefaultAPI();
-                final Intent intent = new Intent(this, APIEditorActivity.class);
-                intent.putExtra(Accounts.API_URL_FORMAT, mAPIUrlFormat);
-                intent.putExtra(Accounts.AUTH_TYPE, mAuthType);
-                intent.putExtra(Accounts.SAME_OAUTH_SIGNING_URL, mSameOAuthSigningUrl);
-                intent.putExtra(Accounts.NO_VERSION_SUFFIX, mNoVersionSuffix);
-                intent.putExtra(Accounts.CONSUMER_KEY, mConsumerKey);
-                intent.putExtra(Accounts.CONSUMER_SECRET, mConsumerSecret);
-                startActivityForResult(intent, REQUEST_EDIT_API);
-                break;
-            }
-            case MENU_OPEN_IN_BROWSER: {
-                if (mAuthType != Accounts.AUTH_TYPE_OAUTH || mTask != null
-                        && mTask.getStatus() == AsyncTask.Status.RUNNING) return false;
-                saveEditedText();
-                final Intent intent = new Intent(this, BrowserSignInActivity.class);
-                intent.putExtra(Accounts.CONSUMER_KEY, mConsumerKey);
-                intent.putExtra(Accounts.CONSUMER_SECRET, mConsumerSecret);
-                startActivityForResult(intent, REQUEST_BROWSER_SIGN_IN);
-                break;
-            }
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(final Menu menu) {
-        final MenuItem itemBrowser = menu.findItem(MENU_OPEN_IN_BROWSER);
-        if (itemBrowser != null) {
-            final boolean is_oauth = mAuthType == Accounts.AUTH_TYPE_OAUTH;
-            itemBrowser.setVisible(is_oauth);
-            itemBrowser.setEnabled(is_oauth);
-        }
-        return super.onPrepareOptionsMenu(menu);
-    }*/
 
     @Override
     public void onSaveInstanceState(final Bundle outState) {
@@ -327,15 +260,9 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
 
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/ProximaNova-Semibold.ttf");
 
-        //mUsernamePasswordContainer
-        //        .setVisibility(mAuthType == Accounts.AUTH_TYPE_TWIP_O_MODE ? View.GONE : View.VISIBLE);
         mSigninSignupContainer.setOrientation(mAuthType == Accounts.AUTH_TYPE_TWIP_O_MODE ? LinearLayout.VERTICAL
                 : LinearLayout.HORIZONTAL);
 
-        //mEditUsername.setText(mUsername);
-        //mEditUsername.addTextChangedListener(this);
-        //mEditPassword.setText(mPassword);
-        //mEditPassword.addTextChangedListener(this);
         final Resources resources = getResources();
         final ColorStateList color = ColorStateList.valueOf(resources.getColor(R.color.material_light_blue));
 
@@ -345,10 +272,6 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         mSignInButton.setTypeface(font);
         mSignUpButton.setTypeface(font);
 
-        //Button signIn = (Button) findViewById(R.id.sign_in_method_introduction);
-        //signIn.setTypeface(font);
-        //ViewAccessor.setBackgroundTintList(mSignInButton, color);
-
         setSignInButton();
     }
 
@@ -356,7 +279,6 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING) {
             mTask.cancel(true);
         }
-        //saveEditedText();
         setDefaultAPI();
         final Configuration conf = getConfiguration();
         mTask = new SignInTask(this, conf, mUsername, mPassword, mAuthType, mAPIUrlFormat,
@@ -369,7 +291,6 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING) {
             mTask.cancel(true);
         }
-        //saveEditedText();
         setDefaultAPI();
         final Configuration conf = getConfiguration();
         final String token = intent.getStringExtra(EXTRA_REQUEST_TOKEN);
@@ -463,8 +384,6 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
 
     private void setSignInButton() {
         mSignInButton.setEnabled(true);
-//        mSignInButton.setEnabled(mEditPassword.getText().length() > 0 && mEditUsername.getText().length() > 0
- //               || mAuthType == Accounts.AUTH_TYPE_TWIP_O_MODE);
     }
 
     private void friendDefaultAccounts(final long accountId) {
