@@ -84,6 +84,8 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
 
     private RequestToken mRequestToken;
 
+    public static String action = "sign_in";
+
     private GetRequestTokenTask mTask;
 
     @Override
@@ -303,9 +305,12 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
                 }
                 return;
             }
-            mActivity.loadUrl(data.getAuthorizationURL());
-            //mActivity.loadUrl("https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=what%20is%20my%20ip%20address");
-            //mActivity.loadUrl("https://mobile.twitter.com/signup?oauth_token=" + data.getToken() + "&context=oauth");
+
+            if (action == "sign_up") {
+                mActivity.loadUrl("https://mobile.twitter.com/signup?oauth_token=" + data.getToken() + "&context=oauth");
+            } else {
+                mActivity.loadUrl(data.getAuthorizationURL());
+            }
         }
 
         @Override

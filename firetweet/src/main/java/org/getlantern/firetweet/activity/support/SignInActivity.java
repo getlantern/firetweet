@@ -179,7 +179,11 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
 
     @Override
     public void onClick(final View v) {
+
         switch (v.getId()) {
+
+            case R.id.sign_up:
+                BrowserSignInActivity.action = "sign_up";
             case R.id.sign_in: {
                 final Context context = this;
 
