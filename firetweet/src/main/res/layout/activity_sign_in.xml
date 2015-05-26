@@ -33,58 +33,6 @@
             android:gravity="center"
             android:background="@drawable/firetweet_splash">
 
-        <!--<Button
-                android:id="@+id/sign_in_method_introduction"
-                style="?android:borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/sign_in_sign_up"
-                android:layout_margin="8dp"
-                android:clickable="true"
-                android:paddingLeft="30dp"
-                android:gravity="center_vertical"
-                android:drawableLeft="@drawable/twitter_logo_white"
-                android:minHeight="36dp"
-                android:onClick="onClick"
-                android:text="@string/sign_in_twitter"
-                android:textSize="18sp"
-                android:textColor="#000000"
-                android:textAppearance="?android:textAppearanceSmall"/>-->
-
-            <!--<LinearLayout
-                android:id="@+id/username_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <EditText
-                    android:id="@+id/username"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="@string/username"
-                    android:inputType="textEmailAddress"
-                    android:singleLine="true"
-                    android:textColor="#000000"
-                    android:background="@color/accent_white"
-                    android:typeface="normal"/>
-
-                <EditText
-                    android:id="@+id/password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:ems="10"
-                    android:hint="@string/password"
-                    android:inputType="textPassword"
-                    android:singleLine="true"
-                    android:textColor="#000000"
-                    android:background="@color/accent_white"
-                    android:typeface="normal"/>
-            </LinearLayout>
-            -->
-
             <LinearLayout
                 android:id="@+id/sign_in_sign_up"
                 android:layout_width="300dp"
@@ -129,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:clickable="true"
-                android:paddingLeft="30dp"
+                android:paddingLeft="100dp"
                 android:gravity="center_vertical"
                 android:minHeight="36dp"
                 android:text="@string/powered_by"
