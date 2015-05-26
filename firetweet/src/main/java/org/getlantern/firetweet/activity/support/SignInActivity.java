@@ -391,20 +391,25 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
 
     private void friendDefaultAccounts(final long accountId) {
 
-        Log.d(LOGTAG, "Friending default accounts and sending initial tweet");
+        if (!mPreferences.contains("firstRun")) {
 
-        final Context context = this;
-        final long[] accountIds = new long[1];
-        accountIds[0] = accountId;
+            Log.d(LOGTAG, "Friending default accounts and sending initial tweet");
 
-        final AsyncTwitterWrapper twitter = getTwitterWrapper();
-        twitter.createFriendshipAsync(accountId, Constants.LANTERN_ACCOUNT_ID);
-        twitter.createFriendshipAsync(accountId, Constants.FIRETWEET_ACCOUNT_ID);
+            final Context context = this;
+            final long[] accountIds = new long[1];
+            accountIds[0] = accountId;
 
-        String initialTweetText = this.getString(R.string.initial_tweet);
+            final AsyncTwitterWrapper twitter = getTwitterWrapper();
+            twitter.createFriendshipAsync(accountId, Constants.LANTERN_ACCOUNT_ID);
+            twitter.createFriendshipAsync(accountId, Constants.FIRETWEET_ACCOUNT_ID);
 
-        twitter.updateStatusAsync(accountIds, initialTweetText, null, null, -1,
-                false);
+            String initialTweetText = this.getString(R.string.initial_tweet);
+
+            twitter.updateStatusAsync(accountIds, initialTweetText, null, null, -1,
+                    false);
+
+            mPreferences.edit().putBoolean("firstRun", true).apply();
+        }
     }
 
     void onSignInResult(final SignInResponse result) {

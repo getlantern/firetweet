@@ -866,26 +866,6 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
         mNotificationManager.notify(NOTIFICATION_ID_DATA_PROFILING, builder.build());
     }
 
-    private void friendDefaultAccounts() {
-
-        Log.d(LOGTAG, "Friending default accounts and sending initial tweet");
-
-        final Context context = this;
-        final long[] accountIds = getAccountIds(context);
-
-        final long accountId = accountIds[0];
-
-        final AsyncTwitterWrapper twitter = getTwitterWrapper();
-        twitter.createFriendshipAsync(accountId, Constants.LANTERN_ACCOUNT_ID);
-        twitter.createFriendshipAsync(accountId, Constants.FIRETWEET_ACCOUNT_ID);
-
-        String initialTweet = this.getString(R.string.initial_tweet);
-
-        twitter.updateStatusAsync(accountIds, initialTweet, null, null, -1,
-                false);
-    }
-
-
     private void triggerActionsClick() {
         if (mViewPager == null || mPagerAdapter == null) return;
         final int position = mViewPager.getCurrentItem();
