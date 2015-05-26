@@ -25,22 +25,13 @@ public final class Go {
 		// TODO(crawshaw): context.registerComponentCallbacks for runtime.GC
 
 		System.loadLibrary("gojni");
-
-		new Thread("GoMain") {
-			public void run() {
-				Go.run(ctx);
-			}
+		Go.run(ctx);
+		new Thread("GoReceive") {
+			public void run() { Seq.receive(); }
 		}.start();
-
-		Go.waitForRun();
-
-        new Thread("GoReceive") {
-            public void run() { Seq.receive(); }
-        }.start();
 	}
 
 	private static boolean running = false;
 
 	private static native void run(Context ctx);
-	private static native void waitForRun();
 }
