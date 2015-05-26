@@ -257,8 +257,6 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
             final String consumerKey = getNonEmptyString(mPreferences, KEY_CONSUMER_KEY, TWITTER_CONSUMER_KEY_3);
             final String consumerSecret = getNonEmptyString(mPreferences, KEY_CONSUMER_SECRET,
                     TWITTER_CONSUMER_SECRET_3);
-            final String proxy_host = "127.0.0.1";
-            final int proxy_port = 9192;
 
             cb.setHostAddressResolverFactory(new FiretweetHostResolverFactory(mApplication));
             cb.setHttpClientFactory(new OkHttpClientFactory(mApplication));
@@ -281,8 +279,8 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
             cb.setGZIPEnabled(enable_gzip_compressing);
             cb.setIgnoreSSLError(ignore_ssl_error);
 
-            cb.setHttpProxyHost(proxy_host);
-            cb.setHttpProxyPort(proxy_port);
+            cb.setHttpProxyHost(PROXY_HOST);
+            cb.setHttpProxyPort(9192);
             Log.d("TwitterBrowserSignIn", "Enabled proxy configuration");
 
             try {
