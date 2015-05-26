@@ -39,11 +39,13 @@ public class Lantern {
                 // specify that all of our HTTP traffic should be routed through
                 // our local proxy
 
+                lanternStarted = true;
+
             } catch (Exception e) {
                 Crashlytics.logException(e);
                 throw new RuntimeException(e);
             }
-            lanternStarted = true;
+
             StrictMode.setThreadPolicy(old);
         }
     }
