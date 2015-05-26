@@ -6,6 +6,7 @@
     <string name="settings">Settings</string>
     <string name="send">Send</string>
     <string name="initial_tweet">I\'m using FireTweet for Unblocked access to Twitter on Android! Download it FREE: http://firetweet.io @GetFireTweet #UnblockedTweeting</string>
+    <string name="powered_by">Powered by Lantern</string>
     <string name="add_location">Add location</string>
     <string name="add_image">Add image</string>
     <string name="take_photo">Take photo</string>

@@ -115,8 +115,8 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
     private long mAPIChangeTimestamp;
 
     private EditText mEditUsername, mEditPassword;
-    private Button mSignInButton, mSignUpButton;
-    private LinearLayout mSigninSignupContainer, mUsernamePasswordContainer;
+    private Button mSignInButton, mSignUpButton, poweredByButton;
+    private LinearLayout mSigninSignupContainer;
 
     private FiretweetApplication mApplication;
     private SharedPreferences mPreferences;
@@ -146,7 +146,6 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
                     mConsumerKey = data.getStringExtra(Accounts.CONSUMER_KEY);
                     mConsumerSecret = data.getStringExtra(Accounts.CONSUMER_SECRET);
                     final boolean isTwipOMode = mAuthType == Accounts.AUTH_TYPE_TWIP_O_MODE;
-                    mUsernamePasswordContainer.setVisibility(isTwipOMode ? View.GONE : View.VISIBLE);
                     mSigninSignupContainer
                             .setOrientation(isTwipOMode ? LinearLayout.VERTICAL : LinearLayout.HORIZONTAL);
                 }
@@ -205,8 +204,8 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         super.onSupportContentChanged();
         mSignInButton = (Button) findViewById(R.id.sign_in);
         mSignUpButton = (Button) findViewById(R.id.sign_up);
+        poweredByButton = (Button) findViewById(R.id.powered_by);
         mSigninSignupContainer = (LinearLayout) findViewById(R.id.sign_in_sign_up);
-        mUsernamePasswordContainer = (LinearLayout) findViewById(R.id.username_password);
     }
 
     @Override
@@ -270,11 +269,12 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         final Resources resources = getResources();
         final ColorStateList color = ColorStateList.valueOf(resources.getColor(R.color.material_light_blue));
 
-        mSignInButton.setTextColor(Color.parseColor("black"));
+        mSignInButton.setTextColor(Color.parseColor("#23CBFF"));
         mSignInButton.setBackgroundColor(Color.parseColor("#E7E7E7"));
         mSignInButton.setBackgroundResource(R.drawable.sign_in_btn);
         mSignInButton.setTypeface(font);
         mSignUpButton.setTypeface(font);
+        poweredByButton.setTypeface(font);
 
         setSignInButton();
     }

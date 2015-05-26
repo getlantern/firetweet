@@ -30,6 +30,7 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:gravity="center"
             android:background="@drawable/firetweet_splash">
 
         <!--<Button
@@ -86,10 +87,9 @@
 
             <LinearLayout
                 android:id="@+id/sign_in_sign_up"
-                android:layout_width="match_parent"
-                android:layout_below="@+id/username_password"
+                android:layout_width="300dp"
                 android:layout_height="0dip"
-                android:gravity="center|bottom"
+                android:gravity="center_vertical|bottom"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:padding="8dp">
@@ -117,11 +117,25 @@
                     android:onClick="onClick"
                     android:layout_marginLeft="10dp"
                     android:textSize="20sp"
-                    android:textColor="#000000"
+                    android:textColor="#23CBFF"
                     android:background="@drawable/sign_in_btn"
                     android:text="@string/sign_in"/>
 
             </LinearLayout>
+            <Button
+                android:id="@+id/powered_by"
+                style="?android:borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:clickable="true"
+                android:paddingLeft="30dp"
+                android:gravity="center_vertical"
+                android:minHeight="36dp"
+                android:text="@string/powered_by"
+                android:textSize="18sp"
+                android:textColor="@color/accent_white"
+                android:textAppearance="?android:textAppearanceSmall"/>
         </LinearLayout>
     </ScrollView>
 
