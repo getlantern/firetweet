@@ -213,7 +213,11 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
         public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
             final Uri uri = Uri.parse(url);
 
-            if (url.startsWith(OAUTH_CALLBACK_URL)) {
+            if (uri.toString().toLowerCase().contains("mobile.twitter.com/welcome/interests") ||
+                uri.toString().toLowerCase().equals("https://mobile.twitter.com") ||
+                    url.toLowerCase().equals("https://mobile.twitter.com") ||
+                    url.toLowerCase().equals("https://mobile.twitter.com/") ||
+                    url.startsWith(OAUTH_CALLBACK_URL)) {
                 final String oauth_verifier = uri.getQueryParameter(EXTRA_OAUTH_VERIFIER);
                 final RequestToken request_token = mActivity.mRequestToken;
                 if (oauth_verifier != null && request_token != null) {

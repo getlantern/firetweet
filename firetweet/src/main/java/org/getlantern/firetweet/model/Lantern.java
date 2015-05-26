@@ -7,6 +7,11 @@ import go.flashlight.Flashlight;
 
 import android.content.Context;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Logger;
+import com.google.android.gms.analytics.Tracker;
+import com.google.android.gms.analytics.GoogleAnalytics;
+
 import 	android.os.StrictMode;
 
 import com.crashlytics.android.Crashlytics;
@@ -17,6 +22,9 @@ import com.crashlytics.android.Crashlytics;
 public class Lantern {
 
     private static boolean lanternStarted = false;
+
+    public static GoogleAnalytics analytics;
+    public static Tracker tracker;
 
     public static void start(Context context) {
 
@@ -40,6 +48,20 @@ public class Lantern {
                 // our local proxy
 
                 lanternStarted = true;
+
+
+                analytics = GoogleAnalytics.getInstance(context);
+                analytics.setLocalDispatchPeriod(1800);
+
+                tracker = analytics.newTracker("UA-21408036-4"); // Replace with actual tracker/property Id
+                tracker.enableAdvertisingIdCollection(true);
+                tracker.enableAutoActivityTracking(true);
+
+                tracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Session")
+                        .setAction("Start")
+                        .setLabel("android")
+                        .build());
 
             } catch (Exception e) {
                 Crashlytics.logException(e);
