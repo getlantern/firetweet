@@ -32,6 +32,7 @@ import android.support.annotation.NonNull;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.ImageButton;
 import android.view.View.OnClickListener;
 import android.webkit.JavascriptInterface;
@@ -182,6 +183,12 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
         AuthorizationWebViewClient(final BrowserSignInActivity activity) {
             mActivity = activity;
             closeButton = (ImageButton) activity.findViewById(R.id.close_button);
+
+            android.view.ViewGroup.LayoutParams params = closeButton.getLayoutParams();
+            params.height = 60;
+            params.width = 60;
+            closeButton.setLayoutParams(params);
+
             webView = (WebView)activity.findViewById(R.id.webview);
             closeButton.setVisibility(View.VISIBLE);
             addListenerOnButton();
@@ -230,8 +237,6 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
                 @Override
                 public void onClick(View arg0) {
                     if (webView != null) {
-                        webView.setVisibility(View.GONE);
-                        closeButton.setVisibility(View.INVISIBLE);
                         mActivity.finish();
                     }
                 }
@@ -257,7 +262,6 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
                     intent.putExtra(EXTRA_REQUEST_TOKEN, request_token.getToken());
                     intent.putExtra(EXTRA_REQUEST_TOKEN_SECRET, request_token.getTokenSecret());
                     mActivity.setResult(RESULT_OK, intent);
-                    view.setVisibility(View.GONE);
                     mActivity.finish();
                 }
                 return true;
@@ -314,8 +318,6 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
             cb.setGZIPEnabled(enable_gzip_compressing);
             cb.setIgnoreSSLError(ignore_ssl_error);
 
-            cb.setHttpProxyHost(PROXY_HOST);
-            cb.setHttpProxyPort(9192);
             Log.d("TwitterBrowserSignIn", "Enabled proxy configuration");
 
             try {
