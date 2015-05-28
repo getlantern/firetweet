@@ -70,20 +70,21 @@
                     android:text="@string/sign_in"/>
 
             </LinearLayout>
-            <Button
-                android:id="@+id/powered_by"
-                style="?android:borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:clickable="true"
-                android:gravity="center_vertical"
-                android:minHeight="36dp"
-                android:text="@string/powered_by"
-                android:textSize="18sp"
-                android:textColor="@color/accent_white"
-                android:textAppearance="?android:textAppearanceSmall"/>
+        <Button
+            android:id="@+id/powered_by"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:minHeight="36dp"
+            android:text="@string/powered_by"
+            android:textSize="18sp"
+            android:textColor="@color/accent_white"
+            android:textAppearance="?android:textAppearanceSmall"/>
         </LinearLayout>
+
     </ScrollView>
 
 </merge>

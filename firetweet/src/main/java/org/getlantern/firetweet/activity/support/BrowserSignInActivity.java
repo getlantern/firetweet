@@ -32,6 +32,8 @@ import android.support.annotation.NonNull;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageButton;
+import android.view.View.OnClickListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
@@ -51,6 +53,7 @@ import org.getlantern.firetweet.util.Utils;
 import org.getlantern.firetweet.util.net.OkHttpClientFactory;
 import org.getlantern.firetweet.util.net.FiretweetHostResolverFactory;
 import org.xmlpull.v1.XmlPullParserException;
+
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -116,6 +119,7 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
     protected void onCreate(final Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
+
         mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         setContentView(R.layout.activity_browser_sign_in);
 
@@ -150,6 +154,8 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
         mWebView.loadUrl(url);
     }
 
+
+
     private String readOAuthPin(final String html) {
         try {
             return OAuthPasswordAuthenticator.readOAuthPINFromHtml(new StringReader(html));
@@ -170,8 +176,15 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
     static class AuthorizationWebViewClient extends WebViewClient {
         private final BrowserSignInActivity mActivity;
 
+        private ImageButton closeButton;
+        private WebView webView;
+
         AuthorizationWebViewClient(final BrowserSignInActivity activity) {
             mActivity = activity;
+            closeButton = (ImageButton) activity.findViewById(R.id.close_button);
+            webView = (WebView)activity.findViewById(R.id.webview);
+            closeButton.setVisibility(View.VISIBLE);
+            addListenerOnButton();
         }
 
         @Override
@@ -207,6 +220,24 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
             } else {
                 handler.cancel();
             }
+        }
+
+        public void addListenerOnButton() {
+
+
+            closeButton.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View arg0) {
+                    if (webView != null) {
+                        webView.setVisibility(View.GONE);
+                        closeButton.setVisibility(View.INVISIBLE);
+                        mActivity.finish();
+                    }
+                }
+
+            });
+
         }
 
         @Override

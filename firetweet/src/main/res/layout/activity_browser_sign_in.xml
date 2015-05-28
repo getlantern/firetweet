@@ -28,6 +28,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <ImageButton
+        android:id="@+id/close_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/sign_in_close"
+        android:background="@null"/>
+
     <FrameLayout
         android:id="@+id/progress_container"
         android:layout_width="match_parent"
