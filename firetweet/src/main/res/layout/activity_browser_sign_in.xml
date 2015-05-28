@@ -34,8 +34,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
+        android:layout_margin="0dp"
+        android:layout_marginBottom="10dip"
+        android:layout_marginLeft="10dip"
+        android:scaleType="fitCenter"
         android:src="@drawable/sign_in_close"
         android:background="@null"/>
+        <!--android:background="@color/accent_white"-->
+        <!--android:background="@null"-->
 
     <FrameLayout
         android:id="@+id/progress_container"

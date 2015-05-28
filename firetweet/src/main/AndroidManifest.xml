@@ -213,6 +213,7 @@
          <activity
             android:name=".activity.support.SignInActivity"
             android:label="@string/sign_in"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="org.getlantern.firetweet.TWITTER_LOGIN"/>
