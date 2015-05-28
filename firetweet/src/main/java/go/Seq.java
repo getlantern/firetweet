@@ -1,7 +1,3 @@
-// Copyright 2014 The Go Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-
 package go;
 
 import android.util.Log;
@@ -31,7 +27,6 @@ public class Seq {
 
 	public native void log(String label);
 
-	public native boolean readBool();
 	public native byte readInt8();
 	public native short readInt16();
 	public native int readInt32();
@@ -44,7 +39,6 @@ public class Seq {
 	public String readString() { return readUTF16(); }
 	public native byte[] readByteArray();
 
-	public native void writeBool(boolean v);
 	public native void writeInt8(byte v);
 	public native void writeInt16(short v);
 	public native void writeInt32(int v);
