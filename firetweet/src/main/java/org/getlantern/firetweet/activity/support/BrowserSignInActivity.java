@@ -75,17 +75,15 @@ import android.util.Log;
 public class BrowserSignInActivity extends BaseSupportDialogActivity implements TwitterConstants {
 
     private static final String INJECT_CONTENT = "javascript:window.injector.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');";
-
-    private SharedPreferences mPreferences;
-
     private static final String PROXY_HOST = "127.0.0.1";
     private static final int PROXY_PORT = 9192;
+    private static final String CANCEL_PAGE = "https://api.twitter.com/oauth/authorize";
+    private static final String SIGNUP_URL = "https://mobile.twitter.com/signup?oauth_token=";
 
+    private SharedPreferences mPreferences;
     private WebView mWebView;
     private View mProgressContainer;
-
     private WebSettings mWebSettings;
-
     private RequestToken mRequestToken;
 
     public static String action = "sign_in";
@@ -204,6 +202,13 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
         @Override
         public void onPageStarted(final WebView view, final String url, final Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
+
+            Log.d("TwitterBrowserSignIn", "WebView page changed to " + url);
+
+            if (url.equals(CANCEL_PAGE)) {
+                mActivity.finish();
+                return;
+            }
             mActivity.setLoadProgressShown(true);
         }
 
@@ -229,6 +234,12 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
             }
         }
 
+        public void closeWebView() {
+            if (webView != null) {
+                mActivity.finish();
+            }
+        }
+
         public void addListenerOnButton() {
 
 
@@ -236,9 +247,7 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
 
                 @Override
                 public void onClick(View arg0) {
-                    if (webView != null) {
-                        mActivity.finish();
-                    }
+                    closeWebView();
                 }
 
             });
@@ -342,7 +351,7 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
             }
 
             if (action == "sign_up") {
-                mActivity.loadUrl("https://mobile.twitter.com/signup?oauth_token=" + data.getToken() + "&context=oauth");
+                mActivity.loadUrl(SIGNUP_URL + data.getToken() + "&context=oauth");
             } else {
                 mActivity.loadUrl(data.getAuthorizationURL());
             }
