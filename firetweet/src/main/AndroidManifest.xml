@@ -566,21 +566,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.AssistLauncherActivity"
-            android:excludeFromRecents="true"
-            android:taskAffinity=":firetweet_assist_launcher"
-            android:theme="@style/Theme.Launcher">
-            <intent-filter>
-                <action android:name="android.intent.action.ASSIST"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-
-            <meta-data
-                android:name="com.android.systemui.action_assist_icon"
-                android:resource="@drawable/ic_assist_firetweet"/>
-        </activity>
-        <activity
             android:name=".activity.TestActivity"
             android:enabled="false"
             android:label="Firetweet test"

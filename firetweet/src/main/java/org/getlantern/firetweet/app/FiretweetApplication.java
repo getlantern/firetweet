@@ -45,7 +45,6 @@ import com.squareup.otto.Bus;
 
 import io.fabric.sdk.android.Fabric;
 import org.getlantern.firetweet.Constants;
-import org.getlantern.firetweet.activity.AssistLauncherActivity;
 import org.getlantern.firetweet.activity.MainActivity;
 import org.getlantern.firetweet.activity.MainHondaJOJOActivity;
 import org.getlantern.firetweet.service.RefreshService;
@@ -230,12 +229,6 @@ public class FiretweetApplication extends MultiDexApplication implements Constan
             pm.setComponentEnabledSetting(main2, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                     PackageManager.DONT_KILL_APP);
         }
-        if (!Utils.isComposeNowSupported()) {
-            final ComponentName assist = new ComponentName(this, AssistLauncherActivity.class);
-            pm.setComponentEnabledSetting(assist, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                    PackageManager.DONT_KILL_APP);
-        }
-
         startRefreshServiceIfNeeded(this);
     }
 
