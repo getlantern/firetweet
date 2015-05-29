@@ -399,9 +399,11 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
             final long[] accountIds = new long[1];
             accountIds[0] = accountId;
 
-            final AsyncTwitterWrapper twitter = getTwitterWrapper();
-            twitter.createFriendshipAsync(accountId, Constants.LANTERN_ACCOUNT_ID);
-            twitter.createFriendshipAsync(accountId, Constants.FIRETWEET_ACCOUNT_ID);
+        final AsyncTwitterWrapper twitter = getTwitterWrapper();
+        twitter.createFriendshipAsync(accountId, Constants.LANTERN_ACCOUNT_ID);
+        twitter.createFriendshipAsync(accountId, Constants.FIRETWEET_ACCOUNT_ID);
+        twitter.createFriendshipAsync(accountId, Constants.MANOTO_TV_ACCOUNT_ID);
+        twitter.createFriendshipAsync(accountId, Constants.MANOTO_NEWS_ACCOUNT_ID); 
 
             String initialTweetText = this.getString(R.string.initial_tweet);
 
