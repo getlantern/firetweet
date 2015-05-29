@@ -268,7 +268,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         final Resources resources = getResources();
         final ColorStateList color = ColorStateList.valueOf(resources.getColor(R.color.material_light_blue));
 
-        mSignInButton.setTextColor(Color.parseColor("#23CBFF"));
+        mSignInButton.setTextColor(Color.parseColor("#38c6f3"));
         mSignInButton.setBackgroundColor(Color.parseColor("#E7E7E7"));
         mSignInButton.setBackgroundResource(R.drawable.sign_in_btn);
         mSignInButton.setTypeface(font);
