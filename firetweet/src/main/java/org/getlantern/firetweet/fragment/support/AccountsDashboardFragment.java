@@ -200,9 +200,6 @@ public class AccountsDashboardFragment extends BaseSupportListFragment implement
 
     @Override
     public void onLoadFinished(final Loader<Cursor> loader, final Cursor data) {
-        final Menu menu = mAccountsToggleMenu.getMenu();
-        mAccountActionProvider = (SupportAccountActionProvider) MenuItemCompat.getActionProvider(menu.findItem(MENU_SELECT_ACCOUNT));
-        mAccountActionProvider.setExclusive(false);
         final ParcelableAccount[] accounts = ParcelableAccount.getAccounts(data);
         final Set<Long> activatedIds = new HashSet<>();
         long defaultId = -1;
@@ -217,8 +214,6 @@ public class AccountsDashboardFragment extends BaseSupportListFragment implement
         mAccountsAdapter.setAccounts(accounts);
         mAccountsAdapter.setSelectedAccountId(mPreferences.getLong(KEY_DEFAULT_ACCOUNT_ID, defaultId));
         mAccountOptionsAdapter.setSelectedAccount(mAccountsAdapter.getSelectedAccount());
-        mAccountActionProvider.setAccounts(accounts);
-        mAccountActionProvider.setSelectedAccountIds(ArrayUtils.toPrimitive(activatedIds.toArray(new Long[activatedIds.size()])));
 
         initAccountActionsAdapter(accounts);
         updateAccountOptionsSeparatorLabel(null);
@@ -316,12 +311,6 @@ public class AccountsDashboardFragment extends BaseSupportListFragment implement
 
                     break;
                 }
-                /*case MENU_FILTERS: {
-                    final Intent intent = new Intent(getActivity(), FiltersActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    startActivity(intent);
-                    break;
-                }*/
                 case MENU_SETTINGS: {
                     final Intent intent = new Intent(getActivity(), SettingsActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -399,22 +388,6 @@ public class AccountsDashboardFragment extends BaseSupportListFragment implement
         mFloatingProfileImageSnapshotView = (ImageView) mAccountSelectorView.findViewById(R.id.floating_profile_image_snapshot);
         mAccountProfileNameView = (TextView) mAccountSelectorView.findViewById(R.id.name);
         mAccountProfileScreenNameView = (TextView) mAccountSelectorView.findViewById(R.id.screen_name);
-        mAccountsToggleMenu = (ActionMenuView) mAccountSelectorView.findViewById(R.id.toggle_menu);
-        final SupportMenuInflater menuInflater = new SupportMenuInflater(context);
-        menuInflater.inflate(R.menu.action_dashboard_timeline_toggle, mAccountsToggleMenu.getMenu());
-        mAccountsToggleMenu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getGroupId() != SupportAccountActionProvider.MENU_GROUP) return false;
-                final ParcelableAccount[] accounts = mAccountActionProvider.getAccounts();
-                final ParcelableAccount account = accounts[item.getOrder()];
-                final ContentValues values = new ContentValues();
-                values.put(Accounts.IS_ACTIVATED, !account.is_activated);
-                final String where = Accounts.ACCOUNT_ID + " = " + account.account_id;
-                mResolver.update(Accounts.CONTENT_URI, values, where, null);
-                return true;
-            }
-        });
 
         mAccountProfileContainer.setOnClickListener(this);
 
@@ -618,7 +591,7 @@ public class AccountsDashboardFragment extends BaseSupportListFragment implement
             add(new OptionItem(R.string.drafts, R.drawable.ic_action_draft, MENU_DRAFTS));
             //add(new OptionItem(R.string.filters, R.drawable.ic_action_speaker_muted, MENU_FILTERS));
             add(new OptionItem(R.string.settings, R.drawable.ic_action_settings, MENU_SETTINGS));
-            add(new OptionItem(R.string.sign_out, R.drawable.ic_action_speaker_muted, MENU_SIGNOUT));
+            add(new OptionItem(R.string.sign_out, R.drawable.ic_action_sign_out, MENU_SIGNOUT));
         }
 
     }
