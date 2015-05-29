@@ -41,6 +41,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
+import android.annotation.TargetApi;
+import android.os.Build;
+import android.webkit.WebView.FindListener;
 
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.app.FiretweetApplication;
@@ -78,6 +81,7 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
     private static final String PROXY_HOST = "127.0.0.1";
     private static final int PROXY_PORT = 9192;
     private static final String CANCEL_PAGE = "https://api.twitter.com/oauth/authorize";
+    private static final String CANCEL_TEXT = "You have not signed in";
     private static final String SIGNUP_URL = "https://mobile.twitter.com/signup?oauth_token=";
 
     private SharedPreferences mPreferences;
@@ -195,20 +199,34 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
         @Override
         public void onPageFinished(final WebView view, final String url) {
             super.onPageFinished(view, url);
+
+            Log.d("TwitterBrowserSignIn", "WebView finished loading page " + url + " " + view.getTitle());
+            final Uri uri = Uri.parse(url);
+            if (url.equals(CANCEL_PAGE) && uri.getQuery() == null) {
+                searchCancelText(view);
+            }
+
             view.loadUrl(INJECT_CONTENT);
             mActivity.setLoadProgressShown(false);
+        }
+
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+        public void searchCancelText(WebView view) {
+            view.setFindListener(new FindListener() {
+                @Override
+                public void onFindResultReceived(int activeMatchOrdinal, int numberOfMatches, boolean isDoneCounting) {
+                    if (numberOfMatches > 0) {
+                        mActivity.finish();
+                    }
+                }
+            });
+            view.findAllAsync(CANCEL_TEXT);
         }
 
         @Override
         public void onPageStarted(final WebView view, final String url, final Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
 
-            Log.d("TwitterBrowserSignIn", "WebView page changed to " + url);
-
-            if (url.equals(CANCEL_PAGE)) {
-                mActivity.finish();
-                return;
-            }
             mActivity.setLoadProgressShown(true);
         }
 
@@ -259,9 +277,7 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
             final Uri uri = Uri.parse(url);
 
             if (uri.toString().toLowerCase().contains("mobile.twitter.com/welcome/interests") ||
-                uri.toString().toLowerCase().equals("https://mobile.twitter.com") ||
-                    url.toLowerCase().equals("https://mobile.twitter.com") ||
-                    url.toLowerCase().equals("https://mobile.twitter.com/") ||
+                url.toLowerCase().equals("https://mobile.twitter.com") ||
                     url.startsWith(OAUTH_CALLBACK_URL)) {
                 final String oauth_verifier = uri.getQueryParameter(EXTRA_OAUTH_VERIFIER);
                 final RequestToken request_token = mActivity.mRequestToken;
