@@ -164,19 +164,6 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
     }
 
     @Override
-    public void onBackPressed() {
-        if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING && !mBackPressed) {
-            final Toast toast = Toast.makeText(this, R.string.signing_in_please_wait, Toast.LENGTH_SHORT);
-            toast.show();
-            return;
-        }
-        if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING) {
-            mTask.cancel(false);
-        }
-        super.onBackPressed();
-    }
-
-    @Override
     public void onClick(final View v) {
 
         int vId = v.getId();
