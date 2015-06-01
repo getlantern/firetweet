@@ -101,4 +101,8 @@ public class ContentResolverUtils {
         return resolver.query(uri, projection, selection, selectionArgs, sortOrder, cancellationSignal);
     }
 
+    public static void delete(final ContentResolver resolver, final Uri uri) {
+        resolver.delete(uri, null, null);
+    }
+
 }
