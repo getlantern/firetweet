@@ -23,6 +23,7 @@ import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -39,6 +40,7 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -86,6 +88,7 @@ import org.getlantern.firetweet.activity.support.ComposeActivity;
 import org.getlantern.firetweet.activity.support.DraftsActivity;
 import org.getlantern.firetweet.activity.support.SignInActivity;
 import org.getlantern.firetweet.activity.support.HomeActivity;
+import org.getlantern.firetweet.activity.MainActivity;
 import org.getlantern.firetweet.activity.support.QuickSearchBarActivity;
 import org.getlantern.firetweet.activity.support.UserProfileEditorActivity;
 import org.getlantern.firetweet.adapter.ArrayAdapter;
@@ -234,6 +237,7 @@ public class AccountsDashboardFragment extends BaseSupportListFragment implement
     public void onLoaderReset(final Loader<Cursor> loader) {
     }
 
+
     @Override
     public void onListItemClick(final ListView l, final View v, final int position, final long id) {
         final ListAdapter adapter = mAdapter.getAdapter(position);
@@ -291,7 +295,8 @@ public class AccountsDashboardFragment extends BaseSupportListFragment implement
                     break;
                 }
                 case MENU_SIGNOUT: {
-
+                    // Stop Lantern service
+                    Lantern.stop();
 
                     // destroy Twitter instance and delete oauth access token
                     final Twitter mTwitter = new TwitterFactory().getInstance();
@@ -301,14 +306,15 @@ public class AccountsDashboardFragment extends BaseSupportListFragment implement
 
                     // remove existing account
                     mAccountsAdapter.setAccounts(null);
-                    HomeActivity.ha.finish();
+                    Utils.removeAccounts(getActivity().getApplicationContext());
+
+                    // close existing activity
+                    closeActivity();
 
                     // display sign in activity
-                    final Intent signInIntent = new Intent(INTENT_ACTION_TWITTER_LOGIN);
-                    signInIntent.setClass(getActivity(), SignInActivity.class);
+                    final Intent signInIntent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+                    signInIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(signInIntent);
-                    getActivity().finish();
-
                     break;
                 }
                 case MENU_SETTINGS: {
@@ -425,6 +431,14 @@ public class AccountsDashboardFragment extends BaseSupportListFragment implement
         if (activity instanceof HomeActivity) {
             ((HomeActivity) activity).closeAccountsDrawer();
         }
+    }
+
+    private void closeActivity() {
+        final Activity activity = getActivity();
+        if (activity instanceof HomeActivity) {
+            ((HomeActivity) activity).closeAccountsDrawer();
+        }
+        activity.finish();
     }
 
     private Context getThemedContext() {
