@@ -1340,6 +1340,14 @@ public final class Utils implements Constants, TwitterConstants {
         }
     }
 
+    public static void removeAccounts(final Context context) {
+        if (context == null) {
+            return;
+        }
+        ContentResolverUtils.delete(context.getContentResolver(), Accounts.CONTENT_URI);
+    }
+
+
     public static String getAccountName(final Context context, final long accountId) {
         if (context == null) return null;
         final String cached = sAccountNames.get(accountId);
