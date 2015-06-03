@@ -295,9 +295,6 @@ public class AccountsDashboardFragment extends BaseSupportListFragment implement
                     break;
                 }
                 case MENU_SIGNOUT: {
-                    // Stop Lantern service
-                    Lantern.stop();
-
                     // destroy Twitter instance and delete oauth access token
                     final Twitter mTwitter = new TwitterFactory().getInstance();
                     mTwitter.setOAuthConsumer(Accounts.CONSUMER_KEY, Accounts.CONSUMER_SECRET);
