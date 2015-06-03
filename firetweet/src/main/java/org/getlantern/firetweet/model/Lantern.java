@@ -28,11 +28,6 @@ public class Lantern {
 
     public static void start(Context context) {
 
-        StrictMode.ThreadPolicy old = StrictMode.getThreadPolicy();
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder(old)
-                .permitDiskWrites()
-                .build());
-
         if (!lanternStarted) {
             // Initializing application context.
             try {
@@ -67,8 +62,6 @@ public class Lantern {
                 Crashlytics.logException(e);
                 throw new RuntimeException(e);
             }
-
-            StrictMode.setThreadPolicy(old);
         }
     }
 

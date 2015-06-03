@@ -4,9 +4,8 @@
   <string name="add_account">اضافه کردن حساب</string>
   <string name="settings">تنظیمات</string>
   <string name="send">ارسال</string>
-  <string name="initial_tweet">دسترسی آزاد به توییتر با اپليكيشن فایرتوییت
-      لينك دانلود رايگان http://firetweet.io 
-      @GetFireTweet</string>
+   <string name="initial_tweet">توييتر بى فيلتر با اپليكيشن فايرتوييت
+لينك دانلود http://git.io/vkMGM </string>
   <string name="add_location">افزودن مکانی</string>
   <string name="add_image">افزودن  تصویر</string>
   <string name="take_photo">عکس گرفتن</string>
