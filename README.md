@@ -58,6 +58,17 @@ file that you can install on an android device with the help of `adb`:
 adb install ./firetweet/build/outputs/apk/firetweet-fdroid-debug.apk
 ```
 
+## How is Lantern included in Firetweet?
+
+We created a really small version of Lantern that can be compiled for Android
+phones and used by Android apps. This library is bundled with Firetweet, you
+can always find the latest version of the library
+[here](https://github.com/getlantern/firetweet/tree/master/firetweet/src/main/jniLibs/armeabi-v7a).
+
+If you prefer to build this binary blob for yourself you may check out the
+[Lantern building instructions](https://github.com/getlantern/lantern), in
+particular the "Creating libgojni.so" section.
+
 ## Open Source
 
 FireTweet was forked from [Twidere][1], an Open Source client for Twitter.
