@@ -45,7 +45,6 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -69,11 +68,10 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.R;
-import org.getlantern.firetweet.FiretweetConstants;
 import org.getlantern.firetweet.activity.SettingsActivity;
 import org.getlantern.firetweet.activity.SettingsWizardActivity;
+import org.getlantern.firetweet.activity.support.UpdaterActivity;
 import org.getlantern.firetweet.adapter.support.SupportTabsAdapter;
 import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.CustomTabsFragment;
@@ -87,7 +85,6 @@ import org.getlantern.firetweet.fragment.support.TrendsSuggectionsFragment;
 import org.getlantern.firetweet.graphic.EmptyDrawable;
 import org.getlantern.firetweet.model.Lantern;
 import org.getlantern.firetweet.model.ParcelableAccount;
-import org.getlantern.firetweet.model.ParcelableUser;
 import org.getlantern.firetweet.model.SupportTabSpec;
 import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;
 import org.getlantern.firetweet.provider.FiretweetDataStore.Mentions;
@@ -329,6 +326,8 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
             signInIntent.setClass(this, SignInActivity.class);
             startActivity(signInIntent);
             finish();
+
+            openUpdater();
 
             final Context context = this;
             Lantern.start(context);
@@ -749,6 +748,11 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
     private void openAccountsDrawer() {
         if (mSlidingMenu == null) return;
         mSlidingMenu.showMenu();
+    }
+
+    private boolean openUpdater() {
+        startActivity(new Intent(this, UpdaterActivity.class));
+        return true;
     }
 
     private boolean openSettingsWizard() {

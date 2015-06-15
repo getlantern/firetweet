@@ -172,12 +172,14 @@ public class SettingsWizardActivity extends Activity implements Constants {
         /*mIndicator.setViewPager(mViewPager);
         initPages();*/
         applyInitialSettings();
-        Handler handler = new Handler(); 
+        exitWizard();
+
+        /*Handler handler = new Handler();
         handler.postDelayed(new Runnable() { 
             public void run() { 
                 exitWizard();
             } 
-        }, 1000); 
+        }, 1000);*/
     }
 
     private void initPages() {
@@ -522,7 +524,7 @@ public class SettingsWizardActivity extends Activity implements Constants {
         private static final String FRAGMENT_TAG = "initial_settings_dialog";
 
         private static final String[] DEFAULT_TAB_TYPES = {TAB_TYPE_HOME_TIMELINE, TAB_TYPE_MENTIONS_TIMELINE,
-                TAB_TYPE_TRENDS_SUGGESTIONS, TAB_TYPE_FAVORITES, TAB_TYPE_ACTIVITIES_BY_FRIENDS, TAB_TYPE_DIRECT_MESSAGES};
+                TAB_TYPE_TRENDS_SUGGESTIONS, TAB_TYPE_DIRECT_MESSAGES};
 
         private final SettingsWizardActivity mActivity;
 
