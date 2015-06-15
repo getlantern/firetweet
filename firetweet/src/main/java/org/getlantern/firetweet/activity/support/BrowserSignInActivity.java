@@ -47,6 +47,7 @@ import android.webkit.WebView.FindListener;
 
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.app.FiretweetApplication;
+import org.getlantern.firetweet.model.Lantern;
 import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;
 import org.getlantern.firetweet.proxy.ProxySettings;
 import org.getlantern.firetweet.util.AsyncTaskUtils;
@@ -74,6 +75,8 @@ import static org.getlantern.firetweet.util.Utils.getNonEmptyString;
 
 import android.util.Log;
 
+import com.google.android.gms.analytics.HitBuilders;
+
 @SuppressLint("SetJavaScriptEnabled")
 public class BrowserSignInActivity extends BaseSupportDialogActivity implements TwitterConstants {
 
@@ -81,6 +84,7 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
     private static final String PROXY_HOST = "127.0.0.1";
     private static final int PROXY_PORT = 9192;
     private static final String CANCEL_PAGE = "https://api.twitter.com/oauth/authorize";
+    private static final String PHONE_VERIFICATION_PAGE = "https://twitter.com/welcome/phone_create";
     private static final String CANCEL_TEXT = "You have not signed in";
     private static final String SIGNUP_URL = "https://mobile.twitter.com/signup?oauth_token=";
 
@@ -204,6 +208,10 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
             final Uri uri = Uri.parse(url);
             if (url.equals(CANCEL_PAGE) && uri.getQuery() == null) {
                 searchCancelText(view);
+            }
+
+            if (url.equals(PHONE_VERIFICATION_PAGE)) {
+                Lantern.analytics.trackPageView("phone_verification_page");
             }
 
             view.loadUrl(INJECT_CONTENT);

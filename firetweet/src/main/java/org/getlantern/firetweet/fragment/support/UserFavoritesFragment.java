@@ -22,6 +22,7 @@ package org.getlantern.firetweet.fragment.support;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
+import static org.getlantern.firetweet.util.Utils.getDefaultAccountId;
 
 import org.getlantern.firetweet.loader.support.UserFavoritesLoader;
 import org.getlantern.firetweet.model.ParcelableStatus;
@@ -38,7 +39,8 @@ public class UserFavoritesFragment extends ParcelableStatusesFragment {
                                                                  final Bundle args,
                                                                  final boolean fromUser) {
         setRefreshing(true);
-        final long accountId = args.getLong(EXTRA_ACCOUNT_ID, -1);
+        final long accountId = getDefaultAccountId(context);
+        //final long accountId = args.getLong(EXTRA_ACCOUNT_ID, -1);
         final long maxId = args.getLong(EXTRA_MAX_ID, -1);
         final long sinceId = args.getLong(EXTRA_SINCE_ID, -1);
         final long userId = args.getLong(EXTRA_USER_ID, -1);

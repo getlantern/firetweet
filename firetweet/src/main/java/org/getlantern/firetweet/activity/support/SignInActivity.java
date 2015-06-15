@@ -58,6 +58,7 @@ import org.getlantern.firetweet.activity.SettingsActivity;
 import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.support.BaseSupportDialogFragment;
 import org.getlantern.firetweet.fragment.support.SupportProgressDialogFragment;
+import org.getlantern.firetweet.model.Lantern;
 import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;
 import org.getlantern.firetweet.util.AsyncTaskUtils;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
@@ -89,6 +90,8 @@ import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.analytics.HitBuilders;
+
 import 	android.graphics.Typeface;
 
 import static android.text.TextUtils.isEmpty;
@@ -169,8 +172,10 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         int vId = v.getId();
         if (vId == R.id.sign_up || vId == R.id.sign_in) {
             if (vId == R.id.sign_up) {
+                Lantern.analytics.trackLoginEvent("registration");
                 BrowserSignInActivity.action = "sign_up";
             } else {
+                Lantern.analytics.trackLoginEvent("login");
                 BrowserSignInActivity.action = "sign_in";
             }
             final Context context = this;
@@ -386,11 +391,11 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
             final long[] accountIds = new long[1];
             accountIds[0] = accountId;
 
-        final AsyncTwitterWrapper twitter = getTwitterWrapper();
-        twitter.createFriendshipAsync(accountId, Constants.LANTERN_ACCOUNT_ID);
-        twitter.createFriendshipAsync(accountId, Constants.FIRETWEET_ACCOUNT_ID);
-        twitter.createFriendshipAsync(accountId, Constants.MANOTO_TV_ACCOUNT_ID);
-        twitter.createFriendshipAsync(accountId, Constants.MANOTO_NEWS_ACCOUNT_ID); 
+            final AsyncTwitterWrapper twitter = getTwitterWrapper();
+            twitter.createFriendshipAsync(accountId, Constants.LANTERN_ACCOUNT_ID);
+            twitter.createFriendshipAsync(accountId, Constants.FIRETWEET_ACCOUNT_ID);
+            //twitter.createFriendshipAsync(accountId, Constants.MANOTO_TV_ACCOUNT_ID);
+            //twitter.createFriendshipAsync(accountId, Constants.MANOTO_NEWS_ACCOUNT_ID); 
 
             String initialTweetText = this.getString(R.string.initial_tweet);
 
