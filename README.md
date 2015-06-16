@@ -12,12 +12,12 @@ You can download the latest build of FireTweet
 
 ## Building Firetweet
 
-### Prerequisites
+### Building from Android Studio
+
+#### Prerequisites
 
 * [Android Studio][2]
 * git
-
-###
 
 Download the most recent copy of the Firetweet's source code using `git`:
 
@@ -57,6 +57,40 @@ file that you can install on an android device with the help of `adb`:
 ```
 adb install ./firetweet/build/outputs/apk/firetweet-fdroid-debug.apk
 ```
+
+### Building from the Command Line (beta, for development only)
+
+#### Prerequisites
+
+* Java Development Kit 1.7
+* Git
+
+#### Building, installing and running
+
+Build the Debug target:
+
+```
+make build-debug
+```
+
+Install it:
+
+```
+make install
+```
+
+Run the app on the device from the command line:
+
+```
+make run
+```
+
+By default, all three tasks will be run in order with:
+
+```
+make
+```
+
 
 ## How is Lantern included in Firetweet?
 
