@@ -97,9 +97,12 @@ public class Lantern {
             try {
                 PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
                 String version = pInfo.versionName;
+                String latestFireTweetVersion = Flashlight.GetFireTweetVersion();
+
                 Log.d(LOG_TAG, "Latest version of FireTweet is " + Flashlight.GetFireTweetVersion() +
                         "; currently running version of FireTweet: " + version);
-                if (Flashlight.GetFireTweetVersion() != version) {
+
+                if (latestFireTweetVersion != null && !latestFireTweetVersion.equals(version)) {
                     // Latest version of FireTweet and the version currently running differ
                     // display the update view
                     final Intent intent = new Intent(context, UpdaterActivity.class);
