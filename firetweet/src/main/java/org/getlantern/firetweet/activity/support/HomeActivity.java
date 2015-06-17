@@ -71,7 +71,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.SettingsActivity;
 import org.getlantern.firetweet.activity.SettingsWizardActivity;
-import org.getlantern.firetweet.activity.support.UpdaterActivity;
+
 import org.getlantern.firetweet.adapter.support.SupportTabsAdapter;
 import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.CustomTabsFragment;
@@ -326,8 +326,6 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
             signInIntent.setClass(this, SignInActivity.class);
             startActivity(signInIntent);
             finish();
-
-            openUpdater();
 
             final Context context = this;
             Lantern.start(context);
@@ -748,11 +746,6 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
     private void openAccountsDrawer() {
         if (mSlidingMenu == null) return;
         mSlidingMenu.showMenu();
-    }
-
-    private boolean openUpdater() {
-        startActivity(new Intent(this, UpdaterActivity.class));
-        return true;
     }
 
     private boolean openSettingsWizard() {

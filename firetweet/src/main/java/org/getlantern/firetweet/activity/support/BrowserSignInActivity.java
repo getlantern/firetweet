@@ -211,6 +211,7 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
             }
 
             if (url.equals(PHONE_VERIFICATION_PAGE)) {
+
                 Lantern.analytics.trackPageView("phone_verification_page");
             }
 

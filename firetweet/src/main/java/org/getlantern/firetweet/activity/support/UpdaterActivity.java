@@ -3,13 +3,20 @@ package org.getlantern.firetweet.activity.support;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
+import android.widget.Button;
+import android.view.View.OnClickListener;
+import android.view.View;
 
 
 import org.getlantern.firetweet.Constants;
+import org.getlantern.firetweet.R;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -27,6 +34,7 @@ import java.net.URLConnection;
 public class UpdaterActivity extends Activity implements Constants {
 
     private UpdaterTask mUpdaterTask;
+    private TextView updateAvailableText;
     private static final String LOG_TAG = "UpdaterActivity";
     private static final String APK_URL = "https://raw.githubusercontent.com/firetweet/downloads/master/firetweet.apk";
 
@@ -34,15 +42,51 @@ public class UpdaterActivity extends Activity implements Constants {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_updater);
+
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/ProximaNova-Semibold.ttf");
+        updateAvailableText = (TextView)findViewById(R.id.update_available);
+        updateAvailableText.setTextColor(Color.parseColor("black"));
+        updateAvailableText.setTypeface(font);
+
+        setOnClickListeners();
+    }
+
+    private void setOnClickListeners() {
+
+
+        Button btn=(Button) findViewById(R.id.not_now);
+        btn.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        btn = (Button)findViewById(R.id.install_update);
+        btn.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                runUpdater();
+            }
+        });
+    }
+
+    private void runUpdater() {
         String[] updaterParams = {APK_URL};
         mUpdaterTask = new UpdaterTask(this);
         mUpdaterTask.execute(updaterParams);
-
-        final Intent intent = new Intent(this, HomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(intent);
         finish();
     }
+
+
+    public void dismissActivity(View v) {
+        finish();
+    }
+
+
 
     @Override
     public void finish() {

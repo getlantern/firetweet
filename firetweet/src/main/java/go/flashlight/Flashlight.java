@@ -9,6 +9,15 @@ import go.Seq;
 public abstract class Flashlight {
     private Flashlight() {} // uninstantiable
     
+    public static String GetFireTweetVersion() {
+        go.Seq _in = new go.Seq();
+        go.Seq _out = new go.Seq();
+        String _result;
+        Seq.send(DESCRIPTOR, CALL_GetFireTweetVersion, _in, _out);
+        _result = _out.readString();
+        return _result;
+    }
+    
     public static void RunClientProxy(String listenAddr, String appName) throws Exception {
         go.Seq _in = new go.Seq();
         go.Seq _out = new go.Seq();
@@ -31,7 +40,8 @@ public abstract class Flashlight {
         }
     }
     
-    private static final int CALL_RunClientProxy = 1;
-    private static final int CALL_StopClientProxy = 2;
+    private static final int CALL_GetFireTweetVersion = 1;
+    private static final int CALL_RunClientProxy = 2;
+    private static final int CALL_StopClientProxy = 3;
     private static final String DESCRIPTOR = "flashlight";
 }

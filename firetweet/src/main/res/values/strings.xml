@@ -16,6 +16,9 @@
     <string name="status_hint">What\'s happening?</string>
     <string name="sign_up">Sign up</string>
     <string name="sign_in">Sign in</string>
+    <string name="not_now">Not Now</string>
+    <string name="install_update">Update</string>
+    <string name="update_available">There is a new version of FireTweet available. Would you like to update now?</string>
     <string name="welcome_to_firetweet">Welcome to FireTweet</string>
     <string name="sign_in_twitter">Use your Twitter login details</string>
     <string name="rest_base_url">REST Base URL</string>
