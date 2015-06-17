@@ -47,7 +47,8 @@
                 android:id="@+id/update_available"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
+                android:gravity="center"
+                android:textSize="17sp"
                 android:singleLine="false"
                 android:text="@string/update_available"
                 android:textAppearance="?android:attr/textAppearanceSmall"/>
