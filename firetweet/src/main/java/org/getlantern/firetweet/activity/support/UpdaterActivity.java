@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -38,6 +39,7 @@ public class UpdaterActivity extends Activity implements Constants {
     private UpdaterTask mUpdaterTask;
     private TextView updateAvailableText;
     private ProgressBar spinner;
+    private ImageView updateIcon;
     private static final String LOG_TAG = "UpdaterActivity";
     private static final String APK_URL = "https://raw.githubusercontent.com/firetweet/downloads/master/firetweet.apk";
 
@@ -50,18 +52,20 @@ public class UpdaterActivity extends Activity implements Constants {
         spinner = (ProgressBar)findViewById(R.id.pbHeaderProgress);
         spinner.setVisibility(View.GONE);
 
+        updateIcon = (ImageView)findViewById(R.id.update_icon);
+
+        addDefaults();
+    }
+
+    private void addDefaults() {
+
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/ProximaNova-Semibold.ttf");
         updateAvailableText = (TextView)findViewById(R.id.update_available);
         updateAvailableText.setTextColor(Color.parseColor("black"));
         updateAvailableText.setTypeface(font);
 
-        setOnClickListeners();
-    }
-
-    private void setOnClickListeners() {
-
-
         Button btn=(Button) findViewById(R.id.not_now);
+        btn.setTypeface(font);
         btn.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -71,6 +75,7 @@ public class UpdaterActivity extends Activity implements Constants {
         });
 
         btn = (Button)findViewById(R.id.install_update);
+        btn.setTypeface(font);
         btn.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -81,7 +86,7 @@ public class UpdaterActivity extends Activity implements Constants {
     }
 
     private void runUpdater() {
-
+        updateIcon.setVisibility(View.GONE);
         spinner.setVisibility(View.VISIBLE);
 
         String[] updaterParams = {APK_URL};

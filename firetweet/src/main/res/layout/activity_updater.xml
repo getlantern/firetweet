@@ -35,6 +35,14 @@
             android:gravity="center"
             android:background="@drawable/update_border">
 
+            <ImageView
+                android:id="@+id/update_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/notification_upgrage"
+                android:scaleType="centerInside"/>
+
             <ProgressBar
                 android:id="@+id/pbHeaderProgress"
                 style="?android:attr/progressBarStyleLarge"
