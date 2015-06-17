@@ -35,6 +35,7 @@ public class Lantern {
     public static Analytics analytics;
 
     private static final String LOG_TAG = "Lantern";
+    private static final int CHECK_NEW_VERSION_DELAY = 10000;
 
     public static void start(Context ctx) {
 
@@ -70,7 +71,7 @@ public class Lantern {
                     public void run() {
                         checkNewVersion();
                     }
-                }, 1000);
+                }, CHECK_NEW_VERSION_DELAY);
 
 
             } catch (Exception e) {
