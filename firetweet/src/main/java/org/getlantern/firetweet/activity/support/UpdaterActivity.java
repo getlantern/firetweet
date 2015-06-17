@@ -83,9 +83,6 @@ public class UpdaterActivity extends Activity implements Constants {
     private void runUpdater() {
 
         spinner.setVisibility(View.VISIBLE);
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        setProgressBarIndeterminateVisibility(true);
-
 
         String[] updaterParams = {APK_URL};
         mUpdaterTask = new UpdaterTask(this);
@@ -93,7 +90,7 @@ public class UpdaterActivity extends Activity implements Constants {
     }
 
     public void dismissActivity() {
-        setProgressBarIndeterminateVisibility(false);
+
         finish();
     }
 
