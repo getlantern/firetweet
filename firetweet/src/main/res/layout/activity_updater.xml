@@ -34,6 +34,15 @@
             android:orientation="vertical"
             android:gravity="center"
             android:background="@drawable/update_border">
+
+            <ProgressBar
+                android:id="@+id/pbHeaderProgress"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </ProgressBar>
+
             <TextView
                 android:id="@+id/update_available"
                 android:layout_width="match_parent"

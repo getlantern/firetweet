@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.View;
 
@@ -35,6 +37,7 @@ public class UpdaterActivity extends Activity implements Constants {
 
     private UpdaterTask mUpdaterTask;
     private TextView updateAvailableText;
+    private ProgressBar spinner;
     private static final String LOG_TAG = "UpdaterActivity";
     private static final String APK_URL = "https://raw.githubusercontent.com/firetweet/downloads/master/firetweet.apk";
 
@@ -43,6 +46,9 @@ public class UpdaterActivity extends Activity implements Constants {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_updater);
+
+        spinner = (ProgressBar)findViewById(R.id.pbHeaderProgress);
+        spinner.setVisibility(View.GONE);
 
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/ProximaNova-Semibold.ttf");
         updateAvailableText = (TextView)findViewById(R.id.update_available);
@@ -75,9 +81,19 @@ public class UpdaterActivity extends Activity implements Constants {
     }
 
     private void runUpdater() {
+
+        spinner.setVisibility(View.VISIBLE);
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        setProgressBarIndeterminateVisibility(true);
+
+
         String[] updaterParams = {APK_URL};
         mUpdaterTask = new UpdaterTask(this);
         mUpdaterTask.execute(updaterParams);
+    }
+
+    public void dismissActivity() {
+        setProgressBarIndeterminateVisibility(false);
         finish();
     }
 
@@ -143,12 +159,15 @@ public class UpdaterActivity extends Activity implements Constants {
         // begin the installation by opening the resulting file
         @Override
         protected void onPostExecute(final String path) {
+
             Intent i = new Intent();
             i.setAction(Intent.ACTION_VIEW);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.setDataAndType(Uri.fromFile(new File(path)), "application/vnd.android.package-archive");
             Log.d(LOG_TAG, "About to install new FireTweet apk");
             this.context.startActivity(i);
+
+            mActivity.dismissActivity();
         }
     }
 }
