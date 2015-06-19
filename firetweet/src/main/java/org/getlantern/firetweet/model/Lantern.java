@@ -10,6 +10,7 @@ import go.flashlight.Flashlight;
 
 import android.content.Context;
 import android.os.Handler;
+import android.content.pm.ApplicationInfo;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Logger;
@@ -93,8 +94,18 @@ public class Lantern {
     }
 
     public static void checkNewVersion() {
+
         if (context != null) {
             try {
+
+                // In developer mode; don't check for updates
+                if ((context.getPackageManager().getPackageInfo(
+                        context.getPackageName(), 0).applicationInfo.flags &
+                        ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
+                    Log.d(LOG_TAG, "Not showing update notification in developer mode.");
+                    return;
+                }
+
                 PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
                 String version = pInfo.versionName;
                 String latestFireTweetVersion = Flashlight.GetFireTweetVersion();

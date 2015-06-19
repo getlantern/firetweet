@@ -1,7 +1,9 @@
 package org.getlantern.firetweet.activity.support;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -99,13 +101,6 @@ public class UpdaterActivity extends Activity implements Constants {
         finish();
     }
 
-
-    public void dismissActivity(View v) {
-        finish();
-    }
-
-
-
     @Override
     public void finish() {
         super.finish();
@@ -154,8 +149,27 @@ public class UpdaterActivity extends Activity implements Constants {
             } catch (Exception e) {
                 Log.e(LOG_TAG, "Error installing new APK..");
                 Log.e(LOG_TAG, e.getMessage());
+                displayInstallError();
             }
             return path;
+        }
+
+        // show an alert when the update fails
+        // and mention where the user can download the latest version
+        // this also dismisses the current updater activity
+        protected void displayInstallError() {
+            AlertDialog alertDialog = new AlertDialog.Builder(mActivity).create();
+            alertDialog.setTitle("Error Downloading Update");
+            alertDialog.setMessage("Try manually installing " +
+                    "the latest version from https://firetweet.io");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            mActivity.dismissActivity();
+                        }
+                    });
+            alertDialog.show();
         }
 
         // begin the installation by opening the resulting file
