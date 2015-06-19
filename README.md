@@ -103,6 +103,66 @@ If you prefer to build this binary blob for yourself you may check out the
 [Lantern building instructions](https://github.com/getlantern/lantern), in
 particular the "Creating libgojni.so" section.
 
+
+## VirtualBox Android development images
+
+### Why use a Virtualbox image instead of the Android Emulator or a real device?
+
+There are several reasons for doing so. When comparing with the Android Emulator, the main reason is that Virtualbox is faster. It virtualizes the x86 architecture, which introduces less overhead than full ARM emulation. When comparing with a real device, there are also reasons for using Virtualbox instead:
+
+* On-screen development. This might be useful for remote pair programming or visual testing.
+* Screen size customization.
+* Easier build and bug reproducibility.
+
+One thing to note is that the majority of Android devices use the ARM architecture. Virtualbox relies on the x86 architecture instead. However, the emulation feature called _Houdini_ binary translation allows for instruction translation, which means that we can run _native_ ARM code on our x86 emulator.
+
+The Android x86 images are based on this project: http://www.android-x86.org/
+
+You can find the latest image [here](https://s3.amazonaws.com/lantern-android-development-images/Android+4.4.ova)
+
+### Installing on the VirtualBox image
+
+1. Make sure that port forwarding is set from 5555 (host) to 5555 (guest) for the main network interface.
+2. Run the Virtualbox image.
+3. Connect with ADB
+```
+adb connect localhost:55555
+```
+4. Check that the device is properly connected
+```
+adb devices
+```
+5. Run make (it will compile, upload and run the app on VirtualBox)
+```
+make
+```
+
+### Development notes
+
+#### Screen orientation
+
+* Press F12 two times in less than 2 seconds = Rotate 90º to the LEFT.
+* Press F11 two times in less than 2 seconds = Rotate 90º to the RiGHT.
+* Press F10 two times in less than 2 seconds = Rotate 180º.
+* Press F9 two times in less than 2 seconds = Normal view 0/360º.
+
+#### Screen size
+
+* Using the kernel VGA configuration option:
+
+When in GRUB, hit 'e' to edit the first entry, then 'e' again to edit the first line. Append the text 'vga=ask' at the end of the boot line. Choose any of the display sizes, but the depth must be 16.
+
+* Using an app (recommended):
+
+Use the app called _Resolution Changer_ and activate the resolution overriding. There is no need to reboot after this.
+
+#### Misc
+
+* For better UI integration, disable mouse integration (Host+I)
+* Certain apps, including Firetweet reorient the screen. This will remap the mouse coordinates and motion, which will drive you crazy! First try rotating setting the screen orientation to landscape. Then, you can try also setting a screen size with _Resolution Changer_ to a new height/width that inverts these values.
+
+
+
 ## Open Source
 
 FireTweet was forked from [Twidere][1], an Open Source client for Twitter.
