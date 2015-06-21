@@ -49,6 +49,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -117,6 +118,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
     private String mConsumerKey, mConsumerSecret;
     private String mUsername, mPassword;
     private CheckBox autoTweetCheckBox;
+    private TextView autoTweetText;
     private long mAPIChangeTimestamp;
 
     private Button mSignInButton, mSignUpButton, poweredByButton;
@@ -273,6 +275,9 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         if (mPreferences.contains(FIRST_RUN)) {
             autoTweetCheckBox.setVisibility(View.GONE);
         }
+        autoTweetText = (TextView)findViewById(R.id.should_send_autotweet);
+        autoTweetText.setTypeface(font);
+        autoTweetText.setTextColor(Color.parseColor("black"));
 
         setSignInButton();
     }
