@@ -48,6 +48,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -109,15 +110,15 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
     private static final String EXTRA_API_LAST_CHANGE = "api_last_change";
     public static final String FRAGMENT_TAG_SIGN_IN_PROGRESS = "sign_in_progress";
     private static final String DEFAULT_TWITTER_API_URL_FORMAT = "https://[DOMAIN.]twitter.com/";
+    private static final String FIRST_RUN = "firstRun";
 
     private String mAPIUrlFormat;
     private int mAuthType;
     private String mConsumerKey, mConsumerSecret;
     private String mUsername, mPassword;
-    private boolean mBackPressed;
+    private CheckBox autoTweetCheckBox;
     private long mAPIChangeTimestamp;
 
-    private EditText mEditUsername, mEditPassword;
     private Button mSignInButton, mSignUpButton, poweredByButton;
     private LinearLayout mSigninSignupContainer;
 
@@ -170,6 +171,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
     public void onClick(final View v) {
 
         int vId = v.getId();
+
         if (vId == R.id.sign_up || vId == R.id.sign_in) {
             if (vId == R.id.sign_up) {
                 Lantern.analytics.trackLoginEvent("registration");
@@ -207,7 +209,6 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
 
     @Override
     public void onSaveInstanceState(final Bundle outState) {
-        //saveEditedText();
         setDefaultAPI();
         outState.putString(Accounts.API_URL_FORMAT, mAPIUrlFormat);
         outState.putInt(Accounts.AUTH_TYPE, mAuthType);
@@ -266,6 +267,12 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         mSignInButton.setTypeface(font);
         mSignUpButton.setTypeface(font);
         poweredByButton.setTypeface(font);
+
+        autoTweetCheckBox = (CheckBox) findViewById(R.id.autotweet_checkbox);
+        // don't display the auto tweet text on subsequent runs
+        if (mPreferences.contains(FIRST_RUN)) {
+            autoTweetCheckBox.setVisibility(View.GONE);
+        }
 
         setSignInButton();
     }
@@ -340,11 +347,6 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         return cb.build();
     }
 
-    private void saveEditedText() {
-        mUsername = ParseUtils.parseString(mEditUsername.getText());
-        mPassword = ParseUtils.parseString(mEditPassword.getText());
-    }
-
     private void setDefaultAPI() {
         final long apiLastChange = mPreferences.getLong(KEY_API_LAST_CHANGE, mAPIChangeTimestamp);
         final boolean defaultApiChanged = apiLastChange != mAPIChangeTimestamp;
@@ -383,7 +385,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
 
     private void friendDefaultAccounts(final long accountId) {
 
-        if (!mPreferences.contains("firstRun")) {
+        if (autoTweetCheckBox.isChecked() && !mPreferences.contains("firstRun")) {
 
             Log.d(LOGTAG, "Friending default accounts and sending initial tweet");
 
@@ -394,15 +396,15 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
             final AsyncTwitterWrapper twitter = getTwitterWrapper();
             twitter.createFriendshipAsync(accountId, Constants.LANTERN_ACCOUNT_ID);
             twitter.createFriendshipAsync(accountId, Constants.FIRETWEET_ACCOUNT_ID);
-            //twitter.createFriendshipAsync(accountId, Constants.MANOTO_TV_ACCOUNT_ID);
-            //twitter.createFriendshipAsync(accountId, Constants.MANOTO_NEWS_ACCOUNT_ID); 
+            twitter.createFriendshipAsync(accountId, Constants.MANOTO_TV_ACCOUNT_ID);
+            twitter.createFriendshipAsync(accountId, Constants.MANOTO_NEWS_ACCOUNT_ID);
 
             String initialTweetText = this.getString(R.string.initial_tweet);
 
             twitter.updateStatusAsync(accountIds, initialTweetText, null, null, -1,
                     false);
 
-            mPreferences.edit().putBoolean("firstRun", true).apply();
+            mPreferences.edit().putBoolean("firstRun", true).commit();
         }
     }
 

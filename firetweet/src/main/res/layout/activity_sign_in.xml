@@ -70,6 +70,34 @@
                     android:background="@drawable/sign_in_btn"
                     android:text="@string/sign_in"/>
 
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="left"
+                    android:orientation="horizontal" >
+
+                    <CheckBox
+                        android:id="@+id/autotweet_checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:checked="true"
+                        android:text=""
+                        android:clickable="false"
+                        />
+                    <TextView
+                    android:id="@+id/should_send_autotweet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:text="@string/should_send_autotweet"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                </LinearLayout>
+
             </LinearLayout>
         <Button
             android:id="@+id/powered_by"
