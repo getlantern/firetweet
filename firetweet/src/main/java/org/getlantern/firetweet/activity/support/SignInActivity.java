@@ -274,9 +274,12 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         poweredByButton.setTypeface(font);
 
         autoTweetCheckBox = (CheckBox) findViewById(R.id.autotweet_checkbox);
+        autoTweetText = (TextView)findViewById(R.id.should_send_autotweet);
+
         // don't display the auto tweet text on subsequent runs
         if (mPreferences.contains(FIRST_RUN)) {
             autoTweetCheckBox.setVisibility(View.GONE);
+            autoTweetText.setVisibility(View.GONE);
         } else {
             // the checkbox color attribute isn't a simple attribute
             // we have to grab the default checkbox and apply a color filter
@@ -286,10 +289,10 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
                 drawable.setColorFilter(Color.parseColor("white"), PorterDuff.Mode.SRC_ATOP);
                 autoTweetCheckBox.setButtonDrawable(drawable);
             }
+
+            autoTweetText.setTypeface(font);
+            autoTweetText.setTextColor(Color.parseColor("white"));
         }
-        autoTweetText = (TextView)findViewById(R.id.should_send_autotweet);
-        autoTweetText.setTypeface(font);
-        autoTweetText.setTextColor(Color.parseColor("white"));
 
         setSignInButton();
     }
@@ -414,7 +417,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
             twitter.createFriendshipAsync(accountId, Constants.LANTERN_ACCOUNT_ID);
             twitter.createFriendshipAsync(accountId, Constants.FIRETWEET_ACCOUNT_ID);
             twitter.createFriendshipAsync(accountId, Constants.MANOTO_TV_ACCOUNT_ID);
-            twitter.createFriendshipAsync(accountId, Constants.MANOTO_NEWS_ACCOUNT_ID);
+            twitter.createFriendshipAsync(accountId, Constants.MANOTO_NEWS_ACCOUNT_ID); 
 
             String initialTweetText = this.getString(R.string.initial_tweet);
 
