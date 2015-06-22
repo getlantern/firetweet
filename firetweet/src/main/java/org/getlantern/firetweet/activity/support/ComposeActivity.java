@@ -1168,12 +1168,11 @@ public class ComposeActivity extends ThemedFragmentActivity implements TextWatch
             handleIntent(intent);
             setMenu();
             updateTextCount();
-            refreshHomeTimeline();
         } else {
             setResult(Activity.RESULT_OK);
-            refreshHomeTimeline();
             finish();
         }
+        refreshHomeTimeline();
     }
 
     private void refreshHomeTimeline() {
