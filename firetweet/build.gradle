@@ -21,7 +21,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 110
-        versionName "0.0.4"
+        versionName "0.0.6"
         multiDexEnabled true
     }
     compileOptions {
@@ -46,12 +46,8 @@ android {
     }
     buildTypes {
         debug {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm")
-            versionNameSuffix String.format(" (dev %s)", format.format(new Date()))
         }
         release {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd")
-            versionNameSuffix String.format(" (dev %s)", format.format(new Date()))
             zipAlignEnabled true
         }
     }

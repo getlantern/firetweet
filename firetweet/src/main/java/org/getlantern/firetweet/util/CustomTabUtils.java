@@ -79,9 +79,13 @@ public class CustomTabUtils implements Constants {
         CUSTOM_TABS_CONFIGURATION_MAP.put(TAB_TYPE_TRENDS_SUGGESTIONS, new CustomTabConfiguration(
                 TrendsSuggectionsFragment.class, R.string.trends, R.drawable.ic_action_hashtag,
                 CustomTabConfiguration.ACCOUNT_NONE, CustomTabConfiguration.FIELD_TYPE_NONE, 3, true));
+
+
         CUSTOM_TABS_CONFIGURATION_MAP.put(TAB_TYPE_FAVORITES, new CustomTabConfiguration(UserFavoritesFragment.class,
                 R.string.favorites, R.drawable.ic_action_star, CustomTabConfiguration.ACCOUNT_REQUIRED,
                 CustomTabConfiguration.FIELD_TYPE_USER, 4));
+
+
         CUSTOM_TABS_CONFIGURATION_MAP.put(TAB_TYPE_USER_TIMELINE, new CustomTabConfiguration(
                 UserTimelineFragment.class, R.string.users_statuses, R.drawable.ic_action_quote,
                 CustomTabConfiguration.ACCOUNT_REQUIRED, CustomTabConfiguration.FIELD_TYPE_USER, 5));

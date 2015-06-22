@@ -22,6 +22,7 @@ package org.getlantern.firetweet.fragment.support;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
+import static org.getlantern.firetweet.util.Utils.getDefaultAccountId;
 
 import org.getlantern.firetweet.loader.support.UserFavoritesLoader;
 import org.getlantern.firetweet.model.ParcelableStatus;

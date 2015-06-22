@@ -290,10 +290,6 @@ public class FiretweetApplication extends MultiDexApplication implements Constan
     private DiskCache createDiskCache(final String dirName) {
         final File cacheDir = getBestCacheDir(this, dirName);
         final File fallbackCacheDir = getInternalCacheDir(this, dirName);
-//        final LruDiscCache discCache = new LruDiscCache(cacheDir, new URLFileNameGenerator(), 384 *
-//                1024 * 1024);
-//        discCache.setReserveCacheDir(fallbackCacheDir);
-//        return discCache;
         return new UnlimitedDiscCache(cacheDir, fallbackCacheDir, new URLFileNameGenerator());
     }
 
