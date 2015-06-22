@@ -82,7 +82,7 @@ public class CustomTabUtils implements Constants {
 
 
         CUSTOM_TABS_CONFIGURATION_MAP.put(TAB_TYPE_FAVORITES, new CustomTabConfiguration(UserFavoritesFragment.class,
-                R.string.favorites, R.drawable.ic_action_star, CustomTabConfiguration.ACCOUNT_OPTIONAL,
+                R.string.favorites, R.drawable.ic_action_star, CustomTabConfiguration.ACCOUNT_REQUIRED,
                 CustomTabConfiguration.FIELD_TYPE_USER, 4));
 
 
