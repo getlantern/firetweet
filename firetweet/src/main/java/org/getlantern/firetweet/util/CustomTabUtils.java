@@ -187,12 +187,6 @@ public class CustomTabUtils implements Constants {
             case TAB_TYPE_DIRECT_MESSAGES: {
                 return TAB_TYPE_DIRECT_MESSAGES;
             }
-            case TAB_TYPE_FAVORITES: {
-                return TAB_TYPE_FAVORITES;
-            }
-            case TAB_TYPE_ACTIVITIES_BY_FRIENDS: {
-                return TAB_TYPE_ACTIVITIES_BY_FRIENDS;
-            }
         }
         return null;
     }

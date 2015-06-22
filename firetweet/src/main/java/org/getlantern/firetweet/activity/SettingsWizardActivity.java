@@ -53,7 +53,6 @@ import org.getlantern.firetweet.fragment.ProgressDialogFragment;
 import org.getlantern.firetweet.fragment.support.DirectMessagesFragment;
 import org.getlantern.firetweet.fragment.support.HomeTimelineFragment;
 import org.getlantern.firetweet.fragment.support.MentionsTimelineFragment;
-import org.getlantern.firetweet.fragment.support.UserFavoritesFragment;
 import org.getlantern.firetweet.model.CustomTabConfiguration;
 import org.getlantern.firetweet.model.SupportTabSpec;
 import org.getlantern.firetweet.preference.WizardPageHeaderPreference;
@@ -94,7 +93,7 @@ public class SettingsWizardActivity extends Activity implements Constants {
 
 
     public void applyInitialSettings() {
-        //if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING) return;
+        if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING) return;
         mTask = new InitialSettingsTask(this);
         AsyncTaskUtils.executeTask(mTask);
     }
@@ -522,7 +521,7 @@ public class SettingsWizardActivity extends Activity implements Constants {
         private static final String FRAGMENT_TAG = "initial_settings_dialog";
 
         private static final String[] DEFAULT_TAB_TYPES = {TAB_TYPE_HOME_TIMELINE, TAB_TYPE_MENTIONS_TIMELINE,
-                TAB_TYPE_TRENDS_SUGGESTIONS, TAB_TYPE_FAVORITES, TAB_TYPE_ACTIVITIES_BY_FRIENDS, TAB_TYPE_DIRECT_MESSAGES};
+                TAB_TYPE_TRENDS_SUGGESTIONS, TAB_TYPE_DIRECT_MESSAGES};
 
         private final SettingsWizardActivity mActivity;
 
@@ -590,7 +589,6 @@ public class SettingsWizardActivity extends Activity implements Constants {
         private boolean wasConfigured(final List<SupportTabSpec> tabs) {
             for (final SupportTabSpec spec : tabs) {
                 if (classEquals(spec.cls, HomeTimelineFragment.class)
-                        || classEquals(spec.cls, UserFavoritesFragment.class)
                         || classEquals(spec.cls, MentionsTimelineFragment.class)
                         || classEquals(spec.cls, DirectMessagesFragment.class)) return true;
             }

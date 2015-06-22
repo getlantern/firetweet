@@ -160,6 +160,8 @@ public class ComposeActivity extends ThemedFragmentActivity implements TextWatch
 
     private static final String EXTRA_ORIGINAL_TEXT = "original_text";
 
+    private static final String LOG_TAG = "ComposeActivity";
+
     private static final String EXTRA_TEMP_URI = "temp_uri";
     private static final String EXTRA_SHARE_SCREENSHOT = "share_screenshot";
     private final Extractor mExtractor = new Extractor();
@@ -471,6 +473,7 @@ public class ComposeActivity extends ThemedFragmentActivity implements TextWatch
                     new RetweetProtectedStatusWarnFragment().show(getSupportFragmentManager(),
                             "retweet_protected_status_warning_message");
                 } else {
+                    Log.d(LOG_TAG, "Sending tweet...");
                     updateStatus();
                 }
                 break;
@@ -1134,23 +1137,9 @@ public class ComposeActivity extends ThemedFragmentActivity implements TextWatch
         } else if (!hasMedia && (isEmpty(text) || noReplyContent(text))) {
             mEditText.setError(getString(R.string.error_message_no_content));
             return;
-        } else if (mAccountsAdapter.isSelectionEmpty()) {
-            mEditText.setError(getString(R.string.no_account_selected));
-            return;
         }
         final boolean attachLocation = mPreferences.getBoolean(KEY_ATTACH_LOCATION, false);
-//        if (mRecentLocation == null && attachLocation) {
-//            final Location location;
-//            if (mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-//                location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-//            } else {
-//                location = null;
-//            }
-//            if (location != null) {
-//                mRecentLocation = new ParcelableLocation(location);
-//            }
-//            setRecentLocation();
-//        }
+
         final long[] accountIds = mAccountsAdapter.getSelectedAccountIds();
         final boolean isQuote = INTENT_ACTION_QUOTE.equals(getIntent().getAction());
         final ParcelableLocation statusLocation = attachLocation ? mRecentLocation : null;
@@ -1161,6 +1150,8 @@ public class ComposeActivity extends ThemedFragmentActivity implements TextWatch
                 isPossiblySensitive);
         if (mPreferences.getBoolean(KEY_NO_CLOSE_AFTER_TWEET_SENT, false)
                 && (mInReplyToStatus == null || mInReplyToStatusId <= 0)) {
+
+
             mIsPossiblySensitive = false;
             mShouldSaveAccounts = true;
             mTempPhotoUri = null;
@@ -1177,9 +1168,15 @@ public class ComposeActivity extends ThemedFragmentActivity implements TextWatch
             handleIntent(intent);
             setMenu();
             updateTextCount();
+
+
         } else {
             setResult(Activity.RESULT_OK);
             finish();
+
+            Log.d(LOG_TAG, "Sent tweet. Refreshing home timeline..");
+            final long default_id = mPreferences.getLong(KEY_DEFAULT_ACCOUNT_ID, -1);
+            mTwitterWrapper.refreshAll(new long[]{default_id});
         }
     }
 
@@ -1319,7 +1316,6 @@ public class ComposeActivity extends ThemedFragmentActivity implements TextWatch
         final ParcelableAccount[] accounts = mAccountsAdapter.getSelectedAccounts();
         setSelectedAccounts(accounts);
         mEditText.setAccountId(accounts.length > 0 ? accounts[0].account_id : Utils.getDefaultAccountId(this));
-//        mAccountActionProvider.setSelectedAccounts(mAccountsAdapter.getSelectedAccounts());
     }
 
     private static class AddBitmapTask extends AddMediaTask {
