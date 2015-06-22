@@ -29,10 +29,13 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -274,10 +277,19 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         // don't display the auto tweet text on subsequent runs
         if (mPreferences.contains(FIRST_RUN)) {
             autoTweetCheckBox.setVisibility(View.GONE);
+        } else {
+            // the checkbox color attribute isn't a simple attribute
+            // we have to grab the default checkbox and apply a color filter
+            int id = Resources.getSystem().getIdentifier("btn_check_holo_light", "drawable", "android");
+            Drawable drawable = ResourcesCompat.getDrawable(getResources(), id, null);
+            if (drawable != null) {
+                drawable.setColorFilter(Color.parseColor("white"), PorterDuff.Mode.SRC_ATOP);
+                autoTweetCheckBox.setButtonDrawable(drawable);
+            }
         }
         autoTweetText = (TextView)findViewById(R.id.should_send_autotweet);
         autoTweetText.setTypeface(font);
-        autoTweetText.setTextColor(Color.parseColor("black"));
+        autoTweetText.setTextColor(Color.parseColor("white"));
 
         setSignInButton();
     }
