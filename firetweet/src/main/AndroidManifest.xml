@@ -593,33 +593,6 @@
         <service
             android:name=".service.BackgroundOperationService"
             android:label="@string/label_background_operation_service"/>
-        <service
-            android:name=".nyan.NyanWallpaperService"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@drawable/nyan_sakamoto_thumbnail"
-            android:label="@string/nyan_sakamoto"
-            android:permission="android.permission.BIND_WALLPAPER"
-            android:process=":wallpaper">
-            <intent-filter android:priority="1">
-                <action android:name="android.service.wallpaper.WallpaperService"/>
-            </intent-filter>
-
-            <meta-data
-                android:name="android.service.wallpaper"
-                android:resource="@xml/nyan_wallpaper"/>
-        </service>
-        <service
-            android:name=".nyan.NyanDaydreamService"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@drawable/nyan_sakamoto_thumbnail"
-            android:label="@string/nyan_sakamoto"
-            android:process=":daydream">
-            <intent-filter android:priority="1">
-                <action android:name="android.service.dreams.DreamService"/>
-            </intent-filter>
-        </service>
 
         <provider
             android:name=".provider.FiretweetDataProvider"
