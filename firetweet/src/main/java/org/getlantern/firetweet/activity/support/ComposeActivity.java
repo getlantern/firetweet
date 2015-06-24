@@ -1174,13 +1174,6 @@ public class ComposeActivity extends ThemedFragmentActivity implements TextWatch
             finish();
             refreshHomeTimeline();
         }
-        refreshHomeTimeline();
-    }
-
-    private void refreshHomeTimeline() {
-        Log.d(LOG_TAG, "Sent tweet. Refreshing home timeline..");
-        final long default_id = mPreferences.getLong(KEY_DEFAULT_ACCOUNT_ID, -1);
-        mTwitterWrapper.refreshAll(new long[]{default_id});
     }
 
     private void refreshHomeTimeline() {
