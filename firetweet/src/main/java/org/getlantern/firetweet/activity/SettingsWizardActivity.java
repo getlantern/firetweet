@@ -53,7 +53,6 @@ import org.getlantern.firetweet.fragment.ProgressDialogFragment;
 import org.getlantern.firetweet.fragment.support.DirectMessagesFragment;
 import org.getlantern.firetweet.fragment.support.HomeTimelineFragment;
 import org.getlantern.firetweet.fragment.support.MentionsTimelineFragment;
-import org.getlantern.firetweet.fragment.support.UserFavoritesFragment;
 import org.getlantern.firetweet.model.CustomTabConfiguration;
 import org.getlantern.firetweet.model.SupportTabSpec;
 import org.getlantern.firetweet.preference.WizardPageHeaderPreference;
@@ -94,7 +93,7 @@ public class SettingsWizardActivity extends Activity implements Constants {
 
 
     public void applyInitialSettings() {
-        //if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING) return;
+        if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING) return;
         mTask = new InitialSettingsTask(this);
         AsyncTaskUtils.executeTask(mTask);
     }
@@ -580,7 +579,6 @@ public class SettingsWizardActivity extends Activity implements Constants {
         private boolean wasConfigured(final List<SupportTabSpec> tabs) {
             for (final SupportTabSpec spec : tabs) {
                 if (classEquals(spec.cls, HomeTimelineFragment.class)
-                        || classEquals(spec.cls, UserFavoritesFragment.class)
                         || classEquals(spec.cls, MentionsTimelineFragment.class)
                         || classEquals(spec.cls, DirectMessagesFragment.class)) return true;
             }

@@ -387,7 +387,6 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
 
         final int initialTabPosition = handleIntent(intent, savedInstanceState == null);
         setTabPosition(initialTabPosition);
-
     }
 
     @Override
