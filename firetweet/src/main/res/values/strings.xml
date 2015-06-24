@@ -18,6 +18,8 @@
     <string name="sign_in">Sign in</string>
     <string name="not_now">Not Now</string>
     <string name="install_update">Update</string>
+    <string name="error_update">Error Downloading Update</string>
+    <string name="manual_update">Try manually installing the latest version from &lt;a href="https://firetweet.io">here1&lt;/a></string>
     <string name="update_available">There is a new version of FireTweet available. Would you like to update now?</string>
     <string name="welcome_to_firetweet">Welcome to FireTweet</string>
     <string name="sign_in_twitter">Use your Twitter login details</string>

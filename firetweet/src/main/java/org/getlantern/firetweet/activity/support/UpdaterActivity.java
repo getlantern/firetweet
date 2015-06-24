@@ -158,10 +158,10 @@ public class UpdaterActivity extends Activity implements Constants {
         // and mention where the user can download the latest version
         // this also dismisses the current updater activity
         protected void displayInstallError() {
+
             AlertDialog alertDialog = new AlertDialog.Builder(mActivity).create();
-            alertDialog.setTitle("Error Downloading Update");
-            alertDialog.setMessage("Try manually installing " +
-                    "the latest version from https://firetweet.io");
+            alertDialog.setTitle(context.getString(R.string.error_update));
+            alertDialog.setMessage(context.getString(R.string.manual_update));
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {

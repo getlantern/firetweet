@@ -29,6 +29,7 @@
     <item name="update_available" type="id"/>
     <item name="sign_in_twitter" type="id"/>
     <item name="initial_tweet" type="id"/>
+    <item name="manual_update" type="id"/>
     <item name="powered_by" type="id"/>
     <item name="quote" type="id"/>
     <item name="drafts" type="id"/>
