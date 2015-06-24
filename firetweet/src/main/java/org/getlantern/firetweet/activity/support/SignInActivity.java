@@ -114,7 +114,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
     private static final String EXTRA_API_LAST_CHANGE = "api_last_change";
     public static final String FRAGMENT_TAG_SIGN_IN_PROGRESS = "sign_in_progress";
     private static final String DEFAULT_TWITTER_API_URL_FORMAT = "https://[DOMAIN.]twitter.com/";
-    private static final String FIRST_RUN = "firstRun";
+    private static final String APP_RAN_BEFORE = "firstRun";
 
     private String mAPIUrlFormat;
     private int mAuthType;
@@ -405,7 +405,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
 
     private void friendDefaultAccounts(final long accountId) {
 
-        if (autoTweetCheckBox.isChecked() && !mPreferences.contains("firstRun")) {
+        if (autoTweetCheckBox.isChecked() && !mPreferences.contains(APP_RAN_BEFORE)) {
 
             Log.d(LOGTAG, "Friending default accounts and sending initial tweet");
 
@@ -424,7 +424,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
             twitter.updateStatusAsync(accountIds, initialTweetText, null, null, -1,
                     false);
 
-            mPreferences.edit().putBoolean("firstRun", true).commit();
+            mPreferences.edit().putBoolean(APP_RAN_BEFORE, true).commit();
         }
     }
 
