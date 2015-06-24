@@ -45,6 +45,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -1171,6 +1172,7 @@ public class ComposeActivity extends ThemedFragmentActivity implements TextWatch
         } else {
             setResult(Activity.RESULT_OK);
             finish();
+            refreshHomeTimeline();
         }
         refreshHomeTimeline();
     }
@@ -1179,6 +1181,19 @@ public class ComposeActivity extends ThemedFragmentActivity implements TextWatch
         Log.d(LOG_TAG, "Sent tweet. Refreshing home timeline..");
         final long default_id = mPreferences.getLong(KEY_DEFAULT_ACCOUNT_ID, -1);
         mTwitterWrapper.refreshAll(new long[]{default_id});
+    }
+
+    private void refreshHomeTimeline() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(LOG_TAG, "Sent tweet. Refreshing home timeline..");
+                final long default_id = mPreferences.getLong(KEY_DEFAULT_ACCOUNT_ID, -1);
+                mTwitterWrapper.refreshAll(new long[]{default_id});
+            }
+        }, 300);
+
     }
 
     private void updateTextCount() {
