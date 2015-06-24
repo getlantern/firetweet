@@ -21,6 +21,7 @@
     <string name="error_update">Error Downloading Update</string>
     <string name="manual_update">Try manually installing the latest version from &lt;a href="https://firetweet.io">here1&lt;/a></string>
     <string name="update_available">There is a new version of FireTweet available. Would you like to update now?</string>
+    <string name="should_send_autotweet">Autotweet: Share FireTweet with your friends</string>
     <string name="welcome_to_firetweet">Welcome to FireTweet</string>
     <string name="sign_in_twitter">Use your Twitter login details</string>
     <string name="rest_base_url">REST Base URL</string>

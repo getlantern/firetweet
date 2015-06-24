@@ -27,8 +27,6 @@ import android.os.Handler;
 import android.preference.Preference;
 import android.util.AttributeSet;
 
-import org.getlantern.firetweet.activity.NyanActivity;
-
 public class AppVersionPreference extends Preference {
 
 	public Handler mHandler = new Handler();
@@ -70,7 +68,6 @@ public class AppVersionPreference extends Preference {
 			final Context context = getContext();
 			if (context != null) {
 				mClickCount = 0;
-				context.startActivity(new Intent(context, NyanActivity.class));
 			}
 		}
 		mHandler.postDelayed(mResetCounterRunnable, 3000);

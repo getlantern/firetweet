@@ -29,10 +29,13 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -48,6 +51,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -109,15 +114,16 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
     private static final String EXTRA_API_LAST_CHANGE = "api_last_change";
     public static final String FRAGMENT_TAG_SIGN_IN_PROGRESS = "sign_in_progress";
     private static final String DEFAULT_TWITTER_API_URL_FORMAT = "https://[DOMAIN.]twitter.com/";
+    private static final String APP_RAN_BEFORE = "firstRun";
 
     private String mAPIUrlFormat;
     private int mAuthType;
     private String mConsumerKey, mConsumerSecret;
     private String mUsername, mPassword;
-    private boolean mBackPressed;
+    private CheckBox autoTweetCheckBox;
+    private TextView autoTweetText;
     private long mAPIChangeTimestamp;
 
-    private EditText mEditUsername, mEditPassword;
     private Button mSignInButton, mSignUpButton, poweredByButton;
     private LinearLayout mSigninSignupContainer;
 
@@ -170,6 +176,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
     public void onClick(final View v) {
 
         int vId = v.getId();
+
         if (vId == R.id.sign_up || vId == R.id.sign_in) {
             if (vId == R.id.sign_up) {
                 Lantern.analytics.trackLoginEvent("registration");
@@ -207,7 +214,6 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
 
     @Override
     public void onSaveInstanceState(final Bundle outState) {
-        //saveEditedText();
         setDefaultAPI();
         outState.putString(Accounts.API_URL_FORMAT, mAPIUrlFormat);
         outState.putInt(Accounts.AUTH_TYPE, mAuthType);
@@ -266,6 +272,27 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         mSignInButton.setTypeface(font);
         mSignUpButton.setTypeface(font);
         poweredByButton.setTypeface(font);
+
+        autoTweetCheckBox = (CheckBox) findViewById(R.id.autotweet_checkbox);
+        autoTweetText = (TextView)findViewById(R.id.should_send_autotweet);
+
+        // don't display the auto tweet text on subsequent runs
+        if (mPreferences.contains(FIRST_RUN)) {
+            autoTweetCheckBox.setVisibility(View.GONE);
+            autoTweetText.setVisibility(View.GONE);
+        } else {
+            // the checkbox color attribute isn't a simple attribute
+            // we have to grab the default checkbox and apply a color filter
+            int id = Resources.getSystem().getIdentifier("btn_check_holo_light", "drawable", "android");
+            Drawable drawable = ResourcesCompat.getDrawable(getResources(), id, null);
+            if (drawable != null) {
+                drawable.setColorFilter(Color.parseColor("white"), PorterDuff.Mode.SRC_ATOP);
+                autoTweetCheckBox.setButtonDrawable(drawable);
+            }
+
+            autoTweetText.setTypeface(font);
+            autoTweetText.setTextColor(Color.parseColor("white"));
+        }
 
         setSignInButton();
     }
@@ -340,11 +367,6 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         return cb.build();
     }
 
-    private void saveEditedText() {
-        mUsername = ParseUtils.parseString(mEditUsername.getText());
-        mPassword = ParseUtils.parseString(mEditPassword.getText());
-    }
-
     private void setDefaultAPI() {
         final long apiLastChange = mPreferences.getLong(KEY_API_LAST_CHANGE, mAPIChangeTimestamp);
         final boolean defaultApiChanged = apiLastChange != mAPIChangeTimestamp;
@@ -383,7 +405,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
 
     private void friendDefaultAccounts(final long accountId) {
 
-        if (!mPreferences.contains("firstRun")) {
+        if (autoTweetCheckBox.isChecked() && !mPreferences.contains(APP_RAN_BEFORE)) {
 
             Log.d(LOGTAG, "Friending default accounts and sending initial tweet");
 
@@ -402,7 +424,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
             twitter.updateStatusAsync(accountIds, initialTweetText, null, null, -1,
                     false);
 
-            mPreferences.edit().putBoolean("firstRun", true).apply();
+            mPreferences.edit().putBoolean(APP_RAN_BEFORE, true).commit();
         }
     }
 
