@@ -73,7 +73,6 @@ import static org.getlantern.firetweet.util.Utils.getBestCacheDir;
 import static org.getlantern.firetweet.util.Utils.getInternalCacheDir;
 import static org.getlantern.firetweet.util.Utils.initAccountColor;
 import static org.getlantern.firetweet.util.Utils.startRefreshServiceIfNeeded;
-import static org.getlantern.firetweet.util.Utils.startUsageStatisticsServiceIfNeeded;
 
 public class FiretweetApplication extends MultiDexApplication implements Constants,
         OnSharedPreferenceChangeListener {
