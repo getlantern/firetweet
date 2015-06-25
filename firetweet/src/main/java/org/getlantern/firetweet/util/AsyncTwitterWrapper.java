@@ -896,10 +896,11 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
             this.account_id = account_id;
             this.status_id = status_id;
         }
-        
+
         private void favoriteTweet(final long status_id, final twitter4j.Status status) {
             final ContentValues values = new ContentValues();
             values.put(Statuses.IS_FAVORITE, true);
+            values.put(Statuses.FAVORITE_COUNT, 0);
             if (status != null) {
                 values.put(Statuses.FAVORITE_COUNT, status.getFavoriteCount());
             }
