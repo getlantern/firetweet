@@ -896,6 +896,20 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
             this.account_id = account_id;
             this.status_id = status_id;
         }
+        
+        private void favoriteTweet(final long status_id, final twitter4j.Status status) {
+            final ContentValues values = new ContentValues();
+            values.put(Statuses.IS_FAVORITE, true);
+            if (status != null) {
+                values.put(Statuses.FAVORITE_COUNT, status.getFavoriteCount());
+            }
+            final Expression where = Expression.and(Expression.equals(Statuses.ACCOUNT_ID, account_id),
+                    Expression.or(Expression.equals(Statuses.STATUS_ID, status_id),
+                            Expression.equals(Statuses.RETWEET_ID, status_id)));
+            for (final Uri uri : FiretweetDataStore.STATUSES_URIS) {
+                mResolver.update(uri, values, where.getSQL(), null);
+            }
+        }
 
         @Override
         protected SingleResponse<ParcelableStatus> doInBackground(final Object... params) {
@@ -903,17 +917,14 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
             final Twitter twitter = getTwitterInstance(mContext, account_id, true);
             if (twitter == null) return SingleResponse.getInstance();
             try {
+
+                // initial update tweet to favorited before we make the call to the Twitter server
+                favoriteTweet(status_id, null);
                 final twitter4j.Status status = twitter.createFavorite(status_id);
                 Utils.setLastSeen(mContext, status.getUserMentionEntities(), System.currentTimeMillis());
-                final ContentValues values = new ContentValues();
-                values.put(Statuses.IS_FAVORITE, true);
-                values.put(Statuses.FAVORITE_COUNT, status.getFavoriteCount());
-                final Expression where = Expression.and(Expression.equals(Statuses.ACCOUNT_ID, account_id),
-                        Expression.or(Expression.equals(Statuses.STATUS_ID, status_id),
-                                Expression.equals(Statuses.RETWEET_ID, status_id)));
-                for (final Uri uri : FiretweetDataStore.STATUSES_URIS) {
-                    mResolver.update(uri, values, where.getSQL(), null);
-                }
+                // update favorite count
+                favoriteTweet(status_id, status);
+
                 return SingleResponse.getInstance(new ParcelableStatus(status, account_id, false));
             } catch (final TwitterException e) {
                 Crashlytics.logException(e);
