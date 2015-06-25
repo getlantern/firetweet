@@ -64,7 +64,6 @@ import org.getlantern.firetweet.util.net.FiretweetHostAddressResolver;
 
 import java.io.File;
 
-import edu.tsinghua.spice.SpiceService;
 import edu.ucdavis.earlybird.UCDService;
 import twitter4j.http.HostAddressResolver;
 
@@ -78,7 +77,6 @@ public class FiretweetApplication extends MultiDexApplication implements Constan
         OnSharedPreferenceChangeListener {
 
     private static final String KEY_UCD_DATA_PROFILING = "ucd_data_profiling";
-    private static final String KEY_SPICE_DATA_PROFILING = "spice_data_profiling";
 
     private Handler mHandler;
     private MediaLoaderWrapper mMediaLoaderWrapper;
@@ -229,20 +227,6 @@ public class FiretweetApplication extends MultiDexApplication implements Constan
                     PackageManager.DONT_KILL_APP);
         }
         startRefreshServiceIfNeeded(this);
-    }
-
-    private void migrateUsageStatisticsPreferences() {
-        final boolean hasUsageStatistics = mPreferences.contains(KEY_USAGE_STATISTICS);
-        if (hasUsageStatistics) return;
-        if (mPreferences.contains(KEY_UCD_DATA_PROFILING) || mPreferences.contains(KEY_SPICE_DATA_PROFILING)) {
-            final boolean prevUsageEnabled = mPreferences.getBoolean(KEY_UCD_DATA_PROFILING, false)
-                    || mPreferences.getBoolean(KEY_SPICE_DATA_PROFILING, false);
-            final Editor editor = mPreferences.edit();
-            editor.putBoolean(KEY_USAGE_STATISTICS, prevUsageEnabled);
-            editor.remove(KEY_UCD_DATA_PROFILING);
-            editor.remove(KEY_SPICE_DATA_PROFILING);
-            editor.apply();
-        }
     }
 
     @Override

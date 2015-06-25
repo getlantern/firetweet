@@ -86,8 +86,6 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import edu.tsinghua.spice.Utilies.SpiceProfilingUtil;
-import edu.tsinghua.spice.Utilies.TypeMappingUtil;
 import edu.ucdavis.earlybird.ProfilingUtil;
 import twitter4j.DirectMessage;
 import twitter4j.Paging;
@@ -2128,9 +2126,6 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
             countCur.close();
             // UCD
             ProfilingUtil.profile(mContext, accountId, "Download tweets, " + FiretweetArrayUtils.toString(statusIds, ',', true));
-            //spice
-            SpiceProfilingUtil.profile(mContext, accountId, accountId + ",Refresh," + FiretweetArrayUtils.toString(statusIds, ',', true));
-            //end
 
             // Insert a gap.
             final boolean deletedOldGap = rowsDeleted > 0 && ArrayUtils.contains(statusIds, maxId);
@@ -2395,32 +2390,6 @@ public class AsyncTwitterWrapper extends TwitterWrapper {
                 }
                 final Bus bus = FiretweetApplication.getInstance(mContext).getMessageBus();
                 bus.post(new StatusRetweetedEvent(status));
-                //spice
-                if (status.media == null) {
-                    SpiceProfilingUtil.log(getContext(), status.id + ",Retweet," + account_id + ","
-                            + status.user_id + "," + status.reply_count + "," + status.retweet_count + "," + status.favorite_count);
-                    SpiceProfilingUtil.profile(getContext(), account_id, status.id + ",Retweet," + account_id + ","
-                            + status.user_id + "," + status.reply_count + "," + status.retweet_count + "," + status.favorite_count);
-                } else {
-                    for (final ParcelableMedia spiceMedia : status.media) {
-                        if (TypeMappingUtil.getMediaType(spiceMedia.type).equals("image")) {
-                            SpiceProfilingUtil.log(getContext(), status.id + ",RetweetM," + account_id + ","
-                                    + status.user_id + "," + status.reply_count + "," + status.retweet_count + "," + status.favorite_count
-                                    + "," + spiceMedia.media_url + "," + TypeMappingUtil.getMediaType(spiceMedia.type) + "," + spiceMedia.width + "x" + spiceMedia.height);
-                            SpiceProfilingUtil.profile(getContext(), account_id, status.id + ",RetweetM," + account_id + ","
-                                    + status.user_id + "," + status.reply_count + "," + status.retweet_count + "," + status.favorite_count
-                                    + "," + spiceMedia.media_url + "," + TypeMappingUtil.getMediaType(spiceMedia.type) + "," + spiceMedia.width + "x" + spiceMedia.height);
-                        } else {
-                            SpiceProfilingUtil.log(getContext(), status.id + ",RetweetO," + account_id + ","
-                                    + status.user_id + "," + status.reply_count + "," + status.retweet_count + "," + status.favorite_count
-                                    + "," + spiceMedia.media_url + "," + TypeMappingUtil.getMediaType(spiceMedia.type));
-                            SpiceProfilingUtil.profile(getContext(), account_id, status.id + ",RetweetO," + account_id + ","
-                                    + status.user_id + "," + status.reply_count + "," + status.retweet_count + "," + status.favorite_count
-                                    + "," + spiceMedia.media_url + "," + TypeMappingUtil.getMediaType(spiceMedia.type));
-                        }
-                    }
-                }
-                //end
                 mMessagesManager.showOkMessage(R.string.status_retweeted, false);
             } else {
                 mMessagesManager.showErrorMessage(R.string.action_retweeting, result.getException(), true);

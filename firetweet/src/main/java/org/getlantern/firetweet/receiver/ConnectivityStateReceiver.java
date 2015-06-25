@@ -28,9 +28,6 @@ import android.util.Log;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.util.Utils;
 
-import edu.tsinghua.spice.Utilies.NetworkStateUtil;
-import edu.tsinghua.spice.Utilies.SpiceProfilingUtil;
-
 import static org.getlantern.firetweet.util.Utils.startRefreshServiceIfNeeded;
 
 public class ConnectivityStateReceiver extends BroadcastReceiver implements Constants {

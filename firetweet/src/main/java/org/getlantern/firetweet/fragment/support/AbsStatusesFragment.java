@@ -53,9 +53,6 @@ import org.getlantern.firetweet.view.HeaderDrawerLayout.DrawerCallback;
 import org.getlantern.firetweet.view.holder.GapViewHolder;
 import org.getlantern.firetweet.view.holder.StatusViewHolder;
 
-import edu.tsinghua.spice.Utilies.SpiceProfilingUtil;
-import edu.tsinghua.spice.Utilies.TypeMappingUtil;
-
 import static org.getlantern.firetweet.util.Utils.setMenuForStatus;
 
 /**
@@ -379,24 +376,8 @@ public abstract class AbsStatusesFragment<Data> extends BaseSupportFragment impl
                 if (twitter == null) return;
                 if (status.is_favorite) {
                     twitter.destroyFavoriteAsync(status.account_id, status.id);
-                    //spice
-                    SpiceProfilingUtil.profile(activity, status.account_id, status.id + ",Unfavor,"
-                            + status.account_id + "," + status.user_id + "," + status.reply_count
-                            + "," + status.retweet_count + "," + status.favorite_count + "," + status.timestamp);
-                    SpiceProfilingUtil.log(activity, status.id + ",Unfavor,"
-                            + status.account_id + "," + status.user_id + "," + status.reply_count
-                            + "," + status.retweet_count + "," + status.favorite_count + "," + status.timestamp);
-                    //end
                 } else {
                     twitter.createFavoriteAsync(status.account_id, status.id);
-                    //spice
-                    SpiceProfilingUtil.profile(activity, status.account_id, status.id + ",Favor,"
-                            + status.account_id + "," + status.user_id + "," + status.reply_count
-                            + "," + status.retweet_count + "," + status.favorite_count + "," + status.timestamp);
-                    SpiceProfilingUtil.log(activity, status.id + ",Favor,"
-                            + status.account_id + "," + status.user_id + "," + status.reply_count
-                            + "," + status.retweet_count + "," + status.favorite_count + "," + status.timestamp);
-                    //end
                 }
                 break;
             }
@@ -489,16 +470,6 @@ public abstract class AbsStatusesFragment<Data> extends BaseSupportFragment impl
         final ParcelableStatus status = mAdapter.getStatus(position);
         if (status == null) return;
         Utils.openMedia(getActivity(), status, media);
-        //spice
-        SpiceProfilingUtil.log(getActivity(),
-                status.id + ",Clicked," + status.account_id + "," + status.user_id + "," + status.text_plain.length()
-                        + "," + media.media_url + "," + TypeMappingUtil.getMediaType(media.type)
-                        + "," + mAdapter.isMediaPreviewEnabled() + "," + status.timestamp);
-        SpiceProfilingUtil.profile(getActivity(), status.account_id,
-                status.id + ",Clicked," + status.account_id + "," + status.user_id + "," + status.text_plain.length()
-                        + "," + media.media_url + "," + TypeMappingUtil.getMediaType(media.type)
-                        + "," + mAdapter.isMediaPreviewEnabled() + "," + status.timestamp);
-        //end
     }
 
     private void updateRefreshProgressOffset() {
