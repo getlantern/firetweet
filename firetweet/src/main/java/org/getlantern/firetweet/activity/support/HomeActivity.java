@@ -123,8 +123,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import edu.tsinghua.spice.Utilies.NetworkStateUtil;
-import edu.tsinghua.spice.Utilies.SpiceProfilingUtil;
 import edu.ucdavis.earlybird.ProfilingUtil;
 
 import android.app.Activity;
@@ -423,12 +421,7 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
         }
         // UCD
         ProfilingUtil.profile(this, ProfilingUtil.FILE_NAME_APP, "App onStart");
-        // spice
-        SpiceProfilingUtil.profile(this, SpiceProfilingUtil.FILE_NAME_APP, "App Launch" + "," + Build.MODEL
-                + "," + "mediaPreview=" + mPreferences.getBoolean(KEY_MEDIA_PREVIEW, false));
-        SpiceProfilingUtil.profile(this, SpiceProfilingUtil.FILE_NAME_ONLAUNCH, "App Launch"
-                + "," + NetworkStateUtil.getConnectedType(this) + "," + Build.MODEL);
-        //end
+
         mReadStateManager.registerOnSharedPreferenceChangeListener(mReadStateChangeListener);
         updateUnreadCount();
     }
@@ -446,10 +439,6 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
 
         // UCD
         ProfilingUtil.profile(this, ProfilingUtil.FILE_NAME_APP, "App onStop");
-        // spice
-        SpiceProfilingUtil.profile(this, SpiceProfilingUtil.FILE_NAME_APP, "App Stop");
-        SpiceProfilingUtil.profile(this, SpiceProfilingUtil.FILE_NAME_ONLAUNCH, "App Stop" + "," + NetworkStateUtil.getConnectedType(this) + "," + Build.MODEL);
-        //end
         super.onStop();
     }
 

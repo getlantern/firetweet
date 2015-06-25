@@ -30,8 +30,6 @@ import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.model.ParcelableMedia;
 import org.getlantern.firetweet.util.FiretweetLinkify.OnLinkClickListener;
 
-import edu.tsinghua.spice.Utilies.SpiceProfilingUtil;
-import edu.tsinghua.spice.Utilies.TypeMappingUtil;
 import edu.ucdavis.earlybird.ProfilingUtil;
 
 import static org.getlantern.firetweet.util.Utils.openStatus;
@@ -58,9 +56,6 @@ public class OnLinkClickHandler implements OnLinkClickListener, Constants {
         if (!isPrivateData()) {
             // UCD
             ProfilingUtil.profile(context, accountId, "Click, " + link + ", " + type);
-            //spice
-            SpiceProfilingUtil.profile(context, accountId, accountId + ",Visit," + link + "," + TypeMappingUtil.getLinkType(type));
-            //end
         }
 
         switch (type) {

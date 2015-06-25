@@ -239,9 +239,6 @@ import java.util.zip.CRC32;
 
 import javax.net.ssl.SSLException;
 
-import edu.tsinghua.spice.SpiceService;
-import edu.tsinghua.spice.Utilies.SpiceProfilingUtil;
-import edu.ucdavis.earlybird.UCDService;
 import twitter4j.DirectMessage;
 import twitter4j.RateLimitStatus;
 import twitter4j.Relationship;
@@ -3845,22 +3842,6 @@ public final class Utils implements Constants, TwitterConstants {
         showWarnMessage(context, context.getText(resId), long_message);
     }
 
-    public static void startUsageStatisticsServiceIfNeeded(final Context context) {
-        final SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        final Intent profilingServiceIntent = new Intent(context, UCDService.class);
-        //spice
-        final Intent spiceProfilingServiceIntent = new Intent(context, SpiceService.class);
-        if (prefs.getBoolean(KEY_USAGE_STATISTICS, false)) {
-            context.startService(profilingServiceIntent);
-            //spice
-            context.startService(spiceProfilingServiceIntent);
-        } else {
-            context.stopService(profilingServiceIntent);
-            //spice
-            context.stopService(spiceProfilingServiceIntent);
-        }
-    }
-
     public static void startRefreshServiceIfNeeded(final Context context) {
         final Intent refreshServiceIntent = new Intent(context, RefreshService.class);
         if (isNetworkAvailable(context) && hasAutoRefreshAccounts(context)) {
@@ -3990,29 +3971,8 @@ public final class Utils implements Constants, TwitterConstants {
             case MENU_FAVORITE: {
                 if (status.is_favorite) {
                     twitter.destroyFavoriteAsync(status.account_id, status.id);
-                    //spice
-                    SpiceProfilingUtil.profile(context,
-                            status.account_id, status.id + ",Unfavor," + status.account_id
-                                    + "," + status.user_id + "," + status.reply_count
-                                    + "," + status.retweet_count + "," + status.favorite_count
-                                    + "," + status.timestamp);
-                    SpiceProfilingUtil.log(context, status.id + ",Unfavor," + status.account_id
-                            + "," + status.user_id + "," + status.reply_count
-                            + "," + status.retweet_count + "," + status.favorite_count
-                            + "," + status.timestamp);
-                    //end
                 } else {
                     twitter.createFavoriteAsync(status.account_id, status.id);
-                    //spice
-                    SpiceProfilingUtil.profile(context,
-                            status.account_id, status.id + ",Favor,"
-                                    + status.account_id + "," + status.user_id + "," + status.reply_count
-                                    + "," + status.retweet_count + "," + status.favorite_count
-                                    + "," + status.timestamp);
-                    SpiceProfilingUtil.log(context, status.id + ",Favor,"
-                            + status.account_id + "," + status.user_id + "," + status.reply_count
-                            + "," + status.retweet_count + "," + status.favorite_count + "," + status.timestamp);
-                    //end
                 }
                 break;
             }

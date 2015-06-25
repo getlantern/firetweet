@@ -85,8 +85,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import edu.tsinghua.spice.Utilies.SpiceProfilingUtil;
-import edu.tsinghua.spice.Utilies.TypeMappingUtil;
 import twitter4j.MediaUploadResponse;
 import twitter4j.Status;
 import twitter4j.StatusUpdate;
@@ -323,20 +321,6 @@ public class BackgroundOperationService extends IntentService implements Constan
                     }
                 } else if (response.getData().account_id > 0) {
                     failedAccountIds.remove(response.getData().account_id);
-                    //spice
-                    if (response.getData().media == null) {
-                        SpiceProfilingUtil.log(this.getBaseContext(), response.getData().id + ",Tweet," + response.getData().account_id + ","
-                                + response.getData().in_reply_to_user_id + "," + response.getData().in_reply_to_status_id);
-                        SpiceProfilingUtil.profile(this.getBaseContext(), response.getData().account_id, response.getData().id + ",Tweet," + response.getData().account_id + ","
-                                + response.getData().in_reply_to_user_id + "," + response.getData().in_reply_to_status_id);
-                    } else
-                        for (final ParcelableMedia spiceMedia : response.getData().media) {
-                            SpiceProfilingUtil.log(this.getBaseContext(), response.getData().id + ",Media," + response.getData().account_id + ","
-                                    + response.getData().in_reply_to_user_id + "," + response.getData().in_reply_to_status_id + "," + spiceMedia.media_url + "," + TypeMappingUtil.getMediaType(spiceMedia.type));
-                            SpiceProfilingUtil.profile(this.getBaseContext(), response.getData().account_id, response.getData().id + ",Media," + response.getData().account_id + ","
-                                    + response.getData().in_reply_to_user_id + "," + response.getData().in_reply_to_status_id + "," + spiceMedia.media_url + "," + TypeMappingUtil.getMediaType(spiceMedia.type));
-                        }
-                    //end
                 }
             }
 

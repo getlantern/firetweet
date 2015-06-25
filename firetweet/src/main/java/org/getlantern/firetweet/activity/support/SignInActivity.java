@@ -277,7 +277,7 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
         autoTweetText = (TextView)findViewById(R.id.should_send_autotweet);
 
         // don't display the auto tweet text on subsequent runs
-        if (mPreferences.contains(FIRST_RUN)) {
+        if (mPreferences.contains(APP_RAN_BEFORE)) {
             autoTweetCheckBox.setVisibility(View.GONE);
             autoTweetText.setVisibility(View.GONE);
         } else {

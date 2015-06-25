@@ -123,8 +123,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import edu.tsinghua.spice.Utilies.SpiceProfilingUtil;
-import edu.tsinghua.spice.Utilies.TypeMappingUtil;
 import twitter4j.TwitterException;
 
 import static android.text.TextUtils.isEmpty;
@@ -321,14 +319,6 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
         final ParcelableStatus status = mStatusAdapter.getStatus(position);
         if (status == null) return;
         Utils.openMedia(getActivity(), status, media);
-        SpiceProfilingUtil.log(getActivity(),
-                status.id + ",Clicked," + status.account_id + "," + status.user_id + "," + status.text_plain.length()
-                        + "," + media.media_url + "," + TypeMappingUtil.getMediaType(media.type)
-                        + "," + mStatusAdapter.isMediaPreviewEnabled() + "," + status.timestamp);
-        SpiceProfilingUtil.profile(getActivity(), status.account_id,
-                status.id + ",Clicked," + status.account_id + "," + status.user_id + "," + status.text_plain.length()
-                        + "," + media.media_url + "," + TypeMappingUtil.getMediaType(media.type)
-                        + "," + mStatusAdapter.isMediaPreviewEnabled() + "," + status.timestamp);
     }
 
     @Override
@@ -396,16 +386,6 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
         final ParcelableStatus status = mStatusAdapter.getStatus();
         if (status == null) return;
         Utils.openMediaDirectly(getActivity(), accountId, status, media, status.media);
-        //spice
-        SpiceProfilingUtil.log(getActivity(),
-                status.id + ",Clicked," + status.account_id + "," + status.user_id + "," + status.text_plain.length()
-                        + "," + media.media_url + "," + TypeMappingUtil.getMediaType(media.type)
-                        + "," + mStatusAdapter.isMediaPreviewEnabled() + "," + status.timestamp);
-        SpiceProfilingUtil.profile(getActivity(), status.account_id,
-                status.id + ",Clicked," + status.account_id + "," + status.user_id + "," + status.text_plain.length()
-                        + "," + media.media_url + "," + TypeMappingUtil.getMediaType(media.type)
-                        + "," + mStatusAdapter.isMediaPreviewEnabled() + "," + status.timestamp);
-        //end
     }
 
     private void addConversation(ParcelableStatus status, int position) {
@@ -465,45 +445,6 @@ public class StatusFragment extends BaseSupportFragment implements LoaderCallbac
         }
         getLoaderManager().initLoader(LOADER_ID_STATUS_REPLIES, args, mRepliesLoaderCallback);
         mRepliesLoaderInitialized = true;
-        //spice
-        if (status.media == null) {
-            SpiceProfilingUtil.profile(getActivity(), status.account_id,
-                    status.id + ",Words," + status.account_id + "," + status.user_id + "," + status.reply_count
-                            + "," + status.retweet_count + "," + status.favorite_count
-                            + "," + status.text_plain.length() + "," + status.timestamp);
-            SpiceProfilingUtil.log(getActivity(), status.id + ",Words," + status.account_id + "," + status.user_id
-                    + "," + status.reply_count + "," + status.retweet_count + "," + status.favorite_count
-                    + "," + status.text_plain.length() + "," + status.timestamp);
-        } else {
-            for (final ParcelableMedia spiceMedia : status.media) {
-                if (spiceMedia.type == ParcelableMedia.TYPE_IMAGE) {
-                    SpiceProfilingUtil.profile(getActivity(), status.account_id,
-                            status.id + ",PreviewM," + status.account_id + "," + status.user_id
-                                    + "," + status.reply_count + "," + status.retweet_count + "," + status.favorite_count
-                                    + "," + status.text_plain.length() + "," + TypeMappingUtil.getMediaType(spiceMedia.type)
-                                    + "," + spiceMedia.media_url + "," + spiceMedia.width + "x" + spiceMedia.height
-                                    + "," + status.timestamp);
-                    SpiceProfilingUtil.log(getActivity(),
-                            status.id + ",PreviewM," + status.account_id + "," + status.user_id
-                                    + "," + status.reply_count + "," + status.retweet_count + "," + status.favorite_count
-                                    + "," + status.text_plain.length() + "," + TypeMappingUtil.getMediaType(spiceMedia.type)
-                                    + "," + spiceMedia.media_url + "," + spiceMedia.width + "x" + spiceMedia.height
-                                    + "," + status.timestamp);
-                } else {
-                    SpiceProfilingUtil.profile(getActivity(), status.account_id,
-                            status.id + ",PreviewO," + status.account_id + "," + status.user_id
-                                    + "," + status.reply_count + "," + status.retweet_count + "," + status.favorite_count
-                                    + "," + status.text_plain.length() + "," + TypeMappingUtil.getMediaType(spiceMedia.type)
-                                    + "," + spiceMedia.media_url + "," + status.timestamp);
-                    SpiceProfilingUtil.log(getActivity(),
-                            status.id + ",PreviewO," + status.account_id + "," + status.user_id
-                                    + "," + status.reply_count + "," + status.retweet_count + "," + status.favorite_count
-                                    + "," + status.text_plain.length() + "," + TypeMappingUtil.getMediaType(spiceMedia.type)
-                                    + "," + spiceMedia.media_url + "," + status.timestamp);
-                }
-            }
-        }
-        //end
     }
 
     private void setConversation(List<ParcelableStatus> data) {

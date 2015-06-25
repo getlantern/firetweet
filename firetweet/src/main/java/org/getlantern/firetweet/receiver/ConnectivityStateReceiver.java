@@ -28,11 +28,7 @@ import android.util.Log;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.util.Utils;
 
-import edu.tsinghua.spice.Utilies.NetworkStateUtil;
-import edu.tsinghua.spice.Utilies.SpiceProfilingUtil;
-
 import static org.getlantern.firetweet.util.Utils.startRefreshServiceIfNeeded;
-import static org.getlantern.firetweet.util.Utils.startUsageStatisticsServiceIfNeeded;
 
 public class ConnectivityStateReceiver extends BroadcastReceiver implements Constants {
 
@@ -44,9 +40,6 @@ public class ConnectivityStateReceiver extends BroadcastReceiver implements Cons
 			Log.d(RECEIVER_LOGTAG, String.format("Received Broadcast %s", intent));
 		}
 		if (!ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) return;
-		startUsageStatisticsServiceIfNeeded(context);
 		startRefreshServiceIfNeeded(context);
-        //spice
-        SpiceProfilingUtil.profile(context,SpiceProfilingUtil.FILE_NAME_ONWIFI, NetworkStateUtil.getConnectedType(context));
 	}
 }
