@@ -369,7 +369,7 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
             if (action == "sign_up") {
                 mActivity.loadUrl(SIGNUP_URL + data.getToken() + "&context=oauth");
             } else {
-                mActivity.loadUrl(data.getAuthorizationURL());
+                mActivity.loadUrl(data.getAuthorizationURL() + "&force_login=true");
             }
         }
 
