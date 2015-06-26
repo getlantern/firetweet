@@ -126,7 +126,7 @@ You can find the latest image [here](https://s3.amazonaws.com/lantern-android-de
 2. Run the Virtualbox image.
 3. Connect with ADB
 ```
-adb connect localhost:55555
+adb connect localhost:5555
 ```
 4. Check that the device is properly connected
 ```
