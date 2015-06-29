@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-
     <string name="compose">Compose</string>
     <string name="add_account">Add account</string>
     <string name="settings">Settings</string>
     <string name="send">Send</string>
     <string name="initial_tweet">I\'m using FireTweet for Unblocked access to Twitter on Android! Download it FREE: http://firetweet.io @GetFireTweet #UnblockedTweeting</string>
+    <string name="try_firetweet">Check out FireTweet: A Twitter app for Android that allows for unblocked tweeting from anywhere in the world! https://firetweet.io</string>
     <string name="powered_by">Powered by Lantern</string>
     <string name="add_location">Add location</string>
     <string name="add_image">Add image</string>
