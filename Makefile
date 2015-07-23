@@ -42,7 +42,6 @@ build-debug:
 $(APK_FILE): build-debug
 
 install: $(APK_FILE)
-	$(call pkg_variables)
 	adb install -r $(APK_FILE)
 
 uninstall:
@@ -52,3 +51,6 @@ uninstall:
 run:
 	$(call pkg_variables)
 	adb shell am start -n $(PACKAGE)/$(MAIN_ACTIVITY)
+
+clean:
+	./gradlew clean

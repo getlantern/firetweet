@@ -59,6 +59,9 @@ android {
 }
 
 repositories {
+    flatDir {
+        dirs 'src/main/libs'
+    }
     jcenter()
     mavenCentral()
     maven { url 'https://repo.commonsware.com.s3.amazonaws.com' }
@@ -72,6 +75,8 @@ configurations.all {
 }
 
 dependencies {
+    compile(name:'libflashlight', ext:'aar')
+
 //    wearApp project(':firetweet.wear')
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:support-v13:22.0.0'
