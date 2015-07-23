@@ -2,8 +2,8 @@ package org.getlantern.firetweet.model;
 
 import org.getlantern.firetweet.FiretweetConstants;
 
-import go.Go;
-import go.flashlight.Flashlight;
+// Flashlight client
+import go.client.*;
 
 import android.content.Context;
 
@@ -12,7 +12,7 @@ import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.analytics.GoogleAnalytics;
 
-import 	android.os.StrictMode;
+import android.os.StrictMode;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -30,10 +30,8 @@ public class Lantern {
         if (!lanternStarted) {
             // Initializing application context.
             try {
-                Go.init(context);
-
                 // init loads libgojni.so and starts the runtime
-                Flashlight.RunClientProxy("127.0.0.1:9192", FiretweetConstants.APP_NAME);
+                Client.RunClientProxy("127.0.0.1:9192", FiretweetConstants.APP_NAME);
                 System.setProperty("http.proxyHost", "127.0.0.1");
                 System.setProperty("http.proxyPort", "9192");
                 System.setProperty("https.proxyHost", "127.0.0.1");
@@ -56,7 +54,7 @@ public class Lantern {
     public static void stop() {
         if (lanternStarted) {
             try {
-                Flashlight.StopClientProxy();
+                Client.StopClientProxy();
                 lanternStarted = false;
             } catch (Exception e) {
                 Crashlytics.logException(e);

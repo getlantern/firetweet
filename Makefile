@@ -52,3 +52,6 @@ uninstall:
 run:
 	$(call pkg_variables)
 	adb shell am start -n $(PACKAGE)/$(MAIN_ACTIVITY)
+
+clean:
+	./gradlew clean
