@@ -3,7 +3,7 @@ package org.getlantern.firetweet.model;
 import org.getlantern.firetweet.FiretweetConstants;
 
 // Flashlight client
-import go.client.*;
+import go.client.Client;
 
 import android.content.Context;
 
@@ -31,7 +31,13 @@ public class Lantern {
             // Initializing application context.
             try {
                 // init loads libgojni.so and starts the runtime
-                Client.RunClientProxy("127.0.0.1:9192", FiretweetConstants.APP_NAME);
+                Client.RunClientProxy("127.0.0.1:9192",
+                                      FiretweetConstants.APP_NAME,
+                                      new Client.GoCallback.Stub() {
+                                          public void Do() {
+                                              // Proxy ready callback: does nothing at the moment
+                                          }
+                                      });
                 System.setProperty("http.proxyHost", "127.0.0.1");
                 System.setProperty("http.proxyPort", "9192");
                 System.setProperty("https.proxyHost", "127.0.0.1");
