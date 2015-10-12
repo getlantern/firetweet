@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="settings">Ustawienia</string>
+  <string name="send">Wyślij</string>
+  <string name="powered_by">Wspierana przez Lantern</string>
+  <string name="add_image">Dodaj obrazek</string>
+  <string name="take_photo">Zrób zdjęcie</string>
+  <string name="remove_image">Usuń obrazek</string>
+  <string name="remove_photo">Usuń zdjęcie</string>
+  <string name="not_now">Nie teraz</string>
+  <string name="install_update">Aktualizacja</string>
+  <string name="error_update">Błąd Pobierania Aktualizacji</string>
+  <string name="advanced">Zaawansowane</string>
+  <string name="save">Zapisz</string>
+  <string name="edit">Edytuj</string>
+  <string name="no_account_selected">Nie wybrano konta.</string>
+  <string name="empty_account_selection_disallowed">Nsleży wybrać co najmniej jedno konto.</string>
+  <string name="error_message">Błąd: &lt;xliff:g id="message"&gt;%s&lt;/xliff:g&gt;</string>
+  <string name="error_message_with_action">Błąd wykonania &lt;xliff:g id="action"&gt;%1$s&lt;/xliff:g&gt;: &lt;xliff:g id="message"&gt;%2$s&lt;/xliff:g&gt;</string>
+  <string name="select_account">Wybierz konto</string>
+  <string name="username">Nazwa użytkownika</string>
+  <string name="password">Hasło</string>
+  <string name="delete">Usuń</string>
+  <string name="reply">Odpowiedz</string>
+  <string name="view_image">Obrazek</string>
+  <string name="browser">Przeglądarka</string>
+  <string name="statuses">Tweety</string>
+  <string name="followers">Obserwujący</string>
+  <string name="following">Obserwowani</string>
+  <string name="about">O Programie</string>
+  <string name="in_reply_to_name">W odpowiedzi na &lt;xliff:g id="user_name"&gt;%s&lt;/xliff:g&gt;</string>
+  <string name="users">Użytkownicy</string>
+  <string name="user">Użytkownik</string>
+  <string name="set_color">Ustaw kolor</string>
+  <string name="follow">Obserwuj</string>
+  <string name="unfollow">Przestań obserwować</string>
+  <string name="url">adres</string>
+  <string name="favorites">Zakładki</string>
+  <string name="name">Nazwa</string>
+  <string name="refresh">Odśwież</string>
+  <string name="retry">Powtórz</string>
+  <string name="more">Więcej</string>
+  <string name="proxy">Proxy</string>
+  <string name="inbox">Skrzynka odbiorcza</string>
+  <string name="load_images">Pobierz obrazki</string>
+  <string name="screen_name">Nazwa użytkownika</string>
+  <string name="pick_file">Wskaż plik</string>
+  <string name="network">Sieć</string>
+  <string name="error_message_status_too_long">Za długi tweet.</string>
+  <string name="error_message_no_content">Brak zawartości</string>
+  <string name="Nitems_selected_quantity_one">wybrano 1 element</string>
+  <string name="Nitems_selected_quantity_other">wybrano &lt;xliff:g id="items"&gt;%d&lt;/xliff:g&gt; elementów</string>
+  <string name="dns_server">Serwer DNS</string>
+  <string name="dns_server_summary">Ustaw serwer DNS dla żądań API</string>
+  <string name="status_not_updated">Nie wysłano tweetu.</string>
+  <string name="stop_auto_refresh_when_battery_low">Zatrzymaj autoodświeżnie przy niskim poziomie baterii</string>
+  <string name="action_getting_status">odczyt tweetu</string>
+  <string name="action_updating_status">wysyłanie tweetu</string>
+  <string name="action_deleting">usuwanie</string>
+  <string name="action_updating_profile">aktualizacja profilu</string>
+  <string name="silent_notifications">Ciche powiadomienia</string>
+  <string name="silent_notifications_summary">Blokuj dzwonki/wibracje powiadomień</string>
+  <string name="disable_background_service">Blokuj serwis w tle</string>
+  <string name="text_copied">Tekst skopiowany do schowka.</string>
+  <string name="hashtag">Hasztag</string>
+  <string name="links">Linki</string>
+  <string name="edit_profile">Edytuj profil</string>
+  <string name="permission_description_none">Nie wymaga uprawnień</string>
+  <string name="accept_permission_request">Akceptuj</string>
+  <string name="no_thanks">Nie, dzięki</string>
+  <string name="network_error">Błąd sieci.</string>
+  <string name="followed_user">Obserwowany &lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt;.</string>
+  <string name="unfollowed_user">Nieobserwowany &lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt;.</string>
+  <string name="blocked_user">Blokowany &lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt;.</string>
+  <string name="unblocked_user">Odblokowany &lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt;.</string>
+  <string name="profile_updated">Zaktualizowano profil.</string>
+  <string name="ask">Zapytaj</string>
+  <string name="default_account">Konto domyślne</string>
+  <string name="safety">Bezpieczeństwo</string>
+  <string name="query">Zapytanie</string>
+  <string name="wizard_page_welcome_yes">Tak</string>
+  <string name="wizard_page_welcome_import_settings">Importuj ustawienia</string>
+  <string name="unfollow_user">Nie obserwuj &lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;</string>
+  <string name="unfollow_user_confirm_message">Nie obserwować &lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;? Nie będziesz więcej widzieć tweetów od tego użytkownika.</string>
+  <string name="destroy_status">Usuń tweet</string>
+  <string name="destroy_status_confirm_message">Usunąć ten tweet?</string>
+  <string name="translators">Tłumacze</string>
+  <string name="translate">Tłumacz</string>
+  <string name="hints">Wskazówki</string>
+  <string name="finish">Skończone</string>
+  <string name="update_status">Wyślij tweet</string>
+  <string name="back">Powrót</string>
+  <string name="accept">Akceptuj</string>
+  <string name="deny">Odrzuć</string>
+  <string name="import_settings">Importuj ustawienia</string>
+  <string name="export_settings">Eksportuj ustawienia</string>
+  <string name="export_settings_type_dialog_title">Eksport ustawień...</string>
+  <string name="import_settings_type_dialog_title">Import ustawień...</string>
+  <string name="import_export">Import/Eksport</string>
+  <string name="progress">Postęp</string>
+  <string name="following_only">Tylko obserwujący</string>
+  <string name="add">Dodaj</string>
+  <string name="delete_drafts_confirm">Usunąć wybrane szkice?</string>
+  <string name="media">Media</string>
+  <string name="style">Styl</string>
+  <string name="color">Kolor</string>
+  <string name="font_family">Krój czcionki</string>
+  <string name="appearance">Wygląd</string>
+  <string name="function">Funkcja</string>
+  <string name="replies">Odpowiedzi</string>
+  <string name="profile">Profil</string>
+  <string name="gallery">Galeria</string>
+  <string name="remove">Usuń</string>
+  <string name="load_media">Pobierz media</string>
+  <string name="profile_text_color">Kolor liter</string>
+  <string name="profile_background_color">Kolot tła</string>
+  <string name="font">Czcionka</string>
+  <string name="size">Rozmiar</string>
+  <string name="just_now">Tylko teraz</string>
+  <string name="draft_saved">Zapisano szkic</string>
+  <string name="follows">Obserwuje</string>
+  <string name="belongs_to">Należy do</string>
+  <string name="ellipsis">…</string>
+  <string name="no_account">Brak konta</string>
+  <string name="usage_statistics_notification_summary">Pomóż nam poprawić FireTweet!</string>
+  <string name="search">Szukaj</string>
+  <!--'Tweet' here is a verb-->
+  <string name="server_address">Adres serwera</string>
+</resources>

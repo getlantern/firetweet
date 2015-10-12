@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="settings">Innstillinger</string>
+  <string name="send">Send</string>
+  <string name="advanced">Avansert</string>
+  <string name="about">Om</string>
+  <string name="url">URL</string>
+  <string name="refresh">Oppdater</string>
+  <string name="retry">Forsøk på nytt</string>
+  <string name="more">Mere</string>
+  <string name="proxy">Proxy</string>
+  <string name="wizard_page_welcome_yes">Ja</string>
+  <string name="finish">Fullfør</string>
+  <string name="back">Tilbake</string>
+  <string name="add">Legg til</string>
+  <string name="search">Søk</string>
+  <!--'Tweet' here is a verb-->
+</resources>

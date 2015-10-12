@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="settings">Nastavitve</string>
+  <string name="send">Pošlji</string>
+  <string name="advanced">Napredno</string>
+  <string name="about">O programu</string>
+  <string name="url">URL</string>
+  <string name="refresh">Osveži</string>
+  <string name="retry">Poizkusi ponovno</string>
+  <string name="more">More</string>
+  <string name="proxy">Posredniški strežnik</string>
+  <string name="finish">Končaj</string>
+  <string name="back">Nazaj</string>
+  <string name="add">Add</string>
+  <string name="search">Išči</string>
+  <!--'Tweet' here is a verb-->
+</resources>

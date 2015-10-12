@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="settings">הגדרות</string>
+  <string name="send">לשלוח</string>
+  <string name="advanced">Advanced</string>
+  <string name="about">אודות</string>
+  <string name="url">URL</string>
+  <string name="refresh">רענן</string>
+  <string name="retry">Retry</string>
+  <string name="more">More</string>
+  <string name="proxy">Proxy</string>
+  <string name="finish">Finish</string>
+  <string name="back">Back</string>
+  <string name="add">הוסף</string>
+  <string name="search">חיפוש</string>
+  <!--'Tweet' here is a verb-->
+</resources>

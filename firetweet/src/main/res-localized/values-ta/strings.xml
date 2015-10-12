@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="settings">அமைப்புக்கள்</string>
+  <string name="send">அனுப்பு</string>
+  <string name="advanced">Advanced</string>
+  <string name="about">பற்றி</string>
+  <string name="url">URL</string>
+  <string name="refresh">மீளேற்று</string>
+  <string name="retry">மீளமுயற்சி</string>
+  <string name="more">More</string>
+  <string name="proxy">Proxy</string>
+  <string name="finish">Finish</string>
+  <string name="back">Back</string>
+  <string name="add">சேர்</string>
+  <string name="search">தேடு</string>
+  <!--'Tweet' here is a verb-->
+</resources>

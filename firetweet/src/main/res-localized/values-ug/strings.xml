@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="settings">تەڭشەكلەر</string>
+  <string name="send">يوللاش</string>
+  <string name="advanced">ئالىي</string>
+  <string name="about">ھەققىدە</string>
+  <string name="url">URL</string>
+  <string name="refresh">يېڭىلاش</string>
+  <string name="retry">قايتا سىناش</string>
+  <string name="more">More</string>
+  <string name="proxy">ۋاكالەتچى</string>
+  <string name="finish">تامام</string>
+  <string name="back">قايتىش</string>
+  <string name="add">قوشۇش</string>
+  <string name="search">ئىزدەش</string>
+  <!--'Tweet' here is a verb-->
+</resources>

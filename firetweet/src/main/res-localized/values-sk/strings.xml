@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="settings">Nastavenia</string>
+  <string name="send">Poslať</string>
+  <string name="advanced">Pokročilé</string>
+  <string name="about">O programe</string>
+  <string name="url">URL</string>
+  <string name="refresh">Obnoviť</string>
+  <string name="retry">Skúsiť znova</string>
+  <string name="more">More</string>
+  <string name="proxy">Proxy</string>
+  <string name="wizard_page_welcome_yes">Áno</string>
+  <string name="finish">Dokončiť</string>
+  <string name="back">Naspäť</string>
+  <string name="add">Pridať</string>
+  <string name="search">Hľadať</string>
+  <!--'Tweet' here is a verb-->
+</resources>

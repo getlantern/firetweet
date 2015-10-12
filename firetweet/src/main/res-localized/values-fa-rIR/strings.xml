@@ -1,256 +1,744 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="compose">نوشتن تویت تازه</string>
-  <string name="add_account">اضافه کردن حساب</string>
+  <string name="add_account">اضافه کردن حساب کاربری</string>
   <string name="settings">تنظیمات</string>
   <string name="send">ارسال</string>
-   <string name="initial_tweet">توييتر بى فيلتر با اپليكيشن فايرتوييت
+  <string name="initial_tweet">توييتر بى فيلتر با اپليكيشن فايرتوييت
 لينك دانلود http://git.io/vkMGM </string>
-  <string name="add_location">افزودن مکانی</string>
+  <string name="try_firetweet">فایر توییت را ببینید: یک نرم افزار توییتر برای اندروید که اجازه می دهد از هرکجای دنیا و بدون محدودیت توییت کنید! https://firetweet.io</string>
+  <string name="powered_by">پشتیبانی شده از سوی لنترن</string>
+  <string name="add_location">افزودن موقعیت مکانی</string>
   <string name="add_image">افزودن  تصویر</string>
   <string name="take_photo">عکس گرفتن</string>
-  <string name="remove_location">برداشتن مکان</string>
+  <string name="remove_location">عدم ردیابی</string>
   <string name="remove_image">برداشتن تصویر</string>
   <string name="remove_photo">برداشتن عکس</string>
   <string name="status_hint">چه خبر؟</string>
   <string name="sign_up">ثبت نام</string>
   <string name="sign_in">ورود</string>
+  <string name="not_now">الان نه</string>
+  <string name="install_update">به روز رسانی</string>
+  <string name="error_update">ایراد در دانلود به روز رسانی</string>
+  <string name="manual_update">از طریق &lt;a href="https://firetweet.io"&gt;اینجا 1&lt;/a&gt; آخرین نسخه را به صورت دستی نصب کنید.</string>
+  <string name="update_available">نسخه جدیدی از فایرتوییت در دسترس است؟ آیا تمایل دارید هم اکنون به روز رسانی را انجام دهید؟</string>
+  <string name="should_send_autotweet">توییت خودکار: فایرتوییت را با دوستان خود به اشتراک بگذارید</string>
+  <string name="welcome_to_firetweet">به فایرتوییت خوش آمدید</string>
   <string name="sign_in_twitter">مشخصات عبور توييتر را وارد كنيد</string>
-  <string name="auth_type">تايپ خودكار</string>
+  <string name="rest_base_url">REST پایه URL</string>
+  <string name="oauth_base_url">OAuth پایه URL</string>
+  <string name="signing_oauth_base_url">امضای URL پایه OAuth</string>
+  <string name="signing_rest_base_url">امضای URL پایه REST</string>
+  <string name="api_url_format">فرمت آدرس اینترنتی آي پی آی</string>
+  <string name="same_oauth_signing_url">برای امضای OAuth از URL یکسان استفاده کنید</string>
+  <string name="auth_type">تایید نمونه</string>
+  <string name="oauth">OAuth</string>
+  <string name="xauth">xAuth</string>
   <string name="basic">ابتدايي</string>
-  <string name="advanced">پیش‌رفته</string>
+  <string name="twip_o">حالت twip O </string>
+  <string name="advanced">پیشرفته</string>
   <string name="save">ذخیره</string>
   <string name="edit">ویرایش</string>
   <string name="edit_api">ویرایش API</string>
   <string name="home">خانه</string>
-  <string name="mentions">اشاره</string>
+  <string name="mentions">منشن ها</string>
   <string name="error_occurred">اشتباهي رخ داده،لطفا دوباره تلاش كنيد.</string>
   <string name="error_already_logged_in">شما در حال حاضر وارد شده ايد.</string>
+  <string name="no_account_selected">هيچ حساب كاربري انتخاب نشده</string>
+  <string name="empty_account_selection_disallowed">لطفا حداقل يك حساب كاربري را انتخاب كنيد</string>
+  <string name="error_unknown_error">اشتباه: اشتباه نامعلوم، این احتمالا حاصل يك باگ است</string>
+  <string name="error_message">خطا: &lt;xliff:g id="message"&gt;%s&lt;/xliff:g&gt;</string>
+  <string name="error_message_with_action">خطا در حین &lt;xliff:g id="action"&gt;%1$s&lt;/xliff:g&gt;: &lt;xliff:g id="message"&gt;%2$s&lt;/xliff:g&gt;</string>
+  <string name="error_message_rate_limit">از محدودیت توییت گذر شد، لطفا  &lt;xliff:g id="time"&gt;%s&lt;/xliff:g&gt; تلاش کنید</string>
+  <string name="error_message_rate_limit_with_action">محدودیت تعداد توییت را در حین &lt;xliff:g id="action"&gt;%1$s&lt;/xliff:g&gt; رد کرده اید, لطفا مجددا تلاش کنید &lt;xliff:g id="time"&gt;%2$s&lt;/xliff:g&gt;</string>
+  <string name="select_account">انتخاب حساب کاربری</string>
   <string name="username"> نام کاربر</string>
   <string name="password">رمز ورود</string>
-  <string name="open_in_browser">در بروزر باز کنید </string>
+  <string name="label_tweetstore_provider">پایگاه داده فايرتوييت</string>
+  <string name="label_refresh_service">سرویس ریفرش</string>
+  <string name="label_background_operation_service">سیستم عامل پس زمینه</string>
+  <string name="open_in_browser">در مرورگر باز کنید </string>
+  <string name="tap_to_load_more">براي بارگذاري بيشتر كليك كنيد</string>
   <string name="delete">حذف</string>
-  <string name="retweet">ریتویت</string>
-  <string name="retweets">رتویتها</string>
-  <string name="cancel_retweet">لغو ریتویت</string>
-  <string name="favorite">برگزیدن</string>
-  <string name="unfavorite">لغو برگزیدن</string>
+  <string name="retweet"> بازتوییت</string>
+  <string name="retweets"> بازتوییت‌ها</string>
+  <string name="cancel_retweet">لغو بازتوییت </string>
+  <string name="favorite">پسندیدن</string>
+  <string name="unfavorite">لغو پسندیدن</string>
   <string name="reply">پاسخ</string>
+  <string name="share">اشتراك گذاري</string>
   <string name="view_image">تصویر</string>
+  <string name="view_map">نقشه</string>
+  <string name="view_status">مشاهده توییت</string>
+  <string name="view_user_profile">نمایه کاربر</string>
+  <string name="browser">مرورگر</string>
+  <string name="pick_from_gallery">از گالري انتخاب كنيد</string>
+  <string name="statuses">توییت ها</string>
+  <string name="followers">دنبال‌ كننده‌ها</string>
+  <string name="following">‫دنبال‌ شونده‌ها‬</string>
   <string name="about">‫‫درباره‬</string>
+  <string name="open_source_license">مجوز نسخه باز</string>
+  <string name="api">API</string>
+  <string name="default_api_settings">پیش فرض تنظیمات API</string>
+  <string name="default_api_settings_summary">اين تنظيمات تنها در مورد حساب هاي تازه وارد شده صادق است</string>
+  <string name="consumer_key">كليد مصرف كننده</string>
+  <string name="consumer_secret">راز مصرف كننده</string>
+  <string name="ignore_ssl_error">اشتباه SSL راناديده بگير</string>
+  <string name="ignore_ssl_error_summary">ایراد SSL را ناديده بگير، در صورتی که با تنظیمات شخصی سرور API مشکل داری این امکان را فعال کن.</string>
+  <string name="gzip_compressing">فشرده سازی GZip</string>
+  <string name="gzip_compressing_summary">درخواست های API را فشرده کن، این کار مصرف داده را کمتر می کند ولی شاید با همه سرورهای API تطابق نداشته باشد.</string>
+  <string name="storage">انبار</string>
+  <string name="database_item_limit">محدوديت حجم پایگاه داده</string>
+  <string name="database_item_limit_summary">محدودیت تعداد مطالبی که در دیتابیس برای هر حساب کاربری در نظر گرفته شده است، بر مقدار کوچکتری تنظیم شده تا فضای آزاد، بیشتر و بارگذاری سریعتر شود.</string>
+  <string name="clear_cache">کَش را خالی کن</string>
+  <string name="clear_cache_summary">کَش تصویر نمایه را خالی کن</string>
+  <string name="clear_databases">پایگاه داده ها را خالی كنيد</string>
+  <string name="clear_databases_summary"> توییت ها، نمایه ها و پیغام ها را حذف کن. اعتبار حساب کاربری شما از بین نخواهد رفت.</string>
+  <string name="look_and_feel">حس و حال</string>
+  <string name="display_profile_image">عکس نمایه را نمایش بده</string>
+  <string name="image_load_summary">غیر فعال کردن این، سرعت مرور لیست را زیاد و مصرف داده را کم می کند</string>
+  <string name="in_reply_to_name">در پاسخ به&lt;xliff:g id="user_name"&gt;%s&lt;/xliff:g&gt;</string>
+  <string name="name_retweeted">&lt;xliff:g id="user_name"&gt;%s&lt;/xliff:g&gt; باز توییت کرده</string>
+  <string name="name_and_another_retweeted">&lt;xliff:g id="user_name"&gt;%1$s&lt;/xliff:g&gt; و دیگران بازتوییت کرده اند</string>
+  <string name="name_and_count_retweeted">&lt;xliff:g id="user_name"&gt;%1$s&lt;/xliff:g&gt; و&lt;xliff:g id="retweet_count"&gt;%2$d&lt;/xliff:g&gt; دیگر بازتوییت کرده اند</string>
+  <string name="N_retweeted_quantity_one">&lt;xliff:g id="retweet_count"&gt;%d&lt;/xliff:g&gt; بازتوییت</string>
+  <string name="N_retweeted_quantity_other">&lt;xliff:g id="retweet_count"&gt;%d&lt;/xliff:g&gt; بازتوییت</string>
+  <string name="retweeted_by_name">بازتوییت شده توسط &lt;xliff:g id="user_name"&gt;%s&lt;/xliff:g&gt;</string>
+  <string name="retweeted_by_name_with_count">توسط &lt;xliff:g id="user_name"&gt;%1$s&lt;/xliff:g&gt; و&lt;xliff:g id="retweet_count"&gt;%2$d&lt;/xliff:g&gt; دیگر بازتوییت شده</string>
+  <string name="retweeted_by_count">توسط &lt;xliff:g id="retweet_count"&gt;%d&lt;/xliff:g&gt; کاربر بازتوییت شده</string>
+  <string name="users_retweeted_this">کاربرها این را بازتوییت کرده اند</string>
+  <string name="users_favorited_this">کاربرها این را پسندیده اند</string>
+  <string name="reply_to">پاسخ به &lt;xliff:g id="user_name"&gt;%s&lt;/xliff:g&gt;</string>
+  <string name="quote_user">از &lt;xliff:g id="user_name"&gt;%s&lt;/xliff:g&gt; نقل قول کن</string>
+  <string name="time_source">&lt;xliff:g id="time"&gt;%1$s&lt;/xliff:g&gt; · &lt;xliff:g id="source"&gt;%2$s&lt;/xliff:g&gt;</string>
+  <string name="source">&lt;xliff:g id="source"&gt;%s&lt;/xliff:g&gt;</string>
+  <string name="filters">فیلترها</string>
+  <string name="users">کاربرها</string>
+  <string name="user">کاربر</string>
+  <string name="keywords">کلید واژه ها</string>
+  <string name="sources">منابع</string>
+  <string name="content">محتوا</string>
+  <string name="customize">شخصی سازی</string>
+  <string name="set_nickname">انتخاب نام مستعار</string>
+  <string name="set_color">انتخاب رنگ</string>
+  <string name="clear">خالی کن</string>
+  <string name="pick_color">انتخاب رنگ</string>
+  <string name="follow">‫دنبال کن‌</string>
+  <string name="unfollow">‫دنبال‌ نکن</string>
+  <string name="bottom_compose_button">دکمه \"نوشتن\" را در پایین قرار بده</string>
+  <string name="bottom_compose_button_summary">دکمه نوشتن را در پایین قرار بده، شما می توانید این امکان را در صورتی که از صفحه نمایش بزرگ استفاده می کنید فعال سازید.</string>
+  <string name="leftside_compose_button">دکمه نوشتن را در سمت چپ قرار بده</string>
+  <string name="leftside_compose_button_summary">دکمه نوشتن را در سمت چپ قرار بده.</string>
+  <string name="bottom_send_button">دکمه \"نوشتن\" را در پایین قرار بده</string>
+  <string name="load_item_limit">محدودیت بازگذاری موارد</string>
+  <string name="load_item_limit_summary">حداکثر تعداد عناوین در هر بار را تنظیم کنید</string>
+  <string name="load_more_automatically">مطالب بیشتری را خودکار بارگذاری کن</string>
+  <string name="load_more_automatically_summary">مطالب بیشتری ( مثلا عکس، نقشه، توییت) را خودکار بارگذاری کن</string>
+  <string name="quote">نقل قول</string>
+  <string name="add_rule">قانون اضافه کن</string>
+  <string name="text_size">ابعاد متن</string>
+  <string name="text_size_summary">ابعاد متن توییت</string>
+  <string name="cannot_get_location">نمی توانم تو را ردیابی کنم.</string>
+  <string name="drafts">چرکنویس</string>
+  <string name="description">شرح</string>
+  <string name="location">موقعیت مکانی</string>
   <string name="url">آدرس اینترنتی</string>
-  <string name="refresh">تازه کردن</string>
+  <string name="favorites">پسندیده ها</string>
+  <string name="name">اسم</string>
+  <string name="refresh">ریفرش</string>
   <string name="retry">دوباره امتحان کنید</string>
   <string name="more">بیشتر</string>
-  <string name="saved_to_gallery">ذخیره به گالری</string>
+  <string name="quote_format">فرمت نقل قول</string>
+  <string name="quote_format_summary">\"[TEXT]\" = متن توییت\n\"[NAME]\" = حساب کاربری توییتر</string>
+  <string name="direct_messages">پیغام ها</string>
+  <string name="blocked_users">کاربرهای بلوک شده</string>
+  <string name="set_as_default">به عنوان پیش فرض انتخاب کن</string>
+  <string name="search_users">جستجوی کاربرها</string>
+  <string name="search_statuses">جستجوی توییت ها</string>
+  <string name="created_at">تولید شده در</string>
+  <string name="search_hint">جستجوی توییت کاربرها</string>
+  <string name="remember_position">موقعیت را به خاطر سپار</string>
+  <string name="remember_position_summary">موقعیت برگه و لیست را قبل از بسته شدن فایرتوییت به خاطر سپار</string>
+  <string name="user_blocked">این کاربر را بلاک کردم</string>
+  <string name="users_blocked">این کاربرها را بلاک کردم</string>
+  <string name="user_unblocked">این کاربر را از بلاک خارج کردم</string>
+  <string name="reported_user_for_spam">این کاربر را به عنوان اسپم گزارش کردم</string>
+  <string name="reported_users_for_spam">این کاربرها را به عنوان اسپم گزارش کردم</string>
+  <string name="filename_hint">اسم پوشه</string>
+  <string name="please_wait">لطفا صبر کنید</string>
+  <string name="saved_to_gallery">در گالری ذخیره شد.</string>
   <string name="proxy">پراکسی</string>
+  <string name="http_proxy">پراکسی اچ تی تی پی</string>
+  <string name="http_proxy_summary">برای همه درخواست های شبکه از پراکسی اچ تی تی پی استفاده کن.</string>
+  <string name="proxy_host">میزبان پراکسی</string>
+  <string name="proxy_port">پورت پراکسی</string>
+  <string name="block">بلاک کن</string>
+  <string name="unblock">از بلاک خارج کن</string>
+  <string name="report_for_spam">به عنوان اسپم گزارش کن</string>
+  <string name="twitter_mute_user">این کاربر را ساکت کن</string>
+  <string name="twitter_muted_users">کاربرهای ساکت شده</string>
+  <string name="message_user_muted">این عضو را به فهرست فیلتر اضافه کردم.شما توییت این کاربررا دیگر در تایم لاین و منشن های خود نمی بینید</string>
+  <string name="message_users_muted">این عضوها را به فهرست فیلتر اضافه کردم.شما توییت این کاربران رادیگر در تایم لاین و منشن های خود نمی بینید.</string>
+  <string name="message_user_unmuted">این کاربر رااز فهرست فیلتر خارج کن</string>
+  <string name="inbox">صندوق رسیده ها</string>
+  <string name="load_images">عکس ها را بارگذاری کن</string>
+  <string name="other_settings">بقیه تنظیمات</string>
+  <string name="auto_refresh">ریفرش خودکار</string>
+  <string name="refresh_interval">مدت ریفرش کردن</string>
+  <string name="content_to_refresh"> ریفرش مطلب</string>
+  <string name="content_to_notify">مطلب برای اعلان</string>
+  <string name="notifications_type">نوع اعلان‌ها</string>
+  <string name="sound">صد ا</string>
+  <string name="ringtone">زنگ گوشی</string>
+  <string name="vibration">لرزش</string>
+  <string name="light">نور</string>
+  <string name="notifications">اعلان‌ها</string>
   <string name="screen_name"> نام کاربر</string>
+  <string name="refresh_on_start">در زمان شروع ریفرش کن</string>
+  <string name="refresh_on_start_summary">با شروع ، تایم لاین و منشن را ریفرش کن.</string>
+  <string name="refresh_after_status_updated">بعد از فرستادن توییت ریفرش کن</string>
+  <string name="refresh_after_status_updated_summary">بعد از فرستادن توییت، تایم لاین و منش ها را ریفرش کن</string>
+  <string name="list_timeline">تایم لاین لیست</string>
+  <string name="list_members">اعضا لیست</string>
+  <string name="list_subscribers">فهرست آبونه ها</string>
+  <string name="type_to_compose">برای نوشتن تایپ کن</string>
+  <string name="lists">فهرست ها</string>
+  <string name="users_lists">فهرست کاربرها</string>
+  <string name="lists_following_user">فهرست‌هایی که این کاربر را دنبال می‌کنند</string>
+  <string name="lists_following_you">فهرست‌هایی که شمارا  دنبال می‌کنند</string>
+  <string name="item_3_minutes">۳ دقیقه</string>
+  <string name="item_5_minutes">۵ دقیقه</string>
+  <string name="item_10_minutes">۱۰ دقیقه</string>
+  <string name="item_15_minutes">۱۵ دقیقه</string>
+  <string name="item_30_minutes">۳۰ دقیقه</string>
+  <string name="item_1_hour">۱ ساعت</string>
+  <string name="item_2_hours">۲ ساعت</string>
+  <string name="item_4_hours">۴ ساعت</string>
+  <string name="display_image_preview">پیش نمایش عکس را نشان بده</string>
+  <string name="following_you">دنبال‌ كننده‌های شما</string>
+  <string name="user_list">لیست</string>
+  <string name="user_lists">لیست ها</string>
+  <string name="trends_location">ردیابی موضوعات داغ</string>
+  <string name="trends_location_summary">برای موضوعات داغ محلی ردیابی کن</string>
+  <string name="trends">موضوعات داغ</string>
+  <string name="accounts">حساب های کاربری</string>
+  <string name="account">حساب کاربری</string>
+  <string name="mention_this_user">این کاربر را منشن کن</string>
+  <string name="mention_user_name">&lt;xliff:g id="name"&gt;%1$s&lt;/xliff:g&gt; منشن کن</string>
+  <string name="signing_in_please_wait">در حال وارد شدن هستید، لطفا صبر کنید یا برای بستن بر روی بازگشت کلیک کنید.</string>
+  <string name="connectivity">اتصال پذیری</string>
+  <string name="add_member">عضو اضافه کن</string>
+  <string name="new_user_list">لیست جدید</string>
+  <string name="is_public">عمومی</string>
+  <string name="send_direct_message">فرستادن پیغام خصوصی</string>
+  <string name="extensions">افزونه ها</string>
+  <string name="uninstall">حذف نرم افزار</string>
   <string name="saved_searches">جستجوهای ذخیره شده</string>
+  <string name="tabs">برگه ها</string>
+  <string name="add_tab">برگه اضافه کن</string>
+  <string name="edit_tab">برگه را ویرایش کن</string>
+  <string name="invalid_settings">تنظیمات اشتباه یافت شد.</string>
   <string name="icon">نمایه</string>
+  <string name="pick_file">انتخاب فایل</string>
+  <string name="user_timeline">تایم لاین کاربر</string>
+  <string name="notification_ringtone">زنگ گوشی</string>
+  <string name="notification_light_color">رنگ نور</string>
+  <string name="share_format">فرمت اشتراک گذاری</string>
+  <string name="share_format_summary">\"[TITLE]\" = تیتر محتوا\n\"[TEXT]\" = متن مطلب</string>
+  <string name="network">شبکه</string>
+  <string name="content_and_storage">محتوا &amp; ذخیره سازی</string>
+  <string name="image_uploader">بارگذار عکس</string>
+  <string name="media_uploader">بارگذار مدیا</string>
+  <string name="image_uploader_default">پیش فرض ( توییتر)</string>
+  <string name="home_refresh">در تایم لاین خانه ریفرش کن</string>
+  <string name="error_message_image_upload_failed">بارگذاری عکس ناموفق.</string>
+  <string name="error_message_image_uploader_not_found">بارگذار عکس پیدا نمی شود، شاید حذف شده باشد.</string>
+  <string name="image_upload_format">فرمت توییت با عکس</string>
+  <string name="image_upload_format_summary">\"[LINK]\" = لینک تصویر\n\"[TEXT]\" = محتوای توییت\n(تنها برای افزونه)</string>
+  <string name="status_shortener">کوتاه کننده توییت</string>
+  <string name="status_shortener_default">هیچکدام</string>
+  <string name="error_message_status_too_long">توییت زیادی طولانی است.</string>
+  <string name="error_message_no_content">بدون محتوا</string>
+  <string name="error_message_tweet_shorten_failed">کوتاه کردن توییت ناموفق.</string>
+  <string name="error_message_tweet_shortener_not_found">کوتاه کننده توییت پیدا نمی شود، شاید حذف شده باشد.</string>
+  <string name="multimedia_contents">محتوای مولتی مدیا</string>
+  <string name="show_absolute_time">زمان مطلق را نشان بده</string>
+  <string name="show_absolute_time_summary">زمان مطلق را در توییت ها نشان بده</string>
+  <string name="user_mentions">منشن های کاربران</string>
+  <string name="dual_pane_layout">چیدمان دوبرگی</string>
+  <string name="quick_send">برای ارسال دکمه اینتر را فشار دهید</string>
+  <string name="quick_send_summary">وقتی اینتر را می زنم، توییت را بفرست</string>
+  <string name="discard">حذف کن</string>
+  <string name="Nitems_selected_quantity_one">یک مورد انتخاب شده</string>
+  <string name="Nitems_selected_quantity_other">&lt;xliff:g id="items"&gt;%d&lt;/xliff:g&gt; عنوان انتخاب شده است</string>
+  <string name="custom_host_mapping">ردیابی سرور میزبان</string>
+  <string name="custom_host_mapping_summary">نقشه برداری از میزبان مانند دیگر میزبانان، اما به مجوزهای بیشتر نیاز ندارد.</string>
+  <string name="host_mapping_host">میزبان</string>
+  <string name="host_mapping_address">آدرس ( می تواند آدرس میزبانی دیگر باشد)</string>
+  <string name="add_host_mapping">ردیابی میزبان را اضافه کن</string>
+  <string name="tcp_dns_query">پرس و جو از TCP DNS</string>
+  <string name="tcp_dns_query_summary">از پروتکل TCP برای ایجاد درخواست DNS استفاده کن که می تواند از جعل سامانه نام دامنه جلوگیری کند.</string>
+  <string name="dns_server">سرور DNS</string>
+  <string name="dns_server_summary">سرور DNS را برای درخواست های API تعیین کن.</string>
+  <string name="activities_about_me">فعالیت ها درباره من</string>
+  <string name="activities_by_friends">فعالیت دوستان</string>
+  <string name="activity_about_me_favorite">&lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt; توییت شما را پسندیده.</string>
+  <string name="activity_about_me_favorite_multi">&lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt; و&lt;xliff:g id="other"&gt;%2$s&lt;/xliff:g&gt; توییت شما را پسندیده اند.</string>
+  <string name="activity_about_me_favorited_retweet">&lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt; بازتوییت شما را پسندید.</string>
+  <string name="activity_about_me_favorited_retweet_multi">&lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt; و &lt;xliff:g id="other"&gt;%2$s&lt;/xliff:g&gt; بازتوییت شما را پسندیدند.</string>
+  <string name="activity_about_me_follow">&lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt; شما را دنبال می کند.</string>
+  <string name="activity_about_me_follow_multi">&lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt; و &lt;xliff:g id="other"&gt;%2$s&lt;/xliff:g&gt; شما را دنبال می کنند.</string>
+  <string name="activity_about_me_retweet">&lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt; توییت شما را بازتوییت کرد.</string>
+  <string name="activity_about_me_retweet_multi">&lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt; و&lt;xliff:g id="other"&gt;%2$s&lt;/xliff:g&gt; توییت شما را بازتوییت کردند.</string>
+  <string name="activity_about_me_retweeted_retweet">&lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt; بازتوییت شما را بازتوییت کرد.</string>
+  <string name="activity_about_me_retweeted_retweet_multi">&lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt; و &lt;xliff:g id="other"&gt;%2$s&lt;/xliff:g&gt; بازتوییت شما را بازتوییت کردند.</string>
+  <string name="activity_about_me_list_member_added">&lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt; شما را به یک لیست اضافه کرد.</string>
+  <string name="activity_about_me_list_member_added_with_name">&lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt; شما را به لیست &lt;xliff:g id="list"&gt;%2$s&lt;/xliff:g&gt;" اضافه کرد.</string>
+  <string name="activity_about_me_list_member_added_multi">&lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt; و&lt;xliff:g id="other"&gt;%2$s&lt;/xliff:g&gt; شما را به لیست هایشان اضافه کردند.</string>
+  <string name="activity_by_friends_favorite">&lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt; توییت&lt;xliff:g id="target"&gt;%2$s&lt;/xliff:g&gt; را پسندید.</string>
+  <string name="activity_by_friends_favorite_multi">&lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt; توییت &lt;xliff:g id="target"&gt;%2$s&lt;/xliff:g&gt; و &lt;xliff:g id="other"&gt;%3$s&lt;/xliff:g&gt;\'s دیگر را پسندید.</string>
+  <string name="activity_by_friends_follow">&lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt;  &lt;xliff:g id="target"&gt;%2$s&lt;/xliff:g&gt; را دنبال می کند.</string>
+  <string name="activity_by_friends_follow_multi">&lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt;  &lt;xliff:g id="target"&gt;%2$s&lt;/xliff:g&gt; و&lt;xliff:g id="other"&gt;%3$s&lt;/xliff:g&gt; را دنبال می کند.</string>
+  <string name="activity_by_friends_retweet">&lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt; توییت &lt;xliff:g id="target"&gt;%2$s&lt;/xliff:g&gt; را بازتوییت کرد.</string>
+  <string name="activity_by_friends_list_member_added">&lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt; &lt;xliff:g id="target"&gt;%2$s&lt;/xliff:g&gt; را به یک لیست اضافه کرد.</string>
+  <string name="activity_by_friends_list_created">&lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt; لیست &lt;xliff:g id="target"&gt;%2$s&lt;/xliff:g&gt; را ساخت.</string>
+  <string name="activity_by_friends_list_created_multi">&lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt; لیست &lt;xliff:g id="target"&gt;%2$s&lt;/xliff:g&gt; و &lt;xliff:g id="other"&gt;%1$s&lt;/xliff:g&gt; را ساخته است.</string>
+  <string name="status_not_updated">توییت فرستاده نشد.</string>
+  <string name="status_not_updated_summary">توییت فرستاده نشد و در چرکنویس ذخیره شد.</string>
+  <string name="incoming_friendships">درخواست‌ های دنباله روی</string>
+  <string name="send_follow_request">درخواست دنباله روی بفرست</string>
+  <string name="follow_request_sent">درخواست دنباله روی فرستاده شد</string>
+  <string name="status">توییت</string>
+  <string name="preview">پیش نمایش</string>
+  <string name="connection_timeout">مهلت ارتباط گیری تمام شد</string>
+  <string name="both">هردو</string>
+  <string name="browser_sign_in">درخواست ورود به مرورگر</string>
+  <string name="stop_auto_refresh_when_battery_low">وقتی باطری ضعیف است به صورت خودکارریفرش نکن</string>
+  <string name="notification_status">توییت جدیدی از &lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt;</string>
+  <string name="notification_status_multiple">توییت جدید از &lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt; و &lt;xliff:g id="count"&gt;%2$d&lt;/xliff:g&gt; دیگر</string>
+  <string name="notification_mention">&lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt; شما را منشن کرده است.</string>
+  <string name="notification_mention_multiple">&lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt; و &lt;xliff:g id="count"&gt;%2$d&lt;/xliff:g&gt; دیگر شما را منشن کرده اند.</string>
+  <string name="notification_direct_message">&lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt; به شما پیغام خصوصی ارسال کرد.</string>
+  <string name="notification_direct_message_multiple_messages">&lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt; به شما &lt;xliff:g id="messages_count"&gt;%2$d&lt;/xliff:g&gt; پیغام خصوصی ارسال کرده است.</string>
+  <string name="notification_direct_message_multiple_users">&lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt; و &lt;xliff:g id="users_count"&gt;%2$d&lt;/xliff:g&gt; دیگر به شما &lt;xliff:g id="messages_count"&gt;%3$d&lt;/xliff:g&gt; پیغام خصوصی ارسال کرده اند.</string>
   <string name="action_getting_status">گرفتن توییت</string>
-  <string name="action_updating_status">فرستادن توییت</string>
-  <string name="action_sending_direct_message">فرستادن پیغام مستقیم</string>
+  <string name="action_updating_status">ارسال توییت</string>
+  <string name="action_sending_direct_message">ارسال پیغام خصوصی</string>
+  <string name="action_refreshing_home_timeline">ریفرش تایم لاین خانه</string>
+  <string name="action_refreshing_mentions">ریفرش منشن ها</string>
+  <string name="action_refreshing_direct_messages">ریفرش پیغام های خصوصی</string>
+  <string name="action_favoriting">پسندیده ها</string>
+  <string name="action_unfavoriting">لغو پسندیدن</string>
+  <string name="action_deleting">حذف کردن</string>
+  <string name="action_updating_profile">به روز کردن نمایه</string>
+  <string name="action_updating_profile_image">به روز کردن عکس نمایه</string>
+  <string name="action_updating_profile_banner_image">به روز کردن تصویر بالای نمایه</string>
+  <string name="action_removing_profile_banner_image">حذف تصویر بالای نمایه</string>
   <string name="action_updating_details">به روز کردن جزئیات</string>
-  <string name="action_blocking">بلوکه کردن</string>
-  <string name="action_unblocking">عدم بلوکه کردن</string>
-  <string name="action_following">پیروی</string>
-  <string name="action_unfollowing">عدم پیروی</string>
+  <string name="action_blocking">بلاک کردن</string>
+  <string name="action_unblocking">رفع بلاک کردن</string>
+  <string name="action_following">دنبال شونده</string>
+  <string name="action_unfollowing">دنبال نکن</string>
   <string name="action_creating_list">ایجاد لیست</string>
   <string name="action_adding_member">اضافه کردن عضو</string>
-  <string name="action_signing_in">وارد سیستم شدن</string>
-  <string name="action_retweeting">دوباره توییت کردن</string>
+  <string name="action_signing_in">ورود به سیستم</string>
+  <string name="action_retweeting">بازتوییت کردن</string>
+  <string name="action_reporting_for_spam">گزارش دادن برای اسپم</string>
+  <string name="action_subscribing_to_list">آبونمان شدن به لیست</string>
   <string name="action_unsubscribing_from_list">از آبونمانی این لیست من را بردار</string>
   <string name="action_saving_search">ذخیره جستجو</string>
   <string name="action_deleting_search">حذف جستجو</string>
-  <string name="action_accepting_follow_request">قبول کردن درخواست پیروی</string>
-  <string name="action_denying_follow_request">رد کردن درخواست پیروی</string>
-  <string name="status_is_duplicate">توییت شما تکراری است</string>
+  <string name="action_accepting_follow_request">قبول درخواست دنباله روی </string>
+  <string name="action_denying_follow_request">رد کردن درخواست دنباله روی</string>
+  <string name="status_is_duplicate">توییت شما تکراری است.</string>
+  <string name="silent_notifications">اعلان‌ها خاموش</string>
+  <string name="silent_notifications_summary">زنگ/لرزش تلفن را برای اعلان‌ها خاموش کن</string>
   <string name="disable_background_service">سرویس پس زمینه را غیر فعال کن</string>
+  <string name="disable_background_service_summary"> اگه ریفرش خودکار و دیتا پروفایلینگ را غیر فعال کنی، فایرتوییت سرویس پس زمینه نخواهد داشت! باور کن!</string>
+  <string name="text_copied">متن در کلیپ بورد کپی شد.</string>
   <string name="hashtag">هشتگ</string>
   <string name="links">لینک ها</string>
-  <string name="edit_profile">ویرایش پروفایل</string>
+  <string name="edit_profile">ویرایش نمایه</string>
+  <string name="display_sensitive_contents">مطالب حساسیت برانگیز را نشان بده</string>
+  <string name="display_sensitive_contents_summary">مطالب حساسیت برانگیز را بدون اخطار قبلی در تایم لاین نشان بده</string>
+  <string name="sensitive_content_warning">این توییت شاید حاوی مطالب حساسیت برانگیز باشد، ادامه بدهم؟</string>
+  <string name="mark_as_sensitive">به عنوان مطلب حساسیت برانگیز نشان کن</string>
+  <string name="remove_sensitive_mark">نشان حساسیت برانگیز را بردار</string>
   <string name="none">هیچکدام</string>
   <string name="large">بزرگ</string>
   <string name="small">کوچک</string>
+  <string name="and_more">و&lt;xliff:g id="count"&gt;%d&lt;/xliff:g&gt; بیشتر</string>
   <string name="clear_search_history">حذف تاریخچه جستجو</string>
   <string name="permission_description_none">اجازه ای نیاز نیست</string>
-  <string name="permission_description_direct_messages">مطالعه، نوشتن، فرستادن پیغام های مستقیم</string>
+  <string name="permission_description_refresh">تایم لاین را ریفرش کن( منجمله پیغام های خصوصی)</string>
+  <string name="permission_description_read">توییت و بعضی مطالب کَش را بخوان</string>
+  <string name="permission_description_write">به پایگاه داده بنویس، استتوس را به روز کن</string>
+  <string name="permission_description_direct_messages">مطالعه، نوشتن، فرستادن پیغام های خصوصی</string>
   <string name="permission_description_accounts">مطالعه اطلاعات حساب کاربری</string>
   <string name="permission_description_preferences">مطالعه تنظیمات</string>
   <string name="permissions_request">درخواست اجازه</string>
   <string name="permissions_request_message">اپلیکیشن اجازه شما را برای موارد زیر می خواهد</string>
   <string name="accept_permission_request">قبول کردن</string>
-  <string name="no_thanks">نه، مرسی</string>
+  <string name="no_thanks">نه، ممنون</string>
+  <string name="revoke_permissions">مجوز را ملغی کن</string>
+  <string name="fast_scroll_thumb">اسکرول سریع با انگشت شست </string>
+  <string name="indicate_your_status">توییت را ذکر کن</string>
+  <string name="default_ringtone">زنگ گوشی پیش فرض</string>
+  <string name="phishing_link_warning">اخطار برای لینک مشکوک</string>
+  <string name="phishing_link_warning_summary">اگر لینک مشکوکی را در پیغام خصوصی باز کنید به شما هشدار می دهم.</string>
+  <string name="phishing_link_warning_message_1">شما در حال بازکردن لینک مشکوکی در پیغام خصوصی هستید. آدرس اینترنتی را قبل از وارد کردن اطلاعات شخصی خود مجددا بازبینی کنید.</string>
   <string name="phishing_link_warning_message_2">ایا مطمئنید می خواهید ادامه بدهید؟</string>
   <string name="image_preload_options">گزینه های پیش بارگذاری عکس</string>
-  <string name="profile_images">عکس های پروفایل</string>
-  <string name="preview_images">پیش نمایش عکس</string>
+  <string name="profile_images">عکس های نمایه</string>
+  <string name="preview_images">پیش نمایش عکس ها</string>
+  <string name="preload_wifi_only">تنها با استفاده از اینترنت بی سیم بارگذاری کن</string>
+  <string name="disable_tab_swipe">امکان جا به جا شدن بین برگه ها با سوایپ را غیرفعال کن</string>
   <string name="sign_in_method_introduction_title">چگونه کار می کند؟</string>
-  <string name="profile_image">عکس پروفایل</string>
-  <string name="your_profile_image">عکس پروفایل شما</string>
+  <string name="sign_in_method_introduction">بیشتر کلاینت ها مانند توییکا با باز کردن یک پنجره مرورگر، از شما می خواهند که نام کاربری و رمز عبور خود را وارد کنید و سپس به کلاینت باز می گردند. این کار گاهی دردسر ساز است. فایرتوییت مراحل ورود را راحت کرده است و نیازی به باز کردن مرورگر نخواهد بود. در رابطه با رمز عبور خود نیز نگران نباشید، فایرتوییت هیچ چیز را ذخیره نمی کند و شما کاملا امن هستید.</string>
+  <string name="quote_protected_status_notice">نقل قول توییت های خصوصی توصیه نمی شود.</string>
+  <string name="edit_draft">ویرایش چرکنویس</string>
+  <string name="profile_image">عکس نمایه</string>
+  <string name="your_profile_image">عکس نمایه شما</string>
+  <string name="mention_user">&lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt; منشن کن</string>
   <string name="theme_color">رنگ تم</string>
-  <string name="wrong_url_format">فرمت آدرس اینترنتی  اشتباه</string>
-  <string name="wrong_username_password">نام کاربری ، رمز عبور اشتباه</string>
-  <string name="network_error">خطای شبکه</string>
-  <string name="status_updated">توییت فرستاده شد</string>
-  <string name="status_deleted">توییت حذف شد</string>
-  <string name="status_favorited">توییت مورد علاقه است</string>
-  <string name="status_unfavorited">توییت دیگر مورد علاقه نیست</string>
-  <string name="status_retweeted">توییت دوباره شد</string>
-  <string name="retweet_cancelled">توییت دوباره کنسل شد</string>
-  <string name="direct_message_sent">پیغام مستقیم فرستاده شد</string>
-  <string name="direct_message_deleted">پیغام مستقیم حذف شد</string>
-  <string name="search_saved">جستجو ذخیره شد</string>
-  <string name="search_deleted">جستجو پاک شد</string>
+  <string name="wrong_url_format">فرمت آدرس اینترنتی  اشتباه.</string>
+  <string name="wrong_username_password">نام کاربری / رمز عبور اشتباه</string>
+  <string name="network_error">خطای شبکه.</string>
+  <string name="api_data_corrupted">داده های API خراب است.</string>
+  <string name="ssl_error">ایراد SSL، شاید نیاز باشد که امکان \"نادیده گرفتن ایراد SSL\" را فعال کنید.</string>
+  <string name="wrong_api_key">آدرس اینترنتی API و یا کلید/رمز کاربری اشتباه است، لطفا مجددا بررسی کنید.</string>
+  <string name="status_updated">توییت فرستاده شد.</string>
+  <string name="status_deleted">توییت حذف شد.</string>
+  <string name="status_favorited">توییت پسندیده شد.</string>
+  <string name="status_unfavorited">توییت پسندیده نیست.</string>
+  <string name="status_retweeted">بازتوییت شد.</string>
+  <string name="retweet_cancelled">بازتوییت کنسل شد.</string>
+  <string name="direct_message_sent">پیغام خصوصی فرستاده شد.</string>
+  <string name="direct_message_deleted">پیغام خصوصی حذف شد.</string>
+  <string name="search_saved">جستجو ذخیره شد.</string>
+  <string name="search_name_saved">جست و جوی "&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;" ذخیره شد.</string>
+  <string name="search_deleted">جستجو حذف شد.</string>
+  <string name="search_name_deleted">جست و جوی "&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;" حذف شد.</string>
   <string name="import_from">از.... وارد کن</string>
-  <string name="profile_updated">حساب کاربری به روز شد</string>
-  <string name="profile_banner_image_updated">بنر حساب کاربری به روز شد</string>
-  <string name="profile_image_updated">عکس حساب کاربری به روز شده</string>
-  <string name="subscribe">آبونمان</string>
-  <string name="unsubscribe">حذف آبونمان</string>
+  <string name="link_to_quoted_status">به توییت نقل قول شده لینک کن</string>
+  <string name="followed_user">&lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt; را دنبال کرد.</string>
+  <string name="sent_follow_request_to_user">برای &lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt; درخواست دنبال کردن ارسال کن.</string>
+  <string name="unfollowed_user">&lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt; را دنبال نکن.</string>
+  <string name="blocked_user">&lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt; بلاک شد.</string>
+  <string name="unblocked_user">&lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt; رفع بلاک شد.</string>
+  <string name="profile_updated">نمایه به روز شد.</string>
+  <string name="profile_banner_image_updated">تصویر بنر نمایه به روز شد.</string>
+  <string name="profile_image_updated">عکس نمایه به روز شد.</string>
+  <string name="created_list">لیست "&lt;xliff:g id="list"&gt;%s&lt;/xliff:g&gt;" ساخته شد.</string>
+  <string name="deleted_list">لیست "&lt;xliff:g id="list"&gt;%s&lt;/xliff:g&gt;" حذف شد.</string>
+  <string name="updated_list_details">جزییات لیست "&lt;xliff:g id="list"&gt;%s&lt;/xliff:g&gt;" را به روز کرد.</string>
+  <string name="subscribed_to_list">مشترک لیست "&lt;xliff:g id="list"&gt;%s&lt;/xliff:g&gt;"شد.</string>
+  <string name="unsubscribed_from_list">حذف اشتراک از لیست "&lt;xliff:g id="list"&gt;%s&lt;/xliff:g&gt;".</string>
+  <string name="added_N_users_to_list_quantity_one">&lt;xliff:g id="items"&gt;%1$d&lt;/xliff:g&gt; کاربر به لیست "&lt;xliff:g id="list"&gt;%2$s&lt;/xliff:g&gt;" اضافه شد.</string>
+  <string name="added_N_users_to_list_quantity_other">&lt;xliff:g id="items"&gt;%1$d&lt;/xliff:g&gt; کاربر به لیست "&lt;xliff:g id="list"&gt;%2$s&lt;/xliff:g&gt;" اضافه شدند.</string>
+  <string name="added_user_to_list">&lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt; به لیست "&lt;xliff:g id="list"&gt;%2$s&lt;/xliff:g&gt;" اضافه شد.</string>
+  <string name="deleted_user_from_list">کاربر &lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt; از لیست "&lt;xliff:g id="list"&gt;%2$s&lt;/xliff:g&gt;" حذف شد.</string>
+  <string name="deleted_N_users_from_list_quantity_one">&lt;xliff:g id="items"&gt;%1$d&lt;/xliff:g&gt; کاربر از لیست "&lt;xliff:g id="list"&gt;%2$s&lt;/xliff:g&gt;" حذف شد.</string>
+  <string name="deleted_N_users_from_list_quantity_other">&lt;xliff:g id="items"&gt;%1$d&lt;/xliff:g&gt; کاربر از لیست "&lt;xliff:g id="list"&gt;%2$s&lt;/xliff:g&gt;" حذف شدند.</string>
+  <string name="delete_user_from_list_confirm">&lt;xliff:g id="user"&gt;%1$s&lt;/xliff:g&gt;از لیست "&lt;xliff:g id="list"&gt;%2$s&lt;/xliff:g&gt;" حذف شود؟</string>
+  <string name="delete_N_users_from_list_confirm_quantity_one"> &lt;xliff:g id="items"&gt;%1$d&lt;/xliff:g&gt; کاربر از لیست "&lt;xliff:g id="list"&gt;%2$s&lt;/xliff:g&gt;" حذف شود؟</string>
+  <string name="delete_N_users_from_list_confirm_quantity_other"> &lt;xliff:g id="items"&gt;%1$d&lt;/xliff:g&gt; کاربر از لیست "&lt;xliff:g id="list"&gt;%2$s&lt;/xliff:g&gt;" حذف شوند؟</string>
+  <string name="subscribe">اشتراک</string>
+  <string name="unsubscribe">حذف اشتراک</string>
+  <string name="background_toast_notification">اعلان توست پس زمینه</string>
+  <string name="background_toast_notification_summary">زمان که به پس زمینه سوییچ کردی، اعلان های توست را نشان بده</string>
   <string name="original_status">توییت اولیه</string>
+  <string name="compose_quit_action">حذف \"نوشتن\"</string>
   <string name="ask">بپرس</string>
-  <string name="status_saved_to_draft">توییت در چرکنویس ذخیره شده</string>
-  <string name="default_account">حساب کاربری پیش فرض شده</string>
+  <string name="no_close_after_status_updated">صفحه نوشتن را بعد از ارسال توییت باز نگهدار</string>
+  <string name="no_close_after_status_updated_summary">یک هدیه کوچک برای افراد پرحرف</string>
+  <string name="status_saved_to_draft">توییت در چرکنویس ذخیره شد.</string>
+  <string name="default_account">حساب کاربری پیش فرض</string>
+  <string name="created_at_with_N_tweets_per_day_quantity_one">&lt;xliff:g id="created_at"&gt;%1$s&lt;/xliff:g&gt; (&lt;xliff:g id="daily_tweet"&gt;%2$d&lt;/xliff:g&gt; توییت در روز)</string>
+  <string name="created_at_with_N_tweets_per_day_quantity_other">&lt;xliff:g id="created_at"&gt;%1$s&lt;/xliff:g&gt; (&lt;xliff:g id="daily_tweet"&gt;%2$d&lt;/xliff:g&gt; توییت در روز)</string>
+  <string name="empty_content">مطلب را خالی کن</string>
   <string name="fast_image_loading">بارگذاری سریع عکس</string>
+  <string name="fast_image_loading_summary">برای بارگذاری سریع تر عکس ها فعال کن، اگر برخی عکس ها نمایش داده نمی شود، این امکان را غیر فعال کن.</string>
   <string name="select_user_list">انتخاب لیست کاربر</string>
   <string name="select_user">انتخاب کاربر</string>
+  <string name="created_by"> تولید شده توسط&lt;xliff:g id="created_by"&gt;%s&lt;/xliff:g&gt;</string>
   <string name="add_to_list">به لیست اضافه کن</string>
   <string name="account_delete_confirm_title">حذف حساب کاربری</string>
-  <string name="account_delete_confirm_message">این حساب کاربری از فایر توییت به زودی حذف می شود</string>
+  <string name="account_delete_confirm_message">این حساب کاربری از فایر توییت حذف خواهد شد.</string>
   <string name="theme">تم</string>
+  <string name="theme_dark">تیره</string>
+  <string name="theme_light">روشن</string>
+  <string name="settings_interface">تعامل گاه</string>
   <string name="no_rule">قانونی وجود ندارد</string>
+  <string name="enable_in_mentions">در منشن ها فعال کن</string>
+  <string name="enable_in_home_timeline">در تایم لاین خانه فعال کن</string>
+  <string name="enable_for_rts">فعال کردن بازتوییت</string>
   <string name="safety">امنیت</string>
-  <string name="updating_status_notification">فرستادن توییت</string>
+  <string name="updating_status_notification">فرستادن توییت ...</string>
+  <string name="name_with_nickname">&lt;xliff:g id="name"&gt;%1$s&lt;/xliff:g&gt; (&lt;xliff:g id="nickname"&gt;%2$s&lt;/xliff:g&gt;)</string>
+  <string name="query">پرسیدن</string>
   <string name="nickname_only">فقط نام مستعار</string>
-  <string name="nickname_only_summary">در صورت امکان اسم مستعار را به جای اسم کاربر استفاده کن</string>
+  <string name="nickname_only_summary">در صورت امکان اسم مستعار را به جای نام کاربر استفاده کن</string>
   <string name="input_text">متن ورودی</string>
-  <string name="users_statuses">توییت های کاربرها</string>
+  <string name="users_lists_with_name">لیست های &lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;</string>
+  <string name="lists_following_user_with_name">لیست هایی که &lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt; را دنبال می کنند</string>
+  <string name="highlight">متمایز کن</string>
+  <string name="underline">تاکید کن</string>
+  <string name="link_highlight_option">گزینه لینک متمایز</string>
+  <string name="users_statuses">توییت های کاربران</string>
+  <string name="card_animation">انیمیشن کارت</string>
   <string name="name_first">اسم را اول نمایش بده</string>
   <string name="next">بعدی</string>
+  <string name="settings_wizard">جادوگر تنظیمات</string>
   <string name="wizard_page_welcome_title">خوش آمدید</string>
+  <string name="wizard_page_welcome_text">برای انتخاب فایرتوییت سپاس گزاریم. آیا می خواهید الان راهش بندازید؟</string>
   <string name="wizard_page_welcome_yes">بله</string>
   <string name="wizard_page_welcome_not_now">الان نه</string>
   <string name="wizard_page_welcome_import_settings">تنظیمات را وارد کن</string>
   <string name="wizard_page_theme_text">تم مورد علاقه خود را انتخاب کنید</string>
   <string name="wizard_page_tabs_text">برگه هایی به فایرتوییت اضافه کنید. اخبار دوستان خود را دنبال کنید</string>
+  <string name="wizard_page_tabs_unchanged_message">شما می توانید در بخش تنظیمات برگه اضافه کنید</string>
+  <string name="wizard_page_cards_text">پیکربندی کارت ها</string>
   <string name="wizard_page_hints_text">اینجا چند راهنمایی مفید وجود دارد</string>
-  <string name="wizard_page_finished_title">تمام شده</string>
+  <string name="wizard_page_usage_statistics_text">فایرتوییت در بعضی پروژه های تحقیقاتی شرکت کرده که احتیاج به داده مصرفی دارند.</string>
+  <string name="wizard_page_finished_title">تمام شد</string>
+  <string name="wizard_page_finished_text">الان فایر توییت آماده استفاده است</string>
+  <string name="invalid_tab">برگه  اشتباه</string>
+  <string name="send_crash_report">ارسال گزارش خرابی به فایرتوییت</string>
+  <string name="add_to_filter">به فیلتر اضافه کن</string>
+  <string name="user_filter_name">کاربر: &lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;</string>
+  <string name="keyword_filter_name">کلید واژه: &lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;</string>
+  <string name="source_filter_name">منبع: &lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;</string>
+  <string name="block_user">&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt; را بلاک کن</string>
+  <string name="block_user_confirm_message">&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt; را بلاک کنم؟ این کاربر دیگر قادر نخواهد بود شما را دنبال کند، برای شما پیغام خصوصی ارسال کند و یا شما را منشن کند.</string>
+  <string name="unfollow_user">&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt; را دنبال نکن</string>
+  <string name="unfollow_user_confirm_message">&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt; را دیگر دنبال نکنم؟ شما دیگر قادر به مشاهده توییت های این کاربر نخواهید بود.</string>
+  <string name="delete_user_list">لیست &lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt; را حذف کن</string>
+  <string name="delete_user_list_confirm_message"> &lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt; لیست را حذف کنم؟ این کار بازگشت پذیر نیست.</string>
+  <string name="unsubscribe_from_user_list">حذف اشتراک از لیست &lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;</string>
+  <string name="unsubscribe_from_user_list_confirm_message">اشتراک لیست &lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt; را حذف کنم؟ شما می توانید مجددا مشترک این لیست شوید.</string>
   <string name="destroy_status">توییت را حذف کن</string>
   <string name="destroy_status_confirm_message">ایا این توییت را حذف کنم؟</string>
-  <string name="firetweet_test">تست فایرتوییت</string>
-  <string name="developed_by">پردازش شده توسط</string>
+  <string name="destroy_saved_search">جست و جوی ذخیره شده "&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;" را حذف کن</string>
+  <string name="destroy_saved_search_confirm_message">جست و جوی ذخیره شده "&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt;" را حذف کنم؟ شما می توانید آن را مجددا ذخیره کنید.</string>
+  <string name="signing_in_error_browser_sign_in_hint">ایراد در ورود، شاید نیاز باشد که از طریق مرورگر وارد شوید. (این کار تنظیمات شخصی شده API را در زمان ورود نادیده می گیرد)</string>
+  <string name="report_user"> &lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt; را گزارش کن</string>
+  <string name="report_user_confirm_message"> &lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt; را به عنوان اسپم گزارش کنم؟ شما همچنین این کاربر را بلاک خواهید کرد.</string>
+  <string name="twidere_test">تست فایرتوییت</string>
+  <string name="staggered_home_timeline">تایم لاین خانه شگفت زده</string>
+  <string name="unread_count">تعداد خوانده نشده</string>
+  <string name="developed_by">توسعه داده شده توسط</string>
   <string name="project_account">حساب پروژه</string>
   <string name="translators">مترجم ها</string>
   <string name="translate">ترجمه</string>
   <string name="sponsored_by">حمایت شده توسط</string>
   <string name="special_thanks_to">تشکر ویژه ه از</string>
+  <string name="contributors_list_summary">اگر اسم خود را نمی یابید با ما تماس بگیرید.</string>
   <string name="account_options">گزینه های حساب کاربری</string>
+  <string name="show_in_timeline">در تایم لاین نشان بده</string>
   <string name="cards">کارت ها</string>
   <string name="no_tab_hint">برگه وجود ندارد</string>
+  <string name="delete_user">کاربر &lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt; را حذف کن</string>
   <string name="delete_users">حذف کاربرها</string>
+  <string name="delete_user_confirm_message">&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt; را حذف کنم؟ این کار بازگشت پذیر نیست.</string>
+  <string name="toggle">تغییر وضعیت</string>
   <string name="general">عمومی</string>
   <string name="hints">راهنمایی</string>
   <string name="finish">تمام</string>
   <string name="background">پس زمینه</string>
   <string name="theme_background_default">پیش فرض</string>
+  <string name="theme_background_solid">سفید و سیاه خالص</string>
   <string name="theme_background_transparent">شفاف</string>
+  <string name="theme_dark_actionbar">نوار فعالیت تیره</string>
+  <string name="wizard_hint_compose_select_account">بر روی این آیکون کلیک کن تا حساب کاربری توییت کننده را تعیین کنی.</string>
+  <string name="wizard_hint_quote_format">فرم مورد علاقه خود برای نقل قول را در\"تنظیمات\" مشخص کنید - \"Content &amp; Storage\"</string>
+  <string name="wizard_hint_filters">شما می توانید توییت های نا خواسته را ازتایم لاین و اعلان های خود با استفاده از فیلترها بردارید </string>
   <string name="view_replies">مشاهده پاسخ ها</string>
+  <string name="compact_cards">متراکم کردن کارت ها</string>
+  <string name="compact_cards_summary">کارت های بیشتری را روی صفحه نمایش بده</string>
+  <string name="dashclock_home_unread_count_name">تعداد خوانده نشده در خانه فایرتوییت</string>
+  <string name="dashclock_home_unread_count_description">تعداد خوانده نشده در خانه</string>
+  <string name="dashclock_mentions_unread_count_name">تعداد منشن های خوانده نشده فایرتوییت</string>
+  <string name="dashclock_mentions_unread_count_description">تعداد منشن های خوانده نشده</string>
   <string name="dashclock_messages_unread_count_name">شمارش پیغام های خوانده نشده فایرتوییت</string>
   <string name="dashclock_messages_unread_count_description">شمارش پیغام های خوانده نشده</string>
+  <string name="N_new_statuses_quantity_one">&lt;xliff:g id="items"&gt;%d&lt;/xliff:g&gt; توییت جدید</string>
+  <string name="N_new_statuses_quantity_other">&lt;xliff:g id="items"&gt;%d&lt;/xliff:g&gt; توییت جدید</string>
+  <string name="N_new_mentions_quantity_one">&lt;xliff:g id="items"&gt;%d&lt;/xliff:g&gt; منشن جدید</string>
+  <string name="N_new_mentions_quantity_other">&lt;xliff:g id="items"&gt;%d&lt;/xliff:g&gt; منشن جدید</string>
+  <string name="N_new_messages_quantity_one">&lt;xliff:g id="items"&gt;%d&lt;/xliff:g&gt; مکالمه جدید</string>
+  <string name="N_new_messages_quantity_other">&lt;xliff:g id="items"&gt;%d&lt;/xliff:g&gt; مکالمه جدید</string>
+  <string name="status_share_subject_format_with_time">توییت شده از سوی &lt;xliff:g id="name"&gt;%1$s&lt;/xliff:g&gt; (@&lt;xliff:g id="screen_name"&gt;%2$s&lt;/xliff:g&gt;), در&lt;xliff:g id="time"&gt;%3$s&lt;/xliff:g&gt;</string>
+  <string name="status_share_text_format_with_link">&lt;xliff:g id="text"&gt;%1$s&lt;/xliff:g&gt;\n\n&lt;xliff:g id="link"&gt;%2$s&lt;/xliff:g&gt;</string>
+  <string name="rate_limit">محدودیت بازگذاری</string>
+  <string name="wizard_hint_rate_limit">در صورتی که به مشکل محدودیت تعداد توییت برخوردید، من را مقصر ندانید، این مورد بخشی از قوانین توییتر است.</string>
   <string name="preparing_database">آماده سازی بانک داده ها</string>
   <string name="preparing_database_toast">در حال آماده سازی بانک داده ها، لطفا صبر کنید</string>
+  <string name="action_name_saved_at_time">&lt;xliff:g id="action"&gt;%1$s&lt;/xliff:g&gt;, ذخیره شده در &lt;xliff:g id="time"&gt;%2$s&lt;/xliff:g&gt;</string>
   <string name="update_status">فرستادن توییت</string>
-  <string name="sending_direct_message">فرستادن پیغام مستقیم</string>
+  <string name="sending_direct_message">فرستادن پیغام خصوصی</string>
   <string name="tab_display_option">امکان نمایش برگه</string>
   <string name="livewp_daydream_enabled_message">این جایزه ای برای شماست، جایزه را در تنظیمات خود بیابید :)</string>
   <string name="center">مرکز</string>
   <string name="multi_select">انتخاب مضاعف</string>
-  <string name="tab_display_option_icon">نمایه</string>
+  <string name="long_click_to_open_menu">برای بازکردن منو کلیک طولانی کنید</string>
+  <string name="swipe_back">برای بستن سوایپ کنید</string>
+  <string name="tab_display_option_icon">آیکون</string>
   <string name="tab_display_option_label">برچسب</string>
-  <string name="tab_display_option_icon_and_label">نمایه و برچسب</string>
+  <string name="tab_display_option_icon_and_label">آیکون و برچسب</string>
+  <string name="highlight_and_underline">متمایز و تاکید کن</string>
   <string name="back">بازگشت</string>
+  <string name="theme_font_family">تم خانواده فونت</string>
   <string name="translation_destination">مقصد ترجمه</string>
   <string name="accept">قبول کردن</string>
   <string name="deny">رد کردن</string>
-  <string name="import_settings">تنظیمات را وارد کن</string>
-  <string name="export_settings_type_dialog_title">تنظیمات خرروجی</string>
-  <string name="import_settings_type_dialog_title">تنظیمات ورودی</string>
+  <string name="accepted_users_follow_request">&lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt; درخواست دنبال کردن را پذیرفت.</string>
+  <string name="denied_users_follow_request">&lt;xliff:g id="user"&gt;%s&lt;/xliff:g&gt;درخواست دنبال کردن را نپذیرفت.</string>
+  <string name="import_settings">وارد کردن تنظیمات</string>
+  <string name="export_settings">خروجی گرفتن از تنظیمات</string>
+  <string name="export_settings_type_dialog_title">از تنظیمات خروجی بگیر ...</string>
+  <string name="import_settings_type_dialog_title">وارد کردن تنظیمات ...</string>
   <string name="nicknames">نام مستعار</string>
   <string name="user_colors">استفاده از رنگ</string>
   <string name="import_export">وارد کردن - خروجی گرفتن</string>
+  <string name="theme_background_alpha">تم پس زمینه آلفا</string>
   <string name="progress">پیشرفت</string>
   <string name="hidden_settings">تنظیمات پنهانی</string>
+  <string name="hidden_settings_warning_title">اخطار: این تنظیمات شاید آسیب بزند!</string>
+  <string name="hidden_settings_warning_message">در صورتی که نمی دانید این تنظیمات چیست، به هیچ وجه آن ها را تغییر ندهید، یا گربه شما کشته می شود، یک بمب اتمی از کره شمالی پرتاب شده و جهان را نابود می کند</string>
+  <string name="force_using_private_apis">مجبور به استفاده از API های خصوصی کن</string>
   <string name="status_text_limit">محدودیت متنی توییت</string>
+  <string name="load_more_from_top">از بالا بیشتر بارگذاری کن</string>
+  <string name="load_more_from_top_summary">اگر ترجیح می دهید از ته به سر بخوانید مفید است</string>
+  <string name="twitter_link_handler">کنترل لینک توییتر</string>
+  <string name="compose_now">همین الان بنویسید</string>
+  <string name="compose_now_summary">از میانبر Google Now برای بخش نوشتن استفاده کن</string>
+  <string name="compose_now_action">عمل همین الان بنویس</string>
+  <string name="open_with_account">با حساب کاربری باز کن</string>
+  <string name="card_highlight_option">گزینه کارت متمایز</string>
+  <string name="card_highlight_option_highlight">متمایز کن</string>
+  <string name="card_highlight_option_line">خط</string>
+  <string name="timeline_sync_service">سرویس همگام سازی تایملاین</string>
+  <string name="image_preview_scale_type">نوع مقیاس پیش نمایش عکس</string>
   <string name="image_preview_scale_type_crop">برش بده</string>
-  <string name="add">بیافزا</string>
-  <string name="retweets_of_me">دوباره توییت شده های من</string>
+  <string name="image_preview_scale_type_fit_center">در مرکز جا بده</string>
+  <string name="quote_protected_status_warning_message">این توییت حفاظت شده است. کاربران حفاظت شده عموما تمایلی به بازنشر توییت هایشان به صورت  عمومی ندارند.</string>
+  <string name="send_anyway">درهرحال بفرست</string>
+  <string name="following_only">تنها شما دنبال می کنید</string>
+  <string name="following_only_summary"> فقط اعلان کاربرهایی که دنبال می کنید را نشان بده.</string>
+  <string name="new_direct_message">پیغام خصوصی جدید</string>
+  <string name="plain_list_style">سبک لیست ساده</string>
+  <string name="want_old_icon_back">آیا آیکون قدیمی را می خواهید؟</string>
+  <string name="icon_restored_message">آیکون بازگردانده شد!</string>
+  <string name="add">اضافه کن</string>
+  <string name="N_media_quantity_one">&lt;xliff:g id="items"&gt;%d&lt;/xliff:g&gt; مدیا</string>
+  <string name="N_media_quantity_other">&lt;xliff:g id="items"&gt;%d&lt;/xliff:g&gt; مدیا</string>
+  <string name="delete_drafts_confirm">چرکنویس های انتخابی را حذف کنم؟</string>
+  <string name="extra_configurations">تنظیمات اضافه</string>
+  <string name="click_item_to_config">برای تنظیم بر روی هر مورد کلیک کنید</string>
+  <string name="dark_drawer">دراور تیره</string>
+  <string name="retweets_of_me">بازتوییت های من</string>
   <string name="from_gallery">از گالری</string>
   <string name="from_camera">از دوربین</string>
-  <string name="excluded">شامل نشده</string>
+  <string name="excluded">مجزا شده</string>
+  <string name="exclude_this_host">این میزبان را مجزا کن</string>
+  <string name="api_url_format_help">[DOMAIN]: دامنه API توییتر. به عنوان نمونه: https://[DOMAIN].twitter.com/ به https://api.twitter.com/ تبدیل می شود.</string>
+  <string name="no_version_suffix">نسخه پسوند وجود ندارد</string>
   <string name="inverse_selection">انتخاب را برعکس کن</string>
-  <string name="mute">صدا را حذف کن</string>
-  <string name="unmute">صدا را برگردان</string>
+  <string name="edit_media">ویرایش مدیا</string>
+  <string name="media">مدیا</string>
+  <string name="mute_user">&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt; را ساکت کن</string>
+  <string name="muted_user">&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt; ساکت شد</string>
+  <string name="unmute_user">صدای &lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt; را برگردان</string>
+  <string name="unmuted_user">صدای &lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt; برگردانده شد</string>
+  <string name="mute">صدا را ساکت کن</string>
+  <string name="unmute">بازگرداندن صدا</string>
   <string name="action_muting">حذف صدا</string>
-  <string name="action_unmuting">برگرداندن صدا</string>
+  <string name="action_unmuting">بازگرداندن صدا</string>
+  <string name="mute_user_confirm_message">&lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt; را ساکت کنم؟ شما دیگر با وجود دنبال کردن این کاربر، توییت های او را مشاهده نخواهید کرد.</string>
   <string name="remove_from_filter">فیلتر را بردار</string>
+  <string name="sort_timeline_by_id">تایم لاین را بر حسب شناسه مرتب کن</string>
   <string name="style">سبک</string>
   <string name="color">رنگ</string>
   <string name="font_family">خانواده فونت</string>
   <string name="appearance">ظاهر</string>
   <string name="function">کارکرد</string>
   <string name="replies">پاسخ ها</string>
-  <string name="profile_banner">بنر حساب کاربری</string>
-  <string name="profile">حساب کاربری</string>
+  <string name="profile_banner">بنر نمایه</string>
+  <string name="profile">نمایه</string>
   <string name="listed">لیست شده</string>
-  <string name="state_blocking">بلوکه کن</string>
+  <string name="state_blocking">بلاک شده ها</string>
   <string name="load_more">بارگذاری بیشتر</string>
   <string name="photo">عکس</string>
   <string name="gallery">گالری</string>
   <string name="remove">حذف</string>
+  <string name="load_media">رسانه را بارگذاری کن</string>
   <string name="profile_text_color">رنگ متن</string>
   <string name="profile_background_color">رنگ پس زمینه</string>
   <string name="profile_link_color_main_color">رنگ لینک ( رنگ اصلی)</string>
-  <string name="retweet_quote_confirm_title">برای پیروانم توییت کنم</string>
+  <string name="retweet_quote_confirm_title">برای دنبال کنندگان شما ریتوییت کنم؟</string>
   <string name="font">فونت</string>
   <string name="size">ابعاد</string>
   <string name="just_now">همین الان</string>
   <string name="requested">درخواست شده</string>
+  <string name="round">مدور</string>
   <string name="square">مربع</string>
+  <string name="profile_image_style">سبک عکس نمایه</string>
+  <string name="media_preview_style">سبک پیش نمایش مدیا</string>
   <string name="draft_saved">چرکنویس ذخیره شده</string>
   <string name="open_twitter_links">لینک های توییتر را باز کن</string>
   <string name="N_others_quantity_one">دیگری</string>
+  <string name="N_others_quantity_other">&lt;xliff:g id="count"&gt;%d&lt;/xliff:g&gt; دیگر</string>
   <string name="type_name_to_search">برای جستجو نام را بنویس</string>
   <string name="no_user_found">کاربری یافت نشد</string>
   <string name="members">عضوها</string>
   <string name="subscribers">مشترک</string>
   <string name="read_from_bottom">از آخر بخوانید</string>
   <string name="register">ثبت نام</string>
+  <string name="follows">دنبال می کند</string>
   <string name="belongs_to">متعلق به</string>
+  <string name="blocked_by_user_summary">شما از سوی  &lt;xliff:g id="name"&gt;%s&lt;/xliff:g&gt; بلاک شده اید</string>
   <string name="select_accounts">انتخاب حساب کاربری</string>
-  <string name="media_preview">پیش نمایش رسانه</string>
+  <string name="media_preview">پیش نمایش مدیا</string>
   <string name="edit_tabs">ویرایش برگه ها</string>
   <string name="no_location">مکانی وجود ندارد</string>
   <string name="getting_location">گرفتن موقعیت مکانی</string>
   <string name="save_to_gallery">ذخیره در گالری</string>
   <string name="usage_statistics">آمار کاربری</string>
+  <string name="research_ucdavis_earlybird">UCDavis Earlybird</string>
+  <string name="research_tsinghua_spice">Tsinghua Spice</string>
   <string name="unknown_location">مکان نامعلوم</string>
+  <string name="ellipsis">...</string>
   <string name="import_export_settings">تنظیمات را وارد کن یا از تنظیمات خروجی بگیر</string>
   <string name="usage_statistics_header_summary">فایرتوییت در بعضی پروژه های تحقیقاتی شرکت کرده. شرکت در این پروژه ها به بهتر شدن  فایر توییت وبقیه اپلیکیشن ها کمک می کند. </string>
   <string name="no_tab">برگه وجود ندارد</string>
-  <string name="user_protected_summary">برای دیدن توییت کاربر مورد نظر باید او را دنبال کنید</string>
+  <string name="user_protected_summary">برای مشاهده توییت های این کاربر محافظت شده باید ابتدا درخواست دنباله روی ارسال کنید</string>
   <string name="no_account">حساب کاربری وجود ندارد</string>
+  <string name="permission_description_shorten_status">نرم افزار می تواند توییت را برای فایرتوییت کوتاه کند، به همین دلیل به توییت دسترسی دارد.</string>
+  <string name="permission_description_upload_media">نرم افزار می تواند مدیا را از فایرتوییت آپلود کند، بنابراین برای ارسال به مدیا در توییت شما دسترسی خواهد داشت.</string>
+  <string name="permission_description_sync_timeline">نرم افزار می تواند خوانده شده ها را برای فایرتوییت همسان سازی کند، به همین دلیل به خوانده شده ها دسترسی دارد.</string>
   <string name="usage_statistics_notification_summary">به ما برای بهتر شدن فایر توییت کمک کنید</string>
-  <string name="projects_we_took_part">پروژه های با همکاری ما</string>
+  <string name="from_name">از &lt;xliff:g id="name"&gt;%1$s&lt;/xliff:g&gt;</string>
+  <string name="from_name_and_name">از &lt;xliff:g id="name"&gt;%1$s&lt;/xliff:g&gt; و &lt;xliff:g id="name"&gt;%2$s&lt;/xliff:g&gt;</string>
+  <string name="from_name_and_N_others">از سوی &lt;xliff:g id="name"&gt;%1$s&lt;/xliff:g&gt; و &lt;xliff:g id="name"&gt;%2$d&lt;/xliff:g&gt; دیگر</string>
+  <string name="projects_we_took_part">پروژه هایی که ما در آن همکاری کرده ایم</string>
   <string name="activated_accounts">حساب های کاربری فعال شده</string>
   <string name="search">جستجو</string>
   <string name="crop">برش بده</string>
-  <string name="user_type_verified">شناسایی شد</string>
+  <string name="scale">اندازه</string>
+  <string name="user_type_verified">تایید شده</string>
   <string name="user_type_protected">حفاظت شده</string>
+  <string name="tweet_hashtag">#&lt;xliff:g id="text"&gt;%1$s&lt;/xliff:g&gt; توییت شده</string>
   <string name="share_status">اشتراک گذاری توییت</string>
+  <string name="pebble_notifications">اعلان های پبل</string>
+  <string name="pebble_notifications_summary">اعلان ها را به پبل شما ارسال کند</string>
   <!--'Tweet' here is a verb-->
-  <string name="permission_label_shorten_status">توییت را کوچک کن</string>
-  <string name="permission_label_upload_media">فایل را بازگذاری کن</string>
+  <string name="tweet_from_name">توییت از &lt;xliff:g id="text"&gt;%1$s&lt;/xliff:g&gt;</string>
+  <string name="permission_label_shorten_status">توییت را کوتاه کن</string>
+  <string name="permission_label_upload_media">مدیا را بازگذاری کن</string>
+  <string name="permission_label_sync_timeline">همسان سازی تایم لاین</string>
+  <string name="thumbor_integration">ادغام Thumbor</string>
   <string name="server_address">آدرس سرور</string>
-  <string name="security_key">کلید امنیت</string>
+  <string name="security_key">کلید امنیتی</string>
+  <string name="hide_card_actions">فعالیت های کارت را بپوشان</string>
 </resources>
