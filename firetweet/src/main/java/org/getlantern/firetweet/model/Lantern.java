@@ -6,12 +6,7 @@ import org.getlantern.firetweet.FiretweetConstants;
 import go.client.Client;
 
 import android.content.Context;
-
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Logger;
-import com.google.android.gms.analytics.Tracker;
-import com.google.android.gms.analytics.GoogleAnalytics;
-
+import android.util.Log;
 import android.os.StrictMode;
 
 import com.crashlytics.android.Crashlytics;
@@ -21,35 +16,42 @@ import com.crashlytics.android.Crashlytics;
  */
 public class Lantern {
 
+    private static final String TAG = "Lantern";
     private static boolean lanternStarted = false;
-
     public static Analytics analytics;
 
-    public static void start(Context context) {
+    public static void start(final Context context) {
 
         if (!lanternStarted) {
             // Initializing application context.
             try {
+
+
+                Client.GoCallback.Stub callback = new Client.GoCallback.Stub() {
+                    public void AfterStart() {
+                        Log.d(TAG, "Lantern successfully started.");
+                        // specify that all of our HTTP traffic should be routed through
+                        // our local proxy
+                        System.setProperty("http.proxyHost", "127.0.0.1");
+                        System.setProperty("http.proxyPort", "9192");
+                        System.setProperty("https.proxyHost", "127.0.0.1");
+                        System.setProperty("https.proxyPort", "9192");
+
+                        lanternStarted = true;
+
+                        analytics = new Analytics(context);
+                        analytics.sendNewSessionEvent();
+                    }
+
+                    public void AfterConfigure() {
+
+                    }
+                };
                 // init loads libgojni.so and starts the runtime
                 Client.RunClientProxy("127.0.0.1:9192",
                                       FiretweetConstants.APP_NAME,
-                                      new Client.GoCallback.Stub() {
-                                          public void Do() {
-                                              // Proxy ready callback: does nothing at the moment
-                                          }
-                                      });
-                System.setProperty("http.proxyHost", "127.0.0.1");
-                System.setProperty("http.proxyPort", "9192");
-                System.setProperty("https.proxyHost", "127.0.0.1");
-                System.setProperty("https.proxyPort", "9192");
-                // specify that all of our HTTP traffic should be routed through
-                // our local proxy
-
-                lanternStarted = true;
-
-                analytics = new Analytics(context);
-                analytics.sendNewSessionEvent();
-
+                                      null,
+                                      callback);
             } catch (Exception e) {
                 Crashlytics.logException(e);
                 throw new RuntimeException(e);

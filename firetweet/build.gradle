@@ -63,7 +63,9 @@ repositories {
         dirs 'src/main/libs'
     }
     jcenter()
+    def androidHome = System.getenv("ANDROID_HOME")
     mavenCentral()
+    maven { url "$androidHome/extras/android/m2repository/" }
     maven { url 'https://repo.commonsware.com.s3.amazonaws.com' }
     maven { url 'https://github.com/suckgamony/RapidDecoder/raw/master/repository' }
     maven { url "https://jitpack.io" }
