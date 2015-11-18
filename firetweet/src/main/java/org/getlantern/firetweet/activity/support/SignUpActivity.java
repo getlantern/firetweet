@@ -2,6 +2,7 @@ package org.getlantern.firetweet.activity.support;
 
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.proxy.ProxySettings;
+import org.getlantern.firetweet.model.Lantern;
 
 import android.os.Bundle;
 import android.webkit.WebView;
@@ -30,7 +31,9 @@ public class SignUpActivity extends BaseActionBarActivity {
         WebView webView = (WebView) findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
         
-        ProxySettings.setProxy(context, webView, PROXY_HOST, PROXY_PORT);
+        if (Lantern.analytics != null) {
+            ProxySettings.setProxy(context, webView, PROXY_HOST, PROXY_PORT);
+        }
 
         webView.loadUrl(TWITTER_SIGNUP_URL);
 

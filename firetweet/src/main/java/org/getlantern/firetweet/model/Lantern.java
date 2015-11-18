@@ -28,7 +28,16 @@ public class Lantern {
 
 
                 Client.GoCallback.Stub callback = new Client.GoCallback.Stub() {
+
                     public void AfterStart() {
+
+                    }
+
+                    public void AfterConfigure() {
+
+                    }
+
+                    public void Do() {
                         Log.d(TAG, "Lantern successfully started.");
                         // specify that all of our HTTP traffic should be routed through
                         // our local proxy
@@ -42,19 +51,14 @@ public class Lantern {
                         analytics = new Analytics(context);
                         analytics.sendNewSessionEvent();
                     }
-
-                    public void AfterConfigure() {
-
-                    }
                 };
                 // init loads libgojni.so and starts the runtime
                 Client.RunClientProxy("127.0.0.1:9192",
                                       FiretweetConstants.APP_NAME,
-                                      null,
+                                      //null,
                                       callback);
             } catch (Exception e) {
                 Crashlytics.logException(e);
-                throw new RuntimeException(e);
             }
         }
     }

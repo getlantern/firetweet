@@ -47,6 +47,7 @@ import android.webkit.WebView.FindListener;
 
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.app.FiretweetApplication;
+import org.getlantern.firetweet.model.Lantern; 
 import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;
 import org.getlantern.firetweet.proxy.ProxySettings;
 import org.getlantern.firetweet.util.AsyncTaskUtils;
@@ -127,7 +128,9 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
         setContentView(R.layout.activity_browser_sign_in);
 
 
-        ProxySettings.setProxy(this, mWebView, PROXY_HOST, PROXY_PORT);
+        if (Lantern.analytics != null) {
+            ProxySettings.setProxy(this, mWebView, PROXY_HOST, PROXY_PORT);
+        }
         Log.d("TwitterBrowserSignIn", "Enabled proxy settings");
 
         mWebView.setWebViewClient(new AuthorizationWebViewClient(this));

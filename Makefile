@@ -7,7 +7,7 @@ endef
 
 .PHONY: all
 
-all: build-debug install run
+all: build-debug install run logcat
 
 compile-debug:
 	./gradlew \
@@ -51,6 +51,10 @@ uninstall:
 run:
 	$(call pkg_variables)
 	adb shell am start -n $(PACKAGE)/$(MAIN_ACTIVITY)
+
+logcat:
+	adb logcat | grep `adb shell ps | grep org.getlantern.firetweet | cut -c10-15`
+
 
 clean:
 	./gradlew clean

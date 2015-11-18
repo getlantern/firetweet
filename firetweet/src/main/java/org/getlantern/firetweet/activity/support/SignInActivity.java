@@ -179,10 +179,14 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
 
         if (vId == R.id.sign_up || vId == R.id.sign_in) {
             if (vId == R.id.sign_up) {
-                Lantern.analytics.trackLoginEvent("registration");
+                if (Lantern.analytics != null) {
+                    Lantern.analytics.trackLoginEvent("registration");
+                }
                 BrowserSignInActivity.action = "sign_up";
             } else {
-                Lantern.analytics.trackLoginEvent("login");
+                if (Lantern.analytics != null) {
+                    Lantern.analytics.trackLoginEvent("login");
+                }
                 BrowserSignInActivity.action = "sign_in";
             }
             final Context context = this;
