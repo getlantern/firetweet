@@ -64,6 +64,8 @@ import org.getlantern.firetweet.util.net.FiretweetHostAddressResolver;
 
 import java.io.File;
 
+import org.getlantern.lantern.sdk.Lantern;
+
 import edu.ucdavis.earlybird.UCDService;
 import twitter4j.http.HostAddressResolver;
 
@@ -182,7 +184,6 @@ public class FiretweetApplication extends MultiDexApplication implements Constan
     public SQLiteDatabase getSQLiteDatabase() {
         if (mDatabase != null) return mDatabase;
 
-        StrictModeUtils.checkDiskIO();
         return mDatabase = getSQLiteOpenHelper().getWritableDatabase();
     }
 
@@ -198,12 +199,14 @@ public class FiretweetApplication extends MultiDexApplication implements Constan
 
     @Override
     public void onCreate() {
-        if (Utils.isDebugBuild()) {
-            StrictModeUtils.detectAllVmPolicy();
-        }
+        StrictModeUtils.detectAll();
+
         super.onCreate();
 
         Fabric.with(this, new Crashlytics());
+
+        Lantern lantern = new Lantern(this.getApplicationContext());
+        lantern.start();
 
         mHandler = new Handler();
         mMessageBus = new Bus();

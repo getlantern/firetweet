@@ -12,8 +12,6 @@ import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.activity.MainActivity;
 import org.getlantern.firetweet.activity.support.HomeActivity;
 
-import org.getlantern.firetweet.model.Lantern;
-
 public class SplashScreen extends Activity {
  
     // Splash screen timer

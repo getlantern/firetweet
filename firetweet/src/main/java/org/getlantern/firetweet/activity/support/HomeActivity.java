@@ -85,7 +85,6 @@ import org.getlantern.firetweet.fragment.support.AccountsDashboardFragment;
 import org.getlantern.firetweet.fragment.support.DirectMessagesFragment;
 import org.getlantern.firetweet.fragment.support.TrendsSuggectionsFragment;
 import org.getlantern.firetweet.graphic.EmptyDrawable;
-import org.getlantern.firetweet.model.Lantern;
 import org.getlantern.firetweet.model.ParcelableAccount;
 import org.getlantern.firetweet.model.ParcelableUser;
 import org.getlantern.firetweet.model.SupportTabSpec;
@@ -328,9 +327,6 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
             startActivity(signInIntent);
             finish();
 
-            final Context context = this;
-            Lantern.start(context);
-
             return;
         } else {
             notifyAccountsChanged();
@@ -346,10 +342,6 @@ public class HomeActivity extends BaseActionBarActivity implements OnClickListen
         final boolean refreshOnStart = mPreferences.getBoolean(KEY_REFRESH_ON_START, false);
         mTabDisplayOption = getTabDisplayOptionInt(this);
 
-
-        final Context context = this;
-
-        Lantern.start(context);
 
         mColorStatusFrameLayout.setOnFitSystemWindowsListener(this);
         ThemeUtils.applyBackground(mTabIndicator);

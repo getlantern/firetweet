@@ -63,7 +63,6 @@ import org.getlantern.firetweet.activity.SettingsActivity;
 import org.getlantern.firetweet.app.FiretweetApplication;
 import org.getlantern.firetweet.fragment.support.BaseSupportDialogFragment;
 import org.getlantern.firetweet.fragment.support.SupportProgressDialogFragment;
-import org.getlantern.firetweet.model.Lantern;
 import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;
 import org.getlantern.firetweet.util.AsyncTaskUtils;
 import org.getlantern.firetweet.util.AsyncTwitterWrapper;
@@ -179,14 +178,8 @@ public class SignInActivity extends BaseActionBarActivity implements TwitterCons
 
         if (vId == R.id.sign_up || vId == R.id.sign_in) {
             if (vId == R.id.sign_up) {
-                if (Lantern.analytics != null) {
-                    Lantern.analytics.trackLoginEvent("registration");
-                }
                 BrowserSignInActivity.action = "sign_up";
             } else {
-                if (Lantern.analytics != null) {
-                    Lantern.analytics.trackLoginEvent("login");
-                }
                 BrowserSignInActivity.action = "sign_in";
             }
             final Context context = this;

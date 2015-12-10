@@ -46,6 +46,12 @@ public class StrictModeUtils {
 		StrictMode.setThreadPolicy(threadPolicyBuilder.build());
 	}
 
+    public static void detectAll() {
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .permitAll()
+                .build());
+    }
+
 	public static void detectAllVmPolicy() {
 		final VmPolicy.Builder vmPolicyBuilder = new VmPolicy.Builder();
 		vmPolicyBuilder.detectAll();

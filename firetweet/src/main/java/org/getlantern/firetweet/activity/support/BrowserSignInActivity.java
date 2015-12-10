@@ -28,6 +28,7 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,7 +48,6 @@ import android.webkit.WebView.FindListener;
 
 import org.getlantern.firetweet.R;
 import org.getlantern.firetweet.app.FiretweetApplication;
-import org.getlantern.firetweet.model.Lantern; 
 import org.getlantern.firetweet.provider.FiretweetDataStore.Accounts;
 import org.getlantern.firetweet.proxy.ProxySettings;
 import org.getlantern.firetweet.util.AsyncTaskUtils;
@@ -80,7 +80,7 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
 
     private static final String INJECT_CONTENT = "javascript:window.injector.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');";
     private static final String PROXY_HOST = "127.0.0.1";
-    private static final int PROXY_PORT = 9192;
+    private static final int PROXY_PORT = 8787;
     private static final String CANCEL_PAGE = "https://api.twitter.com/oauth/authorize";
     private static final String CANCEL_TEXT = "You have not signed in";
     private static final String SIGNUP_URL = "https://mobile.twitter.com/signup?oauth_token=";
@@ -124,13 +124,13 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         setContentView(R.layout.activity_browser_sign_in);
 
-
-        if (Lantern.analytics != null) {
-            ProxySettings.setProxy(this, mWebView, PROXY_HOST, PROXY_PORT);
-        }
+        ProxySettings.setProxy(this, mWebView, PROXY_HOST, PROXY_PORT);
         Log.d("TwitterBrowserSignIn", "Enabled proxy settings");
 
         mWebView.setWebViewClient(new AuthorizationWebViewClient(this));
@@ -242,6 +242,7 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
         public void onReceivedError(final WebView view, final int errorCode, final String description,
                                     final String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
+            Log.d("TwitterBrowserSignIn", "Received error for " + description + " " + failingUrl);
             Toast.makeText(mActivity, R.string.error_occurred, Toast.LENGTH_SHORT).show();
             mActivity.finish();
         }

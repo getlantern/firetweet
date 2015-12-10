@@ -106,11 +106,6 @@ public abstract class BaseThemedActivity extends Activity implements IThemedActi
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
-        if (Utils.isDebugBuild()) {
-            StrictModeUtils.detectAllVmPolicy();
-            StrictModeUtils.detectAllThreadPolicy();
-        }
-
         setTheme();
         super.onCreate(savedInstanceState);
         setActionBarBackground();

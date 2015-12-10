@@ -34,7 +34,6 @@ import android.view.View;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.activity.iface.IThemedActivity;
 import org.getlantern.firetweet.util.ColorUtils;
-import org.getlantern.firetweet.util.StrictModeUtils;
 import org.getlantern.firetweet.util.ThemeUtils;
 import org.getlantern.firetweet.util.Utils;
 import org.getlantern.firetweet.view.ShapedImageView;
@@ -90,10 +89,6 @@ public abstract class ThemedActionBarActivity extends ActionBarActivity implemen
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
-        if (Utils.isDebugBuild()) {
-            StrictModeUtils.detectAllVmPolicy();
-            StrictModeUtils.detectAllThreadPolicy();
-        }
         setTheme();
         super.onCreate(savedInstanceState);
     }

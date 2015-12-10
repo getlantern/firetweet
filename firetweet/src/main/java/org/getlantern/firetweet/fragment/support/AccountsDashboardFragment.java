@@ -107,7 +107,6 @@ import org.getlantern.firetweet.view.ShapedImageView;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
-import org.getlantern.firetweet.model.Lantern;
 
 import java.util.ArrayList;
 import java.util.Collections;

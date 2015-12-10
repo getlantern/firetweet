@@ -25,7 +25,6 @@ import android.os.Bundle;
 
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.activity.support.HomeActivity;
-import org.getlantern.firetweet.util.StrictModeUtils;
 import org.getlantern.firetweet.util.ThemeUtils;
 import org.getlantern.firetweet.util.Utils;
 
@@ -39,10 +38,6 @@ public class MainActivity extends Activity implements Constants {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
-        if (Utils.isDebugBuild()) {
-            StrictModeUtils.detectAllVmPolicy();
-            StrictModeUtils.detectAllThreadPolicy();
-        }
         ThemeUtils.overrideActivityOpenAnimation(this);
         super.onCreate(savedInstanceState);
         final Intent intent = new Intent(this, HomeActivity.class);
