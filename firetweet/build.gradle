@@ -1,11 +1,14 @@
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        mavenCentral()
         mavenLocal()
     }
 
     dependencies {
         classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'org.getlantern:android-sdk:1.9.2-SNAPSHOT@aar'
     }
 }
 import java.text.SimpleDateFormat
@@ -72,6 +75,7 @@ repositories {
     maven { url 'https://github.com/suckgamony/RapidDecoder/raw/master/repository' }
     maven { url "https://jitpack.io" }
     maven { url 'https://maven.fabric.io/public' }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 }
 
 configurations.all {
@@ -79,9 +83,12 @@ configurations.all {
 }
 
 dependencies {
-    compile 'org.getlantern.lantern:sdk:1.0.1'
+    compile 'org.getlantern:android-sdk:1.9.2-SNAPSHOT@aar'
 
 //    wearApp project(':firetweet.wear')
+    compile('org.yaml:snakeyaml:1.10') {
+       transitive = true
+    }
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:support-v13:22.0.0'
     compile 'com.android.support:appcompat-v7:22.0.0'

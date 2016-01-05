@@ -10,6 +10,7 @@ buildscript {
     dependencies {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.8'
         classpath 'com.android.tools.build:gradle:1.2.3'
+        classpath 'org.yaml:snakeyaml:1.10'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -23,6 +24,7 @@ allprojects {
         mavenCentral()
         maven {
             url "$androidHome/extras/android/m2repository/"
+            url "https://oss.sonatype.org/content/repositories/snapshots" 
         }
     }
 
