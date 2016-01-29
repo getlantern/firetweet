@@ -81,6 +81,7 @@ public class FiretweetApplication extends MultiDexApplication implements Constan
     private static final String KEY_UCD_DATA_PROFILING = "ucd_data_profiling";
 
     private Handler mHandler;
+    private Lantern lantern;
     private MediaLoaderWrapper mMediaLoaderWrapper;
     private ImageLoader mImageLoader;
     private AsyncTaskManager mAsyncTaskManager;
@@ -205,8 +206,16 @@ public class FiretweetApplication extends MultiDexApplication implements Constan
 
         Fabric.with(this, new Crashlytics());
 
-        Lantern lantern = new Lantern(this.getApplicationContext());
-        lantern.start();
+        final Context context = this.getApplicationContext();
+        File f = context.getFilesDir();
+        String path = "";
+        if (f != null) {
+            path = f.getPath();
+        }
+        if (lantern == null) {
+            lantern = new Lantern(context, path);
+            lantern.Start();
+        }
 
         mHandler = new Handler();
         mMessageBus = new Bus();
