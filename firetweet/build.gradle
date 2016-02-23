@@ -23,9 +23,9 @@ android {
     defaultConfig {
         applicationId "org.getlantern.firetweet"
         minSdkVersion 15
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 110
-        versionName "0.0.6"
+        versionName "0.0.7"
         multiDexEnabled true
     }
     compileOptions {
@@ -83,12 +83,14 @@ configurations.all {
 }
 
 dependencies {
-    compile 'org.getlantern:android-sdk:1.9.5-SNAPSHOT@aar'
+    compile(name:'liblantern', ext:'aar')
+    compile(name:'sdk-debug', ext:'aar')
 
 //    wearApp project(':firetweet.wear')
     compile('org.yaml:snakeyaml:1.10') {
        transitive = true
     }
+    compile 'com.google.guava:guava:19.0'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:support-v13:22.0.0'
     compile 'com.android.support:appcompat-v7:22.0.0'
@@ -100,7 +102,7 @@ dependencies {
     compile 'com.squareup:otto:1.3.6'
     compile 'dnsjava:dnsjava:2.1.7'
     compile 'com.commonsware.cwac:merge:1.1.1'
-    compile 'com.google.android.gms:play-services:4.3.23'
+    compile 'com.google.android.gms:play-services-analytics:7.0.0'
     compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.1.3'
     compile 'com.rengwuxian.materialedittext:library:2.0.3'
     compile 'com.pnikosis:materialish-progress:1.5'

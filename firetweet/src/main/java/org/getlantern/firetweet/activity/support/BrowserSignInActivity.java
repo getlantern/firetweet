@@ -130,7 +130,9 @@ public class BrowserSignInActivity extends BaseSupportDialogActivity implements 
         mPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         setContentView(R.layout.activity_browser_sign_in);
 
-        ProxySettings.setProxy(this, mWebView, PROXY_HOST, PROXY_PORT);
+        ProxySettings.setProxy(this, mWebView, 
+                FiretweetApplication.PROXY_HOST,
+                FiretweetApplication.PROXY_PORT);
         Log.d("TwitterBrowserSignIn", "Enabled proxy settings");
 
         mWebView.setWebViewClient(new AuthorizationWebViewClient(this));

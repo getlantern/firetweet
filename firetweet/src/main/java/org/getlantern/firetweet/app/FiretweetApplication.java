@@ -32,6 +32,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.nostra13.universalimageloader.cache.disc.DiskCache;
@@ -43,6 +44,7 @@ import com.nostra13.universalimageloader.core.download.ImageDownloader;
 import com.nostra13.universalimageloader.utils.L;
 import com.squareup.otto.Bus;
 
+import com.google.common.net.HostAndPort;
 import io.fabric.sdk.android.Fabric;
 import org.getlantern.firetweet.Constants;
 import org.getlantern.firetweet.activity.MainActivity;
@@ -64,7 +66,8 @@ import org.getlantern.firetweet.util.net.FiretweetHostAddressResolver;
 
 import java.io.File;
 
-import org.getlantern.lantern.sdk.Lantern;
+
+import org.lantern.mobilesdk.Lantern;
 
 import edu.ucdavis.earlybird.UCDService;
 import twitter4j.http.HostAddressResolver;
@@ -79,9 +82,13 @@ public class FiretweetApplication extends MultiDexApplication implements Constan
         OnSharedPreferenceChangeListener {
 
     private static final String KEY_UCD_DATA_PROFILING = "ucd_data_profiling";
+    private static final String TAG = "FireTweet";
+
+    public static String PROXY_HOST = "127.0.0.1";
+    public static int PROXY_PORT = 8787;
+
 
     private Handler mHandler;
-    private Lantern lantern;
     private MediaLoaderWrapper mMediaLoaderWrapper;
     private ImageLoader mImageLoader;
     private AsyncTaskManager mAsyncTaskManager;
@@ -212,9 +219,16 @@ public class FiretweetApplication extends MultiDexApplication implements Constan
         if (f != null) {
             path = f.getPath();
         }
-        if (lantern == null) {
-            lantern = new Lantern(context, path);
-            lantern.Start();
+
+        int startupTimeoutMillis = 30000;
+        String trackingId = "UA-21408036-4";
+        try {
+            org.lantern.mobilesdk.StartResult result = Lantern.enable(context, startupTimeoutMillis, trackingId);
+            HostAndPort hp = HostAndPort.fromString(result.getHTTPAddr());
+            PROXY_HOST = hp.getHostText(); 
+            PROXY_PORT = hp.getPort();
+        } catch (Exception e) {
+            Log.d(TAG, "Unable to start Lantern: " + e.getMessage());
         }
 
         mHandler = new Handler();

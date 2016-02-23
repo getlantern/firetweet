@@ -578,11 +578,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.NyanActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.Nyan"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity
             android:name=".activity.support.UsageStatisticsActivity"
             android:label="@string/usage_statistics"
             android:theme="@android:style/Theme.NoDisplay"/>
@@ -621,46 +616,6 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="org.getlantern.firetweet.NOTIFICATION_DELETED"/>
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name=".receiver.SecretCodeBroadcastReceiver"
-            android:label="@string/firetweet_test">
-            <intent-filter>
-                <action android:name="android.provider.Telephony.SECRET_CODE"/>
-
-                <data
-                    android:host="8943373"
-                    android:scheme="android_secret_code"/>
-            </intent-filter>
-        </receiver>
-
-        <!-- Begin third Party components -->
-
-        <service
-            android:name="edu.ucdavis.earlybird.UCDService"/>
-        <receiver
-            android:name="edu.ucdavis.earlybird.UploadReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.net.wifi.supplicant.CONNECTION_CHANGE"/>
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
-                <action android:name="edu.ucdavis.earlybird.UPLOAD_PROFILE"/>
-            </intent-filter>
-        </receiver>
-
-        <!-- SPICE -->
-        <service
-            android:name="edu.tsinghua.spice.SpiceService"/>
-        <receiver
-            android:name="edu.tsinghua.spice.SpiceUploadReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.net.wifi.supplicant.CONNECTION_CHANGE"/>
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
-                <action android:name="edu.tsinghua.spice.UPLOAD_PROFILE"/>
             </intent-filter>
         </receiver>
 
