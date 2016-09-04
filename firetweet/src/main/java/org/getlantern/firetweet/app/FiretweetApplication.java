@@ -223,10 +223,12 @@ public class FiretweetApplication extends MultiDexApplication implements Constan
         int startupTimeoutMillis = 30000;
         String trackingId = "UA-21408036-4";
         try {
-            org.lantern.mobilesdk.StartResult result = Lantern.enable(context, startupTimeoutMillis, trackingId);
+            org.lantern.mobilesdk.StartResult result = Lantern.enable(context, startupTimeoutMillis,
+                    true, trackingId, null);
             HostAndPort hp = HostAndPort.fromString(result.getHTTPAddr());
-            PROXY_HOST = hp.getHostText(); 
+            PROXY_HOST = hp.getHostText();
             PROXY_PORT = hp.getPort();
+            Log.d(TAG, "Proxy host --> " + PROXY_HOST + " " + PROXY_PORT);
         } catch (Exception e) {
             Log.d(TAG, "Unable to start Lantern: " + e.getMessage());
         }
