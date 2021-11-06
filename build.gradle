@@ -18,6 +18,10 @@ buildscript {
 
 
 allprojects {
+    tasks.withType(JavaCompile).configureEach {
+        options.incremental = true
+    }
+
     repositories {
         jcenter()
         def androidHome = System.getenv("ANDROID_HOME")
